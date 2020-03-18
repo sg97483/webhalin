@@ -392,8 +392,7 @@ def web_har_in(target, driver):
 
             Util.sleep(1)
 
-            if ParkUtil.check_search("#modal-window > div > div > div.modal-text",
-                                     driver):
+            if ParkUtil.check_search(park_id, driver):
                 driver.implicitly_wait(3)
                 driver.find_element_by_css_selector(web_info[WebInfo.btnItem]).click()
 

@@ -280,6 +280,17 @@ parkTypeNoRequestMain = [
     Parks.MEGABOX_SUNGSU
 ]
 
+type_to_search_css = {
+    AJ_PARK: "body > div.wrap > section > div > section > div:nth-child(2) > div > dl:nth-child(4) > dd",
+    AMANO: "#modal-window > div > div > div.modal-text",
+    BLUE: "#divAjaxCarList > tr",
+    DARAE: "#search_form > table > tbody > tr:nth-child(2) > td",
+    GRANG_SEOUL: "#carList > table > tbody > tr > td:nth-child(2) > a",
+    GS: "#divAjaxCarList > tbody > tr",
+    HIGH_CITY: "#search_form > table > tbody > tr > td:nth-child(2) > table:nth-child(3) > tbody > tr:nth-child(2)",
+    IP_TIME: "#DataGrid1 > tbody > tr:nth-child(2) > td:nth-child(1)"
+}
+
 mapToAgency = {
     HIGH_CITY: "#search_form > table > tbody > tr > td:nth-child(2) > table:nth-child(3) > tbody > tr:nth-child(2) > "
                "td:nth-child(2)",

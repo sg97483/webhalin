@@ -63,9 +63,12 @@ def get_park_css(park_id):
     return park_css
 
 
-def check_search(str_tr_selector, driver):
+def check_search(park_id, driver):
     try:
-        tr_text = driver.find_element_by_css_selector(str_tr_selector).text
+        park_type = ParkType.get_park_type(park_id)
+        park_search_css = ParkType.type_to_search_css[park_type]
+
+        tr_text = driver.find_element_by_css_selector(park_search_css).text
         text = re.sub('<.+?>', '', tr_text, 0, re.I | re.S)
         trim_text = text.strip()
         # print(trim_text)

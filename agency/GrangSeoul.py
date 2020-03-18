@@ -71,9 +71,7 @@ def web_har_in(target, driver):
 
                 Util.sleep(1)
 
-                if ParkUtil.check_search(
-                        "#carList > table > tbody > tr > td:nth-child(2) > a",
-                        driver):
+                if ParkUtil.check_search(park_id, driver):
                     if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
                         driver.find_element_by_css_selector("#carList > table > tbody > tr > td:nth-child(2) > a").click()
                         # 할인권 기입 후 등록 체크

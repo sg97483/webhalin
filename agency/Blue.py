@@ -107,9 +107,7 @@ def web_har_in(target, driver):
 
             Util.sleep(1)
 
-            if ParkUtil.check_search(
-                    "#divAjaxCarList > tr",
-                    driver):
+            if ParkUtil.check_search(park_id, driver):
                 driver.find_element_by_css_selector("#divAjaxCarList > tr > td:nth-child(2) > a").click()
                 if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
                     driver.implicitly_wait(3)

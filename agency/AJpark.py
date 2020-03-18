@@ -161,9 +161,7 @@ def web_har_in(target, driver):
 
             driver.implicitly_wait(10)
 
-            if ParkUtil.check_search(
-                    "body > div.wrap > section > div > section > div:nth-child(2) > div > dl:nth-child(4) > dd",
-                    driver):
+            if ParkUtil.check_search(park_id, driver):
                 if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
                     driver.find_element_by_class_name('selectCarInfo').click()
 

@@ -61,9 +61,7 @@ def web_har_in(target, driver):
 
                 Util.sleep(1)
 
-                if ParkUtil.check_search(
-                        "#search_form > table > tbody > tr:nth-child(2) > td",
-                        driver):
+                if ParkUtil.check_search(park_id, driver):
                     if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
                         driver.find_element_by_id("button_discount_4").click()
                         return True

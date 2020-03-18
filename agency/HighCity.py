@@ -398,10 +398,7 @@ def web_har_in(target, driver):
 
                 Util.sleep(1)
 
-                if ParkUtil.check_search(
-                        "#search_form > table > tbody > tr > td:nth-child(2) > table:nth-child(3) > tbody > "
-                        "tr:nth-child(2)",
-                        driver):
+                if ParkUtil.check_search(park_id, driver):
                     if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
                         driver.find_element_by_id(web_info[WebInfo.btnItem]).click()
                         harin_script = get_har_in_script(park_id, ticket_name)
