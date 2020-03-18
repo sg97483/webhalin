@@ -89,7 +89,7 @@ mapIdToWebInfo = {
     14618: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "8",  # 일일권(16시간)
+            "13",  # 8 : 일일권(16시간), 13 : 9시간권
             "11",  # 주말1일권
             "10",  # 야간권
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
@@ -262,6 +262,8 @@ def get_har_in_value(park_id, ticket_name):
     elif park_id == Parks.Y_PLUS or park_id == Parks.SK_MYEONGDONG or park_id == Parks.JS_HOTEL:
         if ticket_name == "3시간권":
             discount_type_value = web_info[WebInfo.methodHarIn3]
+        elif ticket_name == "9시간권":
+            discount_type_value = web_info[WebInfo.methodHarIn1]
         elif ticket_name[-3:] == "1일권":
             if Util.get_week_or_weekend() == 0:
                 discount_type_value = web_info[WebInfo.methodHarIn1]
