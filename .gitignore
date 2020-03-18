@@ -1,0 +1,7 @@
+﻿#payment_list
+payment_list/
+
+# Log
+# /로 끝나면 해당 디렉토리 전체를 무시
+beforeLog/
+2020/
