@@ -69,6 +69,7 @@ def get_sql(now_date):
           "AND TotalTicketType NOT LIKE '월주차%' " \
           "AND TotalTicketType NOT LIKE '월연장%' " \
           "AND TotalTicketType NOT LIKE '%자동결제%' " \
+          "AND actualOutDtm IS NULL " \
           "ORDER BY actualInDtm DESC, parkId DESC;"
     # "ORDER BY actualInDtm ASC, parkId ASC;"
     # "ORDER BY actualInDtm DESC, parkId DESC;"
