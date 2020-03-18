@@ -374,6 +374,9 @@ def web_har_in(target, driver):
                 if park_id == Parks.SEOUL_GIROKWON:
                     web_har_in_login_seoul_girockwon(driver, park_id)
 
+            if park_id == Parks.NY_TOWER:
+                driver.find_element_by_css_selector("#modal-window > div > div > div.modal-buttons > a:nth-child(2)").click()
+
             if park_id in amano_auto_search_one:
                 driver.find_element_by_css_selector("#modal-window > div > div > div.modal-buttons > a").click()
             else:
