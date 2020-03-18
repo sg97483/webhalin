@@ -57,7 +57,8 @@ parkTypeHighCity = [
     Parks.GANG_NAM_L7,
     Parks.COSMO_TOWER,
     Parks.MERITZ_FIRE,
-    Parks.ORAKAI_SWEETS
+    Parks.ORAKAI_SWEETS,
+    Parks.YANGWOO_DRAMA_CITY
 ]
 
 parkTypeAmano = [
@@ -210,7 +211,8 @@ haveOneKey = [
     Parks.COSMO_TOWER,
     Parks.NY_TOWER,
     Parks.MERITZ_FIRE,
-    Parks.ORAKAI_SWEETS
+    Parks.ORAKAI_SWEETS,
+    Parks.YANGWOO_DRAMA_CITY
 ]
 
 haveWeekKey = [
