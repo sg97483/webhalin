@@ -28,7 +28,7 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.ORAKAI_SWEETS
+testPark = Parks.EG_BUILDING
 
 
 def get_sql(now_date):
@@ -54,7 +54,7 @@ def get_sql(now_date):
         '19180', '19183', '19181', '19182', '19188', '19189', '19190',
         '19198',
         '12766',
-        '19073'
+        '19073', '19194'
     ]
 
     str_lots = ", ".join(valid_lots)
@@ -69,8 +69,11 @@ def get_sql(now_date):
           "AND TotalTicketType NOT LIKE '월주차%' " \
           "AND TotalTicketType NOT LIKE '월연장%' " \
           "AND TotalTicketType NOT LIKE '%자동결제%' " \
-          "AND actualOutDtm IS NULL " \
-          "ORDER BY actualInDtm DESC, parkId DESC;"
+          "AND actualOutDtm IS NULL "
+
+    sql += "AND parkId IN ('" + str(testPark) + "') "
+
+    sql += "ORDER BY actualInDtm DESC, parkId DESC;"
     # "ORDER BY actualInDtm ASC, parkId ASC;"
     # "ORDER BY actualInDtm DESC, parkId DESC;"
     # "AND parkId IN ('" + str(testPark) + "') " \
