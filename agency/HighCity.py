@@ -325,6 +325,13 @@ mapIdToWebInfo = {
             "chk",
             "javascript:applyDiscount('20', '1', '', 'ppark', '1', '0');",
             "javascript:applyDiscount('20', '1', '', 'ppark', '1', '0');"
+            ],
+    # (하이파킹)오투타워(구 HP빌딩)
+    19083: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
+            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+            "chk",
+            "javascript:applyDiscount('95', '1', '', '파킹박', '1', '0');",
+            "javascript:applyDiscount('95', '1', '', '파킹박', '1', '0');"
             ]
 }
 
