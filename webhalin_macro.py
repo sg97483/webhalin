@@ -28,7 +28,7 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.EG_BUILDING
+testPark = Parks.MERITZ_FIRE
 
 
 def get_sql(now_date):

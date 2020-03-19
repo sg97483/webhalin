@@ -290,7 +290,8 @@ type_to_search_css = {
     GRANG_SEOUL: "#carList > table > tbody > tr > td:nth-child(2) > a",
     GS: "#divAjaxCarList > tbody > tr",
     HIGH_CITY: "#search_form > table > tbody > tr > td:nth-child(2) > table:nth-child(3) > tbody > tr:nth-child(2)",
-    IP_TIME: "#DataGrid1 > tbody > tr:nth-child(2) > td:nth-child(1)"
+    IP_TIME: "#DataGrid1 > tbody > tr:nth-child(2) > td:nth-child(1)",
+    Parks.MERITZ_FIRE: "#search_form > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)"
 }
 
 mapToAgency = {
@@ -306,7 +307,8 @@ mapToAgency = {
     IP_TIME: "#DataGrid1 > tbody > tr:nth-child(2) > td:nth-child(1)",
     # IP_TIME: "#listSearch > table:nth-child(7) > tbody > tr:nth-child(2)",
     GRANG_SEOUL: "#carList > table > tbody > tr > td:nth-child(2) > a",
-    AJ_PARK: "body > div.wrap > section > div > section > div:nth-child(2) > div > dl:nth-child(4) > dd"
+    AJ_PARK: "body > div.wrap > section > div > section > div:nth-child(2) > div > dl:nth-child(4) > dd",
+    Parks.MERITZ_FIRE: "#search_form > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)"
 }
 
 mapToHarinUrl = {
