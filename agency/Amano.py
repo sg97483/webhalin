@@ -372,12 +372,13 @@ def web_har_in(target, driver):
             # print(driver.current_url)
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
             if ParkUtil.first_access(park_id, driver.current_url):
+                if park_id == Parks.NY_TOWER:
+                    driver.find_element_by_xpath("//*[@id='modal-window']/div/div/div[3]/a[1]").click()
+                    driver.implicitly_wait(3)
+
                 web_har_in_login(driver, park_id)
                 if park_id == Parks.SEOUL_GIROKWON:
                     web_har_in_login_seoul_girockwon(driver, park_id)
-
-            if park_id == Parks.NY_TOWER:
-                driver.find_element_by_css_selector("#modal-window > div > div > div.modal-buttons > a:nth-child(2)").click()
 
             if park_id in amano_auto_search_one:
                 driver.find_element_by_css_selector("#modal-window > div > div > div.modal-buttons > a").click()
