@@ -332,6 +332,13 @@ mapIdToWebInfo = {
             "chk",
             "javascript:applyDiscount('95', '1', '', '파킹박', '1', '0');",
             "javascript:applyDiscount('95', '1', '', '파킹박', '1', '0');"
+            ],
+    # 오렌지센터
+    19197: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
+            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+            "chk",
+            "javascript:applyDiscount('16', '1', '', 'ppark', '999999999', '0');",
+            "javascript:applyDiscount('16', '1', '', 'ppark', '999999999', '0');"
             ]
 }
 
