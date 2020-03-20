@@ -105,7 +105,7 @@ def web_har_in(target, driver):
 
             driver.find_element_by_xpath(web_info[WebInfo.btnSearch]).click()
 
-            Util.sleep(1)
+            Util.sleep(3)
 
             if ParkUtil.check_search(park_id, driver):
                 driver.find_element_by_css_selector("#divAjaxCarList > tr > td:nth-child(2) > a").click()
