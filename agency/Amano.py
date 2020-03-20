@@ -203,6 +203,16 @@ mapIdToWebInfo = {
             "",  # 할인키 값을 모르겠음
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+            ],
+    # 자양래미안프리미어팰리스
+    19193: ["userId", "userPwd", "//*[@id='btnLogin']",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "15",  # 종일권
+            "",  #
+            "16",  # 2시간권
+            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
+            "17"  # 3시간권
             ]
 }
 
@@ -245,7 +255,8 @@ amano_pass = [
     Parks.YEOKSAM_BUILDING,
     Parks.HARIM_INTERNATIONAL,
     Parks.SINRA_STAY_G_TOWER,
-    Parks.NY_TOWER
+    Parks.NY_TOWER,
+    Parks.JAYANG_PALACE
 ]
 
 
@@ -310,6 +321,13 @@ def get_har_in_value(park_id, ticket_name):
         else:
             discount_type_value = web_info[WebInfo.methodHarIn1]
 
+    elif park_id == Parks.JAYANG_PALACE:
+        if ticket_name[-3:] == "1일권":
+            discount_type_value = web_info[WebInfo.methodHarIn1]
+        elif ticket_name[-4:] == "2시간권":
+            discount_type_value = web_info[WebInfo.methodHarIn3]
+        elif ticket_name[-4:] == "3시간권":
+            discount_type_value = web_info[10]
     else:
         if Util.get_week_or_weekend() == 0:
             discount_type_value = web_info[WebInfo.methodHarIn1]

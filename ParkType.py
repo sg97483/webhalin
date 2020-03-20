@@ -86,7 +86,8 @@ parkTypeAmano = [
     Parks.HARIM_INTERNATIONAL,
     Parks.SINRA_STAY_G_TOWER,
     Parks.NY_TOWER,
-    Parks.ACE_TOWER
+    Parks.ACE_TOWER,
+    Parks.JAYANG_PALACE
 ]
 
 parkTypeBlue = [
@@ -262,7 +263,8 @@ haveThreeKey = [
     Parks.JANG_AN_SPIZON,
     Parks.JEIL_OPISTEL,
     Parks.SUSONG_SQAURE,
-    Parks.AJ_MR_HOMZ
+    Parks.AJ_MR_HOMZ,
+    Parks.JAYANG_PALACE
 ]
 
 haveFourKey = [
