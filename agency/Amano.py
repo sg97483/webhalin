@@ -273,7 +273,7 @@ def get_har_in_value(park_id, ticket_name):
     elif park_id == Parks.Y_PLUS or park_id == Parks.SK_MYEONGDONG or park_id == Parks.JS_HOTEL:
         if ticket_name == "3시간권":
             discount_type_value = web_info[WebInfo.methodHarIn3]
-        elif ticket_name == "9시간권":
+        elif ticket_name == "13시간권":
             discount_type_value = web_info[WebInfo.methodHarIn1]
         elif ticket_name[-3:] == "1일권":
             if Util.get_week_or_weekend() == 0:
