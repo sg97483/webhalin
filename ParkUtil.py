@@ -54,11 +54,7 @@ def first_access(park_id, current_url):
 
 def get_park_search_css(park_id):
     park_type = ParkType.get_park_type(park_id)
-
-    if park_id == Parks.MERITZ_FIRE:
-        park_search_css = ParkType.type_to_search_css[park_id]
-    else:
-        park_search_css = ParkType.type_to_search_css[park_type]
+    park_search_css = ParkType.type_to_search_css[park_type]
 
     return park_search_css
 
@@ -67,8 +63,7 @@ def get_park_css(park_id):
     park_type = ParkType.get_park_type(park_id)
 
     if park_id == Parks.T_TOWER or\
-            park_id == Parks.PODO_MALL or\
-            park_id == Parks.MERITZ_FIRE:
+            park_id == Parks.PODO_MALL:
         park_css = ParkType.mapToAgency[park_id]
     else:
         park_css = ParkType.mapToAgency[park_type]

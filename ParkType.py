@@ -12,6 +12,7 @@ IP_TIME = 26
 GRANG_SEOUL = 27
 OLD_AJ = 28
 AJ_PARK = 29
+HIGH_CITY_2 = 30
 
 # 주차장 타입별 주차장들
 parkTypeHighCity = [
@@ -56,12 +57,16 @@ parkTypeHighCity = [
     Parks.ULGI_TWIN_TOWER,
     Parks.GANG_NAM_L7,
     Parks.COSMO_TOWER,
-    Parks.MERITZ_FIRE,
     Parks.ORAKAI_SWEETS,
     Parks.YANGWOO_DRAMA_CITY,
     Parks.EG_BUILDING,
     Parks.O_TWO_TOWER,
     Parks.ORANGE_CENTER
+]
+
+parkTypeHighCity2 = [
+    Parks.MERITZ_FIRE,
+    Parks.ORAKAI_DAEHAKRO
 ]
 
 parkTypeAmano = [
@@ -219,7 +224,8 @@ haveOneKey = [
     Parks.YANGWOO_DRAMA_CITY,
     Parks.EG_BUILDING,
     Parks.O_TWO_TOWER,
-    Parks.ORANGE_CENTER
+    Parks.ORANGE_CENTER,
+    Parks.ORAKAI_DAEHAKRO
 ]
 
 haveWeekKey = [
@@ -297,7 +303,7 @@ type_to_search_css = {
     GS: "#divAjaxCarList > tbody > tr",
     HIGH_CITY: "#search_form > table > tbody > tr > td:nth-child(2) > table:nth-child(3) > tbody > tr:nth-child(2)",
     IP_TIME: "#DataGrid1 > tbody > tr:nth-child(2) > td:nth-child(1)",
-    Parks.MERITZ_FIRE: "#search_form > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)"
+    HIGH_CITY_2: "#search_form > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)"
 }
 
 mapToAgency = {
@@ -314,11 +320,12 @@ mapToAgency = {
     # IP_TIME: "#listSearch > table:nth-child(7) > tbody > tr:nth-child(2)",
     GRANG_SEOUL: "#carList > table > tbody > tr > td:nth-child(2) > a",
     AJ_PARK: "body > div.wrap > section > div > section > div:nth-child(2) > div > dl:nth-child(4) > dd",
-    Parks.MERITZ_FIRE: "#search_form > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)"
+    HIGH_CITY_2: "#search_form > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)"
 }
 
 mapToHarinUrl = {
     HIGH_CITY: "/discount/discount_regist.asp",
+    HIGH_CITY_2: "/discount/discount_regist.asp",
     AMANO: "/discount/registration",
     BLUE: "/index.php/main/index",
     DARAE: "/discount/discount_regist.php",
@@ -333,6 +340,10 @@ mapToHarinUrl = {
 def get_park_type(park_id):
     if park_id in parkTypeHighCity:
         return HIGH_CITY
+    elif park_id in parkTypeHighCity2:
+        return HIGH_CITY_2
+    elif park_id in parkTypeAmano:
+        return AMANO
     elif park_id in parkTypeAmano:
         return AMANO
     elif park_id in parkTypeBlue:

@@ -28,7 +28,7 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.JAYANG_PALACE
+testPark = Parks.ORAKAI_DAEHAKRO
 
 
 def get_sql(now_date):
@@ -143,7 +143,7 @@ def web_har_in(target):
     if park_id == Parks.GRANG_SEUOL:
         return True
 
-    elif park_type == ParkType.HIGH_CITY:
+    elif park_type == ParkType.HIGH_CITY or park_type == ParkType.HIGH_CITY_2:
         exec_web_har_in(HighCity, target, driver)
         return True
 
