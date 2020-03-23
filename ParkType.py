@@ -92,7 +92,8 @@ parkTypeAmano = [
     Parks.SINRA_STAY_G_TOWER,
     Parks.NY_TOWER,
     Parks.ACE_TOWER,
-    Parks.JAYANG_PALACE
+    Parks.JAYANG_PALACE,
+    Parks.HONG_MUN_KWAN
 ]
 
 parkTypeBlue = [
@@ -275,6 +276,10 @@ haveThreeKey = [
 
 haveFourKey = [
     Parks.YEOKSAM_BUILDING
+]
+
+haveFiveKey = [
+    Parks.HONG_MUN_KWAN
 ]
 
 parkTypeNoRequestMain = [
