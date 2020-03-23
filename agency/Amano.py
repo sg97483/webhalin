@@ -54,7 +54,7 @@ mapIdToWebInfo = {
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "15",  # 평일1일권
-            "",  # 주말1일권
+            "16",  # 주말1일권
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
