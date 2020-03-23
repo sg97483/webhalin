@@ -7,6 +7,7 @@ import datetime
 import logging
 
 import Colors
+import LimitLot
 import ParkType
 import Parks
 import Util
@@ -71,7 +72,7 @@ def get_sql(now_date):
           "AND TotalTicketType NOT LIKE '%자동결제%' " \
           "AND actualOutDtm IS NULL "
 
-    sql += "AND parkId IN ('" + str(testPark) + "') "
+    # sql += "AND parkId IN ('" + str(testPark) + "') "
 
     sql += "ORDER BY actualInDtm DESC, parkId DESC;"
     # "ORDER BY actualInDtm ASC, parkId ASC;"
@@ -227,10 +228,10 @@ while True:
 
     conn.close()
 
-    # try:
-    #     LimitLot.do_limit_lot(driver)
-    # except Exception as ex:
-    #     print(Colors.RED + str(ex) + Colors.ENDC)
+    try:
+        LimitLot.do_limit_lot(driver)
+    except Exception as ex:
+        print(Colors.RED + str(ex) + Colors.ENDC)
 
     time.sleep(1000)
 
