@@ -233,7 +233,8 @@ amano_auto_search_one = [
     Parks.PARK_M,
     Parks.N_TOWER,
     Parks.JS_HOTEL,
-    Parks.SINRA_STAY_G_TOWER
+    Parks.SINRA_STAY_G_TOWER,
+    Parks.HONG_MUN_KWAN
 ]
 
 amano_auto_search_two = [
@@ -381,7 +382,10 @@ def web_har_in_login(driver, park_id):
     element_pw.clear()
     element_pw.send_keys(web_har_in_info[WebInfo.webHarInPw])
 
-    driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
+    if park_id == Parks.HONG_MUN_KWAN:
+        driver.find_element_by_css_selector("#loginForm > li:nth-child(5) > input").click()
+    else:
+        driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
 
 
 def web_har_in_login_seoul_girockwon(driver, park_id):

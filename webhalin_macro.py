@@ -29,7 +29,7 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.ORAKAI_DAEHAKRO
+testPark = Parks.HONG_MUN_KWAN
 
 
 def get_sql(now_date):
@@ -73,7 +73,7 @@ def get_sql(now_date):
           "AND TotalTicketType NOT LIKE '%자동결제%' " \
           "AND actualOutDtm IS NULL "
 
-    # sql += "AND parkId IN ('" + str(testPark) + "') "
+    sql += "AND parkId IN ('" + str(testPark) + "') "
 
     sql += "ORDER BY actualInDtm DESC, parkId DESC;"
     # "ORDER BY actualInDtm ASC, parkId ASC;"
