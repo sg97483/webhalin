@@ -13,6 +13,7 @@ GRANG_SEOUL = 27
 OLD_AJ = 28
 AJ_PARK = 29
 HIGH_CITY_2 = 30
+ETC = 31
 
 # 주차장 타입별 주차장들
 parkTypeHighCity = [
@@ -163,6 +164,10 @@ parkType_old_aj = [
     Parks.GMG_TOWER
 ]
 '''
+
+park_type_etc = [
+    Parks.WESTERN_853
+]
 
 # 키의 갯수 주차권을 분류하기 위함
 haveOneKey = [
@@ -365,3 +370,5 @@ def get_park_type(park_id):
         return GRANG_SEOUL
     elif park_id in park_type_aj_park:
         return AJ_PARK
+    elif park_id in park_type_etc:
+        return ETC
