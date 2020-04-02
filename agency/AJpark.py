@@ -47,8 +47,8 @@ mapIdToWebInfo = {
             "carNo", "searchSubmitByDate",
             "",
             1,  # 평일종일권
-            0,  # 주말종일권
-            2  # 야간권
+            2,  # 주말종일권
+            0  # 야간권
             ],
     # 논현점(AJ파크)
     19156: ["email", "password", "//*[@id='login']",
