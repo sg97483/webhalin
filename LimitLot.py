@@ -10,7 +10,7 @@ def do_limit_lot(driver):
 
     try:
         driver.find_element_by_id("ol_id").send_keys("admin")
-        driver.find_element_by_id("ol_pw").send_keys("park0981")
+        driver.find_element_by_id("ol_pw").send_keys("wise0413")
         driver.find_element_by_id("ol_submit").click()
     except Exception as ex:
         print(Colors.RED + str(ex) + Colors.ENDC)
