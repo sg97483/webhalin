@@ -397,7 +397,7 @@ def web_har_in_login(driver, park_id):
     if park_id == Parks.NY_TOWER:
         driver.implicitly_wait(3)
 
-    if park_id == Parks.HONG_MUN_KWAN:
+    if park_id == Parks.HONG_MUN_KWAN or park_id == Parks.YEOKSAM_BUILDING:
         driver.find_element_by_css_selector("#loginForm > li:nth-child(5) > input").click()
     else:
         driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
