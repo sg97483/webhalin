@@ -394,6 +394,9 @@ def web_har_in_login(driver, park_id):
     element_pw.clear()
     element_pw.send_keys(web_har_in_info[WebInfo.webHarInPw])
 
+    if park_id == Parks.NY_TOWER:
+        driver.implicitly_wait(3)
+
     if park_id == Parks.HONG_MUN_KWAN:
         driver.find_element_by_css_selector("#loginForm > li:nth-child(5) > input").click()
     else:
@@ -435,8 +438,9 @@ def web_har_in(target, driver):
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
             if ParkUtil.first_access(park_id, driver.current_url):
                 if park_id == Parks.NY_TOWER:
-                    driver.find_element_by_xpath("//*[@id='modal-window']/div/div/div[3]/a[1]").click()
                     driver.implicitly_wait(3)
+                    driver.find_element_by_xpath("//*[@id='modal-window']/div/div/div[3]/a[1]").click()
+                    Util.sleep(3)
 
                 web_har_in_login(driver, park_id)
                 if park_id == Parks.SEOUL_GIROKWON:
