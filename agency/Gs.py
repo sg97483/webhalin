@@ -129,6 +129,8 @@ def web_har_in(target, driver):
 
                 driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
 
+                driver.implicitly_wait(3)
+
                 if park_id == Parks.FINANCE_TOWER \
                         or park_id == Parks.DMC_S_CITY \
                         or park_id == Parks.NONHYEON_BUILDING \
