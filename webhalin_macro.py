@@ -30,6 +30,7 @@ driver.implicitly_wait(3)
 '''
 
 testPark = Parks.FINANCE_TOWER
+is_test = True
 
 
 def get_sql(now_date):
@@ -73,7 +74,8 @@ def get_sql(now_date):
           "AND TotalTicketType NOT LIKE '%자동결제%' " \
           "AND actualOutDtm IS NULL "
 
-    sql += "AND parkId IN ('" + str(testPark) + "') "
+    if is_test:
+        sql += "AND parkId IN ('" + str(testPark) + "') "
 
     sql += "ORDER BY actualInDtm DESC, parkId DESC;"
     # "ORDER BY actualInDtm ASC, parkId ASC;"
@@ -233,10 +235,11 @@ while True:
 
     conn.close()
 
-    try:
-        LimitLot.do_limit_lot(driver)
-    except Exception as ex:
-        print(Colors.RED + str(ex) + Colors.ENDC)
+    if not is_test:
+        try:
+            LimitLot.do_limit_lot(driver)
+        except Exception as ex:
+            print(Colors.RED + str(ex) + Colors.ENDC)
 
     time.sleep(1000)
 
