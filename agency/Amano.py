@@ -59,7 +59,7 @@ mapIdToWebInfo = {
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
     # 서울기록원
-    19128: ["userId", "userPwd", "//input[@type='submit']",
+    19128: ["userId", "userPwd", "btnLogin",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "4",  # 평일1일권
@@ -409,8 +409,12 @@ def web_har_in_login(driver, park_id):
     if park_id == Parks.NY_TOWER:
         driver.implicitly_wait(3)
 
-    if park_id == Parks.HONG_MUN_KWAN or park_id == Parks.YEOKSAM_BUILDING:
+    if park_id == Parks.HONG_MUN_KWAN or \
+            park_id == Parks.YEOKSAM_BUILDING:
         driver.find_element_by_css_selector("#loginForm > li:nth-child(5) > input").click()
+    elif park_id == Parks.SEOUL_GIROKWON:
+        driver.find_element_by_id(web_info[WebInfo.btnLogin]).click()
+        driver.implicitly_wait(3)
     else:
         driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
 
@@ -455,8 +459,6 @@ def web_har_in(target, driver):
                     Util.sleep(3)
 
                 web_har_in_login(driver, park_id)
-                if park_id == Parks.SEOUL_GIROKWON:
-                    web_har_in_login_seoul_girockwon(driver, park_id)
 
             if park_id in amano_auto_search_one:
                 driver.find_element_by_css_selector("#modal-window > div > div > div.modal-buttons > a").click()

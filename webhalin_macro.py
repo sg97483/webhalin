@@ -29,7 +29,7 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.OMOK_BRIDGE
+testPark = Parks.SEOUL_GIROKWON
 is_test = True
 
 
