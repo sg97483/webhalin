@@ -49,6 +49,11 @@ mapIdToWebInfo = {
     45009: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
             "carNumber", "/html/body/div[2]/ul/li/button",
             "chk_info1"  # 파킹박
+            ],
+    # (하이파킹)우림로데오스위트
+    19203: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
+            "carNumber", "/html/body/div[2]/ul/li/button",
+            "chk_info1"  # 파킹박
             ]
 }
 
@@ -58,7 +63,8 @@ blue_pass = [
     Parks.SAMSUNG_SERVICE_BUILDING,
     Parks.URBANIEL_HAN_GANG,
     Parks.MILLENNIUM_SEOUL_HILTON,
-    Parks.URIM_RODEO_SWEET
+    Parks.URIM_RODEO_SWEET,
+    Parks.FRYDIUM_BUILDING
 ]
 
 
