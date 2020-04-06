@@ -95,7 +95,8 @@ parkTypeAmano = [
     Parks.NY_TOWER,
     Parks.ACE_TOWER,
     Parks.JAYANG_PALACE,
-    Parks.HONG_MUN_KWAN
+    Parks.HONG_MUN_KWAN,
+    Parks.CHUNGJEONGNO_HOUSE
 ]
 
 parkTypeBlue = [
@@ -234,7 +235,8 @@ haveOneKey = [
     Parks.O_TWO_TOWER,
     Parks.ORANGE_CENTER,
     Parks.ORAKAI_DAEHAKRO,
-    Parks.MOL_OF_K
+    Parks.MOL_OF_K,
+    Parks.FRYDIUM_BUILDING
 ]
 
 haveWeekKey = [
@@ -279,7 +281,8 @@ haveThreeKey = [
     Parks.JEIL_OPISTEL,
     Parks.SUSONG_SQAURE,
     Parks.AJ_MR_HOMZ,
-    Parks.JAYANG_PALACE
+    Parks.JAYANG_PALACE,
+    Parks.CHUNGJEONGNO_HOUSE
 ]
 
 haveFourKey = [

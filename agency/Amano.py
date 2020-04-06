@@ -224,7 +224,17 @@ mapIdToWebInfo = {
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
             "18",  # 4시간권
             "19"  # 8시간권
-            ]
+            ],
+    # 충정로청년주택
+    19191: ["userId", "userPwd", "//*[@id='btnLogin']",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "2",  # 평일종일권(파킹셰어)
+            "",  #
+            "5",  # 2시간권
+            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
+            "15"  # 3시간권
+    ]
 }
 
 amano_auto_search_one = [
@@ -234,7 +244,8 @@ amano_auto_search_one = [
     Parks.N_TOWER,
     Parks.JS_HOTEL,
     Parks.SINRA_STAY_G_TOWER,
-    Parks.HONG_MUN_KWAN
+    Parks.HONG_MUN_KWAN,
+    Parks.CHUNGJEONGNO_HOUSE
 ]
 
 amano_auto_search_two = [
@@ -269,7 +280,8 @@ amano_pass = [
     Parks.SINRA_STAY_G_TOWER,
     Parks.NY_TOWER,
     Parks.JAYANG_PALACE,
-    Parks.HONG_MUN_KWAN
+    Parks.HONG_MUN_KWAN,
+    Parks.CHUNGJEONGNO_HOUSE
 ]
 
 
