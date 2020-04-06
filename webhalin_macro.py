@@ -29,7 +29,7 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.YEOKSAM_BUILDING
+testPark = Parks.OMOK_BRIDGE
 is_test = True
 
 
@@ -57,7 +57,7 @@ def get_sql(now_date):
         '19198',
         '12766',
         '19073', '19194', '19197', '19193',
-        '19208', '19203', '19191'
+        '19208', '19203', '19191', '19235'
     ]
 
     str_lots = ", ".join(valid_lots)

@@ -234,6 +234,16 @@ mapIdToWebInfo = {
             "5",  # 2시간권
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
             "15"  # 3시간권
+    ],
+    # 오목교주차장
+    19235: ["userId", "userPwd", "//*[@id='btnLogin']",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "2",  # 평일종일권(파킹셰어)
+            "",  #
+            "4",  # 2시간권
+            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
+            "5"  # 3시간권
     ]
 }
 
@@ -245,7 +255,8 @@ amano_auto_search_one = [
     Parks.JS_HOTEL,
     Parks.SINRA_STAY_G_TOWER,
     Parks.HONG_MUN_KWAN,
-    Parks.CHUNGJEONGNO_HOUSE
+    Parks.CHUNGJEONGNO_HOUSE,
+    Parks.OMOK_BRIDGE
 ]
 
 amano_auto_search_two = [
@@ -281,7 +292,8 @@ amano_pass = [
     Parks.NY_TOWER,
     Parks.JAYANG_PALACE,
     Parks.HONG_MUN_KWAN,
-    Parks.CHUNGJEONGNO_HOUSE
+    Parks.CHUNGJEONGNO_HOUSE,
+    Parks.OMOK_BRIDGE
 ]
 
 
