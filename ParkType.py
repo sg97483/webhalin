@@ -163,11 +163,10 @@ park_type_aj_park = [
     Parks.AJ_MUNJUNG_PRAVIDA,
     Parks.AJ_MR_HOMZ
 ]
-'''
-parkType_old_aj = [
+
+park_type_old_aj = [
     Parks.GMG_TOWER
 ]
-'''
 
 park_type_etc = [
     Parks.WESTERN_853
@@ -213,7 +212,7 @@ haveOneKey = [
     Parks.TAEPYEONGRO_BUILDING,
     Parks.NONHYEON_BUILDING,
     Parks.RIVER_TOWER,
-    # Parks.GMG_TOWER,
+    Parks.GMG_TOWER,
     Parks.URBANIEL_HAN_GANG,
     Parks.SAMSUNG_SEOUL_MEDICAL_CENTER,
     Parks.W_SQARE,
@@ -321,7 +320,8 @@ type_to_search_css = {
     GS: "#divAjaxCarList > tbody > tr",
     HIGH_CITY: "#search_form > table > tbody > tr > td:nth-child(2) > table:nth-child(3) > tbody > tr:nth-child(2)",
     IP_TIME: "#DataGrid1 > tbody > tr:nth-child(2) > td:nth-child(1)",
-    HIGH_CITY_2: "#search_form > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)"
+    HIGH_CITY_2: "#search_form > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)",
+    OLD_AJ: "body > table:nth-child(4) > tbody > tr:nth-child(3) > td:nth-child(2)"
 }
 
 mapToAgency = {
@@ -338,7 +338,8 @@ mapToAgency = {
     # IP_TIME: "#listSearch > table:nth-child(7) > tbody > tr:nth-child(2)",
     GRANG_SEOUL: "#carList > table > tbody > tr > td:nth-child(2) > a",
     AJ_PARK: "body > div.wrap > section > div > section > div:nth-child(2) > div > dl:nth-child(4) > dd",
-    HIGH_CITY_2: "#search_form > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)"
+    HIGH_CITY_2: "#search_form > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)",
+    OLD_AJ: "/html/body/table[2]/tbody/tr[3]/td[2]/text()[1]"
 }
 
 mapToHarinUrl = {
@@ -351,7 +352,8 @@ mapToHarinUrl = {
     GS: "/main",
     IP_TIME: "/ListSearch.aspx",
     GRANG_SEOUL: "/ezTicket/carSearch",
-    AJ_PARK: "home.do"
+    AJ_PARK: "home.do",
+    OLD_AJ: "/discount/carSearch.cs?userID=ppark&contextPath="
 }
 
 
@@ -380,3 +382,5 @@ def get_park_type(park_id):
         return AJ_PARK
     elif park_id in park_type_etc:
         return ETC
+    elif park_id in park_type_old_aj:
+        return OLD_AJ

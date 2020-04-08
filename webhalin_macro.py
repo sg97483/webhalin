@@ -12,7 +12,7 @@ import ParkType
 import Parks
 import Util
 
-from agency import Iptime, Gs, HighCity, Iparking, AJpark, Darae, Amano, Blue, Etc
+from agency import Iptime, Gs, HighCity, Iparking, AJpark, Darae, Amano, Blue, Etc, OldAJ
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -29,7 +29,7 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.SEOUL_GIROKWON
+testPark = Parks.GMG_TOWER
 is_test = True
 
 
@@ -181,6 +181,10 @@ def web_har_in(target):
 
     elif park_type == ParkType.ETC:
         exec_web_har_in(Etc, target, driver)
+        return True
+
+    elif park_type == ParkType.OLD_AJ:
+        exec_web_har_in(OldAJ, target, driver)
         return True
 
     else:
