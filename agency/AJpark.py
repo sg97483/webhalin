@@ -104,6 +104,14 @@ mapIdToWebInfo = {
             2,  # 평일종일권
             0,  # 주말종일권
             1  # 야간권
+            ],
+    # 	AJ파크 신덕빌딩
+    19230: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일심야권
+            0,  # 평일심야권
+            0  # 평일심야권
             ]
 }
 

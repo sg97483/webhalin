@@ -161,7 +161,8 @@ park_type_aj_park = [
     Parks.AJ_DONG_MYO,
     Parks.AJ_GANG_NAM,
     Parks.AJ_MUNJUNG_PRAVIDA,
-    Parks.AJ_MR_HOMZ
+    Parks.AJ_MR_HOMZ,
+    Parks.AJ_SINDUK
 ]
 
 park_type_old_aj = [
