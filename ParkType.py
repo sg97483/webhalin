@@ -121,7 +121,8 @@ parkTypeIparking = [
     Parks.AUTOWAY_TOWER,
     Parks.NUN_SQUARE,
     Parks.RAMIAN_YONGSAN_THE_CENTRAL,
-    Parks.BUILDING_94
+    Parks.BUILDING_94,
+    Parks.CONCORDIAN_BUILDING
 ]
 
 parkTypeGs = [

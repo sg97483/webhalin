@@ -38,6 +38,12 @@ mapIdToWebInfo = {
             "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
             "#carList > tr",
             "6"
+            ],
+    # (광화문)콘코디언빌딩
+    12806: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "6"
             ]
 }
 
