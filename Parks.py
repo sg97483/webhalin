@@ -194,7 +194,8 @@ mapIdToUrl = {
     19203: "http://175.198.156.61:8090",
     19191: "http://1.223.26.123",
     19235: "http://115.21.35.7",
-    19230: "https://mobile.ajpark.co.kr/partner/" # AJ파크 신덕빌딩
+    19230: "https://mobile.ajpark.co.kr/partner/",  # AJ파크 신덕빌딩
+    14588: "http://210.223.34.79:8090"
 }
 
 lotOptionList = {
@@ -359,7 +360,8 @@ lotOptionList = {
     19203: ["프라이디움빌딩", "ppark", "1234"],
     19191: ["충정로청년주택", "파킹박", "park001"],
     19235: ["오목교주차장", "파킹박", "park001"],
-    19230: ["신덕빌딩", "parkingpark@wisemobile.co.kr", "@wise0413"]
+    19230: ["신덕빌딩", "parkingpark@wisemobile.co.kr", "@wise0413"],
+    14588: ["센터마크호텔", "ppark", "1234"]
 }
 
 NON = 0
@@ -487,3 +489,4 @@ OMOK_BRIDGE = 19235
 GMG_TOWER = 19071
 AJ_SINDUK = 19230
 CONCORDIAN_BUILDING = 12806
+CENTERMARK_HOTEL = 14588
