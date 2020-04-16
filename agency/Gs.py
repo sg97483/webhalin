@@ -79,7 +79,15 @@ mapIdToWebInfo = {
             "",  # 차량번호 클릭
             "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 9549');",  # 1일권
             "javascript:fnDisCount('56:전액무료(웹) / 잔여수량 9956');",  # 전액 무료
-            ""]
+            ""],
+    # (하이파킹) 파크빌딩
+    19180: ["login_id", "login_pw",
+            "//*[@id='bodyCSS']/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # 차량번호 클릭
+            "javascript:fnDisCount('39:파킹박', '1');",
+            "javascript:fnDisCount('39:파킹박', '1');",
+            ""],
 }
 
 

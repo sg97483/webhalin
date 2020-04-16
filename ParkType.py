@@ -136,7 +136,8 @@ parkTypeGs = [
     Parks.MEGABOX_SUNGSU,
     Parks.NONHYEON_BUILDING,
     Parks.ERE_BUILDING,
-    Parks.KDB_LIFE
+    Parks.KDB_LIFE,
+    Parks.PARK_BUILDING
 ]
 
 parkType_ip_time = [
@@ -313,7 +314,8 @@ parkTypeNoRequestMain = [
     Parks.KDB_LIFE,
     Parks.SAMSUNG_SERVICE_BUILDING,
     Parks.MEGABOX_SUNGSU,
-    Parks.MILLENNIUM_SEOUL_HILTON
+    Parks.MILLENNIUM_SEOUL_HILTON,
+    Parks.PARK_BUILDING
 ]
 
 type_to_search_css = {
