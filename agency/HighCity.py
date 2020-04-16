@@ -367,6 +367,13 @@ mapIdToWebInfo = {
             "chk",
             "javascript:applyDiscount('96', '1', '', '파킹박');",
             "javascript:applyDiscount('96', '1', '', '파킹박');"
+            ],
+    #  문정플라자
+    19022: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
+            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+            "chk",
+            "javascript:applyDiscount('35', '1', '', 'ppark', '1', '0');",
+            "javascript:applyDiscount('35', '1', '', 'ppark', '1', '0');"
             ]
 }
 

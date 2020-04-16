@@ -65,7 +65,8 @@ parkTypeHighCity = [
     Parks.ORANGE_CENTER,
     Parks.MOL_OF_K,
     Parks.CENTERMARK_HOTEL,
-    Parks.KTNG_TOWER
+    Parks.KTNG_TOWER,
+    Parks.MUNJUNG_PLAZA
 ]
 
 parkTypeHighCity2 = [

@@ -196,7 +196,8 @@ mapIdToUrl = {
     19235: "http://115.21.35.7",
     19230: "https://mobile.ajpark.co.kr/partner/",  # AJ파크 신덕빌딩
     14588: "http://210.223.34.79:8090",
-    19202: "http://220.85.91.232:8090"
+    19202: "http://220.85.91.232:8090",
+    19022: "http://121.167.43.131:8090",
 }
 
 lotOptionList = {
@@ -363,7 +364,8 @@ lotOptionList = {
     19235: ["오목교주차장", "파킹박", "park001"],
     19230: ["신덕빌딩", "parkingpark@wisemobile.co.kr", "@wise0413"],
     14588: ["센터마크호텔", "ppark", "1234"],
-    19202: ["호텔선샤인", "ppark", "1234"]
+    19202: ["호텔선샤인", "ppark", "1234"],
+    19022: ["문정플라자", "ppark", "1234"]
 }
 
 NON = 0
@@ -495,3 +497,4 @@ CENTERMARK_HOTEL = 14588
 HOTEL_SUNSHINE = 19202
 PARK_BUILDING = 19180
 KTNG_TOWER = 19084
+MUNJUNG_PLAZA = 19022
