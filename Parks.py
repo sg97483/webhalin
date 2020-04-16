@@ -82,7 +82,7 @@ mapIdToUrl = {
     19066: "http://park.awp.co.kr/discount/registration",
     19020: "http://gstimes3.iptime.org​",
     16210: "http://114.205.71.214:8090", # 센터플레이스 웹할인 접속 안됨
-    19084: "http://121.138.149.9:8090/",
+    19084: "http://121.138.149.9:8090",
     19082: "http://211.35.190.129:8090", # 동화빌딩
     13825: "http://61.253.191.140:8090/",
     16360: "http://106.254.242.178:8090/",
@@ -494,3 +494,4 @@ CONCORDIAN_BUILDING = 12806
 CENTERMARK_HOTEL = 14588
 HOTEL_SUNSHINE = 19202
 PARK_BUILDING = 19180
+KTNG_TOWER = 19084

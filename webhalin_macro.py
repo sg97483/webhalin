@@ -29,7 +29,7 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.PARK_BUILDING
+testPark = Parks.KTNG_TOWER
 is_test = True
 
 
