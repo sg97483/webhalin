@@ -54,6 +54,11 @@ mapIdToWebInfo = {
     19203: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
             "carNumber", "/html/body/div[2]/ul/li/button",
             "chk_info1"  # 파킹박
+            ],
+    # 호텔선샤인
+    19202: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
+            "carNumber", "/html/body/div[2]/ul/li/button",
+            "chk_info1"  # 파킹박
             ]
 }
 
@@ -64,7 +69,8 @@ blue_pass = [
     Parks.URBANIEL_HAN_GANG,
     Parks.MILLENNIUM_SEOUL_HILTON,
     Parks.URIM_RODEO_SWEET,
-    Parks.FRYDIUM_BUILDING
+    Parks.FRYDIUM_BUILDING,
+    Parks.HOTEL_SUNSHINE
 ]
 
 

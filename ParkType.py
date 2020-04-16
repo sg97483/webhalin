@@ -110,7 +110,8 @@ parkTypeBlue = [
     Parks.URBANIEL_HAN_GANG,
     Parks.MILLENNIUM_SEOUL_HILTON,
     Parks.URIM_RODEO_SWEET,
-    Parks.FRYDIUM_BUILDING
+    Parks.FRYDIUM_BUILDING,
+    Parks.HOTEL_SUNSHINE
 ]
 
 parkTypeDarae = [
