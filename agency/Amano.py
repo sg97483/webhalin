@@ -89,7 +89,7 @@ mapIdToWebInfo = {
     14618: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "13",  # 8 : 일일권(16시간), 13 : 9시간권
+            "13",  # 8 : 일일권(16시간), 13 : 16시간권
             "11",  # 주말1일권
             "10",  # 야간권
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
@@ -307,16 +307,26 @@ def get_har_in_value(park_id, ticket_name):
         elif ticket_name[-3:] == "1일권":
             discount_type_value = web_info[WebInfo.methodHarIn1]
 
-    elif park_id == Parks.Y_PLUS or park_id == Parks.SK_MYEONGDONG or park_id == Parks.JS_HOTEL:
+    elif park_id == Parks.Y_PLUS or park_id == Parks.JS_HOTEL:
         if ticket_name == "3시간권":
             discount_type_value = web_info[WebInfo.methodHarIn3]
-        elif ticket_name == "13시간권":
+        elif ticket_name == "16시간권":
             discount_type_value = web_info[WebInfo.methodHarIn1]
         elif ticket_name[-3:] == "1일권":
             if Util.get_week_or_weekend() == 0:
                 discount_type_value = web_info[WebInfo.methodHarIn1]
             else:
                 discount_type_value = web_info[WebInfo.methodHarIn2]
+
+    elif park_id == Parks.SK_MYEONGDONG:
+        if ticket_name == "3시간권":
+            discount_type_value = web_info[WebInfo.methodHarIn1]
+        elif ticket_name == "심야권":
+            discount_type_value = web_info[WebInfo.methodHarIn3]
+        elif ticket_name == "16시간권":
+            discount_type_value = web_info[WebInfo.methodHarIn1]
+        else:
+            discount_type_value = web_info[WebInfo.methodHarIn1]
 
     elif park_id == Parks.PARK_M or park_id == Parks.WEST_GATE:
         if Util.get_week_or_weekend() == 0:
