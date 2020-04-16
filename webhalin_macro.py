@@ -73,7 +73,8 @@ def get_sql(now_date):
           "AND TotalTicketType NOT LIKE '월주차%' " \
           "AND TotalTicketType NOT LIKE '월연장%' " \
           "AND TotalTicketType NOT LIKE '%자동결제%' " \
-          "AND actualOutDtm IS NULL "
+          "AND actualOutDtm IS NULL " \
+          "AND agHp = 0 "
 
     if is_test:
         sql += "AND parkId IN ('" + str(testPark) + "') "
@@ -122,7 +123,7 @@ def logging_info(target):
 
 
 def in_car_check_db(pid, park_id):
-    sql_in_car_check = "UPDATE T_PAYMENT_HISTORY SET inCarCheck = 'Y', actualOutDtm = 1 WHERE id ='" + str(pid) + "'"
+    sql_in_car_check = "UPDATE T_PAYMENT_HISTORY SET inCarCheck = 'Y', agHp = 1 WHERE id ='" + str(pid) + "'"
     curs.execute(sql_in_car_check)
     conn.commit()
     logger.info(" 할인 되었습니다. / \"" + Parks.mapIdToUrl[park_id] + "\"")
