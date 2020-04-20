@@ -29,7 +29,7 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.CENTER_PLACE
+testPark = Parks.AJ_JONGRO
 is_test = True
 
 

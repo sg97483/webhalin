@@ -183,6 +183,7 @@ def web_har_in(target, driver):
 
                     select = Select(driver.find_element_by_id('selectDiscount'))
                     select.select_by_index(get_har_in_script(park_id, ticket_name))
+                    driver.implicitly_wait(3)
                     driver.find_element_by_id('discountSubmit').click()
                     return True
 
