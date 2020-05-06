@@ -318,7 +318,8 @@ parkTypeNoRequestMain = [
     Parks.SAMSUNG_SERVICE_BUILDING,
     Parks.MEGABOX_SUNGSU,
     Parks.MILLENNIUM_SEOUL_HILTON,
-    Parks.PARK_BUILDING
+    Parks.PARK_BUILDING,
+    Parks.CONCORDIAN_BUILDING
 ]
 
 type_to_search_css = {
