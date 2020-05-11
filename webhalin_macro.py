@@ -29,8 +29,9 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.MAGOK_RUMA_2
-is_test = True
+testPark = Parks.OUR_W_TOER
+is_test = False
+is_no_db_test = False
 
 
 def get_sql(now_date):
@@ -225,16 +226,26 @@ while True:
 
     logger.info("웹할인 체크 필요 개수 : " + str(len(rows)))
 
-    for i in rows:
-        print(i, sep='\n')
+    if is_no_db_test and is_test:
+        # pid, park_id
+        # id, parkId, agCarNumber, totalTicketType
+        tempTarget = ['0', '18968', '57고6227', '평일1일권']
 
         try:
-            web_har_in(i)
+            web_har_in(tempTarget)
         except Exception as ex:
             print(Colors.RED + str(ex) + Colors.ENDC)
+    else:
+        for i in rows:
+            print(i, sep='\n')
 
-    print("웹할인 체크 필요 개수 : " + str(len(rows)))
-    print(Colors.GREEN + "메크로 일시정지" + Colors.ENDC)
+            try:
+                web_har_in(i)
+            except Exception as ex:
+                print(Colors.RED + str(ex) + Colors.ENDC)
+
+        print("웹할인 체크 필요 개수 : " + str(len(rows)))
+        print(Colors.GREEN + "메크로 일시정지" + Colors.ENDC)
 
     logger.removeHandler(streamHandler)
     logger.removeHandler(file_handler)
