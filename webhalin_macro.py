@@ -29,7 +29,7 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.AJ_JONGRO
+testPark = Parks.MAGOK_RUMA_2
 is_test = True
 
 
@@ -58,7 +58,7 @@ def get_sql(now_date):
         '12766',
         '19073', '19194', '19197', '19193',
         '19208', '19203', '19191', '19235',
-        '19230', '14588', '19202', '19022', '19159'
+        '19230', '14588', '19202', '19022', '19159', '19234'
     ]
 
     str_lots = ", ".join(valid_lots)

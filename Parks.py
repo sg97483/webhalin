@@ -199,6 +199,7 @@ mapIdToUrl = {
     19202: "http://220.85.91.232:8090",
     19022: "http://121.167.43.131:8090",
     19159: "https://mobile.ajpark.co.kr/partner/",  # AJ파크 홍대아일렉스스퀘어점
+    19234: "http://175.197.189.31",  # 마곡류마타워2
 }
 
 lotOptionList = {
@@ -367,7 +368,8 @@ lotOptionList = {
     14588: ["센터마크호텔", "ppark", "1234"],
     19202: ["호텔선샤인", "ppark", "1234"],
     19022: ["문정플라자", "ppark", "1234"],
-    19159: ["홍대아일렉스스퀘어점", "parkingpark@wisemobile.co.kr", "@wise0413"]
+    19159: ["홍대아일렉스스퀘어점", "parkingpark@wisemobile.co.kr", "@wise0413"],
+    19234: ["마곡류마타워", "파킹박", "park001"]
 }
 
 NON = 0
@@ -501,3 +503,4 @@ PARK_BUILDING = 19180
 KTNG_TOWER = 19084
 MUNJUNG_PLAZA = 19022
 HONGDAE_EILEX = 19159
+MAGOK_RUMA_2 = 19234

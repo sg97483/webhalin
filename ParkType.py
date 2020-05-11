@@ -100,7 +100,8 @@ parkTypeAmano = [
     Parks.JAYANG_PALACE,
     Parks.HONG_MUN_KWAN,
     Parks.CHUNGJEONGNO_HOUSE,
-    Parks.OMOK_BRIDGE
+    Parks.OMOK_BRIDGE,
+    Parks.MAGOK_RUMA_2
 ]
 
 parkTypeBlue = [
