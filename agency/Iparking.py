@@ -44,6 +44,12 @@ mapIdToWebInfo = {
             "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
             "#carList > tr",
             "6"
+            ],
+    # 성수 우리 W타워
+    18968: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "6"
             ]
 }
 
