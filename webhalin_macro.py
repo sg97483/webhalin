@@ -29,7 +29,7 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.NONHYEON_WELLSTONE
+testPark = Parks.DIAT_CENTRAL
 is_test = True
 is_no_db_test = False
 

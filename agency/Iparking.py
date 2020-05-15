@@ -50,6 +50,12 @@ mapIdToWebInfo = {
             "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
             "#carList > tr",
             "6"
+            ],
+    # (하이파킹) 디아뜨센트럴
+    19183: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "6"
             ]
 }
 
