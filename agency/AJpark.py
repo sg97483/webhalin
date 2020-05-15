@@ -120,6 +120,14 @@ mapIdToWebInfo = {
             1,  # 평일1일권
             2,  # 주말1일권
             0  # 야간권
+            ],
+    # 	AJ파크 논현웰스톤
+    19215: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일1일권
+            0,  # 주말1일권
+            1  # 야간권
             ]
 }
 

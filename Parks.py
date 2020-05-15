@@ -175,6 +175,7 @@ mapIdToUrl = {
     19162: "https://mobile.ajpark.co.kr/partner/",  # AJ파크 강남역점
     19160: "https://mobile.ajpark.co.kr/partner/",  # AJ파크 문정프라비다점
     19161: "https://mobile.ajpark.co.kr/partner/",  # 미스터홈즈 선정릉점
+    19215: "https://mobile.ajpark.co.kr/partner/",  # 논현웰스톤
 
     19004: "http://221.148.11.134:8090",
     19180: "http://hipgnpb.iptime.org:8090",
@@ -369,7 +370,8 @@ lotOptionList = {
     19202: ["호텔선샤인", "ppark", "1234"],
     19022: ["문정플라자", "ppark", "1234"],
     19159: ["홍대아일렉스스퀘어점", "parkingpark@wisemobile.co.kr", "@wise0413"],
-    19234: ["마곡류마타워", "파킹박", "park001"]
+    19234: ["마곡류마타워", "파킹박", "park001"],
+    19215: ["논현웰스톤", "parkingpark@wisemobile.co.kr", "@wise0413"]
 }
 
 NON = 0
@@ -505,3 +507,4 @@ MUNJUNG_PLAZA = 19022
 HONGDAE_EILEX = 19159
 MAGOK_RUMA_2 = 19234
 OUR_W_TOER = 18968
+NONHYEON_WELLSTONE = 19215

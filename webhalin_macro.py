@@ -29,8 +29,8 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.OUR_W_TOER
-is_test = False
+testPark = Parks.NONHYEON_WELLSTONE
+is_test = True
 is_no_db_test = False
 
 
@@ -59,7 +59,8 @@ def get_sql(now_date):
         '12766',
         '19073', '19194', '19197', '19193',
         '19208', '19203', '19191', '19235',
-        '19230', '14588', '19202', '19022', '19159', '19234'
+        '19230', '14588', '19202', '19022', '19159', '19234',
+        '19215'
     ]
 
     str_lots = ", ".join(valid_lots)
