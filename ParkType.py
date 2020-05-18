@@ -129,7 +129,8 @@ parkTypeIparking = [
     Parks.BUILDING_94,
     Parks.CONCORDIAN_BUILDING,
     Parks.OUR_W_TOER,
-    Parks.DIAT_CENTRAL
+    Parks.DIAT_CENTRAL,
+    Parks.BIT_FLEX
 ]
 
 parkTypeGs = [

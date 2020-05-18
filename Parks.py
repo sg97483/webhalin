@@ -201,6 +201,7 @@ mapIdToUrl = {
     19022: "http://121.167.43.131:8090",
     19159: "https://mobile.ajpark.co.kr/partner/",  # AJ파크 홍대아일렉스스퀘어점
     19234: "http://175.197.189.31",  # 마곡류마타워2
+    19241: "http://test-members.iparking.co.kr/#!",  # 비트플렉스몰
 }
 
 lotOptionList = {
@@ -371,7 +372,8 @@ lotOptionList = {
     19022: ["문정플라자", "ppark", "1234"],
     19159: ["홍대아일렉스스퀘어점", "parkingpark@wisemobile.co.kr", "@wise0413"],
     19234: ["마곡류마타워", "파킹박", "park001"],
-    19215: ["논현웰스톤", "parkingpark@wisemobile.co.kr", "@wise0413"]
+    19215: ["논현웰스톤", "parkingpark@wisemobile.co.kr", "@wise0413"],
+    19241: ["비트플렉스몰", "hpbitppark", "123456"],
 }
 
 NON = 0
@@ -509,3 +511,4 @@ MAGOK_RUMA_2 = 19234
 OUR_W_TOER = 18968
 NONHYEON_WELLSTONE = 19215
 DIAT_CENTRAL = 19183
+BIT_FLEX = 19241
