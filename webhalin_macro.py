@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 import pymysql
 import datetime
@@ -17,8 +18,9 @@ from agency import Iptime, Gs, HighCity, Iparking, AJpark, Darae, Amano, Blue, E
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-chromeDriver = 'C:/Users/wisemobile5/Desktop/WEBHALIN/chromedriver_win32/chromedriver.exe'
-driver = webdriver.Chrome(chromeDriver)
+# chromeDriver = 'C:/Users/wisemobile5/Desktop/WEBHALIN/chromedriver_win32/chromedriver.exe'
+# driver = webdriver.Chrome(chromeDriver)
+driver = webdriver.Chrome(ChromeDriverManager().install())
 driver.implicitly_wait(3)
 
 
@@ -29,8 +31,8 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.BIT_FLEX
-is_test = True
+testPark = Parks.DMC_S_CITY
+is_test = False
 is_no_db_test = False
 
 
@@ -230,7 +232,7 @@ while True:
     if is_no_db_test and is_test:
         # pid, park_id
         # id, parkId, agCarNumber, totalTicketType
-        tempTarget = ['0', '18968', '57고6227', '평일1일권']
+        tempTarget = ['0', '12806', '28가1894', '평일1일권']
 
         try:
             web_har_in(tempTarget)
