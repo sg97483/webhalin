@@ -22,8 +22,8 @@ mapIdToWebInfo = {
     19147: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
-            0,  # 평일종일권
-            2,  # 주말종일권
+            2,  # 평일종일권
+            0,  # 주말종일권
             1  # 야간권
             ],
     # AJ파크 교원명동빌딩점
@@ -62,8 +62,8 @@ mapIdToWebInfo = {
     19139: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
-            0,  # 평일종일권
-            2,  # 주말종일권
+            2,  # 평일종일권
+            0,  # 주말종일권
             1  # 야간권
             ],
     # 강남역점(AJ파크)
@@ -118,8 +118,8 @@ mapIdToWebInfo = {
             "carNo", "searchSubmitByDate",
             "",
             1,  # 평일1일권
-            2,  # 주말1일권
-            0  # 야간권
+            0,  # 주말1일권
+            2  # 야간권
             ],
     # 	AJ파크 논현웰스톤
     19215: ["email", "password", "//*[@id='login']",
