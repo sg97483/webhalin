@@ -5,6 +5,7 @@ import Parks
 import ParkType
 import re
 import Colors
+import time
 
 connParkId = []
 
@@ -117,3 +118,14 @@ def check_same_car_num(parkId, oriCarNum, driver):
         else:
             print(Colors.MARGENTA + "차량번호가 틀립니다." + Colors.ENDC)
             return False
+
+
+def is_night_time():
+    f_seconds = time.time()
+    s_time = int(f_seconds%60)
+    f_seconds//=60
+    m_time = f_seconds%60
+    f_seconds //= 60
+    h_time = f_seconds%24
+    h_time = (h_time + 9)%24
+    print(h_time, " 시", m_time, " 분", s_time, " 초")
