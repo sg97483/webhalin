@@ -114,7 +114,7 @@ mapIdToWebInfo = {
             ],
     # 골든타워
     18577: ["userId", "userPwd", "//input[@type='submit']",
-            "schCarNo", "//*[@id='sForm']/input[3]",
+            "schCarNo", "//*[@id='sForm']/input[4]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "129",  # 완전무료
             "",
