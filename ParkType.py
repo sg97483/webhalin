@@ -143,7 +143,8 @@ parkTypeGs = [
     Parks.NONHYEON_BUILDING,
     Parks.ERE_BUILDING,
     Parks.KDB_LIFE,
-    Parks.PARK_BUILDING
+    Parks.PARK_BUILDING,
+    Parks.URBANIEL_CHEN_HO
 ]
 
 parkType_ip_time = [
@@ -325,7 +326,8 @@ parkTypeNoRequestMain = [
     Parks.MILLENNIUM_SEOUL_HILTON,
     Parks.PARK_BUILDING,
     Parks.CONCORDIAN_BUILDING,
-    Parks.URBANIEL_HAN_GANG
+    Parks.URBANIEL_HAN_GANG,
+    Parks.URBANIEL_CHEN_HO
 ]
 
 type_to_search_css = {
