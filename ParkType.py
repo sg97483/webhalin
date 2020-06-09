@@ -102,7 +102,8 @@ parkTypeAmano = [
     Parks.HONG_MUN_KWAN,
     Parks.CHUNGJEONGNO_HOUSE,
     Parks.OMOK_BRIDGE,
-    Parks.MAGOK_RUMA_2
+    Parks.MAGOK_RUMA_2,
+    Parks.NON_SQUARE
 ]
 
 parkTypeBlue = [
@@ -329,7 +330,8 @@ parkTypeNoRequestMain = [
     Parks.PARK_BUILDING,
     Parks.CONCORDIAN_BUILDING,
     Parks.URBANIEL_HAN_GANG,
-    Parks.URBANIEL_CHEN_HO
+    Parks.URBANIEL_CHEN_HO,
+    Parks.NON_SQUARE
 ]
 
 type_to_search_css = {

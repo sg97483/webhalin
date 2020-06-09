@@ -253,6 +253,15 @@ mapIdToWebInfo = {
             "",  #
             "7",  # 3시간권
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+    ],
+    # 눈스퀘어
+    19247: ["userId", "userPwd", "//*[@id='btnLogin']",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "1",  # 15시간권
+            "1",  # 15시간권
+            "",  #
+            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
     ]
 }
 
@@ -304,7 +313,8 @@ amano_pass = [
     Parks.HONG_MUN_KWAN,
     Parks.CHUNGJEONGNO_HOUSE,
     Parks.OMOK_BRIDGE,
-    Parks.MAGOK_RUMA_2
+    Parks.MAGOK_RUMA_2,
+    Parks.NON_SQUARE
 ]
 
 
