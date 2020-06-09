@@ -31,8 +31,8 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.URBANIEL_CHEN_HO
-is_test = True
+testPark = Parks.KOREANA_HOTEL
+is_park_test = True
 is_no_db_test = False
 
 
@@ -62,7 +62,7 @@ def get_sql(now_date):
         '19073', '19194', '19197', '19193',
         '19208', '19203', '19191', '19235',
         '19230', '14588', '19202', '19022', '19159', '19234',
-        '19215', '19241', '19196'
+        '19215', '19241', '19196', '19248'
     ]
 
     str_lots = ", ".join(valid_lots)
@@ -80,7 +80,7 @@ def get_sql(now_date):
           "AND actualOutDtm IS NULL " \
           "AND agHp = 0 "
 
-    if is_test:
+    if is_park_test:
         sql += "AND parkId IN ('" + str(testPark) + "') "
 
     sql += "ORDER BY actualInDtm DESC, parkId DESC;"
@@ -200,45 +200,47 @@ def web_har_in(target):
 repeatCnt = 0
 
 while True:
-    repeatCnt += 1
-    logger.info("반복 횟수 : " + str(repeatCnt))
-
-    conn = pymysql.connect(host='49.236.134.172', port=3306, user='root', password='#orange8398@@', db='parkingpark',
-                           charset='utf8')
-    curs = conn.cursor()
-
-    now = datetime.datetime.now()
-
-    nowDate = now.strftime('%Y%m%d')
-    newFolder = 'C:/Users/wisemobile5/Desktop/WEBHALIN/' + nowDate
-
-    nowTime = now.strftime('%H%M')
-    file_name = nowDate + "_" + nowTime + "_" + str(repeatCnt) + ".py"
-
-    file_url = newFolder + "\\" + file_name
-
-    # logging.basicConfig(file_name= file_url', file_name)
-
-    file_handler = logging.FileHandler(file_name, encoding="utf-8")
-    streamHandler = logging.StreamHandler()
-    logger.addHandler(file_handler)
-    logger.addHandler(streamHandler)
-
-    curs.execute(get_sql(nowDate))
-    rows = curs.fetchall()
-
-    logger.info("웹할인 체크 필요 개수 : " + str(len(rows)))
-
-    if is_no_db_test and is_test:
+    if is_no_db_test:
         # pid, park_id
         # id, parkId, agCarNumber, totalTicketType
-        tempTarget = ['0', '12806', '28가1894', '평일1일권']
+        tempTarget1 = ['0', '18913', '28가1234', '평일1일권']
+        tempTarget2 = ['0', '18577', '28가5678', '평일1일권']
 
         try:
-            web_har_in(tempTarget)
+            web_har_in(tempTarget1)
+            web_har_in(tempTarget2)
         except Exception as ex:
             print(Colors.RED + str(ex) + Colors.ENDC)
     else:
+        repeatCnt += 1
+        logger.info("반복 횟수 : " + str(repeatCnt))
+
+        conn = pymysql.connect(host='49.236.134.172', port=3306, user='root', password='#orange8398@@', db='parkingpark',
+                               charset='utf8')
+        curs = conn.cursor()
+
+        now = datetime.datetime.now()
+
+        nowDate = now.strftime('%Y%m%d')
+        newFolder = 'C:/Users/wisemobile5/Desktop/WEBHALIN/' + nowDate
+
+        nowTime = now.strftime('%H%M')
+        file_name = nowDate + "_" + nowTime + "_" + str(repeatCnt) + ".py"
+
+        file_url = newFolder + "\\" + file_name
+
+        # logging.basicConfig(file_name= file_url', file_name)
+
+        file_handler = logging.FileHandler(file_name, encoding="utf-8")
+        streamHandler = logging.StreamHandler()
+        logger.addHandler(file_handler)
+        logger.addHandler(streamHandler)
+
+        curs.execute(get_sql(nowDate))
+        rows = curs.fetchall()
+
+        logger.info("웹할인 체크 필요 개수 : " + str(len(rows)))
+
         for i in rows:
             print(i, sep='\n')
 
@@ -250,16 +252,16 @@ while True:
         print("웹할인 체크 필요 개수 : " + str(len(rows)))
         print(Colors.GREEN + "메크로 일시정지" + Colors.ENDC)
 
-    logger.removeHandler(streamHandler)
-    logger.removeHandler(file_handler)
+        logger.removeHandler(streamHandler)
+        logger.removeHandler(file_handler)
 
-    conn.close()
+        conn.close()
 
-    if not is_test:
-        try:
-            LimitLot.do_limit_lot(driver)
-        except Exception as ex:
-            print(Colors.RED + str(ex) + Colors.ENDC)
+        if not is_park_test:
+            try:
+                LimitLot.do_limit_lot(driver)
+            except Exception as ex:
+                print(Colors.RED + str(ex) + Colors.ENDC)
 
     time.sleep(1000)
 

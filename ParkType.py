@@ -66,7 +66,8 @@ parkTypeHighCity = [
     Parks.MOL_OF_K,
     Parks.CENTERMARK_HOTEL,
     Parks.KTNG_TOWER,
-    Parks.MUNJUNG_PLAZA
+    Parks.MUNJUNG_PLAZA,
+    Parks.KOREANA_HOTEL
 ]
 
 parkTypeHighCity2 = [
@@ -251,7 +252,8 @@ haveOneKey = [
     Parks.ORAKAI_DAEHAKRO,
     Parks.MOL_OF_K,
     Parks.FRYDIUM_BUILDING,
-    Parks.CENTERMARK_HOTEL
+    Parks.CENTERMARK_HOTEL,
+    Parks.KOREANA_HOTEL
 ]
 
 haveWeekKey = [

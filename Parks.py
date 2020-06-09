@@ -203,6 +203,7 @@ mapIdToUrl = {
     19234: "http://175.197.189.31",  # 마곡류마타워2
     19241: "http://test-members.iparking.co.kr/#!",  # 비트플렉스몰
     19196: "http://hipubch.iptime.org:8090",  # 어바니엘천호
+    19248: "http://203.234.135.152:8090",  # 코리아나 호텔
 }
 
 lotOptionList = {
@@ -376,6 +377,7 @@ lotOptionList = {
     19215: ["논현웰스톤", "parkingpark@wisemobile.co.kr", "@wise0413"],
     19241: ["비트플렉스몰", "hpbitppark", "123456"],
     19196: ["어바니엘천호", "ppark", "1234"],
+    19248: ["코리아나호텔", "ppark", "1234"],
 }
 
 NON = 0
@@ -515,3 +517,4 @@ NONHYEON_WELLSTONE = 19215
 DIAT_CENTRAL = 19183
 BIT_FLEX = 19241
 URBANIEL_CHEN_HO = 19196
+KOREANA_HOTEL = 19248
