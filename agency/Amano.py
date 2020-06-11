@@ -317,6 +317,20 @@ amano_pass = [
     Parks.NON_SQUARE
 ]
 
+amano_need_log_out = [
+    Parks.WEST_GATE,
+    Parks.GOLDEN_TOWER
+]
+
+
+def log_out_web(park_id, driver):
+    print(Colors.BLUE + "로그아웃 호출" + Colors.ENDC)
+    if park_id in amano_need_log_out:
+        driver.execute_script("javascript:logout();")
+        driver.implicitly_wait(3)
+        driver.find_element_by_xpath("//*[@id='modal-window']/div/div/div[3]/a[2]").click()
+        Util.sleep(3)
+
 
 def get_har_in_value(park_id, ticket_name):
     web_info = mapIdToWebInfo[park_id]
@@ -566,9 +580,14 @@ def web_har_in(target, driver):
                             Util.sleep(2)
                             driver.execute_script(har_in_script)
                             Util.sleep(2)
+                            log_out_web(park_id, driver)
                             return True
 
+                log_out_web(park_id, driver)
                 return False
+
+            log_out_web(park_id, driver)
+            return False
         else:
             print(Colors.BLUE + "현재 웹할인 페이지 분석이 되어 있지 않는 주차장입니다." + Colors.ENDC)
             return False
