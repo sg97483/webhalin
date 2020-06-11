@@ -31,7 +31,7 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.NON_SQUARE
+testPark = Parks.ORAKAI_DAEHAKRO
 is_park_test = True
 is_no_db_test = False
 

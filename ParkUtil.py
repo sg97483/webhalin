@@ -60,11 +60,17 @@ def get_park_search_css(park_id):
     return park_search_css
 
 
+check_searched_car_number_self = [
+    Parks.T_TOWER,
+    Parks.PODO_MALL,
+    Parks.ORAKAI_DAEHAKRO
+]
+
+
 def get_park_css(park_id):
     park_type = ParkType.get_park_type(park_id)
 
-    if park_id == Parks.T_TOWER or\
-            park_id == Parks.PODO_MALL:
+    if park_id in check_searched_car_number_self:
         park_css = ParkType.mapToAgency[park_id]
     else:
         park_css = ParkType.mapToAgency[park_type]
@@ -122,10 +128,10 @@ def check_same_car_num(parkId, oriCarNum, driver):
 
 def is_night_time():
     f_seconds = time.time()
-    s_time = int(f_seconds%60)
-    f_seconds//=60
-    m_time = f_seconds%60
+    s_time = int(f_seconds % 60)
     f_seconds //= 60
-    h_time = f_seconds%24
-    h_time = (h_time + 9)%24
+    m_time = f_seconds % 60
+    f_seconds //= 60
+    h_time = f_seconds % 24
+    h_time = (h_time + 9) % 24
     print(h_time, " 시", m_time, " 분", s_time, " 초")

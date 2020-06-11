@@ -362,7 +362,8 @@ mapToAgency = {
     GRANG_SEOUL: "#carList > table > tbody > tr > td:nth-child(2) > a",
     AJ_PARK: "body > div.wrap > section > div > section > div:nth-child(2) > div > dl:nth-child(4) > dd",
     HIGH_CITY_2: "#search_form > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)",
-    OLD_AJ: "/html/body/table[2]/tbody/tr[3]/td[2]/text()[1]"
+    OLD_AJ: "/html/body/table[2]/tbody/tr[3]/td[2]/text()[1]",
+    Parks.ORAKAI_DAEHAKRO: "#search_form > table > tbody > tr > td:nth-child(2) > table:nth-child(3) > tbody > tr:nth-child(2) > td:nth-child(2)"
 }
 
 mapToHarinUrl = {
