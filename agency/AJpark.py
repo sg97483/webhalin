@@ -125,9 +125,9 @@ mapIdToWebInfo = {
     19215: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
-            1,  # 평일1일권
+            0,  # 평일1일권
             0,  # 주말1일권
-            0  # 야간권
+            1  # 야간권
             ]
 }
 
