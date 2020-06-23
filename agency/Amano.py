@@ -262,6 +262,15 @@ mapIdToWebInfo = {
             "1",  # 15시간권
             "",  #
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+    ],
+    # 정안빌딩
+    19267: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "9",  # ppar
+            "9",  # ppark
+            "",  #
+            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
     ]
 }
 
@@ -286,7 +295,8 @@ amano_auto_search_two = [
     Parks.JIN_YANG_BUILDING,
     Parks.YEOKSAM_BUILDING,
     Parks.HARIM_INTERNATIONAL,
-    Parks.NY_TOWER
+    Parks.NY_TOWER,
+    Parks.JEONGAN_BUILDING
 ]
 
 amano_pass = [
@@ -314,7 +324,8 @@ amano_pass = [
     Parks.CHUNGJEONGNO_HOUSE,
     Parks.OMOK_BRIDGE,
     Parks.MAGOK_RUMA_2,
-    Parks.NON_SQUARE
+    Parks.NON_SQUARE,
+    Parks.JEONGAN_BUILDING
 ]
 
 amano_need_log_out = [

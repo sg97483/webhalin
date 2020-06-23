@@ -208,6 +208,7 @@ mapIdToUrl = {
     19196: "http://hipubch.iptime.org:8090",  # 어바니엘천호
     19248: "http://203.234.135.152:8090",  # 코리아나 호텔
     19247: "http://203.234.211.229",  # 아마노 눈스퀘어
+    19267: "http://hipjungan.iptime.org",  # 하이파킹 정안빌딩
 }
 
 lotOptionList = {
@@ -383,6 +384,7 @@ lotOptionList = {
     19196: ["어바니엘천호", "ppark", "1234"],
     19248: ["코리아나호텔", "ppark", "1234"],
     19247: ["눈스퀘어", "parkingpark", "park001^^"],
+    19267: ["정안빌딩", "ppark", "1234"],
 }
 
 NON = 0
@@ -527,3 +529,4 @@ NON_SQUARE = 19247
 AJ_BANGBE = 19219
 AJ_HOUSE_DIBIZ = 19218
 AJ_EWHA = 19212
+JEONGAN_BUILDING = 19267
