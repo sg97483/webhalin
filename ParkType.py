@@ -177,7 +177,10 @@ park_type_aj_park = [
     Parks.AJ_MR_HOMZ,
     Parks.AJ_SINDUK,
     Parks.HONGDAE_EILEX,
-    Parks.NONHYEON_WELLSTONE
+    Parks.NONHYEON_WELLSTONE,
+    Parks.AJ_BANGBE,
+    Parks.AJ_HOUSE_DIBIZ,
+    Parks.AJ_EWHA
 ]
 
 park_type_old_aj = [

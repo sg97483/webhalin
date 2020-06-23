@@ -176,6 +176,9 @@ mapIdToUrl = {
     19160: "https://mobile.ajpark.co.kr/partner/",  # AJ파크 문정프라비다점
     19161: "https://mobile.ajpark.co.kr/partner/",  # 미스터홈즈 선정릉점
     19215: "https://mobile.ajpark.co.kr/partner/",  # 논현웰스톤
+    19219: "https://mobile.ajpark.co.kr/partner/",  # AJ방배점
+    19218: "https://mobile.ajpark.co.kr/partner/",  # AJ하우스디비즈
+    19212: "https://mobile.ajpark.co.kr/partner/",  # AJ이화주차장점
 
     19004: "http://221.148.11.134:8090",
     19180: "http://hipgnpb.iptime.org:8090",
@@ -521,3 +524,6 @@ BIT_FLEX = 19241
 URBANIEL_CHEN_HO = 19196
 KOREANA_HOTEL = 19248
 NON_SQUARE = 19247
+AJ_BANGBE = 19219
+AJ_HOUSE_DIBIZ = 19218
+AJ_EWHA = 19212

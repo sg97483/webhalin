@@ -128,6 +128,30 @@ mapIdToWebInfo = {
             0,  # 평일1일권
             0,  # 주말1일권
             1  # 야간권
+            ],
+    # 	AJ방배점
+    19219: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일1일권
+            0,  # 주말1일권 안팜
+            1  # 야간권
+            ],
+    # 	AJ하우스디비즈
+    19218: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일1일권
+            0,  # 주말1일권 안팜
+            1  # 야간권
+            ],
+    # 	AJ이화주차장점
+    19212: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일1일권
+            0,  # 주말1일권
+            2  # 야간권
             ]
 }
 

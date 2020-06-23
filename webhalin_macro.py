@@ -31,8 +31,8 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.ORAKAI_DAEHAKRO
-is_park_test = True
+testPark = Parks.MILLENNIUM_SEOUL_HILTON
+is_park_test = False
 is_no_db_test = False
 
 
@@ -62,7 +62,8 @@ def get_sql(now_date):
         '19073', '19194', '19197', '19193',
         '19208', '19203', '19191', '19235',
         '19230', '14588', '19202', '19022', '19159', '19234',
-        '19215', '19241', '19196', '19248', '19247'
+        '19215', '19241', '19196', '19248', '19247',
+        '19219', '19218', '19212'
     ]
 
     str_lots = ", ".join(valid_lots)
@@ -203,8 +204,8 @@ while True:
     if is_no_db_test:
         # pid, park_id
         # id, parkId, agCarNumber, totalTicketType
-        tempTarget1 = ['0', '18913', '28가1234', '평일1일권']
-        tempTarget2 = ['0', '18577', '28가5678', '평일1일권']
+        tempTarget1 = ['0', '18913', '47보9363', '평일1일권']
+        tempTarget2 = ['0', '18577', '296루7472', '평일1일권']
 
         try:
             web_har_in(tempTarget1)
