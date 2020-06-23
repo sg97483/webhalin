@@ -271,6 +271,15 @@ mapIdToWebInfo = {
             "9",  # ppark
             "",  #
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+    ],
+    # 광화문S타워
+    19250: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "18",  # 종일권(PS)
+            "18",  # 종일권(PS)
+            "",  #
+            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
     ]
 }
 
@@ -296,7 +305,8 @@ amano_auto_search_two = [
     Parks.YEOKSAM_BUILDING,
     Parks.HARIM_INTERNATIONAL,
     Parks.NY_TOWER,
-    Parks.JEONGAN_BUILDING
+    Parks.JEONGAN_BUILDING,
+    Parks.GWANG_HWA_MUN_S_TOWER
 ]
 
 amano_pass = [
@@ -325,7 +335,8 @@ amano_pass = [
     Parks.OMOK_BRIDGE,
     Parks.MAGOK_RUMA_2,
     Parks.NON_SQUARE,
-    Parks.JEONGAN_BUILDING
+    Parks.JEONGAN_BUILDING,
+    Parks.GWANG_HWA_MUN_S_TOWER
 ]
 
 amano_need_log_out = [

@@ -209,6 +209,7 @@ mapIdToUrl = {
     19248: "http://203.234.135.152:8090",  # 코리아나 호텔
     19247: "http://203.234.211.229",  # 아마노 눈스퀘어
     19267: "http://hipjungan.iptime.org",  # 하이파킹 정안빌딩
+    19250: "http://stower.iptime.org",  # 광화문S타워
 }
 
 lotOptionList = {
@@ -385,6 +386,7 @@ lotOptionList = {
     19248: ["코리아나호텔", "ppark", "1234"],
     19247: ["눈스퀘어", "parkingpark", "park001^^"],
     19267: ["정안빌딩", "ppark", "1234"],
+    19250: ["광화문S타워", "ppark", "ppark1!"],
 }
 
 NON = 0
@@ -530,3 +532,4 @@ AJ_BANGBE = 19219
 AJ_HOUSE_DIBIZ = 19218
 AJ_EWHA = 19212
 JEONGAN_BUILDING = 19267
+GWANG_HWA_MUN_S_TOWER = 19250
