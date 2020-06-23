@@ -46,7 +46,7 @@ mapIdToUrl = {
     19029: "http://106.245.254.58/",
     19030: "http://www.amanopark.co.kr",
     19031: "http://112.216.143.58",
-    4588: "http://59.5.53.81",
+    # 4588: "http://59.5.53.81",
     12951: "http://116.127.152.21:8090",
     11367: "http://218.232.123.182:8090",
     18936: "http://58.227.73.50",
@@ -210,6 +210,7 @@ mapIdToUrl = {
     19247: "http://203.234.211.229",  # 아마노 눈스퀘어
     19267: "http://hipjungan.iptime.org",  # 하이파킹 정안빌딩
     19250: "http://stower.iptime.org",  # 광화문S타워
+    19240: "http://gstimes0084.iptime.org/index.php"  # 상봉듀오트리스
 }
 
 lotOptionList = {
@@ -387,6 +388,7 @@ lotOptionList = {
     19247: ["눈스퀘어", "parkingpark", "park001^^"],
     19267: ["정안빌딩", "ppark", "1234"],
     19250: ["광화문S타워", "ppark", "ppark1!"],
+    19240: ["상봉듀오트리스", "ppark", "1234"],
 }
 
 NON = 0
@@ -533,3 +535,4 @@ AJ_HOUSE_DIBIZ = 19218
 AJ_EWHA = 19212
 JEONGAN_BUILDING = 19267
 GWANG_HWA_MUN_S_TOWER = 19250
+SANGBONG_DUOTRIS = 19240

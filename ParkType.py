@@ -148,7 +148,8 @@ parkTypeGs = [
     Parks.ERE_BUILDING,
     Parks.KDB_LIFE,
     Parks.PARK_BUILDING,
-    Parks.URBANIEL_CHEN_HO
+    Parks.URBANIEL_CHEN_HO,
+    Parks.SANGBONG_DUOTRIS
 ]
 
 parkType_ip_time = [
