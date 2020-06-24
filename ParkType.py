@@ -334,7 +334,6 @@ parkTypeNoRequestMain = [
     Parks.MEGABOX_SUNGSU,
     Parks.MILLENNIUM_SEOUL_HILTON,
     Parks.PARK_BUILDING,
-    Parks.CONCORDIAN_BUILDING,
     Parks.URBANIEL_HAN_GANG,
     Parks.URBANIEL_CHEN_HO,
     Parks.NON_SQUARE
