@@ -280,6 +280,15 @@ mapIdToWebInfo = {
             "18",  # 종일권(PS)
             "",  #
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+    ],
+    # MDM타워 당산
+    19239: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "8",  # 24시간유료 (판매 : 15000 )
+            "8",  # 24시간유료 (판매 : 15000 )
+            "",  #
+            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
     ]
 }
 
@@ -306,7 +315,8 @@ amano_auto_search_two = [
     Parks.HARIM_INTERNATIONAL,
     Parks.NY_TOWER,
     Parks.JEONGAN_BUILDING,
-    Parks.GWANG_HWA_MUN_S_TOWER
+    Parks.GWANG_HWA_MUN_S_TOWER,
+    Parks.MDM_TOWER_DANG_SAN
 ]
 
 amano_pass = [
@@ -336,7 +346,8 @@ amano_pass = [
     Parks.MAGOK_RUMA_2,
     Parks.NON_SQUARE,
     Parks.JEONGAN_BUILDING,
-    Parks.GWANG_HWA_MUN_S_TOWER
+    Parks.GWANG_HWA_MUN_S_TOWER,
+    Parks.MDM_TOWER_DANG_SAN
 ]
 
 amano_need_log_out = [
