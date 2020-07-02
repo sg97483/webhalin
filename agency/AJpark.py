@@ -184,6 +184,11 @@ def web_har_in(target, driver):
     print("parkId = " + str(park_id) + ", " + "searchId = " + search_id)
     print(Colors.BLUE + ticket_name + Colors.ENDC)
 
+    if ticket_name == "심야권":
+        if not ParkUtil.is_night_time():
+            print(Colors.BLUE + "현재 심야권 시간이 아닙니다." + Colors.ENDC)
+            return False
+
     if ParkUtil.is_park_in(park_id):
         if park_id in mapIdToWebInfo:
             login_url = ParkUtil.get_park_url(park_id)
