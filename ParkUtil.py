@@ -136,7 +136,7 @@ def is_night_time():
     h_time = (h_time + 9) % 24
     print(h_time, " 시", m_time, " 분", s_time, " 초")
 
-    if h_time > 18:
+    if h_time >= 18:
         return True
     else:
         return False
