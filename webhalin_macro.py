@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import requests
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 import time
@@ -23,7 +23,6 @@ logger.setLevel(logging.DEBUG)
 driver = webdriver.Chrome(ChromeDriverManager().install())
 driver.implicitly_wait(3)
 
-
 '''
 # parkId: [id_name, pw_name, login_btn_xpath,
 #         search_box_name, search_btn_xpath,
@@ -32,8 +31,11 @@ driver.implicitly_wait(3)
 '''
 
 testPark = Parks.MDM_TOWER_DANG_SAN
-is_park_test = True
+is_park_test = False
 is_no_db_test = False
+
+
+# is_part_test = True
 
 
 def get_sql(now_date):
@@ -135,6 +137,22 @@ def in_car_check_db(pid, park_id):
     logger.info("\n")
 
 
+def push_fcm_in_car_check(pid):
+    # print(Colors.BLUE + "푸쉬 발송 테스트 : " + str(pid) + Colors.ENDC)
+    api_host = "http://cafe.wisemobile.kr:8080"
+    params_get = "?msgType=parked&id=" + str(pid)
+    url_puch_fcm = api_host + "/fcm/sendFcmTest" + params_get
+
+    headers = {'Content-Type': 'application/json', 'charset': 'UTF-8', 'Accept': '*/*'}
+
+    try:
+        response = requests.get(url_puch_fcm, headers=headers)
+    except Exception as exPush:
+        print(Colors.BLUE + "푸쉬 리퀘스트 에러 : " + exPush + Colors.ENDC)
+
+    print(Colors.BLUE + "푸쉬 발송 완료 : " + str(response) + Colors.ENDC)
+
+
 def exec_web_har_in(park_type, target, chrome_driver):
     pid = target[0]
     park_id = int(Util.all_trim(target[1]))
@@ -142,6 +160,7 @@ def exec_web_har_in(park_type, target, chrome_driver):
     if park_type.web_har_in(target, chrome_driver):
         logging_info(target)
         in_car_check_db(pid, park_id)
+        push_fcm_in_car_check(pid)
     else:
         print("실패")
 
@@ -201,6 +220,11 @@ def web_har_in(target):
 repeatCnt = 0
 
 while True:
+    # if is_part_test:
+    #     print(Colors.BLUE + "퓌쉬 테스트 시작" + Colors.ENDC)
+    #     pid = 235564
+    #     push_fcm_in_car_check(pid)
+
     if is_no_db_test:
         # pid, park_id
         # id, parkId, agCarNumber, totalTicketType
@@ -216,7 +240,8 @@ while True:
         repeatCnt += 1
         logger.info("반복 횟수 : " + str(repeatCnt))
 
-        conn = pymysql.connect(host='49.236.134.172', port=3306, user='root', password='#orange8398@@', db='parkingpark',
+        conn = pymysql.connect(host='49.236.134.172', port=3306, user='root', password='#orange8398@@',
+                               db='parkingpark',
                                charset='utf8')
         curs = conn.cursor()
 
