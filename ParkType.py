@@ -341,7 +341,8 @@ parkTypeNoRequestMain = [
     Parks.URBANIEL_CHEN_HO,
     Parks.NON_SQUARE,
     Parks.MODERN_GYEDONG_BUILDING,
-    Parks.SUN_HWA_BUILDING
+    Parks.SUN_HWA_BUILDING,
+    Parks.PODO_MALL
 ]
 
 type_to_search_css = {
@@ -366,7 +367,6 @@ mapToAgency = {
     I_PARKING: "#carList > tr > td:nth-child(2)",
     GS: "#divAjaxCarList > tbody > tr > td",
     Parks.T_TOWER: "#tblList > tbody > tr > td:nth-child(2)",
-    Parks.PODO_MALL: "#tblList > tbody > tr > td:nth-child(2)",
     IP_TIME: "#DataGrid1 > tbody > tr:nth-child(2) > td:nth-child(1)",
     # IP_TIME: "#listSearch > table:nth-child(7) > tbody > tr:nth-child(2)",
     GRANG_SEOUL: "#carList > table > tbody > tr > td:nth-child(2) > a",

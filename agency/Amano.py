@@ -76,14 +76,14 @@ mapIdToWebInfo = {
             "21",  # 심야권
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
-    # 포도몰
+    # 포도몰 PODO_MALL
     11558: ["userId", "userPwd", "//input[@type='submit']",
             "schCarNo", "//*[@id='sForm']/input[3]",
-            "#tblList > tbody > tr",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "",  # 평일1일권 value : 5
             "",
             "11",  # 12시간권
-            "javascript:document.getElementById('btnSave').click"
+            "javascript:document.getElementById('discountTypeValue').click"
             ],
     # SK 명동
     14618: ["userId", "userPwd", "//*[@id='btnLogin']",
@@ -316,7 +316,8 @@ amano_auto_search_two = [
     Parks.NY_TOWER,
     Parks.JEONGAN_BUILDING,
     Parks.GWANG_HWA_MUN_S_TOWER,
-    Parks.MDM_TOWER_DANG_SAN
+    Parks.MDM_TOWER_DANG_SAN,
+    Parks.PODO_MALL
 ]
 
 amano_pass = [
@@ -347,7 +348,8 @@ amano_pass = [
     Parks.NON_SQUARE,
     Parks.JEONGAN_BUILDING,
     Parks.GWANG_HWA_MUN_S_TOWER,
-    Parks.MDM_TOWER_DANG_SAN
+    Parks.MDM_TOWER_DANG_SAN,
+    Parks.PODO_MALL
 ]
 
 amano_need_log_out = [
@@ -357,12 +359,12 @@ amano_need_log_out = [
 
 
 def log_out_web(park_id, driver):
-    print(Colors.BLUE + "로그아웃 호출" + Colors.ENDC)
     if park_id in amano_need_log_out:
         driver.execute_script("javascript:logout();")
         driver.implicitly_wait(3)
         driver.find_element_by_xpath("//*[@id='modal-window']/div/div/div[3]/a[2]").click()
         Util.sleep(3)
+        print(Colors.BLUE + "로그아웃" + Colors.ENDC)
 
 
 def get_har_in_value(park_id, ticket_name):
@@ -570,7 +572,7 @@ def web_har_in(target, driver):
 
                 html = driver.page_source
                 soup = BeautifulSoup(html, 'html.parser')
-                if park_id == ParkType.Parks.T_TOWER or park_id == ParkType.Parks.PODO_MALL:
+                if park_id == ParkType.Parks.T_TOWER:
                     car_num = soup.find(id='tblList')  # 트라팰리스
                 else:
                     car_num = soup.find("tr")  # 와이플러스 및 나머지
