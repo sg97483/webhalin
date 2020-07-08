@@ -192,7 +192,7 @@ def web_har_in(target, driver):
     print("parkId = " + str(park_id) + ", " + "searchId = " + search_id)
     print(Colors.BLUE + ticket_name + Colors.ENDC)
 
-    if ticket_name == "심야권":
+    if ticket_name == "심야권" or ticket_name == "저녁권":
         if not ParkUtil.is_night_time():
             print(Colors.BLUE + "현재 심야권 시간이 아닙니다." + Colors.ENDC)
             return False
