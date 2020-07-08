@@ -150,7 +150,8 @@ parkTypeGs = [
     Parks.KDB_LIFE,
     Parks.PARK_BUILDING,
     Parks.URBANIEL_CHEN_HO,
-    Parks.SANGBONG_DUOTRIS
+    Parks.SANGBONG_DUOTRIS,
+    Parks.MODERN_GYEDONG_BUILDING
 ]
 
 parkType_ip_time = [
@@ -337,7 +338,8 @@ parkTypeNoRequestMain = [
     Parks.PARK_BUILDING,
     Parks.URBANIEL_HAN_GANG,
     Parks.URBANIEL_CHEN_HO,
-    Parks.NON_SQUARE
+    Parks.NON_SQUARE,
+    Parks.MODERN_GYEDONG_BUILDING
 ]
 
 type_to_search_css = {

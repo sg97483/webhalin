@@ -104,6 +104,14 @@ mapIdToWebInfo = {
             "javascript:fnDisCount('56:전액무료(웹) / 잔여수량 99996', '1');",
             "javascript:fnDisCount('56:전액무료(웹) / 잔여수량 99996', '1');",
             ""],
+    # 현대계동사옥 주차장
+    12749: ["login_id", "login_pw",
+            "//*[@id='bodyCSS']/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # 차량번호 클릭
+            "javascript:fnDisCount('79:당일권');",
+            "javascript:fnDisCount('79:당일권');",
+            ""],
 }
 
 
@@ -158,7 +166,8 @@ def web_har_in(target, driver):
                 if park_id == Parks.FINANCE_TOWER \
                         or park_id == Parks.DMC_S_CITY \
                         or park_id == Parks.NONHYEON_BUILDING \
-                        or park_id == Parks.KDB_LIFE:
+                        or park_id == Parks.KDB_LIFE \
+                        or park_id == Parks.MODERN_GYEDONG_BUILDING:
                     Util.click_element_xpath(web_info[WebInfo.btnLogin], driver)
                 else:
                     driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
@@ -183,7 +192,8 @@ def web_har_in(target, driver):
                     or park_id == Parks.DMCC\
                     or park_id == Parks.NONHYEON_BUILDING \
                     or park_id == Parks.MEGABOX_SUNGSU \
-                    or park_id == Parks.KDB_LIFE:
+                    or park_id == Parks.KDB_LIFE \
+                    or park_id == Parks.MODERN_GYEDONG_BUILDING:
                 driver.implicitly_wait(3)
                 Util.click_element_id('btnSearch', driver)
             else:
