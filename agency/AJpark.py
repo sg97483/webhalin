@@ -22,8 +22,8 @@ mapIdToWebInfo = {
     19147: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
-            0,  # 평일종일권
-            2,  # 주말종일권
+            2,  # 평일종일권
+            0,  # 주말종일권
             1  # 야간권
             ],
     # AJ파크 교원명동빌딩점
