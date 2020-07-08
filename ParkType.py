@@ -189,7 +189,8 @@ park_type_aj_park = [
 ]
 
 park_type_old_aj = [
-    Parks.GMG_TOWER
+    Parks.GMG_TOWER,
+    Parks.SUN_HWA_BUILDING
 ]
 
 park_type_etc = [
@@ -339,7 +340,8 @@ parkTypeNoRequestMain = [
     Parks.URBANIEL_HAN_GANG,
     Parks.URBANIEL_CHEN_HO,
     Parks.NON_SQUARE,
-    Parks.MODERN_GYEDONG_BUILDING
+    Parks.MODERN_GYEDONG_BUILDING,
+    Parks.SUN_HWA_BUILDING
 ]
 
 type_to_search_css = {

@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+import datetime
 import re
 
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.alert import Alert
 
+import Parks
 import Util
 import ParkType
 import Colors
@@ -17,6 +19,12 @@ mapIdToWebInfo = {
             "",
             "javascript:onclickDiscount('20200407090327-00361', '00009', '당일 무료', '56너0427', '매수차감', form1.remark.value);",
             "javascript:onclickDiscount('20200407090327-00361', '00009', '당일 무료', '56너0427', '매수차감', form1.remark.value);"],
+    # (하이파킹) 순화빌딩 주차장
+    16173: ["name", "pwd", "//*[@id='login']/table[1]/tbody/tr[3]/td[2]/input",
+            "carNumber", "/html/body/table[2]/tbody/tr[5]/td/input",
+            "",
+            "javascript:onclickDiscount('20200708091117-03829', '00019', '앱서비스', '06로0473', '매수차감', form1.remark.value);",
+            "javascript:onclickDiscount('20200708091117-03829', '00019', '앱서비스', '06로0473', '매수차감', form1.remark.value);"],
 }
 
 
@@ -68,6 +76,23 @@ def web_har_in(target, driver):
 
             Util.sleep(1)
 
+            if park_id == Parks.SUN_HWA_BUILDING:
+                tr_text = driver.find_element_by_css_selector(
+                    "body > table:nth-child(4) > tbody > tr:nth-child(2) > td:nth-child(2) > p:nth-child(2)").text
+                text = re.sub('<.+?>', '', tr_text, 0, re.I | re.S)
+                trim_text = text.strip()
+                split_trim_text = trim_text.split(":")
+                search_day_text = split_trim_text[1].strip()
+
+                today = datetime.datetime.now()
+                today_text = today.strftime('%Y-%m-%d')
+
+                if today_text == search_day_text:
+                    driver.find_element_by_xpath("/html/body/table[2]/tbody/tr[2]").click()
+                else:
+                    print(Colors.BLUE + "금일 날짜에 맞는 데이터가 없습니다." + Colors.ENDC)
+                    return False
+
             # 차량 번호 검색 및 비교 시도
             try:
                 tr_text = driver.find_element_by_css_selector("body > table:nth-child(4) > tbody > tr:nth-child(3) > td:nth-child(2)").text
@@ -80,7 +105,13 @@ def web_har_in(target, driver):
                 if ori_car_num[-7:] == trim_text:
                     # harin_script = get_har_in_script(park_id, ticket_name)
                     # driver.execute_script(harin_script)
-                    driver.find_element_by_id("BTN_당일 무료").click()
+                    if park_id == Parks.GMG_TOWER:
+                        driver.find_element_by_id("BTN_당일 무료").click()
+                    elif park_id == Parks.SUN_HWA_BUILDING:
+                        driver.find_element_by_xpath("/html/body/table[2]/tbody/tr[4]/td[1]/p[1]/input").click()
+                    else:
+                        print(Colors.BLUE + "할인권 버튼을 찾을 수 없습니다." + Colors.ENDC)
+                        return False
                     driver.implicitly_wait(3)
                     alert = Alert(driver)
                     alert.accept()
