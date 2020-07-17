@@ -30,8 +30,8 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.MDM_TOWER_DANG_SAN
-is_park_test = False
+testPark = Parks.HILL_STATE_ECO_MAGOKNARU
+is_park_test = True
 is_no_db_test = False
 
 
@@ -65,7 +65,7 @@ def get_sql(now_date):
         '19208', '19203', '19191', '19235',
         '19230', '14588', '19202', '19022', '19159', '19234',
         '19215', '19241', '19196', '19248', '19247',
-        '19219', '19218', '19212', '19267', '19250', '19240', '19239', '19161'
+        '19219', '19218', '19212', '19267', '19250', '19240', '19239', '19161', '19272'
     ]
 
     str_lots = ", ".join(valid_lots)

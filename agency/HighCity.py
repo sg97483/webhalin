@@ -381,6 +381,13 @@ mapIdToWebInfo = {
             "chk",
             "javascript:applyDiscount('13', '1', '01|02|03|', 'ppark', '999999999', '0');",
             "javascript:applyDiscount('13', '1', '01|02|03|', 'ppark', '999999999', '0');"
+            ],
+    #  힐스테이트에코마곡나루역
+    19272: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
+            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+            "chk",
+            "javascript:applyDiscount('08', '1', '17|', 'ppark', '1', '0');",
+            "javascript:applyDiscount('08', '1', '17|', 'ppark', '1', '0');"
             ]
 }
 

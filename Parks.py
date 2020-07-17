@@ -211,7 +211,8 @@ mapIdToUrl = {
     19267: "http://hipjungan.iptime.org",  # 하이파킹 정안빌딩
     19250: "http://stower.iptime.org",  # 광화문S타워
     19240: "http://gstimes0084.iptime.org/index.php",  # 상봉듀오트리스
-    19239: "http://59.15.76.103"  # MDM타워 당산
+    19239: "http://59.15.76.103",  # MDM타워 당산
+    19272: "http://59.15.186.7:8090"  # 힐스테이트에코마곡나루역
 }
 
 lotOptionList = {
@@ -391,6 +392,7 @@ lotOptionList = {
     19250: ["광화문S타워", "ppark", "ppark1!"],
     19240: ["상봉듀오트리스", "ppark", "1234"],
     19239: ["MDM타워 당산", "ppark", "1234"],
+    19272: ["힐스테이트에코마곡나루역", "ppark", "1234"],
 }
 
 NON = 0
@@ -541,3 +543,4 @@ SANGBONG_DUOTRIS = 19240
 MDM_TOWER_DANG_SAN = 19239
 MODERN_GYEDONG_BUILDING = 12749
 SUN_HWA_BUILDING = 16173
+HILL_STATE_ECO_MAGOKNARU = 19272
