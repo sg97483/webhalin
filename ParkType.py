@@ -68,7 +68,8 @@ parkTypeHighCity = [
     Parks.KTNG_TOWER,
     Parks.MUNJUNG_PLAZA,
     Parks.KOREANA_HOTEL,
-    Parks.HILL_STATE_ECO_MAGOKNARU
+    Parks.HILL_STATE_ECO_MAGOKNARU,
+    Parks.ING_ORANGE_TOWER
 ]
 
 parkTypeHighCity2 = [

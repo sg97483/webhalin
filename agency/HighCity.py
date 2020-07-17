@@ -388,6 +388,14 @@ mapIdToWebInfo = {
             "chk",
             "javascript:applyDiscount('08', '1', '17|', 'ppark', '1', '0');",
             "javascript:applyDiscount('08', '1', '17|', 'ppark', '1', '0');"
+            ],
+    #  ING오렌지타워
+    19085: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
+            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+            "chk",
+            "javascript:applyDiscount('99', '1', '', '파킹박', '1', '0');",
+            "javascript:applyDiscount('92', '1', '', '파킹박(주말)', '1', '0');",
+            "javascript:applyDiscount('91', '1', '', '파킹박(야간)', '1', '0');"
             ]
 }
 
