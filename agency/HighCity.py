@@ -403,6 +403,14 @@ mapIdToWebInfo = {
             "chk",
             "javascript:applyDiscount('96', '1', '09|14|16|17|18|19|20|', '파킹박', '999999999', '0');",
             "javascript:applyDiscount('96', '1', '09|14|16|17|18|19|20|', '파킹박', '999999999', '0');"
+            ],
+    #  강남빌딩
+    19271: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
+            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+            "chk",
+            "javascript:applyDiscount('07', '0', '01|02|10|11|12|13|14|15|', 'ppark', '1', '0');",
+            "javascript:applyDiscount('07', '0', '01|02|10|11|12|13|14|15|', 'ppark', '1', '0');",
+            "javascript:applyDiscount('07', '0', '01|02|10|11|12|13|14|15|', 'ppark', '1', '0');"
             ]
 }
 
