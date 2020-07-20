@@ -213,7 +213,8 @@ mapIdToUrl = {
     19240: "http://gstimes0084.iptime.org/index.php",  # 상봉듀오트리스
     19239: "http://59.15.76.103",  # MDM타워 당산
     19272: "http://59.15.186.7:8090",  # 힐스테이트에코마곡나루역
-    19271: "http://220.85.76.134:8090"  # 강남빌딩
+    19271: "http://220.85.76.134:8090",  # 강남빌딩
+    19199: "http://hipmahh.iptime.org:8090"  # 머큐어앰버서더 홍대호텔
 }
 
 lotOptionList = {
@@ -395,6 +396,7 @@ lotOptionList = {
     19239: ["MDM타워 당산", "ppark", "1234"],
     19272: ["힐스테이트에코마곡나루역", "ppark", "1234"],
     19271: ["강남빌딩", "ppark", "1234"],
+    19199: ["머큐어앰버서더", "ppark", "1234"],
 }
 
 NON = 0
@@ -549,3 +551,4 @@ HILL_STATE_ECO_MAGOKNARU = 19272
 ING_ORANGE_TOWER = 19085
 KTNG_SUWON = 22982
 GANG_NAM_BUILDING = 19271
+MERCURE_AMBASSADOR = 19199

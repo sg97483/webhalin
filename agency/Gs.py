@@ -112,6 +112,14 @@ mapIdToWebInfo = {
             "javascript:fnDisCount('79:당일권');",
             "javascript:fnDisCount('79:당일권');",
             ""],
+    # 머큐어앰버서더 홍대호텔
+    19199: ["login_id", "login_pw",
+            "//*[@id='bodyCSS']/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # 차량번호 클릭
+            "javascript:fnDisCount('57:전액무료(웹)', '1');",
+            "javascript:fnDisCount('57:전액무료(웹)', '1');",
+            ""],
 }
 
 
@@ -167,7 +175,8 @@ def web_har_in(target, driver):
                         or park_id == Parks.DMC_S_CITY \
                         or park_id == Parks.NONHYEON_BUILDING \
                         or park_id == Parks.KDB_LIFE \
-                        or park_id == Parks.MODERN_GYEDONG_BUILDING:
+                        or park_id == Parks.MODERN_GYEDONG_BUILDING \
+                        or park_id == Parks.MERCURE_AMBASSADOR:
                     Util.click_element_xpath(web_info[WebInfo.btnLogin], driver)
                 else:
                     driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
