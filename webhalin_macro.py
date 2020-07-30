@@ -139,12 +139,12 @@ def push_fcm_in_car_check(pid):
     # print(Colors.BLUE + "푸쉬 발송 테스트 : " + str(pid) + Colors.ENDC)
     api_host = "http://cafe.wisemobile.kr:8080"
     params_get = "?msgType=parked&id=" + str(pid)
-    url_puch_fcm = api_host + "/fcm/sendFcmTest" + params_get
+    url_push_fcm = api_host + "/fcm/sendFcmTest" + params_get
 
     headers = {'Content-Type': 'application/json', 'charset': 'UTF-8', 'Accept': '*/*'}
 
     try:
-        response = requests.get(url_puch_fcm, headers=headers)
+        response = requests.get(url_push_fcm, headers=headers)
     except Exception as exPush:
         print(Colors.BLUE + "푸쉬 리퀘스트 에러 : " + exPush + Colors.ENDC)
 
