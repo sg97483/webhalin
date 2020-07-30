@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 import requests
-from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
 import time
 import pymysql
 import datetime
 import logging
 
+import ChromeDriver
 import Colors
 import LimitLot
 import ParkType
@@ -18,9 +17,7 @@ from agency import Iptime, Gs, HighCity, Iparking, AJpark, Darae, Amano, Blue, E
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-# chromeDriver = 'C:/Users/wisemobile5/Desktop/WEBHALIN/chromedriver_win32/chromedriver.exe'
-# driver = webdriver.Chrome(chromeDriver)
-driver = webdriver.Chrome(ChromeDriverManager().install())
+driver = ChromeDriver.get()
 driver.implicitly_wait(3)
 
 '''
