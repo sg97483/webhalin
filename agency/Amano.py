@@ -199,7 +199,7 @@ mapIdToWebInfo = {
     16209: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "",  # 할인키 값을 모르겠음
+            "12",  # 종일권(평일)
             "",  # 할인키 값을 모르겠음
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
@@ -317,7 +317,8 @@ amano_auto_search_two = [
     Parks.JEONGAN_BUILDING,
     Parks.GWANG_HWA_MUN_S_TOWER,
     Parks.MDM_TOWER_DANG_SAN,
-    Parks.PODO_MALL
+    Parks.PODO_MALL,
+    Parks.ACE_TOWER
 ]
 
 amano_pass = [
@@ -349,7 +350,8 @@ amano_pass = [
     Parks.JEONGAN_BUILDING,
     Parks.GWANG_HWA_MUN_S_TOWER,
     Parks.MDM_TOWER_DANG_SAN,
-    Parks.PODO_MALL
+    Parks.PODO_MALL,
+    Parks.ACE_TOWER
 ]
 
 amano_need_log_out = [

@@ -27,7 +27,7 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.MERCURE_AMBASSADOR
+testPark = Parks.ACE_TOWER
 is_park_test = True
 is_no_db_test = False
 
