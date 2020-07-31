@@ -298,6 +298,15 @@ mapIdToWebInfo = {
             "3",  # 주말권
             "2",  # 심야권
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+    ],
+    # 건국빌딩
+    19206: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "16",  # 저녁권
+            "17",  # 심야권
+            "",  #
+            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
     ]
 }
 
@@ -312,7 +321,8 @@ amano_auto_search_one = [
     Parks.CHUNGJEONGNO_HOUSE,
     Parks.OMOK_BRIDGE,
     Parks.MAGOK_RUMA_2,
-    Parks.HANA_TOOJA_BUILDING
+    Parks.HANA_TOOJA_BUILDING,
+    Parks.KUN_KUK_BUILDING
 ]
 
 amano_auto_search_two = [
@@ -362,7 +372,8 @@ amano_pass = [
     Parks.MDM_TOWER_DANG_SAN,
     Parks.PODO_MALL,
     Parks.ACE_TOWER,
-    Parks.HANA_TOOJA_BUILDING
+    Parks.HANA_TOOJA_BUILDING,
+    Parks.KUN_KUK_BUILDING
 ]
 
 amano_need_log_out = [
@@ -496,6 +507,14 @@ def get_har_in_value(park_id, ticket_name):
         else:
             discount_type_value = web_info[WebInfo.methodHarIn1]
 
+    if park_id == Parks.T_TOWER:
+        if ticket_name[-3:] == "저녁":
+            discount_type_value = web_info[WebInfo.methodHarIn1]
+        elif ticket_name[-3:] == "심야권":
+            discount_type_value = web_info[WebInfo.methodHarIn2]
+        else:
+            discount_type_value = web_info[WebInfo.methodHarIn3]
+
     return discount_type_value
 
 
@@ -623,7 +642,8 @@ def web_har_in(target, driver):
                             driver.execute_script("arguments[0].value = '" + discount_type_value + "';",
                                                   discount_type)
 
-                        if park_id == Parks.GOLDEN_TOWER:
+                        if park_id == Parks.GOLDEN_TOWER or \
+                                Parks.KUN_KUK_BUILDING:
                             element_text_area = driver.find_element_by_id('memo')
                             element_text_area.send_keys(Keys.TAB)
                             element_text_area.clear()

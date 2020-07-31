@@ -214,7 +214,8 @@ mapIdToUrl = {
     19239: "http://59.15.76.103",  # MDM타워 당산
     19272: "http://59.15.186.7:8090",  # 힐스테이트에코마곡나루역
     19271: "http://220.85.76.134:8090",  # 강남빌딩
-    19199: "http://hipmahh.iptime.org:8090"  # 머큐어앰버서더 홍대호텔
+    19199: "http://hipmahh.iptime.org:8090",  # 머큐어앰버서더 홍대호텔
+    19206: "http://211.106.26.68"  # 건국빌딩
 }
 
 lotOptionList = {
@@ -397,6 +398,7 @@ lotOptionList = {
     19272: ["힐스테이트에코마곡나루역", "ppark", "1234"],
     19271: ["강남빌딩", "ppark", "1234"],
     19199: ["머큐어앰버서더", "ppark", "1234"],
+    19206: ["건국빌딩", "pkp111", "pkp111"],
 }
 
 NON = 0
@@ -553,3 +555,4 @@ KTNG_SUWON = 22982
 GANG_NAM_BUILDING = 19271
 MERCURE_AMBASSADOR = 19199
 HANA_TOOJA_BUILDING = 19040
+KUN_KUK_BUILDING = 19206
