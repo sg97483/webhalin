@@ -289,6 +289,15 @@ mapIdToWebInfo = {
             "8",  # 24시간유료 (판매 : 15000 )
             "",  #
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+    ],
+    # 하나금융 투자빌딩
+    19040: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "",  #
+            "3",  # 주말권
+            "2",  # 심야권
+            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
     ]
 }
 
@@ -302,7 +311,8 @@ amano_auto_search_one = [
     Parks.HONG_MUN_KWAN,
     Parks.CHUNGJEONGNO_HOUSE,
     Parks.OMOK_BRIDGE,
-    Parks.MAGOK_RUMA_2
+    Parks.MAGOK_RUMA_2,
+    Parks.HANA_TOOJA_BUILDING
 ]
 
 amano_auto_search_two = [
@@ -351,7 +361,8 @@ amano_pass = [
     Parks.GWANG_HWA_MUN_S_TOWER,
     Parks.MDM_TOWER_DANG_SAN,
     Parks.PODO_MALL,
-    Parks.ACE_TOWER
+    Parks.ACE_TOWER,
+    Parks.HANA_TOOJA_BUILDING
 ]
 
 amano_need_log_out = [
@@ -476,6 +487,14 @@ def get_har_in_value(park_id, ticket_name):
             discount_type_value = web_info[WebInfo.methodHarIn1]
         else:
             discount_type_value = web_info[WebInfo.methodHarIn2]
+
+    if park_id == Parks.HANA_TOOJA_BUILDING:
+        if ticket_name == "심야권":
+            discount_type_value = web_info[WebInfo.methodHarIn3]
+        elif ticket_name == "주말1일권":
+            discount_type_value = web_info[WebInfo.methodHarIn2]
+        else:
+            discount_type_value = web_info[WebInfo.methodHarIn1]
 
     return discount_type_value
 
