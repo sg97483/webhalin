@@ -166,7 +166,8 @@ mapIdToWebInfo = {
             "10",  # 12시간권
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
             "11",  # 5시간권
-            "12"  # 3시간권
+            "12",  # 3시간권
+            "15"  # 야간권
             ],
     # (자주식)교대역 하림인터내셔날
     19029: ["userId", "userPwd", "//*[@id='btnLogin']",
@@ -459,6 +460,8 @@ def get_har_in_value(park_id, ticket_name):
             discount_type_value = web_info[10]
         elif str(ticket_name).startswith("3시간권"):
             discount_type_value = web_info[11]
+        elif str(ticket_name).startswith("야간권"):
+            discount_type_value = web_info[12]
         else:
             discount_type_value = web_info[WebInfo.methodHarIn1]
 
