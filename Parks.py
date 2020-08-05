@@ -17,8 +17,8 @@ mapIdToUrl = {
     19090: "http://1.214.198.170:8090",
     28864: "http://1.230.226.2",
     15644: "http://125.129.139.210:8090/",
-    18930: "http://110.12.115.145:8088/",
-    19120: "http://110.12.115.145:8088/",
+    18930: "http://110.12.115.145:8088",
+    19120: "http://110.12.115.145:8088",
     16105: "http://kyunghe4.iptime.org:8090/",
     19100: "http://gstimes0026.iptime.org",
     45655: "http://gstimes0025.iptime.org/",
@@ -559,3 +559,5 @@ MERCURE_AMBASSADOR = 19199
 HANA_TOOJA_BUILDING = 19040
 KUN_KUK_BUILDING = 19206
 STATE_TOWER_NAMSAN = 19258
+DREAM_TOWER_NIGHT = 18930
+DREAM_TOWER_HOLIDAY = 19120

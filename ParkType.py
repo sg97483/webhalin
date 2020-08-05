@@ -202,7 +202,9 @@ park_type_old_aj = [
 ]
 
 park_type_etc = [
-    Parks.WESTERN_853
+    Parks.WESTERN_853,
+    Parks.DREAM_TOWER_NIGHT,
+    Parks.DREAM_TOWER_HOLIDAY
 ]
 
 # 키의 갯수 주차권을 분류하기 위함
