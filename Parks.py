@@ -42,7 +42,7 @@ mapIdToUrl = {
     19028: "http://221.148.128.248",
     19047: "http://203.236.112.80:8090",
     12750: "http://203.234.135.161:8090/",
-    19044: "http://125.129.140.83", # 상암DMC s-city
+    19044: "http://125.129.140.83",  # 상암DMC s-city
     19029: "http://106.245.254.58/",
     19030: "http://www.amanopark.co.kr",
     19031: "http://112.216.143.58",
@@ -83,7 +83,7 @@ mapIdToUrl = {
     19020: "http://gstimes3.iptime.org​",
     16210: "http://116.124.66.81:8090",  # 센터플레이스 웹할인 수정
     19084: "http://121.138.149.9:8090",
-    19082: "http://211.35.190.129:8090", # 동화빌딩
+    19082: "http://211.35.190.129:8090",  # 동화빌딩
     13825: "http://61.253.191.140:8090/",
     16360: "http://106.254.242.178:8090/",
     19087: "http://58.234.166.8:8090/",
@@ -138,7 +138,7 @@ mapIdToUrl = {
     12183: "http://61.74.31.144:8090/",
     19136: "http://gstimes0028.iptime.org",
     18963: "http://hip-251.iptime.org:8080/default.aspx",
-    18959: "http://61.253.184.97:8080/default.aspx", # apm
+    18959: "http://61.253.184.97:8080/default.aspx",  # apm
     18901: "http://210.222.65.49/login",
     15313: "http://220.85.111.211:8090",
     19138: "http://test-members.iparking.co.kr/#!",
@@ -148,7 +148,7 @@ mapIdToUrl = {
     19155: "http://221.163.221.2",
     18968: "http://test-members.iparking.co.kr/#!",
     45304: "http://www.amanopark.co.kr/login",
-    19166: "http://gstimes0050.iptime.org/", # GS 인사동
+    19166: "http://gstimes0050.iptime.org/",  # GS 인사동
     19168: "http://gstimes0046.iptime.org/",  # 메가박스 성수
     14618: "http://211.244.148.17",
     19172: "http://106.246.233.234",
@@ -215,7 +215,8 @@ mapIdToUrl = {
     19272: "http://59.15.186.7:8090",  # 힐스테이트에코마곡나루역
     19271: "http://220.85.76.134:8090",  # 강남빌딩
     19199: "http://hipmahh.iptime.org:8090",  # 머큐어앰버서더 홍대호텔
-    19206: "http://211.106.26.68"  # 건국빌딩
+    19206: "http://211.106.26.68",  # 건국빌딩
+    19258: "http://1.225.4.44"  # 스테이트타워남산
 }
 
 lotOptionList = {
@@ -399,6 +400,7 @@ lotOptionList = {
     19271: ["강남빌딩", "ppark", "1234"],
     19199: ["머큐어앰버서더", "ppark", "1234"],
     19206: ["건국빌딩", "pkp111", "pkp111"],
+    19258: ["스테이트타워남산", "parkingpark", "park001^^"],
 }
 
 NON = 0
@@ -556,3 +558,4 @@ GANG_NAM_BUILDING = 19271
 MERCURE_AMBASSADOR = 19199
 HANA_TOOJA_BUILDING = 19040
 KUN_KUK_BUILDING = 19206
+STATE_TOWER_NAMSAN = 19258
