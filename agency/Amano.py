@@ -496,13 +496,7 @@ def get_har_in_value(park_id, ticket_name):
         else:
             discount_type_value = web_info[WebInfo.methodHarIn2]
 
-    else:
-        if Util.get_week_or_weekend() == 0:
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-        else:
-            discount_type_value = web_info[WebInfo.methodHarIn2]
-
-    if park_id == Parks.HANA_TOOJA_BUILDING:
+    elif park_id == Parks.HANA_TOOJA_BUILDING:
         if ticket_name == "심야권":
             discount_type_value = web_info[WebInfo.methodHarIn3]
         elif ticket_name == "주말1일권":
@@ -510,13 +504,19 @@ def get_har_in_value(park_id, ticket_name):
         else:
             discount_type_value = web_info[WebInfo.methodHarIn1]
 
-    if park_id == Parks.T_TOWER:
+    elif park_id == Parks.KUN_KUK_BUILDING:
         if ticket_name[-3:] == "저녁":
             discount_type_value = web_info[WebInfo.methodHarIn1]
         elif ticket_name[-3:] == "심야권":
             discount_type_value = web_info[WebInfo.methodHarIn2]
         else:
             discount_type_value = web_info[WebInfo.methodHarIn3]
+
+    else:
+        if Util.get_week_or_weekend() == 0:
+            discount_type_value = web_info[WebInfo.methodHarIn1]
+        else:
+            discount_type_value = web_info[WebInfo.methodHarIn2]
 
     return discount_type_value
 
@@ -646,7 +646,7 @@ def web_har_in(target, driver):
                                                   discount_type)
 
                         if park_id == Parks.GOLDEN_TOWER or \
-                                Parks.KUN_KUK_BUILDING:
+                                park_id == Parks.KUN_KUK_BUILDING:
                             element_text_area = driver.find_element_by_id('memo')
                             element_text_area.send_keys(Keys.TAB)
                             element_text_area.clear()
