@@ -405,8 +405,6 @@ def get_park_type(park_id):
         return HIGH_CITY_2
     elif park_id in parkTypeAmano:
         return AMANO
-    elif park_id in parkTypeAmano:
-        return AMANO
     elif park_id in parkTypeBlue:
         return BLUE
     elif park_id in parkTypeDarae:
