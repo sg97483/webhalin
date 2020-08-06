@@ -96,16 +96,21 @@ def web_har_in(target, driver):
                         print("검색된 차량번호 : " + td_car_num + " == " + "기존 차량번호 : " + ori_car_num + " / " + ori_car_num[-7:])
 
                         if ori_car_num[-7:] == td_car_num:
+                            try:
+                                driver.find_element_by_css_selector('#discount > div.mb-3.inline > ul > li.list-group > a:nth-child(1)').click()
+                            except NoSuchElementException:
+                                print("웨스턴853 여러 개 차량번호 클릭 실패")
+
                             harin_script = get_har_in_script(park_id, ticket_name)
                             driver.execute_script(harin_script)
                             return True
                         else:
                             print(Colors.MARGENTA + "차량번호가 틀립니다." + Colors.ENDC)
+                            return False
 
                 except NoSuchElementException:
                     print(Colors.GREEN + "해당 엘리멘트가 존재하지 않습니다." + Colors.ENDC)
-
-                return False
+                    return False
 
             elif park_id == Parks.DREAM_TOWER_NIGHT or park_id == Parks.DREAM_TOWER_HOLIDAY:
                 # Login
