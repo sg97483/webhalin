@@ -14,6 +14,7 @@ OLD_AJ = 28
 AJ_PARK = 29
 HIGH_CITY_2 = 30
 ETC = 31
+NICE = 32
 
 # 주차장 타입별 주차장들
 parkTypeHighCity = [
@@ -205,6 +206,11 @@ park_type_etc = [
     Parks.WESTERN_853,
     Parks.DREAM_TOWER_NIGHT,
     Parks.DREAM_TOWER_HOLIDAY
+]
+
+park_type_nice = [
+    Parks.JONG_RO_TOWER,
+    Parks.UDEOK_BUILDING
 ]
 
 # 키의 갯수 주차권을 분류하기 위함
@@ -427,3 +433,5 @@ def get_park_type(park_id):
         return ETC
     elif park_id in park_type_old_aj:
         return OLD_AJ
+    elif park_id in park_type_nice:
+        return NICE

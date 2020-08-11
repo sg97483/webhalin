@@ -12,7 +12,7 @@ import ParkType
 import Parks
 import Util
 
-from agency import Iptime, Gs, HighCity, Iparking, AJpark, Darae, Amano, Blue, Etc, OldAJ
+from agency import Iptime, Gs, HighCity, Iparking, AJpark, Darae, Amano, Blue, Etc, OldAJ, GrangSeoul, Nice
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -27,7 +27,7 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.STATE_TOWER_NAMSAN
+testPark = Parks.UDEOK_BUILDING
 is_park_test = True
 is_no_db_test = False
 
@@ -63,7 +63,12 @@ def get_sql(now_date):
         '19230', '14588', '19202', '19022', '19159', '19234',
         '19215', '19241', '19196', '19248', '19247',
         '19219', '19218', '19212', '19267', '19250', '19240', '19239', '19161', '19272', '19271',
-        '19199', '19206', '19258'
+        '19199', '19206', '19258',
+        # 여기서부터 나이스파크
+        '19280', '19281', '19282', '19283', '19284', '19285', '19286', '19287', '19288', '19289', '19290',
+        '19291', '19292', '19293', '19294', '19295', '19296', '19297', '19298', '19299', '19300',
+        '19301', '19302', '19303', '19304', '19305', '19306', '19307', '19308', '19309', '19310',
+        '19311', '19312'
     ]
 
     str_lots = ", ".join(valid_lots)
@@ -209,6 +214,14 @@ def web_har_in(target):
 
     elif park_type == ParkType.OLD_AJ:
         exec_web_har_in(OldAJ, target, driver)
+        return True
+
+    elif park_type == ParkType.GRANG_SEOUL:
+        exec_web_har_in(GrangSeoul, target, driver)
+        return True
+
+    elif park_type == ParkType.NICE:
+        exec_web_har_in(Nice, target, driver)
         return True
 
     else:
