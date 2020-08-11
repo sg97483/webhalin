@@ -317,6 +317,15 @@ mapIdToWebInfo = {
             "15",  # 종일권(평일)
             "14",  # 야간권
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+    ],
+    # 서교동 나대지
+    19238: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "4",  # 파킹쉐어 16시간
+            "4",  # 파킹쉐어 16시간
+            "",
+            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
     ]
 }
 
@@ -333,7 +342,8 @@ amano_auto_search_one = [
     Parks.MAGOK_RUMA_2,
     Parks.HANA_TOOJA_BUILDING,
     Parks.KUN_KUK_BUILDING,
-    Parks.STATE_TOWER_NAMSAN
+    Parks.STATE_TOWER_NAMSAN,
+    Parks.SEOGYO_DONG_NADAEJI
 ]
 
 amano_auto_search_two = [
@@ -385,7 +395,8 @@ amano_pass = [
     Parks.ACE_TOWER,
     Parks.HANA_TOOJA_BUILDING,
     Parks.KUN_KUK_BUILDING,
-    Parks.STATE_TOWER_NAMSAN
+    Parks.STATE_TOWER_NAMSAN,
+    Parks.SEOGYO_DONG_NADAEJI
 ]
 
 amano_need_log_out = [

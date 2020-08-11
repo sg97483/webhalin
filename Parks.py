@@ -216,7 +216,8 @@ mapIdToUrl = {
     19271: "http://220.85.76.134:8090",  # 강남빌딩
     19199: "http://hipmahh.iptime.org:8090",  # 머큐어앰버서더 홍대호텔
     19206: "http://211.106.26.68",  # 건국빌딩
-    19258: "http://1.225.4.44"  # 스테이트타워남산
+    19258: "http://1.225.4.44",  # 스테이트타워남산
+    19238: "http://112.216.33.118"  # 서교동 나대지
 }
 
 lotOptionList = {
@@ -401,6 +402,7 @@ lotOptionList = {
     19199: ["머큐어앰버서더", "ppark", "1234"],
     19206: ["건국빌딩", "pkp111", "pkp111"],
     19258: ["스테이트타워남산", "parkingpark", "park001^^"],
+    19238: ["서교동 나대지 주차장", "parkingp", "pP1111@"],
 }
 
 NON = 0
@@ -563,3 +565,4 @@ DREAM_TOWER_NIGHT = 18930
 DREAM_TOWER_HOLIDAY = 19120
 JONG_RO_TOWER = 19306
 UDEOK_BUILDING = 19304
+SEOGYO_DONG_NADAEJI = 19238

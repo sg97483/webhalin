@@ -114,7 +114,8 @@ parkTypeAmano = [
     Parks.MDM_TOWER_DANG_SAN,
     Parks.HANA_TOOJA_BUILDING,
     Parks.KUN_KUK_BUILDING,
-    Parks.STATE_TOWER_NAMSAN
+    Parks.STATE_TOWER_NAMSAN,
+    Parks.SEOGYO_DONG_NADAEJI
 ]
 
 parkTypeBlue = [
