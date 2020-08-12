@@ -31,7 +31,6 @@ def web_har_in(target, driver):
         driver.find_element_by_id("ol_submit").click()
     except Exception as ex:
         print(Colors.RED + str(ex) + Colors.ENDC)
-        return False
 
     driver.get(nice_url)
     driver.find_element_by_name('stx').send_keys(search_id)
