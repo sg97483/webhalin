@@ -326,6 +326,15 @@ mapIdToWebInfo = {
             "4",  # 파킹쉐어 16시간
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+    ],
+    # 건대부중(건국대학교사범대학부속중학교)
+    19210: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "3",  # 파킹셰어 종일권 (판매 : 10000 )
+            "3",  # 파킹셰어 종일권 (판매 : 10000 )
+            "",
+            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
     ]
 }
 
@@ -343,7 +352,8 @@ amano_auto_search_one = [
     Parks.HANA_TOOJA_BUILDING,
     Parks.KUN_KUK_BUILDING,
     Parks.STATE_TOWER_NAMSAN,
-    Parks.SEOGYO_DONG_NADAEJI
+    Parks.SEOGYO_DONG_NADAEJI,
+    Parks.KUN_KUK_MIDDLE
 ]
 
 amano_auto_search_two = [
@@ -396,7 +406,8 @@ amano_pass = [
     Parks.HANA_TOOJA_BUILDING,
     Parks.KUN_KUK_BUILDING,
     Parks.STATE_TOWER_NAMSAN,
-    Parks.SEOGYO_DONG_NADAEJI
+    Parks.SEOGYO_DONG_NADAEJI,
+    Parks.KUN_KUK_MIDDLE
 ]
 
 amano_need_log_out = [
