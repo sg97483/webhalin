@@ -179,6 +179,7 @@ mapIdToUrl = {
     19219: "https://mobile.ajpark.co.kr/partner/",  # AJ방배점
     19218: "https://mobile.ajpark.co.kr/partner/",  # AJ하우스디비즈
     19212: "https://mobile.ajpark.co.kr/partner/",  # AJ이화주차장점
+    19226: "https://mobile.ajpark.co.kr/partner/",  # AJ 홍익스포츠스파
 
     19004: "http://221.148.11.134:8090",
     19180: "http://hipgnpb.iptime.org:8090",
@@ -569,3 +570,4 @@ JONG_RO_TOWER = 19306
 UDEOK_BUILDING = 19304
 SEOGYO_DONG_NADAEJI = 19238
 KUN_KUK_MIDDLE = 19210
+AJ_HONG_IK_SPORTS_SPA = 19226

@@ -168,6 +168,14 @@ mapIdToWebInfo = {
             2,  # 평일종일권
             0,  # 주말종일권
             1  # 야간권
+            ],
+    # AJ파크 홍익스포츠스파
+    19226: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일종일권
+            0,  # 주말종일권
+            2  # 야간권
             ]
 }
 

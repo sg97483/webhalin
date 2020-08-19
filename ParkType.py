@@ -196,7 +196,8 @@ park_type_aj_park = [
     Parks.NONHYEON_WELLSTONE,
     Parks.AJ_BANGBE,
     Parks.AJ_HOUSE_DIBIZ,
-    Parks.AJ_EWHA
+    Parks.AJ_EWHA,
+    Parks.AJ_HONG_IK_SPORTS_SPA
 ]
 
 park_type_old_aj = [
