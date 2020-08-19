@@ -281,8 +281,9 @@ mapIdToWebInfo = {
     19174: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
-            "javascript:applyDiscount('21', '1', '10|11|12|13|14|', '공유서비스무료(web)', '1', '0');",
-            "javascript:applyDiscount('21', '1', '10|11|12|13|14|', '공유서비스무료(web)', '1', '0');"
+            "javascript:applyDiscount('34', '1', '', '파킹박', '1', '0');",
+            "javascript:applyDiscount('34', '1', '', '파킹박', '1', '0');",
+            "javascript:applyDiscount('35', '1', '', '파킹박(야간)', '1', '0');"
             ],
     # (하이파킹) 강남 롯데호텔L7
     19004: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
