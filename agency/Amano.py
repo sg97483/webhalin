@@ -352,8 +352,7 @@ amano_auto_search_one = [
     Parks.HANA_TOOJA_BUILDING,
     Parks.KUN_KUK_BUILDING,
     Parks.STATE_TOWER_NAMSAN,
-    Parks.SEOGYO_DONG_NADAEJI,
-    Parks.KUN_KUK_MIDDLE
+    Parks.SEOGYO_DONG_NADAEJI
 ]
 
 amano_auto_search_two = [
