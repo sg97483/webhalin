@@ -95,11 +95,11 @@ mapIdToWebInfo = {
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
     # 웨스트게이트
-    18913: ["userId", "userPwd", "//input[@type='submit']",
-            "schCarNo", "//*[@id='sForm']/input[4]",
+    18913: ["userId", "userPwd", "btnLogin",
+            "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "459",  # 종일 평일(자주식)
-            "460",  # 종일 주말
+            "4",  # 종일 평일(자주식)
+            "",  # 종일 주말
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
@@ -411,7 +411,6 @@ amano_pass = [
 ]
 
 amano_need_log_out = [
-    Parks.WEST_GATE,
     Parks.GOLDEN_TOWER
 ]
 
@@ -584,7 +583,7 @@ def web_har_in_login(driver, park_id):
     if park_id == Parks.HONG_MUN_KWAN or \
             park_id == Parks.YEOKSAM_BUILDING:
         driver.find_element_by_css_selector("#loginForm > li:nth-child(5) > input").click()
-    elif park_id == Parks.SEOUL_GIROKWON:
+    elif park_id == Parks.SEOUL_GIROKWON or park_id == Parks.WEST_GATE:
         driver.find_element_by_id(web_info[WebInfo.btnLogin]).click()
         driver.implicitly_wait(3)
     else:
