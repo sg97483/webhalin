@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import re
+
 from selenium.webdriver.support.select import Select
 
 import Util
@@ -225,7 +227,6 @@ def web_har_in(target, driver):
             # print(driver.current_url)
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
             if ParkUtil.first_access(park_id, driver.current_url):
-
                 driver.find_element_by_id(web_info[WebInfo.inputId]).send_keys(AJ_PARK_ID)
                 driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(AJ_PARK_PW)
 
@@ -244,9 +245,25 @@ def web_har_in(target, driver):
 
                     select = Select(driver.find_element_by_id('selectDiscount'))
                     select.select_by_index(get_har_in_script(park_id, ticket_name))
-                    driver.implicitly_wait(3)
-                    driver.find_element_by_id('discountSubmit').click()
-                    return True
+
+                    aj_ticket_info = driver.find_element_by_id('discountType_time').text
+                    aj_ticket_cnt_txt = aj_ticket_info[-6:]
+                    aj_ticket_cnt = re.findall("\d+", aj_ticket_cnt_txt)
+                    aj_cnt = aj_ticket_cnt[0]
+                    print(Colors.RED + aj_cnt + Colors.ENDC)
+
+                    try:
+                        if int(aj_cnt) < 1:
+                            print(Colors.RED + "주차권이 부족합니다." + Colors.ENDC)
+                            return False
+                        else:
+                            Util.sleep(5)
+                            driver.implicitly_wait(3)
+                            driver.find_element_by_id('discountSubmit').click()
+                            return True
+                    except ValueError as ex:
+                        print(Colors.RED + "잘못된 주차권 갯수입니다. : " + ex + Colors.ENDC)
+                        return False
 
             return False
         else:
