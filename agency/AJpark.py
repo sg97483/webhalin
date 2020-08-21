@@ -245,8 +245,9 @@ def web_har_in(target, driver):
 
                     select = Select(driver.find_element_by_id('selectDiscount'))
                     select.select_by_index(get_har_in_script(park_id, ticket_name))
-
-                    aj_ticket_info = driver.find_element_by_id('discountType_time').text
+                    Util.sleep(2)
+                    aj_ticket_info = select.first_selected_option.text
+                    print(Colors.BLUE + aj_ticket_info + Colors.ENDC)
                     aj_ticket_cnt_txt = aj_ticket_info[-6:]
                     aj_ticket_cnt = re.findall("\d+", aj_ticket_cnt_txt)
                     aj_cnt = aj_ticket_cnt[0]
@@ -257,7 +258,6 @@ def web_har_in(target, driver):
                             print(Colors.RED + "주차권이 부족합니다." + Colors.ENDC)
                             return False
                         else:
-                            Util.sleep(5)
                             driver.implicitly_wait(3)
                             driver.find_element_by_id('discountSubmit').click()
                             return True
