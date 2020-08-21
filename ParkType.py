@@ -362,7 +362,8 @@ parkTypeNoRequestMain = [
     Parks.MODERN_GYEDONG_BUILDING,
     Parks.SUN_HWA_BUILDING,
     Parks.PODO_MALL,
-    Parks.MERCURE_AMBASSADOR
+    Parks.MERCURE_AMBASSADOR,
+    Parks.HOTEL_SUNSHINE
 ]
 
 type_to_search_css = {
