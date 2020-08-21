@@ -27,7 +27,7 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.AJ_HONG_IK_SPORTS_SPA
+testPark = Parks.GRANG_SEUOL
 is_park_test = True
 is_no_db_test = False
 
@@ -175,10 +175,7 @@ def web_har_in(target):
     park_id = int(Util.all_trim(target[1]))
     park_type = ParkType.get_park_type(park_id)
 
-    if park_id == Parks.GRANG_SEUOL:
-        return True
-
-    elif park_type == ParkType.HIGH_CITY or park_type == ParkType.HIGH_CITY_2:
+    if park_type == ParkType.HIGH_CITY or park_type == ParkType.HIGH_CITY_2:
         exec_web_har_in(HighCity, target, driver)
         return True
 
@@ -224,6 +221,10 @@ def web_har_in(target):
 
     elif park_type == ParkType.NICE:
         exec_web_har_in(Nice, target, driver)
+        return True
+
+    elif park_id == Parks.GRANG_SEUOL:
+        exec_web_har_in(GrangSeoul, target, driver)
         return True
 
     else:
