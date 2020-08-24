@@ -29,8 +29,8 @@ mapIdToWebInfo = {
     19120: ["user_id", "passwd", "//*[@id='login_div']/table/tbody/tr/td",
             "_search_Str", "/html/body/table[2]/tbody/tr[1]/td/form/table/tbody/tr[9]/td/table[2]/tbody/tr/td[5]/input",
             "",
-            "",
-            ""],
+            "javascript:show_notice3('주말종일권','8000','')",
+            "javascript:show_notice3('주말종일권','8000','')"],
 }
 
 
