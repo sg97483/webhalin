@@ -81,21 +81,25 @@ def web_har_in(target, driver):
             Util.sleep(1)
 
             if park_id == Parks.SUN_HWA_BUILDING:
-                tr_text = driver.find_element_by_css_selector(
-                    "body > table:nth-child(4) > tbody > tr:nth-child(2) > td:nth-child(2) > p:nth-child(2)").text
-                text = re.sub('<.+?>', '', tr_text, 0, re.I | re.S)
-                trim_text = text.strip()
-                split_trim_text = trim_text.split(":")
-                search_day_text = split_trim_text[1].strip()
+                try:
+                    tr_text = driver.find_element_by_css_selector(
+                        "body > table:nth-child(4) > tbody > tr:nth-child(2) > td:nth-child(2) > p:nth-child(2)").text
 
-                today = datetime.datetime.now()
-                today_text = today.strftime('%Y-%m-%d')
+                    text = re.sub('<.+?>', '', tr_text, 0, re.I | re.S)
+                    trim_text = text.strip()
+                    split_trim_text = trim_text.split(":")
+                    search_day_text = split_trim_text[1].strip()
 
-                if today_text == search_day_text:
-                    driver.find_element_by_xpath("/html/body/table[2]/tbody/tr[2]").click()
-                else:
-                    print(Colors.BLUE + "금일 날짜에 맞는 데이터가 없습니다." + Colors.ENDC)
-                    return False
+                    today = datetime.datetime.now()
+                    today_text = today.strftime('%Y-%m-%d')
+
+                    if today_text == search_day_text:
+                        driver.find_element_by_xpath("/html/body/table[2]/tbody/tr[2]").click()
+                    else:
+                        print(Colors.BLUE + "금일 날짜에 맞는 데이터가 없습니다." + Colors.ENDC)
+                        return False
+                except NoSuchElementException as ex:
+                    print(Colors.BLUE + "날짜 선택을 건너뜁니다. " + ex.msg + Colors.ENDC)
 
             # 차량 번호 검색 및 비교 시도
             try:
