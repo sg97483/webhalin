@@ -161,13 +161,13 @@ mapIdToWebInfo = {
     19173: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "9",  # 평일1일권
-            "",
+            "9",  # 24hr(플랫폼)
+            "14",  # 주말(플랫폼)
             "10",  # 12시간권
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
             "11",  # 5시간권
             "12",  # 3시간권
-            "15"  # 야간권
+            "13"  # 야간권
             ],
     # (자주식)교대역 하림인터내셔날
     19029: ["userId", "userPwd", "//*[@id='btnLogin']",
