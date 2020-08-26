@@ -62,6 +62,12 @@ mapIdToWebInfo = {
             "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
             "#carList > tr",
             "6"
+            ],
+    # 여의도 NH농협캐피탈
+    12532: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
             ]
 }
 
@@ -69,7 +75,8 @@ i_parking_hi_parking = [
     Parks.MAJESTA,
     Parks.AUTOWAY_TOWER,
     Parks.NUN_SQUARE,
-    Parks.BUILDING_94
+    Parks.BUILDING_94,
+    Parks.YEOUIDO_NH_CAPITAL
 ]
 
 
