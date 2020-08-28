@@ -412,6 +412,14 @@ mapIdToWebInfo = {
             "javascript:applyDiscount('07', '0', '01|02|10|11|12|13|14|15|', 'ppark', '1', '0');",
             "javascript:applyDiscount('07', '0', '01|02|10|11|12|13|14|15|', 'ppark', '1', '0');",
             "javascript:applyDiscount('07', '0', '01|02|10|11|12|13|14|15|', 'ppark', '1', '0');"
+            ],
+    #  양재공영
+    19321: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
+            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+            "chk",
+            "javascript:applyDiscount('10', '1', '', '종일권(유료)', '1', '0');",
+            "javascript:applyDiscount('10', '1', '', '종일권(유료)', '1', '0');",
+            "javascript:applyDiscount('10', '1', '', '종일권(유료)', '1', '0');"
             ]
 }
 
