@@ -31,6 +31,12 @@ mapIdToWebInfo = {
             "",
             "javascript:show_notice3('주말종일권','8000','')",
             "javascript:show_notice3('주말종일권','8000','')"],
+    # (하이파킹) 디아뜨갤러리 2차
+    19171: ["id", "pw", "//*[@id='btnLogin']",
+            "//*[@id='discount']/div[1]/input[1]", "",
+            "",
+            "2",
+            "javascript:insertDiscount();"],
 }
 
 
@@ -160,6 +166,70 @@ def web_har_in(target, driver):
                     print(Colors.GREEN + "해당 엘리멘트가 존재하지 않습니다." + Colors.ENDC)
 
                 return False
+
+            elif park_id == Parks.DIAT_GALLERY_2:
+                if ParkUtil.check_first_conn(park_id):
+                    driver.find_element_by_id(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
+                    driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
+
+                    driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
+
+                driver.implicitly_wait(2)
+                driver.find_element_by_id("ContentPlaceHolder1_btnParking").click()
+                driver.implicitly_wait(2)
+                driver.find_element_by_id("ContentPlaceHolder1_Repeater1_btnParkCd_1").click()
+                driver.implicitly_wait(2)
+                driver.find_element_by_id("txtInCardNo").click()
+                driver.execute_script("document.getElementById('txtInCardNo').innerHTML = '" + search_id + "';")
+                driver.implicitly_wait(2)
+                driver.find_element_by_xpath("//*[@id='form1']/div[5]/div[1]/div/div[2]/div[2]/button").click()
+                driver.implicitly_wait(2)
+
+                try:
+                    park_search_css = "#form1 > div.wrap > div > div > div.car-select-list-wrap > ul > li > label > div.car-number"
+
+                    tr_text = driver.find_element_by_css_selector(park_search_css).text
+                    text = re.sub('<.+?>', '', tr_text, 0, re.I | re.S)
+                    trim_text = text.strip()
+                    # print(trim_text)
+                    if trim_text.startswith("검색") or trim_text.startswith("입차") or trim_text.startswith("차량"):
+                        print(Colors.YELLOW + "미입차" + Colors.ENDC)
+                        return False
+                    else:
+                        td_car_num_0 = driver.find_element_by_css_selector(park_search_css).text
+                        td_car_num_1 = re.sub('<.+?>', '', td_car_num_0, 0, re.I | re.S)
+                        td_car_num_2 = td_car_num_1.strip()
+                        td_car_num_3 = td_car_num_2.split('\n')
+                        td_car_num = td_car_num_3[0][-7:]
+
+                        print("검색된 차량번호 : " + td_car_num + " == " + "기존 차량번호 : " + ori_car_num + " / " + ori_car_num[-7:])
+
+                        if ori_car_num[-7:] == td_car_num:
+                            driver.find_element_by_css_selector(park_search_css).click()
+                            driver.implicitly_wait(2)
+                            driver.execute_script("javascript:next()")
+                            driver.implicitly_wait(2)
+                            driver.find_element_by_xpath("//*[@id='form1']/div[17]/div/div/div[2]/div[1]/button")
+                            # driver.find_element_by_xpath("//*[@id='form1']/div[17]/div/div/div[2]/div[1]/button")
+                            driver.implicitly_wait(2)
+                            driver.execute_script("javascript:showItem(349408703206216,'파킹박','[무료]',0,'기타','[무한]','1','[무한]')")
+                            # driver.find_element_by_xpath("//*[@id='form1']/div[17]/div/div/div[3]/button")
+                            driver.implicitly_wait(2)
+                            driver.execute_script("javascript:validate();")
+                            driver.implicitly_wait(2)
+                            driver.execute_script("javascript:confirm();")
+                            driver.implicitly_wait(2)
+                            driver.execute_script("javascript:goLink('Ticket_CheckPoint.aspx', true);")
+                            driver.implicitly_wait(2)
+                            Util.sleep(2)
+                            return True
+                        else:
+                            print(Colors.MARGENTA + "차량번호가 틀립니다." + Colors.ENDC)
+                            return False
+
+                except NoSuchElementException:
+                    print(Colors.GREEN + "해당 엘리멘트가 존재하지 않습니다." + Colors.ENDC)
+                    return False
 
         else:
             print(Colors.BLUE + "현재 웹할인 페이지 분석이 되어 있지 않는 주차장입니다." + Colors.ENDC)

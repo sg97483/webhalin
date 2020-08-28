@@ -211,7 +211,8 @@ park_type_old_aj = [
 park_type_etc = [
     Parks.WESTERN_853,
     Parks.DREAM_TOWER_NIGHT,
-    Parks.DREAM_TOWER_HOLIDAY
+    Parks.DREAM_TOWER_HOLIDAY,
+    Parks.DIAT_GALLERY_2
 ]
 
 park_type_nice = [
