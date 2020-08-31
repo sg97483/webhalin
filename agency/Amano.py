@@ -201,7 +201,7 @@ mapIdToWebInfo = {
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "12",  # 종일권(평일)
-            "",  # 할인키 값을 모르겠음
+            "13",  # 종일권(주말)
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
@@ -210,7 +210,7 @@ mapIdToWebInfo = {
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "15",  # 종일권
-            "",  #
+            "18",  # 종일권(주말)(파킹셰어) (판매 : 5000 )
             "16",  # 2시간권
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
             "17"  # 3시간권
@@ -314,7 +314,7 @@ mapIdToWebInfo = {
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "15",  # 종일권(평일)
-            "15",  # 종일권(평일)
+            "16",  # 파킹셰어 종일권(주말) (판매 : 10000 )
             "14",  # 야간권
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
     ],
@@ -494,11 +494,17 @@ def get_har_in_value(park_id, ticket_name):
         elif str(ticket_name).startswith("야간권"):
             discount_type_value = web_info[12]
         else:
-            discount_type_value = web_info[WebInfo.methodHarIn1]
+            if Util.get_week_or_weekend() == 0:
+                discount_type_value = web_info[WebInfo.methodHarIn1]
+            else:
+                discount_type_value = web_info[WebInfo.methodHarIn2]
 
     elif park_id == Parks.JAYANG_PALACE:
         if ticket_name[-3:] == "1일권":
-            discount_type_value = web_info[WebInfo.methodHarIn1]
+            if Util.get_week_or_weekend() == 0:
+                discount_type_value = web_info[WebInfo.methodHarIn1]
+            else:
+                discount_type_value = web_info[WebInfo.methodHarIn2]
         elif ticket_name[-4:] == "2시간권":
             discount_type_value = web_info[WebInfo.methodHarIn3]
         elif ticket_name[-4:] == "3시간권":
