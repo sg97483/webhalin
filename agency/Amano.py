@@ -167,7 +167,7 @@ mapIdToWebInfo = {
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
             "11",  # 5시간권
             "12",  # 3시간권
-            "13"  # 야간권
+            "15"  # 야간권
             ],
     # (자주식)교대역 하림인터내셔날
     19029: ["userId", "userPwd", "//*[@id='btnLogin']",
