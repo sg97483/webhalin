@@ -335,6 +335,15 @@ mapIdToWebInfo = {
             "3",  # 파킹셰어 종일권 (판매 : 10000 )
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+    ],
+    # 휴맥스빌리지
+    19195: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "2",  # 일일무료
+            "2",  # 일일무료
+            "",
+            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
     ]
 }
 
@@ -352,7 +361,8 @@ amano_auto_search_one = [
     Parks.HANA_TOOJA_BUILDING,
     Parks.KUN_KUK_BUILDING,
     Parks.STATE_TOWER_NAMSAN,
-    Parks.SEOGYO_DONG_NADAEJI
+    Parks.SEOGYO_DONG_NADAEJI,
+    Parks.HUMAX_VILLAGE
 ]
 
 amano_auto_search_two = [
@@ -406,7 +416,8 @@ amano_pass = [
     Parks.KUN_KUK_BUILDING,
     Parks.STATE_TOWER_NAMSAN,
     Parks.SEOGYO_DONG_NADAEJI,
-    Parks.KUN_KUK_MIDDLE
+    Parks.KUN_KUK_MIDDLE,
+    Parks.HUMAX_VILLAGE
 ]
 
 amano_need_log_out = [
