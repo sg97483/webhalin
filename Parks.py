@@ -81,7 +81,7 @@ mapIdToUrl = {
     12872: "http://npgsgranparkingroot0.iptime.org",
     19066: "http://park.awp.co.kr/discount/registration",
     19020: "http://gstimes3.iptime.org​",
-    16210: "http://116.124.66.81:8090",  # 센터플레이스 웹할인 수정
+    16210: "http://116.124.66.91:8090",  # 센터플레이스 웹할인 수정
     19084: "http://121.138.149.9:8090",
     19082: "http://211.35.190.129:8090",  # 동화빌딩
     13825: "http://61.253.191.140:8090/",
