@@ -27,7 +27,7 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.HUMAX_VILLAGE
+testPark = Parks.D_TOWER
 is_park_test = True
 is_no_db_test = False
 
@@ -70,7 +70,7 @@ def get_sql(now_date):
         '19301', '19302', '19303', '19304', '19305', '19306', '19307', '19308', '19309', '19310',
         '19311', '19312',
         # 나이스 신규현장 끝
-        '19238', '19210', '19226', '19321', '19276', '19195'
+        '19238', '19210', '19226', '19321', '19276', '19195', '19325'
     ]
 
     str_lots = ", ".join(valid_lots)

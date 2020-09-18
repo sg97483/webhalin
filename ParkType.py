@@ -75,7 +75,8 @@ parkTypeHighCity = [
     Parks.GANG_NAM_BUILDING,
     Parks.YANGJAE_GONGYEONG,
     Parks.DONGSAN_GONGYEONG,
-    Parks.SHIN_NON_HYUN_W_TOWER
+    Parks.SHIN_NON_HYUN_W_TOWER,
+    Parks.D_TOWER
 ]
 
 parkTypeHighCity2 = [

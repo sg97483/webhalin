@@ -436,6 +436,14 @@ mapIdToWebInfo = {
             "javascript:applyDiscount('94', '1', '', '파킹박');",
             "javascript:applyDiscount('94', '1', '', '파킹박');",
             "javascript:applyDiscount('81', '1', '', '파킹박(야간)');",
+            ],
+    #  D타워
+    19325: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
+            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+            "chk",
+            "javascript:applyDiscount('14', '1', '11|', 'ppark', 'Y');",
+            "javascript:applyDiscount('14', '1', '11|', 'ppark', 'Y');",
+            "javascript:applyDiscount('17', '1', '11|', 'ppark(야간)', 'Y');",
             ]
 }
 
