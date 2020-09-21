@@ -110,7 +110,7 @@ def web_har_in(target, driver):
                 split_trim_text = trim_text.split()
                 trim_text = split_trim_text[3]
 
-                if ori_car_num[-7:] == trim_text:
+                if ori_car_num[-7:] == trim_text[-7:]:
                     # harin_script = get_har_in_script(park_id, ticket_name)
                     # driver.execute_script(harin_script)
                     if park_id == Parks.GMG_TOWER:
