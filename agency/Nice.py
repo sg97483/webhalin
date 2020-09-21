@@ -39,7 +39,7 @@ def web_har_in(target, driver):
     print(searched_car_number)
 
     if ori_car_num[-7:] == searched_car_number[-7:]:
-        if ticket_name == '평일1일권':
+        if ticket_name == '1일권':
             driver.find_element_by_css_selector(
                 'body > table:nth-child(11) > tbody > tr:nth-child(2) > td:nth-child(11) > b:nth-child(3) > a > font').click()
         else:
