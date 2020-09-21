@@ -568,6 +568,17 @@ def get_har_in_value(park_id, ticket_name):
         elif ticket_name == "주말1일권":
             discount_type_value = web_info[WebInfo.methodHarIn2]
 
+    # 오목교주차장
+    elif park_id == Parks.OMOK_BRIDGE:
+        if ticket_name[-4:] == "2시간권":
+            discount_type_value = web_info[WebInfo.methodHarIn3]
+        elif ticket_name[-4:] == "3시간권":
+            discount_type_value = web_info[10]
+        elif ticket_name == "평일1일권":
+            discount_type_value = web_info[WebInfo.methodHarIn1]
+        elif ticket_name == "주말1일권":
+            discount_type_value = web_info[WebInfo.methodHarIn2]
+
     else:
         if Util.get_week_or_weekend() == 0:
             discount_type_value = web_info[WebInfo.methodHarIn1]
