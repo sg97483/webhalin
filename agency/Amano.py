@@ -604,15 +604,15 @@ def web_har_in_login(driver, park_id):
     element_pw.clear()
     element_pw.send_keys(web_har_in_info[WebInfo.webHarInPw])
 
-    if park_id == Parks.NY_TOWER:
-        driver.implicitly_wait(3)
-
     if park_id == Parks.HONG_MUN_KWAN or \
             park_id == Parks.YEOKSAM_BUILDING:
         driver.find_element_by_css_selector("#loginForm > li:nth-child(5) > input").click()
     elif park_id == Parks.SEOUL_GIROKWON or park_id == Parks.WEST_GATE:
         driver.find_element_by_id(web_info[WebInfo.btnLogin]).click()
         driver.implicitly_wait(3)
+    elif park_id == Parks.NY_TOWER:
+        Util.sleep(1)
+        driver.find_element_by_id("btnLogin").click()
     else:
         driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
 
