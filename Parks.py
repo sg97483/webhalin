@@ -225,6 +225,7 @@ mapIdToUrl = {
     19195: "http://211.55.114.162",  # 휴맥스빌리
     19325: "http://211.62.158.80:8900",  # D타워
     19273: "http://112.169.122.54:8090",  # 반포동방음언덕형공영
+    19331: "http://121.160.237.7",  # 건국빌딩 GS
 }
 
 lotOptionList = {
@@ -417,6 +418,7 @@ lotOptionList = {
     19195: ["휴맥스빌리지", "ppark", "1234"],
     19325: ["D타워", "ppark", "1234"],
     19273: ["반포동방음언덕형공영", "ppark", "1234"],
+    19331: ["건국빌딩", "gspartner2", "123456"],
 }
 
 NON = 0
@@ -591,3 +593,4 @@ HUMAX_VILLAGE = 19195
 SHIN_NON_HYUN_W_TOWER = 12124
 D_TOWER = 19325
 BANPO_DONG_GONGYONG = 19273
+GS_GUN_GUK_BUILDING = 19331

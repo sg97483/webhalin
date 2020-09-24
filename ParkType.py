@@ -122,7 +122,8 @@ parkTypeAmano = [
     Parks.STATE_TOWER_NAMSAN,
     Parks.SEOGYO_DONG_NADAEJI,
     Parks.KUN_KUK_MIDDLE,
-    Parks.HUMAX_VILLAGE
+    Parks.HUMAX_VILLAGE,
+    Parks.GS_GUN_GUK_BUILDING
 ]
 
 parkTypeBlue = [
