@@ -290,7 +290,8 @@ mapIdToWebInfo = {
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
             "javascript:applyDiscount('09', '1', '06|11|20|22|', '파킹박', '999999999', '0');",
-            "javascript:applyDiscount('09', '1', '06|11|20|22|', '파킹박', '999999999', '0');"
+            "javascript:applyDiscount('09', '1', '06|11|20|22|', '파킹박', '999999999', '0');",
+            "javascript:applyDiscount('31', '1', '', '파킹박(야간)', '999999999', '0');"
             ],
     # 	(하이시티파킹) 코스모타워 주차장
     12184: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
@@ -472,7 +473,9 @@ def get_har_in_script(park_id, ticket_name):
             else:
                 return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
 
-    elif park_id == Parks.DGB_FINANCE_CENTER or park_id == Parks.CENTRAL_TOWER:
+    elif park_id == Parks.DGB_FINANCE_CENTER \
+            or park_id == Parks.CENTRAL_TOWER \
+            or park_id == Parks.GANG_NAM_L7:
         if ticket_name == "심야권":
             return mapIdToWebInfo[park_id][WebInfo.methodHarIn3]
         else:
