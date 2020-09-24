@@ -336,15 +336,6 @@ mapIdToWebInfo = {
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
     ],
-    # 휴맥스빌리지
-    19195: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
-            "schCarNo", "//*[@id='sForm']/input[3]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "2",  # 일일무료
-            "2",  # 일일무료
-            "",
-            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-    ],
     # 건국빌딩
     19331: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
