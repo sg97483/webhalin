@@ -226,6 +226,7 @@ mapIdToUrl = {
     19325: "http://211.62.158.80:8900",  # D타워
     19273: "http://112.169.122.54:8090",  # 반포동방음언덕형공영
     19331: "http://121.160.237.7",  # 건국빌딩 GS
+    19236: "http://test-members.iparking.co.kr/#!",  # 이수공영
 }
 
 lotOptionList = {
@@ -419,6 +420,7 @@ lotOptionList = {
     19325: ["D타워", "ppark", "1234"],
     19273: ["반포동방음언덕형공영", "ppark", "1234"],
     19331: ["건국빌딩", "gspartner2", "123456"],
+    19236: ["이수공", "hpisuppark", "hpisuppark"],
 }
 
 NON = 0
@@ -595,3 +597,4 @@ D_TOWER = 19325
 BANPO_DONG_GONGYONG = 19273
 GS_GUN_GUK_BUILDING = 19331
 SAM_WON_TOWER = 19330
+ISU_GONG_YONG = 19236

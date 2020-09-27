@@ -68,6 +68,12 @@ mapIdToWebInfo = {
             "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
             "#carList > tr",
             "2"
+            ],
+    # 이수공영주차장
+    19236: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
             ]
 }
 
