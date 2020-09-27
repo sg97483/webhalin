@@ -344,6 +344,15 @@ mapIdToWebInfo = {
             "5",  # 24시간권
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+    ],
+    # 감신대
+    19209: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "",  #
+            "2",  # 종일권(주말) (판매 : 5000 )
+            "",
+            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
     ]
 }
 
@@ -379,7 +388,8 @@ amano_auto_search_two = [
     Parks.MDM_TOWER_DANG_SAN,
     Parks.PODO_MALL,
     Parks.ACE_TOWER,
-    Parks.GS_GUN_GUK_BUILDING
+    Parks.GS_GUN_GUK_BUILDING,
+    Parks.GAM_SIN_DAE
 ]
 
 amano_pass = [
@@ -419,7 +429,8 @@ amano_pass = [
     Parks.SEOGYO_DONG_NADAEJI,
     Parks.KUN_KUK_MIDDLE,
     Parks.HUMAX_VILLAGE,
-    Parks.GS_GUN_GUK_BUILDING
+    Parks.GS_GUN_GUK_BUILDING,
+    Parks.GAM_SIN_DAE
 ]
 
 amano_need_log_out = [
