@@ -222,7 +222,8 @@ park_type_etc = [
 park_type_nice = [
     Parks.JONG_RO_TOWER,
     Parks.UDEOK_BUILDING,
-    Parks.LOTTE_NESON
+    Parks.LOTTE_NESON,
+    Parks.SAM_WON_TOWER
 ]
 
 # 키의 갯수 주차권을 분류하기 위함
