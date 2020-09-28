@@ -210,7 +210,7 @@ def web_har_in(target, driver):
 
             # if park_id == Parks.DMC_S_CITY:
             #     Util.sleep(5)
-            Util.sleep(1)
+            Util.sleep(2)
 
             if ParkUtil.check_search(park_id, driver):
                 if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
