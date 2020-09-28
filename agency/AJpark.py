@@ -237,7 +237,7 @@ def web_har_in(target, driver):
             driver.find_element_by_id(web_info[WebInfo.inputSearch]).send_keys(search_id)
             driver.find_element_by_id('searchSubmitByDate').click()
 
-            driver.implicitly_wait(10)
+            driver.implicitly_wait(3)
 
             if ParkUtil.check_search(park_id, driver):
                 if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
