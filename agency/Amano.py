@@ -626,6 +626,9 @@ def web_har_in_login(driver, park_id):
     elif park_id == Parks.NY_TOWER:
         Util.sleep(1)
         driver.find_element_by_id("btnLogin").click()
+    elif park_id == Parks.GS_GUN_GUK_BUILDING:
+        driver.find_element_by_id("btnLogin").click()
+        Util.sleep(2)
     else:
         driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
 
