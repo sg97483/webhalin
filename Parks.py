@@ -337,6 +337,7 @@ lotOptionList = {
     12050: ["이화여대 ECC 주차장", "파킹박", "123456"],
     19119: ["이화여대 ECC 월주차", "파킹박", "123456"],
     19121: ["상암 파크엠 주차장", "파킹박", "123456"],
+    19124: ["상암 파크엠 (야간)", "파킹박", "123456"],
     18966: ["마제스타", "parking_hiparking", "parking_hiparking"],
     15309: ["오토웨이타워", "parking_hiparking", "parking_hiparking"],
     12532: ["농협캐피탈", "parking_hiparking", "parking_hiparking"],
