@@ -412,7 +412,7 @@ mapIdToWebInfo = {
             "chk",
             "javascript:applyDiscount('07', '0', '01|02|10|11|12|13|14|15|', 'ppark', '1', '0');",
             "javascript:applyDiscount('07', '0', '01|02|10|11|12|13|14|15|', 'ppark', '1', '0');",
-            "javascript:applyDiscount('07', '0', '01|02|10|11|12|13|14|15|', 'ppark', '1', '0');"
+            "javascript:applyDiscount('91', '1', '', 'ppark(야간)', '1', '0');"
             ],
     #  양재공영
     19321: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
@@ -475,7 +475,8 @@ def get_har_in_script(park_id, ticket_name):
 
     elif park_id == Parks.DGB_FINANCE_CENTER \
             or park_id == Parks.CENTRAL_TOWER \
-            or park_id == Parks.GANG_NAM_L7:
+            or park_id == Parks.GANG_NAM_L7\
+            or park_id == Parks.GANG_NAM_BUILDING:
         if ticket_name == "심야권":
             return mapIdToWebInfo[park_id][WebInfo.methodHarIn3]
         else:
