@@ -15,10 +15,12 @@ mapIdToWebInfo = {
     16239: ["userId", "userPwd", "//input[@type='submit']",
             "schCarNo", "//input[@type='button']",
             "#tblList > tbody > tr",
-            "3",  # 종일권(판매:0 차감 : 1440 )
+            "5",  # 1일권(판매:8000 차감 : 1440 )
+            "5",  # 1일권(판매:8000 차감 : 1440 )
             "4",  # 심야권(판매:0 차감 : 720 )
-            "",
-            "javascript:document.getElementById('btnSave').click"
+            "javascript:document.getElementById('btnSave').click",
+            "6",  # 2일권(판매:16000 차감 : 2880 )
+            "7",  # 3일권(판매:24000 차감 : 4320 )
             # "#article > div > div.stitle > p > a > img"
             ],
     # 와이플러스
@@ -463,9 +465,13 @@ def get_har_in_value(park_id, ticket_name):
 
     if park_id == Parks.T_TOWER:
         if ticket_name == "심야권":
-            discount_type_value = web_info[WebInfo.methodHarIn2]
+            discount_type_value = web_info[WebInfo.methodHarIn3]
         elif ticket_name[-3:] == "1일권":
             discount_type_value = web_info[WebInfo.methodHarIn1]
+        elif ticket_name == "금토일연박권":
+            discount_type_value = web_info[11]
+        elif ticket_name[-3:] == "연박권":
+            discount_type_value = web_info[10]
 
     elif park_id == Parks.Y_PLUS or park_id == Parks.JS_HOTEL:
         if ticket_name == "3시간권":
