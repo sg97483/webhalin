@@ -58,7 +58,7 @@ mapIdToWebInfo = {
             "chk",
             "javascript:applyDiscount('94', '1', '', '파킹박');",
             "javascript:applyDiscount('94', '1', '', '파킹박');",
-            ""],
+            "javascript:applyDiscount('91', '1', '', '파킹박(야간)', '1', '0');"],
     # 에코테라스
     14994: ["user_id", "password", "//input[@type='button']",
             "license_plate_number", "//input[@type='button']",
@@ -476,7 +476,8 @@ def get_har_in_script(park_id, ticket_name):
     elif park_id == Parks.DGB_FINANCE_CENTER \
             or park_id == Parks.CENTRAL_TOWER \
             or park_id == Parks.GANG_NAM_L7\
-            or park_id == Parks.GANG_NAM_BUILDING:
+            or park_id == Parks.GANG_NAM_BUILDING\
+            or park_id == Parks.ICON_YEOKSAM:
         if ticket_name == "심야권":
             return mapIdToWebInfo[park_id][WebInfo.methodHarIn3]
         else:
