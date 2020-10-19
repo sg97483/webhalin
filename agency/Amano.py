@@ -351,8 +351,8 @@ mapIdToWebInfo = {
     19331: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "5",  # 24시간권
-            "5",  # 24시간권
+            "7",  # 24시간권
+            "7",  # 24시간권
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
     ],
