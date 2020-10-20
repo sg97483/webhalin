@@ -206,7 +206,8 @@ park_type_aj_park = [
     Parks.AJ_BANGBE,
     Parks.AJ_HOUSE_DIBIZ,
     Parks.AJ_EWHA,
-    Parks.AJ_HONG_IK_SPORTS_SPA
+    Parks.AJ_HONG_IK_SPORTS_SPA,
+    Parks.AJ_GUWOL_CENTRAL
 ]
 
 park_type_old_aj = [

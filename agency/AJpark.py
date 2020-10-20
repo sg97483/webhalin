@@ -178,6 +178,14 @@ mapIdToWebInfo = {
             1,  # 평일종일권
             0,  # 주말종일권
             2  # 야간권
+            ],
+    # AJ파크 구월중앙점
+    16434: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일종일권
+            0,  # 주말종일권
+            2  # 야간권
             ]
 }
 
@@ -260,6 +268,8 @@ def web_har_in(target, driver):
                         else:
                             driver.implicitly_wait(3)
                             driver.find_element_by_id('discountSubmit').click()
+                            driver.implicitly_wait(2)
+                            driver.find_element_by_xpath('/html/body/div[3]/div[2]/div/button[2]').click()
                             return True
                     except ValueError as ex:
                         print(Colors.RED + "잘못된 주차권 갯수입니다. : " + ex + Colors.ENDC)

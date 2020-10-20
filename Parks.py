@@ -180,6 +180,7 @@ mapIdToUrl = {
     19218: "https://mobile.ajpark.co.kr/partner/",  # AJ하우스디비즈
     19212: "https://mobile.ajpark.co.kr/partner/",  # AJ이화주차장점
     19226: "https://mobile.ajpark.co.kr/partner/",  # AJ 홍익스포츠스파
+    16434: "https://mobile.ajpark.co.kr/partner/",  # AJ 구월중앙점
 
     19004: "http://221.148.11.134:8090",
     19180: "http://hipgnpb.iptime.org:8090",
@@ -602,3 +603,4 @@ GS_GUN_GUK_BUILDING = 19331
 SAM_WON_TOWER = 19330
 ISU_GONG_YONG = 19236
 GAM_SIN_DAE = 19209
+AJ_GUWOL_CENTRAL = 16434
