@@ -123,7 +123,8 @@ parkTypeAmano = [
     Parks.SEOGYO_DONG_NADAEJI,
     Parks.KUN_KUK_MIDDLE,
     Parks.GS_GUN_GUK_BUILDING,
-    Parks.GAM_SIN_DAE
+    Parks.GAM_SIN_DAE,
+    Parks.NC_GANG_NAM
 ]
 
 parkTypeBlue = [
@@ -377,7 +378,8 @@ parkTypeNoRequestMain = [
     Parks.PODO_MALL,
     Parks.MERCURE_AMBASSADOR,
     Parks.HOTEL_SUNSHINE,
-    Parks.GS_GUN_GUK_BUILDING
+    Parks.GS_GUN_GUK_BUILDING,
+    Parks.NC_GANG_NAM
 ]
 
 type_to_search_css = {

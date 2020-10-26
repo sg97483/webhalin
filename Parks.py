@@ -229,6 +229,7 @@ mapIdToUrl = {
     19331: "http://121.160.237.7",  # 건국빌딩 GS
     19236: "http://test-members.iparking.co.kr/#!",  # 이수공영
     19209: "http://222.110.182.133",  # 감신대
+    19334: "http://112.220.251.2",  # NC백화점 강남점
 }
 
 lotOptionList = {
@@ -425,6 +426,7 @@ lotOptionList = {
     19331: ["건국빌딩", "gspartner2", "123456"],
     19236: ["이수공", "hpisuppark", "hpisuppark"],
     19209: ["감신대", "파킹박", "park001"],
+    19334: ["NC백화점 강남점", "parkingpark", "park001^^"],
 }
 
 NON = 0
@@ -604,3 +606,4 @@ SAM_WON_TOWER = 19330
 ISU_GONG_YONG = 19236
 GAM_SIN_DAE = 19209
 AJ_GUWOL_CENTRAL = 16434
+NC_GANG_NAM = 19334

@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from selenium.common.exceptions import NoSuchElementException
+
 import Util
 import ParkType
 import Colors
@@ -82,9 +84,9 @@ mapIdToWebInfo = {
     19077: ["userId", "userPwd", "//input[@type='submit']",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "15",  # 평일1일권
+            "28",  # 평일1일권
             "22",  # 주말1일권
-            "21",  # 심야권
+            "30",  # 심야권
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
     # 포도몰 PODO_MALL
@@ -364,6 +366,19 @@ mapIdToWebInfo = {
             "2",  # 종일권(주말) (판매 : 5000 )
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+    ],
+    # NC 강남점
+    19334: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "8",  # 당일권 (판매 : 12000 )
+            "8",  # 당일권 (판매 : 12000 )
+            "",
+            "javascript:document.getElementById('discountTypeValue').click",
+            "9",  # 2일권 (판매 : 24000 )
+            "10",  # 3일권 (판매 : 35000 )
+            "11",  # 4일권 (판매 : 45000 )
+            "12",  # 5일권 (판매 : 55000 )
     ]
 }
 
@@ -401,7 +416,8 @@ amano_auto_search_two = [
     Parks.PODO_MALL,
     Parks.ACE_TOWER,
     Parks.GS_GUN_GUK_BUILDING,
-    Parks.GAM_SIN_DAE
+    Parks.GAM_SIN_DAE,
+    Parks.NC_GANG_NAM
 ]
 
 amano_pass = [
@@ -442,7 +458,8 @@ amano_pass = [
     Parks.KUN_KUK_MIDDLE,
     Parks.HUMAX_VILLAGE,
     Parks.GS_GUN_GUK_BUILDING,
-    Parks.GAM_SIN_DAE
+    Parks.GAM_SIN_DAE,
+    Parks.NC_GANG_NAM
 ]
 
 amano_need_log_out = [
@@ -608,6 +625,18 @@ def get_har_in_value(park_id, ticket_name):
         elif ticket_name == "주말1일권":
             discount_type_value = web_info[WebInfo.methodHarIn2]
 
+    elif park_id == Parks.NC_GANG_NAM:
+        if ticket_name[-3:] == "1일권":
+            discount_type_value = web_info[WebInfo.methodHarIn1]
+        elif ticket_name[-3:] == "2일권":
+            discount_type_value = web_info[10]
+        elif ticket_name[-3:] == "3일권":
+            discount_type_value = web_info[11]
+        elif ticket_name[-3:] == "4일권":
+            discount_type_value = web_info[12]
+        elif ticket_name[-3:] == "5일권":
+            discount_type_value = web_info[13]
+
     else:
         if Util.get_week_or_weekend() == 0:
             discount_type_value = web_info[WebInfo.methodHarIn1]
@@ -758,6 +787,14 @@ def web_har_in(target, driver):
                             Util.sleep(2)
                             driver.execute_script(har_in_script)
                             Util.sleep(2)
+
+                            try:
+                                driver.find_element_by_css_selector(
+                                    "#modal-window > div > div > div.modal-buttons > a").click()
+                                Util.sleep(2)
+                            except NoSuchElementException:
+                                print(Colors.RED + "팝업(모달뷰)에 확인을 누를 수 없습니다." + Colors.ENDC)
+
                             log_out_web(park_id, driver)
                             return True
 
