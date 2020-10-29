@@ -5,11 +5,9 @@ import re
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.alert import Alert
 
-import Parks
 import Util
-import ParkType
 import Colors
-import ParkUtil
+from park import ParkUtil, ParkType, Parks
 import WebInfo
 
 mapIdToWebInfo = {

@@ -2,15 +2,12 @@
 from selenium.common.exceptions import NoSuchElementException
 
 import Util
-import ParkType
 import Colors
-import ParkUtil
+from park import ParkUtil, ParkType, Parks
 import WebInfo
 from bs4 import BeautifulSoup
 import re
 from selenium.webdriver.common.keys import Keys
-
-Parks = ParkType.Parks
 
 mapIdToWebInfo = {
     # amano 남산트라펠리스
@@ -719,6 +716,7 @@ def web_har_in(target, driver):
 
                 web_har_in_login(driver, park_id)
 
+
             if park_id in amano_auto_search_one:
                 driver.find_element_by_css_selector("#modal-window > div > div > div.modal-buttons > a").click()
             else:
@@ -743,7 +741,7 @@ def web_har_in(target, driver):
 
                 html = driver.page_source
                 soup = BeautifulSoup(html, 'html.parser')
-                if park_id == ParkType.Parks.T_TOWER:
+                if park_id == park.Parks.T_TOWER:
                     car_num = soup.find(id='tblList')  # 트라팰리스
                 else:
                     car_num = soup.find("tr")  # 와이플러스 및 나머지

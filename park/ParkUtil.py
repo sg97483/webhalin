@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from selenium.common.exceptions import NoSuchElementException
 
-import Parks
-import ParkType
+from park import ParkType, Parks
 import re
 import Colors
 import time

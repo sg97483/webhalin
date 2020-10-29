@@ -2,9 +2,8 @@
 from selenium.common.exceptions import NoSuchElementException
 
 import Util
-import ParkType
 import Colors
-import ParkUtil
+from park import ParkUtil, ParkType
 import WebInfo
 
 mapIdToWebInfo = {

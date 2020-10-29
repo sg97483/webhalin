@@ -8,8 +8,7 @@ import logging
 import ChromeDriver
 import Colors
 import LimitLot
-import ParkType
-import Parks
+from park import ParkType, Parks
 import Util
 
 from agency import Iptime, Gs, HighCity, Iparking, AJpark, Darae, Amano, Blue, Etc, OldAJ, GrangSeoul, Nice
@@ -27,7 +26,7 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.N_TOWER
+testPark = Parks.CENTERMARK_HOTEL
 is_park_test = True
 is_no_db_test = False
 

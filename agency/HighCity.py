@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 import Util
-import ParkType
 import Colors
-import ParkUtil
+from park import ParkUtil, ParkType, Parks
 import WebInfo
-
-Parks = ParkType.Parks
 
 mapIdToWebInfo = {
     # HighCity 동일타워

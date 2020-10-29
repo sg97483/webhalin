@@ -3,13 +3,10 @@ import re
 
 from selenium.webdriver.support.select import Select
 
-import Util
-import ParkType
 import Colors
-import ParkUtil
+import Util
 import WebInfo
-
-Parks = ParkType.Parks
+from park import ParkUtil, ParkType
 
 mapIdToWebInfo = {
     # AJ파크 공덕효성해링턴스퀘어점

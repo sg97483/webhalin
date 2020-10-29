@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import Util
-import ParkType
+from park import ParkType, Parks
 import Colors
-
-Parks = ParkType.Parks
 
 
 def web_har_in(target, driver):

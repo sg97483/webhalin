@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 import Util
-import ParkType
 import Colors
-import ParkUtil
+from park import ParkUtil, ParkType, Parks
 import WebInfo
 import re
-
-Parks = ParkType.Parks
 
 mapIdToWebInfo = {
     # Iparking 서초 마제스타

@@ -5,12 +5,9 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 
 import Util
-import ParkType
 import Colors
-import ParkUtil
+from park import ParkUtil, ParkType, Parks
 import WebInfo
-
-Parks = ParkType.Parks
 
 mapIdToWebInfo = {
     # (하이파킹) 웨스턴853오피스텔

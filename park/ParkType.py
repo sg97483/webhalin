@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import Parks
+from park import Parks
 
 # 주차장 별 비교해야 될 셀럭터
 HIGH_CITY = 20

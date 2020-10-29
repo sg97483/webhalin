@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 import Util
-import ParkType
 import Colors
-import ParkUtil
+from park import ParkUtil, ParkType
 import WebInfo
 
 mapIdToWebInfo = {
