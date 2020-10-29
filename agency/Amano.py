@@ -245,7 +245,7 @@ mapIdToWebInfo = {
             "5",  # 2시간권
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
             "15"  # 3시간권
-    ],
+            ],
     # 오목교주차장
     19235: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -255,7 +255,7 @@ mapIdToWebInfo = {
             "4",  # 2시간권
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
             "5"  # 3시간권
-    ],
+            ],
     # 마곡류마타워2
     19234: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -264,7 +264,7 @@ mapIdToWebInfo = {
             "8",  # 종일권(주말) (판매 : 6000 )
             "7",  # 3시간권
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-    ],
+            ],
     # 눈스퀘어
     19247: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -273,7 +273,7 @@ mapIdToWebInfo = {
             "1",  # 15시간권
             "",  #
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-    ],
+            ],
     # 정안빌딩
     19267: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -282,7 +282,7 @@ mapIdToWebInfo = {
             "9",  # ppark
             "",  #
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-    ],
+            ],
     # 광화문S타워
     19250: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -291,7 +291,7 @@ mapIdToWebInfo = {
             "18",  # 종일권(PS)
             "",  #
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-    ],
+            ],
     # MDM타워 당산
     19239: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -300,7 +300,7 @@ mapIdToWebInfo = {
             "8",  # 24시간유료 (판매 : 15000 )
             "",  #
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-    ],
+            ],
     # 하나금융 투자빌딩
     19040: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -309,7 +309,7 @@ mapIdToWebInfo = {
             "3",  # 주말권
             "2",  # 심야권
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-    ],
+            ],
     # 건국빌딩
     19206: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -318,7 +318,7 @@ mapIdToWebInfo = {
             "17",  # 심야권
             "",  #
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-    ],
+            ],
     # 스테이트타워남산
     19258: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -327,7 +327,7 @@ mapIdToWebInfo = {
             "16",  # 파킹셰어 종일권(주말) (판매 : 10000 )
             "14",  # 야간권
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-    ],
+            ],
     # 서교동 나대지
     19238: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -336,7 +336,7 @@ mapIdToWebInfo = {
             "4",  # 파킹쉐어 16시간
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-    ],
+            ],
     # 건대부중(건국대학교사범대학부속중학교)
     19210: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -345,7 +345,7 @@ mapIdToWebInfo = {
             "3",  # 파킹셰어 종일권 (판매 : 10000 )
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-    ],
+            ],
     # 건국빌딩
     19331: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -354,7 +354,7 @@ mapIdToWebInfo = {
             "7",  # 24시간권
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-    ],
+            ],
     # 감신대
     19209: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -363,7 +363,7 @@ mapIdToWebInfo = {
             "2",  # 종일권(주말) (판매 : 5000 )
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-    ],
+            ],
     # NC 강남점
     19334: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -376,88 +376,8 @@ mapIdToWebInfo = {
             "10",  # 3일권 (판매 : 35000 )
             "11",  # 4일권 (판매 : 45000 )
             "12",  # 5일권 (판매 : 55000 )
-    ]
+            ]
 }
-
-amano_auto_search_one = [
-    Parks.SK_MYEONGDONG,
-    Parks.GOLDEN_TOWER,
-    Parks.PARK_M,
-    Parks.PARK_M_NIGHT,
-    Parks.N_TOWER,
-    Parks.JS_HOTEL,
-    Parks.SINRA_STAY_G_TOWER,
-    Parks.HONG_MUN_KWAN,
-    Parks.CHUNGJEONGNO_HOUSE,
-    Parks.OMOK_BRIDGE,
-    Parks.MAGOK_RUMA_2,
-    Parks.HANA_TOOJA_BUILDING,
-    Parks.KUN_KUK_BUILDING,
-    Parks.STATE_TOWER_NAMSAN,
-    Parks.SEOGYO_DONG_NADAEJI,
-    Parks.HUMAX_VILLAGE
-]
-
-amano_auto_search_two = [
-    Parks.PACIFIC_TOWER,
-    Parks.SEOUL_GIROKWON,
-    Parks.TWIN_TREE,
-    Parks.WEST_GATE,
-    Parks.JIN_YANG_BUILDING,
-    Parks.YEOKSAM_BUILDING,
-    Parks.HARIM_INTERNATIONAL,
-    Parks.NY_TOWER,
-    Parks.JEONGAN_BUILDING,
-    Parks.GWANG_HWA_MUN_S_TOWER,
-    Parks.MDM_TOWER_DANG_SAN,
-    Parks.PODO_MALL,
-    Parks.ACE_TOWER,
-    Parks.GS_GUN_GUK_BUILDING,
-    Parks.GAM_SIN_DAE,
-    Parks.NC_GANG_NAM
-]
-
-amano_pass = [
-    Parks.PARK_M,
-    Parks.PARK_M_NIGHT,
-    Parks.ECC,
-    Parks.Y_PLUS,
-    Parks.PACIFIC_TOWER,
-    Parks.SEOUL_GIROKWON,
-    Parks.N_TOWER,
-    Parks.SK_MYEONGDONG,
-    Parks.WEST_GATE,
-    Parks.TWIN_TREE,
-    Parks.GOLDEN_TOWER,
-    Parks.JS_HOTEL,
-    Parks.ECC_MONTH,
-    Parks.JANG_AN_SPIZON,
-    Parks.JIN_YANG_BUILDING,
-    Parks.YEOKSAM_BUILDING,
-    Parks.HARIM_INTERNATIONAL,
-    Parks.SINRA_STAY_G_TOWER,
-    Parks.NY_TOWER,
-    Parks.JAYANG_PALACE,
-    Parks.HONG_MUN_KWAN,
-    Parks.CHUNGJEONGNO_HOUSE,
-    Parks.OMOK_BRIDGE,
-    Parks.MAGOK_RUMA_2,
-    Parks.NON_SQUARE,
-    Parks.JEONGAN_BUILDING,
-    Parks.GWANG_HWA_MUN_S_TOWER,
-    Parks.MDM_TOWER_DANG_SAN,
-    Parks.PODO_MALL,
-    Parks.ACE_TOWER,
-    Parks.HANA_TOOJA_BUILDING,
-    Parks.KUN_KUK_BUILDING,
-    Parks.STATE_TOWER_NAMSAN,
-    Parks.SEOGYO_DONG_NADAEJI,
-    Parks.KUN_KUK_MIDDLE,
-    Parks.HUMAX_VILLAGE,
-    Parks.GS_GUN_GUK_BUILDING,
-    Parks.GAM_SIN_DAE,
-    Parks.NC_GANG_NAM
-]
 
 amano_need_log_out = [
     Parks.GOLDEN_TOWER
@@ -716,20 +636,17 @@ def web_har_in(target, driver):
 
                 web_har_in_login(driver, park_id)
 
+            Util.close_modal(driver)
 
-            if park_id in amano_auto_search_one:
-                driver.find_element_by_css_selector("#modal-window > div > div > div.modal-buttons > a").click()
-            else:
-                discount_url = login_url + ParkUtil.get_park_discount_url(park_type)
-                driver.get(discount_url)
+            discount_url = login_url + ParkUtil.get_park_discount_url(park_type)
+            driver.get(discount_url)
 
             driver.implicitly_wait(3)
 
             driver.find_element_by_id(web_info[WebInfo.inputSearch]).send_keys(search_id)
             Util.sleep(3)
 
-            if park_id in amano_auto_search_two:
-                driver.find_element_by_css_selector("#modal-window > div > div > div.modal-buttons > a").click()
+            Util.close_modal(driver)
 
             driver.find_element_by_xpath(web_info[WebInfo.btnSearch]).click()
 
@@ -760,9 +677,7 @@ def web_har_in(target, driver):
                     discount_type_value = get_har_in_value(park_id, ticket_name)
 
                     if discount_type_value != "":
-                        if park_id in amano_pass:
-                            pass
-                        else:
+                        if park_id == Parks.T_TOWER:
                             pe_id = driver.find_element_by_id('peId')
                             driver.execute_script("arguments[0].value = '" + pe_id_value + "';", pe_id)
                             car_no = driver.find_element_by_id('carNo')
@@ -780,19 +695,13 @@ def web_har_in(target, driver):
                             Util.sleep(1)
 
                         if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
-                            har_in_script = web_info[WebInfo.methodHarInFunc].replace("discountTypeValue", discount_type_value) + "()"
+                            har_in_script = web_info[WebInfo.methodHarInFunc].replace("discountTypeValue",
+                                                                                      discount_type_value) + "()"
                             print(Colors.RED + har_in_script + Colors.ENDC)
                             Util.sleep(2)
                             driver.execute_script(har_in_script)
                             Util.sleep(2)
-
-                            try:
-                                driver.find_element_by_css_selector(
-                                    "#modal-window > div > div > div.modal-buttons > a").click()
-                                Util.sleep(2)
-                            except NoSuchElementException:
-                                print(Colors.RED + "팝업(모달뷰)에 확인을 누를 수 없습니다." + Colors.ENDC)
-
+                            Util.close_modal(driver)
                             log_out_web(park_id, driver)
                             return True
 
