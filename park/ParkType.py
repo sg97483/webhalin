@@ -124,7 +124,8 @@ parkTypeAmano = [
     Parks.KUN_KUK_MIDDLE,
     Parks.GS_GUN_GUK_BUILDING,
     Parks.GAM_SIN_DAE,
-    Parks.NC_GANG_NAM
+    Parks.NC_GANG_NAM,
+    Parks.JONG_RO_THE_K
 ]
 
 parkTypeBlue = [

@@ -376,7 +376,17 @@ mapIdToWebInfo = {
             "10",  # 3일권 (판매 : 35000 )
             "11",  # 4일권 (판매 : 45000 )
             "12",  # 5일권 (판매 : 55000 )
-            ]
+            ],
+    # 종로 더케이손해보험
+    2810: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
+           "schCarNo", "//*[@id='sForm']/input[3]",
+           "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+           "9",  # 평일 종일권
+           "",  #
+           "",
+           "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
+           "8"  # 유료 3시간
+           ]
 }
 
 amano_need_log_out = [
@@ -554,6 +564,14 @@ def get_har_in_value(park_id, ticket_name):
         elif ticket_name[-3:] == "5일권":
             discount_type_value = web_info[13]
 
+    elif park_id == Parks.JONG_RO_THE_K:
+        if ticket_name == "3시간권":
+            discount_type_value = web_info[WebInfo.methodHarIn3]
+        elif ticket_name == "평일1일권":
+            discount_type_value = web_info[WebInfo.methodHarIn1]
+        elif ticket_name == "주말1일권":
+            discount_type_value = web_info[WebInfo.methodHarIn2]
+
     else:
         if Util.get_week_or_weekend() == 0:
             discount_type_value = web_info[WebInfo.methodHarIn1]
@@ -658,7 +676,7 @@ def web_har_in(target, driver):
 
                 html = driver.page_source
                 soup = BeautifulSoup(html, 'html.parser')
-                if park_id == park.Parks.T_TOWER:
+                if park_id == Parks.T_TOWER:
                     car_num = soup.find(id='tblList')  # 트라팰리스
                 else:
                     car_num = soup.find("tr")  # 와이플러스 및 나머지
