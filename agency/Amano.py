@@ -445,7 +445,7 @@ def get_har_in_value(park_id, ticket_name):
             discount_type_value = web_info[WebInfo.methodHarIn2]
 
     elif park_id == Parks.PODO_MALL:
-        if str(ticket_name).startswith("12시간"):
+        if str(ticket_name).endswith("12시간권"):
             discount_type_value = web_info[WebInfo.methodHarIn3]
 
     elif park_id == Parks.TWIN_TREE:
