@@ -458,6 +458,14 @@ mapIdToWebInfo = {
             "javascript:applyDiscount('09', '1', '04|', 'ppark', '999999999', '0');",
             "javascript:applyDiscount('09', '1', '04|', 'ppark', '999999999', '0');",
             "",
+            ],
+    # 그랜드센트럴
+    19364: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
+            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+            "chk",
+            "javascript:applyDiscount('08', '1', '01|', 'ppark', '999999999', '0');",
+            "javascript:applyDiscount('08', '1', '01|', 'ppark', '999999999', '0');",
+            "",
             ]
 }
 

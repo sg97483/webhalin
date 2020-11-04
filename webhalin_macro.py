@@ -26,7 +26,7 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.SUWON_STATION_MARKET
+testPark = Parks.GRAND_CENTRAL
 is_park_test = True
 is_no_db_test = False
 
@@ -70,7 +70,7 @@ def get_sql(now_date):
         '19311', '19312', '19330',
         # 나이스 신규현장 끝
         '19238', '19210', '19226', '19321', '19276', '19195', '19325', '19273',
-        '19331', '19236', '19209', '16434', '19334', '19324'
+        '19331', '19236', '19209', '16434', '19334', '19324', '19364'
     ]
 
     str_lots = ", ".join(valid_lots)

@@ -230,7 +230,8 @@ mapIdToUrl = {
     19236: "http://test-members.iparking.co.kr/#!",  # 이수공영
     19209: "http://222.110.182.133",  # 감신대
     19334: "http://112.220.251.2",  # NC백화점 강남점
-    19324: "http://112.168.189.184:8090",  # 수원역전시
+    19324: "http://112.168.189.184:8090",  # 수원역전시장
+    19364: "http://175.123.52.82:8090",  # 그랜드센트
 }
 
 lotOptionList = {
@@ -429,6 +430,7 @@ lotOptionList = {
     19209: ["감신대", "파킹박", "park001"],
     19334: ["NC백화점 강남점", "parkingpark", "park001^^"],
     19324: ["수원역전시장", "ppark", "1234"],
+    19364: ["그랜드센트럴", "ppark", "1234"],
 }
 
 NON = 0
@@ -611,3 +613,4 @@ AJ_GUWOL_CENTRAL = 16434
 NC_GANG_NAM = 19334
 JONG_RO_THE_K = 2810
 SUWON_STATION_MARKET = 19324
+GRAND_CENTRAL = 19364
