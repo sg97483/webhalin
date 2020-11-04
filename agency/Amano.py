@@ -386,7 +386,16 @@ mapIdToWebInfo = {
            "",
            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
            "8"  # 유료 3시간
-           ]
+           ],
+    # 합정역 청년주택
+    19328: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "13",  # 당일권(파킹셰어)
+            "",  #
+            "",
+            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+            ]
 }
 
 amano_need_log_out = [
@@ -571,6 +580,12 @@ def get_har_in_value(park_id, ticket_name):
             discount_type_value = web_info[WebInfo.methodHarIn1]
         elif ticket_name == "주말1일권":
             discount_type_value = web_info[WebInfo.methodHarIn2]
+
+    elif park_id == Parks.HAP_JEONG_STATION_YOUTH_HOUSE:
+        if ticket_name[-3:] == "심야권":
+            discount_type_value = web_info[WebInfo.methodHarIn3]
+        elif ticket_name == "평일1일권":
+            discount_type_value = web_info[WebInfo.methodHarIn1]
 
     else:
         if Util.get_week_or_weekend() == 0:
