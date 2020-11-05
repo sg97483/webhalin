@@ -688,17 +688,19 @@ def web_har_in(target, driver):
 
                 web_har_in_login(driver, park_id)
 
+            Util.close_popup(driver)
             Util.close_modal(driver)
 
             discount_url = login_url + ParkUtil.get_park_discount_url(park_type)
-            driver.get(discount_url)
+            if not str(discount_url).startswith(driver.current_url):
+                driver.get(discount_url)
+                driver.implicitly_wait(3)
 
-            driver.implicitly_wait(3)
+                Util.close_popup(driver)
+                Util.close_modal(driver)
 
             driver.find_element_by_id(web_info[WebInfo.inputSearch]).send_keys(search_id)
             Util.sleep(3)
-
-            Util.close_modal(driver)
 
             driver.find_element_by_xpath(web_info[WebInfo.btnSearch]).click()
 

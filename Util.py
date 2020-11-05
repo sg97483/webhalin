@@ -57,3 +57,19 @@ def close_modal(driver):
         sleep(2)
     except NoSuchElementException:
         print(Colors.RED + "모달(팝업)을 닫을 수 없습니다." + Colors.ENDC)
+
+
+def close_popup(driver):
+    try:
+        sleep(3)
+        popups = driver.window_handles
+        print(popups)
+        for popup in popups:
+            if popup != popups[0]:
+                driver.switch_to_window(popup)
+                driver.close()
+
+        driver.switch_to_window(driver.window_handles[0])
+
+    except NoSuchElementException:
+        print(Colors.RED + "모달(팝업)을 닫을 수 없습니다." + Colors.ENDC)
