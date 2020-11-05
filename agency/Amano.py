@@ -66,7 +66,8 @@ mapIdToWebInfo = {
             "15",  # 평일1일권
             "16",  # 주말1일권
             "",
-            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
+            "18"  # 3시간권
             ],
     # 서울기록원
     19128: ["userId", "userPwd", "btnLogin",
@@ -605,6 +606,14 @@ def get_har_in_value(park_id, ticket_name):
             discount_type_value = web_info[11]
         elif ticket_name == "평일1일권" or ticket_name == "금요일권":
             discount_type_value = web_info[WebInfo.methodHarIn1]
+
+    elif park_id == Parks.PACIFIC_TOWER:
+        if ticket_name[-3:] == "3시간권":
+            discount_type_value = web_info[10]
+        elif Util.get_week_or_weekend() == 0:
+            discount_type_value = web_info[WebInfo.methodHarIn1]
+        else:
+            discount_type_value = web_info[WebInfo.methodHarIn2]
 
     else:
         if Util.get_week_or_weekend() == 0:
