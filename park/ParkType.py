@@ -128,7 +128,8 @@ parkTypeAmano = [
     Parks.GAM_SIN_DAE,
     Parks.NC_GANG_NAM,
     Parks.JONG_RO_THE_K,
-    Parks.HAP_JEONG_STATION_YOUTH_HOUSE
+    Parks.HAP_JEONG_STATION_YOUTH_HOUSE,
+    Parks.LOTTE_CITY_HOTEL_MYEONG_DONG
 ]
 
 parkTypeBlue = [

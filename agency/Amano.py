@@ -395,6 +395,17 @@ mapIdToWebInfo = {
             "",  #
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+            ],
+    # 롯데시티호텔명동
+    19336: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "6",  # 당일권 (판매 : 20000 )
+            "",  #
+            "",
+            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
+            "4",  # 2시간권 (판매 : 5000 )
+            "5"  # 3시간권 (판매 : 7000 )
             ]
 }
 
@@ -585,6 +596,14 @@ def get_har_in_value(park_id, ticket_name):
         if ticket_name[-3:] == "심야권":
             discount_type_value = web_info[WebInfo.methodHarIn3]
         elif ticket_name == "평일1일권":
+            discount_type_value = web_info[WebInfo.methodHarIn1]
+
+    elif park_id == Parks.LOTTE_CITY_HOTEL_MYEONG_DONG:
+        if ticket_name[-3:] == "2시간권":
+            discount_type_value = web_info[10]
+        elif ticket_name[-3:] == "3시간권":
+            discount_type_value = web_info[11]
+        elif ticket_name == "평일1일권" or ticket_name == "금요일권":
             discount_type_value = web_info[WebInfo.methodHarIn1]
 
     else:

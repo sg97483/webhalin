@@ -233,6 +233,7 @@ mapIdToUrl = {
     19324: "http://112.168.189.184:8090",  # 수원역전시장
     19364: "http://175.123.52.82:8090",  # 그랜드센트럴
     19328: "http://211.217.209.129",  # 합정역 청년주택
+    19336: "http://1.225.67.7",  # 롯데시티호텔명동
 }
 
 lotOptionList = {
@@ -433,6 +434,7 @@ lotOptionList = {
     19324: ["수원역전시장", "ppark", "1234"],
     19364: ["그랜드센트럴", "ppark", "1234"],
     19328: ["합정역 청년주택", "parkingpark", "park001"],
+    19336: ["롯데시티호텔명동", "parkingpark", "park001^^"],
 }
 
 NON = 0
@@ -617,3 +619,4 @@ JONG_RO_THE_K = 2810
 SUWON_STATION_MARKET = 19324
 GRAND_CENTRAL = 19364
 HAP_JEONG_STATION_YOUTH_HOUSE = 19328
+LOTTE_CITY_HOTEL_MYEONG_DONG = 19336
