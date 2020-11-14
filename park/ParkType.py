@@ -111,7 +111,7 @@ parkTypeAmano = [
     Parks.NY_TOWER,
     Parks.ACE_TOWER,
     Parks.JAYANG_PALACE,
-    Parks.HONG_MUN_KWAN,
+    # Parks.HONG_MUN_KWAN,
     Parks.CHUNGJEONGNO_HOUSE,
     Parks.OMOK_BRIDGE,
     Parks.MAGOK_RUMA_2,
@@ -120,7 +120,7 @@ parkTypeAmano = [
     Parks.GWANG_HWA_MUN_S_TOWER,
     Parks.MDM_TOWER_DANG_SAN,
     Parks.HANA_TOOJA_BUILDING,
-    Parks.KUN_KUK_BUILDING,
+    # Parks.KUN_KUK_BUILDING,
     Parks.STATE_TOWER_NAMSAN,
     Parks.SEOGYO_DONG_NADAEJI,
     Parks.KUN_KUK_MIDDLE,
@@ -229,10 +229,10 @@ park_type_etc = [
 ]
 
 park_type_nice = [
-    Parks.JONG_RO_TOWER,
-    Parks.UDEOK_BUILDING,
-    Parks.LOTTE_NESON,
-    Parks.SAM_WON_TOWER
+    # Parks.JONG_RO_TOWER,
+    # Parks.UDEOK_BUILDING,
+    # Parks.LOTTE_NESON,
+    # Parks.SAM_WON_TOWER
 ]
 
 # 키의 갯수 주차권을 분류하기 위함
@@ -355,7 +355,7 @@ haveFourKey = [
 ]
 
 haveFiveKey = [
-    Parks.HONG_MUN_KWAN
+    # Parks.HONG_MUN_KWAN
 ]
 
 parkTypeNoRequestMain = [
