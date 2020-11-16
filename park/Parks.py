@@ -234,6 +234,7 @@ mapIdToUrl = {
     19364: "http://175.123.52.82:8090",  # 그랜드센트럴
     19328: "http://211.217.209.129",  # 합정역 청년주택
     19336: "http://1.225.67.7",  # 롯데시티호텔명동
+    18945: "http://www.amanopark.co.kr",  # 강남파이낸스프라자
 }
 
 lotOptionList = {
@@ -322,7 +323,7 @@ lotOptionList = {
     15008: ["아이콘역삼", "ppark", "1234"],
     19043: ["MG[엠지]신용정보빌딩", "ppark", "1111"],
     15160: ["우덕빌딩", "파킹박", "123456"],
-    18577: ["서대문역 골든타워주차장", "SGTPP", "2222"],
+    18577: ["서대문역 골든타워주차장", "parkingpark3", "park001^^"],
     16003: ["트윈시티남산", "ppark", "1234"],
     19090: ["태평로빌딩", "ppark", "1234"],
     16173: ["순화빌딩", "ppark", "1234"],
@@ -435,6 +436,7 @@ lotOptionList = {
     19364: ["그랜드센트럴", "ppark", "1234"],
     19328: ["합정역 청년주택", "parkingpark", "park001"],
     19336: ["롯데시티호텔명동", "parkingpark", "park001^^"],
+    18945: ["강남파이낸스프라자", "parkingpark2", "park001^^"],
 }
 
 NON = 0
@@ -620,3 +622,4 @@ SUWON_STATION_MARKET = 19324
 GRAND_CENTRAL = 19364
 HAP_JEONG_STATION_YOUTH_HOUSE = 19328
 LOTTE_CITY_HOTEL_MYEONG_DONG = 19336
+GANG_NAM_FINANCE = 18945
