@@ -129,10 +129,11 @@ mapIdToWebInfo = {
     18577: ["userId", "userPwd", "//input[@type='submit']",
             "schCarNo", "//*[@id='sForm']/input[4]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "129",  # 완전무료
+            "838",  # 종일권(평일) (판매 : 8000 )
             "839",  # 종일권(주말) (판매 : 5000 )
             "",
-            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
+            "129",  # 완전무료
             ],
     # JS호텔 분당
     19155: ["userId", "userPwd", "//input[@type='submit']",
@@ -729,13 +730,13 @@ def web_har_in(target, driver):
             Util.close_popup(driver)
             Util.close_modal(driver)
 
-            discount_url = login_url + ParkUtil.get_park_discount_url(park_type)
-            if not str(discount_url).startswith(driver.current_url):
-                driver.get(discount_url)
-                driver.implicitly_wait(3)
-
-                Util.close_popup(driver)
-                Util.close_modal(driver)
+            # discount_url = login_url + ParkUtil.get_park_discount_url(park_type)
+            # if not str(discount_url).startswith(driver.current_url):
+            #     driver.get(discount_url)
+            #     driver.implicitly_wait(3)
+            #
+            #     Util.close_popup(driver)
+            #     Util.close_modal(driver)
 
             driver.find_element_by_id(web_info[WebInfo.inputSearch]).send_keys(search_id)
             Util.sleep(3)
@@ -782,9 +783,10 @@ def web_har_in(target, driver):
                                 or park_id == Parks.GANG_NAM_FINANCE:
                             # or park_id == Parks.KUN_KUK_BUILDING:
                             element_text_area = driver.find_element_by_id('memo')
-                            element_text_area.send_keys(Keys.TAB)
-                            element_text_area.clear()
-                            element_text_area.send_keys("1")
+                            # element_text_area.send_keys(Keys.TAB)
+                            # element_text_area.clear()
+                            Util.sleep(1)
+                            element_text_area.send_keys("11")
                             Util.sleep(1)
 
                         if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
