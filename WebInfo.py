@@ -16,3 +16,8 @@ methodHarIn2 = 7
 methodHarIn3 = 8
 methodHarInFunc = 9
 # btnLogOut = 10
+
+weekday = 6
+weekend = 7
+night = 8
+three = 10

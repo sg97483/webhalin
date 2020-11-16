@@ -28,9 +28,9 @@ mapIdToWebInfo = {
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "8",  # 평일 24시간권
             "9",  # 주말 24시간권
-            "10",  # 3시간권
-            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-            # "body > div:nth-child(4) > table > tbody > tr:nth-child(1) > td:nth-child(3) > button"
+            "",
+            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
+            "10"  # 3시간권
             ],
     # 파크엠 1일권
     19121: ["userId", "userPwd", "//input[@type='submit']",
@@ -93,7 +93,7 @@ mapIdToWebInfo = {
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "11",  # 12시간
-            "12",  # 주말 12시간
+            "11",  # 12시간 (12) 주말 12시간
             "",
             "javascript:document.getElementById('discountTypeValue').click",
             "3"  # 3시간할인
@@ -122,8 +122,9 @@ mapIdToWebInfo = {
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "14",  # 앱1일권
             "21",  # 당일권(주말) (판매 : 8700 )
-            "5",  # 6시간권
-            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+            "",
+            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
+            "5"  # 6시간권
             ],
     # 골든타워
     18577: ["userId", "userPwd", "//input[@type='submit']",
@@ -141,8 +142,9 @@ mapIdToWebInfo = {
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "16",  # 종일권
             "16",  # 종일권
-            "14",  # 3시간권
-            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+            "",  #
+            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
+            "14"  # 3시간권
             ],
     # ECC
     19119: ["userId", "userPwd", "//input[@type='submit']",
@@ -159,8 +161,9 @@ mapIdToWebInfo = {
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "3",  # 평일1일권
             "",
-            "5",  # 4시간권
-            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+            "",
+            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
+            "5"  # 4시간권
             ],
     # 진양빌딩 (서대문역)
     19000: ["userId", "userPwd", "//input[@type='submit']",
@@ -177,11 +180,11 @@ mapIdToWebInfo = {
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "9",  # 24hr(플랫폼)
             "14",  # 주말(플랫폼)
-            "10",  # 12시간권
+            "13",  # 야간권
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
-            "11",  # 5시간권
             "12",  # 3시간권
-            "13"  # 야간권
+            "11",  # 5시간권
+            "10"  # 12시간권
             ],
     # (자주식)교대역 하림인터내셔날
     19029: ["userId", "userPwd", "//*[@id='btnLogin']",
@@ -226,9 +229,10 @@ mapIdToWebInfo = {
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "15",  # 종일권
             "18",  # 종일권(주말)(파킹셰어) (판매 : 5000 )
-            "16",  # 2시간권
+            "",
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
-            "17"  # 3시간권
+            "17",  # 3시간권
+            "16"  # 2시간권
             ],
     # # 홍익대학교 홍문관
     # 19208: ["userId", "userPwd", "//*[@id='btnLogin']",
@@ -247,9 +251,10 @@ mapIdToWebInfo = {
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "2",  # 평일종일권(파킹셰어)
             "",  #
-            "5",  # 2시간권
+            "",  #
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
-            "15"  # 3시간권
+            "15",  # 3시간권
+            "5"  # 2시간권
             ],
     # 오목교주차장
     19235: ["userId", "userPwd", "//*[@id='btnLogin']",
@@ -257,9 +262,10 @@ mapIdToWebInfo = {
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "2",  # 평일종일권(파킹셰어)
             "",  #
-            "4",  # 2시간권
+            "",  #
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
-            "5"  # 3시간권
+            "5",  # 3시간권
+            "4"  # 2시간권
             ],
     # 마곡류마타워2
     19234: ["userId", "userPwd", "//*[@id='btnLogin']",
@@ -267,8 +273,9 @@ mapIdToWebInfo = {
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "5",  # 평일종일권(파킹셰어)
             "8",  # 종일권(주말) (판매 : 6000 )
-            "7",  # 3시간권
-            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+            "",  #
+            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
+            "7"  # 3시간권
             ],
     # 눈스퀘어
     19247: ["userId", "userPwd", "//*[@id='btnLogin']",
@@ -409,8 +416,8 @@ mapIdToWebInfo = {
             "",  #
             "",
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
-            "4",  # 2시간권 (판매 : 5000 )
-            "5"  # 3시간권 (판매 : 7000 )
+            "5",  # 3시간권 (판매 : 7000 )
+            "4"  # 2시간권 (판매 : 5000 )
             ],
     # 강남파이낸스프라자
     18945: ["userId", "userPwd", "//*[@id='loginForm']/li[3]/input",
@@ -428,6 +435,15 @@ amano_need_log_out = [
     Parks.GANG_NAM_FINANCE
 ]
 
+have_not_tree_time = {
+    Parks.T_TOWER,
+    Parks.TWIN_TREE,
+    Parks.GOLDEN_TOWER,
+    Parks.JANG_AN_SPIZON,
+    Parks.HARIM_INTERNATIONAL,
+    Parks.NC_GANG_NAM
+}
+
 
 def log_out_web(park_id, driver):
     if park_id in amano_need_log_out:
@@ -440,218 +456,80 @@ def log_out_web(park_id, driver):
 
 def get_har_in_value(park_id, ticket_name):
     web_info = mapIdToWebInfo[park_id]
-    discount_type_value = ""
 
-    if park_id == Parks.T_TOWER:
-        if ticket_name == "심야권":
-            discount_type_value = web_info[WebInfo.methodHarIn3]
-        elif ticket_name[-3:] == "1일권":
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-        elif ticket_name == "금토일연박권":
-            discount_type_value = web_info[11]
-        elif ticket_name[-3:] == "연박권":
-            discount_type_value = web_info[10]
-
-    elif park_id == Parks.Y_PLUS or park_id == Parks.JS_HOTEL:
-        if ticket_name == "3시간권":
-            discount_type_value = web_info[WebInfo.methodHarIn3]
-        elif ticket_name == "16시간권":
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-        elif ticket_name[-3:] == "1일권":
-            if Util.get_week_or_weekend() == 0:
-                discount_type_value = web_info[WebInfo.methodHarIn1]
-            else:
-                discount_type_value = web_info[WebInfo.methodHarIn2]
-
-    elif park_id == Parks.SK_MYEONGDONG:
-        if ticket_name == "3시간권":
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-        elif ticket_name == "심야권":
-            discount_type_value = web_info[WebInfo.methodHarIn3]
-        elif ticket_name == "16시간권":
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-        else:
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-
-    elif park_id == Parks.PARK_M or park_id == Parks.WEST_GATE or park_id == Parks.PARK_M_NIGHT:
-        if Util.get_week_or_weekend() == 0:
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-        else:
-            discount_type_value = web_info[WebInfo.methodHarIn2]
-
-    elif park_id == Parks.PODO_MALL:
-        if str(ticket_name).endswith("12시간권"):
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-        elif ticket_name[-4:] == "3시간권":
-            discount_type_value = web_info[10]
-
-    elif park_id == Parks.TWIN_TREE:
-        if ticket_name == "6시간권":
-            discount_type_value = web_info[WebInfo.methodHarIn3]
-        else:
-            if Util.get_week_or_weekend() == 0:
-                discount_type_value = web_info[WebInfo.methodHarIn1]
-            else:
-                discount_type_value = web_info[WebInfo.methodHarIn2]
-
-    elif park_id == Parks.JANG_AN_SPIZON:
-        if ticket_name == "4시간권":
-            discount_type_value = web_info[WebInfo.methodHarIn3]
-        else:
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-
-    elif park_id == Parks.JIN_YANG_BUILDING:
-        if ticket_name == "6시간권":
-            discount_type_value = web_info[WebInfo.methodHarIn3]
-        else:
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-
-    elif park_id == Parks.YEOKSAM_BUILDING:
-        if ticket_name[-3:] == "1일권":
-            if Util.get_week_or_weekend() == 0:
-                discount_type_value = web_info[WebInfo.methodHarIn1]
-            else:
-                discount_type_value = web_info[WebInfo.methodHarIn2]
-        elif str(ticket_name).startswith("주간권"):
-            discount_type_value = web_info[WebInfo.methodHarIn3]
-        elif str(ticket_name).startswith("5시간권"):
-            discount_type_value = web_info[10]
-        elif str(ticket_name).startswith("3시간권"):
-            discount_type_value = web_info[11]
-        elif str(ticket_name).startswith("야간권"):
-            discount_type_value = web_info[12]
-        else:
-            if Util.get_week_or_weekend() == 0:
-                discount_type_value = web_info[WebInfo.methodHarIn1]
-            else:
-                discount_type_value = web_info[WebInfo.methodHarIn2]
-
-    elif park_id == Parks.JAYANG_PALACE:
-        if ticket_name[-3:] == "1일권":
-            if Util.get_week_or_weekend() == 0:
-                discount_type_value = web_info[WebInfo.methodHarIn1]
-            else:
-                discount_type_value = web_info[WebInfo.methodHarIn2]
-        elif ticket_name[-4:] == "2시간권":
-            discount_type_value = web_info[WebInfo.methodHarIn3]
-        elif ticket_name[-4:] == "3시간권":
-            discount_type_value = web_info[10]
-
-    # elif park_id == Parks.HONG_MUN_KWAN:
-    #     if ticket_name[-3:] == "1일권":
-    #         if Util.get_week_or_weekend() == 0:
-    #             discount_type_value = web_info[WebInfo.methodHarIn1]
-    #         else:
-    #             discount_type_value = web_info[WebInfo.methodHarIn2]
-    #     elif ticket_name == "심야권":
-    #         discount_type_value = web_info[WebInfo.methodHarIn3]
-    #     elif str(ticket_name).startswith("4시간권"):
-    #         discount_type_value = web_info[10]
-    #     elif str(ticket_name).startswith("8시간권"):
-    #         discount_type_value = web_info[11]
-    #     else:
-    #         discount_type_value = web_info[WebInfo.methodHarIn1]
-
-    elif park_id == Parks.MAGOK_RUMA_2:
-        if ticket_name[-4:] == "3시간권":
-            discount_type_value = web_info[WebInfo.methodHarIn3]
-        elif Util.get_week_or_weekend() == 0:
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-        else:
-            discount_type_value = web_info[WebInfo.methodHarIn2]
-
-    elif park_id == Parks.HANA_TOOJA_BUILDING:
-        if ticket_name == "심야권":
-            discount_type_value = web_info[WebInfo.methodHarIn3]
-        elif ticket_name == "주말1일권":
-            discount_type_value = web_info[WebInfo.methodHarIn2]
-        else:
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-
-    # elif park_id == Parks.KUN_KUK_BUILDING:
-    #     if ticket_name[-3:] == "저녁":
-    #         discount_type_value = web_info[WebInfo.methodHarIn1]
-    #     elif ticket_name[-3:] == "심야권":
-    #         discount_type_value = web_info[WebInfo.methodHarIn2]
-    #     else:
-    #         discount_type_value = web_info[WebInfo.methodHarIn3]
-
-    elif park_id == Parks.STATE_TOWER_NAMSAN:
-        if ticket_name[-3:] == "심야권":
-            discount_type_value = web_info[WebInfo.methodHarIn3]
-        elif ticket_name == "평일1일권":
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-        elif ticket_name == "주말1일권":
-            discount_type_value = web_info[WebInfo.methodHarIn2]
-
-    # 오목교주차장
-    elif park_id == Parks.OMOK_BRIDGE:
-        if ticket_name[-4:] == "2시간권":
-            discount_type_value = web_info[WebInfo.methodHarIn3]
-        elif ticket_name[-4:] == "3시간권":
-            discount_type_value = web_info[10]
-        elif ticket_name == "평일1일권":
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-        elif ticket_name == "주말1일권":
-            discount_type_value = web_info[WebInfo.methodHarIn2]
-
-    elif park_id == Parks.NC_GANG_NAM:
-        if ticket_name[-3:] == "1일권":
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-        elif ticket_name[-3:] == "2일권":
-            discount_type_value = web_info[10]
-        elif ticket_name[-3:] == "3일권":
-            discount_type_value = web_info[11]
-        elif ticket_name[-3:] == "4일권":
-            discount_type_value = web_info[12]
-        elif ticket_name[-3:] == "5일권":
-            discount_type_value = web_info[13]
-
-    elif park_id == Parks.JONG_RO_THE_K:
-        if ticket_name == "3시간권":
-            discount_type_value = web_info[WebInfo.methodHarIn3]
-        elif ticket_name == "평일1일권":
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-        elif ticket_name == "주말1일권":
-            discount_type_value = web_info[WebInfo.methodHarIn2]
-
-    elif park_id == Parks.HAP_JEONG_STATION_YOUTH_HOUSE:
-        if ticket_name[-3:] == "심야권":
-            discount_type_value = web_info[WebInfo.methodHarIn3]
-        elif ticket_name == "평일1일권":
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-
-    elif park_id == Parks.LOTTE_CITY_HOTEL_MYEONG_DONG:
-        if ticket_name[-4:] == "2시간권":
-            discount_type_value = web_info[10]
-        elif ticket_name[-4:] == "3시간권":
-            discount_type_value = web_info[11]
-        elif ticket_name == "평일1일권" or ticket_name == "금요일권":
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-
-    elif park_id == Parks.PACIFIC_TOWER:
-        if ticket_name[-4:] == "3시간권":
-            discount_type_value = web_info[10]
-        elif Util.get_week_or_weekend() == 0:
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-        else:
-            discount_type_value = web_info[WebInfo.methodHarIn2]
-
-    elif park_id == Parks.N_TOWER:
-        if ticket_name[-4:] == "3시간권":
-            discount_type_value = web_info[10]
-        elif Util.get_week_or_weekend() == 0:
-            discount_type_value = web_info[WebInfo.methodHarIn1]
-        else:
-            discount_type_value = web_info[WebInfo.methodHarIn2]
-
+    if ticket_name[-3:] == "심야권":
+        return web_info[WebInfo.night]
+    elif ticket_name == "평일1일권":
+        return web_info[WebInfo.weekday]
+    elif ticket_name == "주말1일권":
+        return web_info[WebInfo.weekend]
     else:
-        if Util.get_week_or_weekend() == 0:
-            discount_type_value = web_info[WebInfo.methodHarIn1]
+        if park_id not in have_not_tree_time:
+            if ticket_name[-4:] == "3시간권":
+                return web_info[WebInfo.three]
+            elif Util.get_week_or_weekend() == 0:
+                return web_info[WebInfo.weekday]
+            else:
+                return web_info[WebInfo.weekend]
         else:
-            discount_type_value = web_info[WebInfo.methodHarIn2]
+            if park_id == Parks.T_TOWER:
+                if ticket_name == "금토일연박권" \
+                        or ticket_name == "3일권":
+                    return web_info[11]
+                elif ticket_name[-3:] == "연박권" \
+                        or ticket_name == "2일권":
+                    return web_info[10]
 
-    return discount_type_value
+            elif park_id == Parks.TWIN_TREE:
+                if ticket_name == "6시간권":
+                    return web_info[10]
+
+            elif park_id == Parks.JANG_AN_SPIZON:
+                if ticket_name == "4시간권":
+                    return web_info[10]
+
+            elif park_id == Parks.JIN_YANG_BUILDING:
+                if ticket_name == "6시간권":
+                    return web_info[10]
+
+            elif park_id == Parks.YEOKSAM_BUILDING:
+                if str(ticket_name).startswith("주간권"):
+                    return web_info[WebInfo.methodHarIn3]
+                elif str(ticket_name).startswith("5시간권"):
+                    return web_info[11]
+                elif str(ticket_name).startswith("야간권"):
+                    return web_info[12]
+
+            elif park_id == Parks.JAYANG_PALACE:
+                if ticket_name[-4:] == "2시간권":
+                    return web_info[11]
+
+            # 오목교주차장
+            elif park_id == Parks.OMOK_BRIDGE:
+                if ticket_name[-4:] == "2시간권":
+                    return web_info[11]
+
+            elif park_id == Parks.NC_GANG_NAM:
+                if ticket_name[-3:] == "1일권":
+                    return web_info[WebInfo.methodHarIn1]
+                elif ticket_name[-3:] == "2일권":
+                    return web_info[10]
+                elif ticket_name[-3:] == "3일권":
+                    return web_info[11]
+                elif ticket_name[-3:] == "4일권":
+                    return web_info[12]
+                elif ticket_name[-3:] == "5일권":
+                    return web_info[13]
+
+            elif park_id == Parks.LOTTE_CITY_HOTEL_MYEONG_DONG:
+                if ticket_name[-4:] == "2시간권":
+                    return web_info[11]
+
+            else:
+                if Util.get_week_or_weekend() == 0:
+                    return web_info[WebInfo.weekday]
+                else:
+                    return web_info[WebInfo.weekend]
 
 
 def web_har_in_login(driver, park_id):
