@@ -235,6 +235,7 @@ mapIdToUrl = {
     19328: "http://211.217.209.129",  # 합정역 청년주택
     19336: "http://1.225.67.7",  # 롯데시티호텔명동
     18945: "http://www.amanopark.co.kr",  # 강남파이낸스프라자
+    19266: "http://112.217.205.146:8090",  # 미성빌딩
 }
 
 lotOptionList = {
@@ -437,6 +438,7 @@ lotOptionList = {
     19328: ["합정역 청년주택", "parkingpark", "park001"],
     19336: ["롯데시티호텔명동", "parkingpark", "park001^^"],
     18945: ["강남파이낸스프라자", "parkingpark2", "park001^^"],
+    19266: ["미성빌딩", "ppark", "1234"],
 }
 
 NON = 0
@@ -624,3 +626,4 @@ HAP_JEONG_STATION_YOUTH_HOUSE = 19328
 LOTTE_CITY_HOTEL_MYEONG_DONG = 19336
 GANG_NAM_FINANCE = 18945
 GRACE_TOWER = 45304
+MI_SEONG_BUILDING = 19266

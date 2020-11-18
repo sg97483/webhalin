@@ -466,6 +466,14 @@ mapIdToWebInfo = {
             "javascript:applyDiscount('08', '1', '01|', 'ppark', '999999999', '0');",
             "javascript:applyDiscount('08', '1', '01|', 'ppark', '999999999', '0');",
             "",
+            ],
+    # 미성빌
+    19266: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
+            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+            "chk",
+            "javascript:applyDiscount('12', '1', '04|09|03|06|02|01|05|10|11|13|14|97|98|', 'ppark');",
+            "",
+            "",
             ]
 }
 
