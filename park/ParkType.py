@@ -130,7 +130,8 @@ parkTypeAmano = [
     Parks.JONG_RO_THE_K,
     Parks.HAP_JEONG_STATION_YOUTH_HOUSE,
     Parks.LOTTE_CITY_HOTEL_MYEONG_DONG,
-    Parks.GANG_NAM_FINANCE
+    Parks.GANG_NAM_FINANCE,
+    Parks.GRACE_TOWER
 ]
 
 parkTypeBlue = [

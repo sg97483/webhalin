@@ -428,6 +428,15 @@ mapIdToWebInfo = {
             "812",  # 주말종일권 (판매 : 5000 )
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+            ],
+    # 그레이스타워
+    45304: ["userId", "userPwd", "//*[@id='loginForm']/li[3]/input",
+            "schCarNo", "//*[@id='sForm']/input[4]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "775",  # 파킹셰어평일당일권 (판매 : 13000 )
+            "",  #
+            "",
+            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ]
 }
 
