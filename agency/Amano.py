@@ -114,7 +114,8 @@ mapIdToWebInfo = {
             "4",  # 종일 평일(자주식)
             "",  # 종일 주말
             "",
-            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
+            "7"  # 3시간권 (판매 : 6000 )
             ],
     # 트윈트리
     12868: ["userId", "userPwd", "//input[@type='submit']",
