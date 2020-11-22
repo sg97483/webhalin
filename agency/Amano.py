@@ -121,11 +121,11 @@ mapIdToWebInfo = {
     12868: ["userId", "userPwd", "//input[@type='submit']",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "14",  # 앱1일권
+            "20",  # 당일권(평일) (판매 : 12000 )
             "21",  # 당일권(주말) (판매 : 8700 )
             "",
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
-            "5"  # 6시간권
+            "22"  # 6시간권 (판매 : 8000 )
             ],
     # 골든타워
     18577: ["userId", "userPwd", "//input[@type='submit']",
@@ -161,10 +161,11 @@ mapIdToWebInfo = {
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "3",  # 평일1일권
-            "",
+            "7",  # 토/일/공휴일 종일권
             "",
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
-            "5"  # 4시간권
+            "5",  # 4시간권
+            "8"  # 토/일/공휴일 2시간
             ],
     # 진양빌딩 (서대문역)
     19000: ["userId", "userPwd", "//input[@type='submit']",
@@ -471,7 +472,7 @@ def get_har_in_value(park_id, ticket_name):
         return web_info[WebInfo.night]
     elif ticket_name == "평일1일권":
         return web_info[WebInfo.weekday]
-    elif ticket_name == "주말1일권":
+    elif ticket_name == "주말1일권" or ticket_name == "토요일권" or ticket_name == "일요일권":
         return web_info[WebInfo.weekend]
     else:
         if park_id not in have_not_tree_time:
