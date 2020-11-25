@@ -194,7 +194,7 @@ mapIdToWebInfo = {
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "12",  # 평일1일권
             "22",  # 주말당일권(파킹셰어) (판매 : 10000 )
-            "",
+            "23",  # 심야권(파킹셰어) (판매 : 5000 )
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
             "24",  # 2시간권(파킹셰어) (판매 : 10000 )
             ],
