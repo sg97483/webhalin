@@ -80,7 +80,8 @@ parkTypeHighCity = [
     Parks.BANPO_DONG_GONGYONG,
     Parks.SUWON_STATION_MARKET,
     Parks.GRAND_CENTRAL,
-    Parks.MI_SEONG_BUILDING
+    Parks.MI_SEONG_BUILDING,
+    Parks.NH_GWANG_MYEONG
 ]
 
 parkTypeHighCity2 = [

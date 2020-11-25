@@ -236,6 +236,7 @@ mapIdToUrl = {
     19336: "http://1.225.67.7",  # 롯데시티호텔명동
     18945: "http://www.amanopark.co.kr",  # 강남파이낸스프라자
     19266: "http://112.217.205.146:8090",  # 미성빌딩
+    19329: "http://59.15.45.203:8090",  # NH농협은행광명시지부
 }
 
 lotOptionList = {
@@ -439,6 +440,7 @@ lotOptionList = {
     19336: ["롯데시티호텔명동", "parkingpark", "park001^^"],
     18945: ["강남파이낸스프라자", "parkingpark2", "park001^^"],
     19266: ["미성빌딩", "ppark", "1234"],
+    19329: ["NH농협은행광명시지부", "ppark", "1234"],
 }
 
 NON = 0
@@ -627,3 +629,4 @@ LOTTE_CITY_HOTEL_MYEONG_DONG = 19336
 GANG_NAM_FINANCE = 18945
 GRACE_TOWER = 45304
 MI_SEONG_BUILDING = 19266
+NH_GWANG_MYEONG = 19329
