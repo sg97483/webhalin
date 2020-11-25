@@ -237,6 +237,7 @@ mapIdToUrl = {
     18945: "http://www.amanopark.co.kr",  # 강남파이낸스프라자
     19266: "http://112.217.205.146:8090",  # 미성빌딩
     19329: "http://59.15.45.203:8090",  # NH농협은행광명시지부
+    16212: "http://1.232.56.21",  # 파인에비뉴
 }
 
 lotOptionList = {
@@ -441,6 +442,7 @@ lotOptionList = {
     18945: ["강남파이낸스프라자", "parkingpark2", "park001^^"],
     19266: ["미성빌딩", "ppark", "1234"],
     19329: ["NH농협은행광명시지부", "ppark", "1234"],
+    16212: ["파인에비", "parkingpark", "park001^^"],
 }
 
 NON = 0
@@ -630,3 +632,4 @@ GANG_NAM_FINANCE = 18945
 GRACE_TOWER = 45304
 MI_SEONG_BUILDING = 19266
 NH_GWANG_MYEONG = 19329
+FINE_AVENUE = 16212
