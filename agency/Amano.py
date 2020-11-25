@@ -427,7 +427,7 @@ mapIdToWebInfo = {
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "",  #
             "812",  # 주말종일권 (판매 : 5000 )
-            "",
+            "811",  # 심야권 (판매 : 7000 )
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
     # 그레이스타워
