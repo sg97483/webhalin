@@ -303,7 +303,7 @@ mapIdToWebInfo = {
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "18",  # 종일권(PS)
             "18",  # 종일권(PS)
-            "",  #
+            "19",  # 야간권(PS)
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
     # MDM타워 당산
