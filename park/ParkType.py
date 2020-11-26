@@ -389,7 +389,8 @@ parkTypeNoRequestMain = [
     Parks.MERCURE_AMBASSADOR,
     Parks.HOTEL_SUNSHINE,
     Parks.GS_GUN_GUK_BUILDING,
-    Parks.NC_GANG_NAM
+    Parks.NC_GANG_NAM,
+    Parks.FINE_AVENUE
 ]
 
 type_to_search_css = {
