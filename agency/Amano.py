@@ -36,7 +36,7 @@ mapIdToWebInfo = {
     19121: ["userId", "userPwd", "//input[@type='submit']",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "8",  # 평일1일권
+            "19",  # 평일1일권
             "10",  # 평일1일권
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
