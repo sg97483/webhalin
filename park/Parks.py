@@ -196,7 +196,7 @@ mapIdToUrl = {
     19194: "http://220.76.103.138:8090",
     19197: "http://210.183.177.248:8090",
     19193: "http://121.130.57.54",
-    # 19208: "http://hdpark7.awp.co.kr",
+    19208: "http://hdpark7.awp.co.kr",
     19203: "http://175.198.156.61:8090",
     19191: "http://1.223.26.123",
     19235: "http://115.21.35.7",
@@ -561,7 +561,7 @@ O_TWO_TOWER = 19083
 ORANGE_CENTER = 19197
 JAYANG_PALACE = 19193
 ORAKAI_DAEHAKRO = 19181
-# NICE_HONG_MUN_KWAN = 19208
+NICE_HONG_MUN_KWAN = 19208
 WESTERN_853 = 18999
 MOL_OF_K = 18997
 FRYDIUM_BUILDING = 19203

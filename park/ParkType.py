@@ -113,7 +113,7 @@ parkTypeAmano = [
     Parks.NY_TOWER,
     Parks.ACE_TOWER,
     Parks.JAYANG_PALACE,
-    # Parks.HONG_MUN_KWAN,
+    Parks.NICE_HONG_MUN_KWAN,
     Parks.CHUNGJEONGNO_HOUSE,
     Parks.OMOK_BRIDGE,
     Parks.MAGOK_RUMA_2,

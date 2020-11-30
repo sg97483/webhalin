@@ -236,17 +236,17 @@ mapIdToWebInfo = {
             "17",  # 3시간권
             "16"  # 2시간권
             ],
-    # # 홍익대학교 홍문관
-    # 19208: ["userId", "userPwd", "//*[@id='btnLogin']",
-    #         "schCarNo", "//*[@id='sForm']/input[3]",
-    #         "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-    #         "15",  # 평일1일권
-    #         "17",  # 주말1일권
-    #         "16",  # 심야권
-    #         "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
-    #         "18",  # 4시간권
-    #         "19"  # 8시간권
-    #         ],
+    # 홍익대학교 홍문관
+    19208: ["userId", "userPwd", "//*[@id='btnLogin']",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "15",  # 평일1일권
+            "17",  # 주말1일권
+            "16",  # 심야권
+            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
+            "18",  # 4시간권
+            "19"  # 8시간권
+            ],
     # 충정로청년주택
     19191: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -462,7 +462,8 @@ have_not_tree_time = {
     Parks.GOLDEN_TOWER,
     Parks.JANG_AN_SPIZON,
     Parks.HARIM_INTERNATIONAL,
-    Parks.NC_GANG_NAM
+    Parks.NC_GANG_NAM,
+    Parks.NICE_HONG_MUN_KWAN
 }
 
 
@@ -546,6 +547,12 @@ def get_har_in_value(park_id, ticket_name):
                 if ticket_name[-4:] == "2시간권":
                     return web_info[11]
 
+            elif park_id == Parks.NICE_HONG_MUN_KWAN:
+                if ticket_name[-4:] == "4시간권":
+                    return web_info[10]
+                elif ticket_name[-4:] == "8시간권":
+                    return web_info[11]
+
             else:
                 if Util.get_week_or_weekend() == 0:
                     return web_info[WebInfo.weekday]
@@ -569,8 +576,8 @@ def web_har_in_login(driver, park_id):
     element_pw.clear()
     element_pw.send_keys(web_har_in_info[WebInfo.webHarInPw])
 
-    # if park_id == Parks.HONG_MUN_KWAN or \
-    if park_id == Parks.YEOKSAM_BUILDING:
+    if park_id == Parks.NICE_HONG_MUN_KWAN or \
+            park_id == Parks.YEOKSAM_BUILDING:
         driver.find_element_by_css_selector("#loginForm > li:nth-child(5) > input").click()
     elif park_id == Parks.SEOUL_GIROKWON or park_id == Parks.WEST_GATE:
         driver.find_element_by_id(web_info[WebInfo.btnLogin]).click()
