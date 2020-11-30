@@ -80,15 +80,24 @@ def web_har_in(target, driver):
 
                 if ParkUtil.check_search(park_id, driver):
                     try:
-                        if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
-                            driver.find_element_by_css_selector(web_info[WebInfo.btnItem]).click()
-                            driver.find_element_by_id("Button_Discount").click()
-                            Util.sleep(1)
-                            driver.find_element_by_id("Button_Discount").click()
-                            Util.sleep(1)
-                            return True
-                    except NoSuchElementException:
+                        if ParkUtil.check_same_day(park_id, driver):
+                            if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
+                                driver.find_element_by_css_selector(web_info[WebInfo.btnItem]).click()
+                                driver.find_element_by_id("Button_Discount").click()
+                                Util.sleep(1)
+                                driver.find_element_by_id("Button_Discount").click()
+                                Util.sleep(1)
+                                return True
+                            else:
+                                print(Colors.MARGENTA + "차량번호가 틀립니다." + Colors.ENDC)
+                                return False
+                        else:
+                            print(Colors.MARGENTA + "입차날짜가 틀립니다." + Colors.ENDC)
+                            return False
+
+                    except NoSuchElementException as ex:
                         print(Colors.BLUE + "검색결과가 없습니다." + Colors.ENDC)
+                        print('에러가 발생 했습니다', ex)  # ex는 발생한 에러의 이름을 받아오는 변수
                         return False
 
                 return False

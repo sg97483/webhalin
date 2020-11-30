@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import datetime
+
 from selenium.common.exceptions import NoSuchElementException
 
 from park import ParkType, Parks
@@ -138,3 +140,32 @@ def is_night_time():
         return True
     else:
         return False
+
+
+def get_type_to_day_css(park_id):
+    park_type = ParkType.get_park_type(park_id)
+    return ParkType.type_to_day_css[park_type]
+
+
+def check_same_day(parkId, driver):
+    day_css = get_type_to_day_css(parkId)
+
+    if day_css == "":
+        print(Colors.YELLOW + "해당 엘리멘트가 존재하지 않습니다." + Colors.ENDC)
+        return False
+    else:
+        text_0 = driver.find_element_by_css_selector(day_css).text
+        text_1 = re.sub('<.+?>', '', text_0, 0, re.I | re.S)
+        text_2 = text_1.strip()
+        text_3 = text_2.split('\n')
+        text = text_3[0]
+
+        now = datetime.datetime.now()
+        now_date = now.strftime('%Y-%m-%d')
+        print("검색된 입차날짜 : " + text + " == " + "현재 입차날짜 : " + now_date)
+
+        if text.startswith(now_date):
+            return True
+        else:
+            print(Colors.MARGENTA + "입차날짜가 틀립니다." + Colors.ENDC)
+            return False

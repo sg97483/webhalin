@@ -438,6 +438,10 @@ mapToHarinUrl = {
     OLD_AJ: "/discount/carSearch.cs?userID=ppark&contextPath="
 }
 
+type_to_day_css = {
+    IP_TIME: "#DataGrid1 > tbody > tr:nth-child(2) > td:nth-child(2)",
+}
+
 
 def get_park_type(park_id):
     if park_id in parkTypeHighCity:
