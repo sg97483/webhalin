@@ -169,3 +169,20 @@ def check_same_day(parkId, driver):
         else:
             print(Colors.MARGENTA + "입차날짜가 틀립니다." + Colors.ENDC)
             return False
+
+
+def check_nice_date(parkId, create_date, driver):
+    if parkId == Parks.NICE_HONG_MUN_KWAN:
+        print("create_date : " + create_date)
+        date_xpath = "//*[@id='entryDate']"
+        text_0 = driver.find_element_by_xpath(date_xpath).text
+        text_1 = re.sub('<.+?>', '', text_0, 0, re.I | re.S)
+        date_time_in_car_time = datetime.datetime.strptime(text_1, '%Y-%m-%d %H:%M:%S')
+        date_time_create_date = datetime.datetime.strptime(create_date, '%Y-%m-%d %H:%M:%S')
+
+        if date_time_create_date <= date_time_in_car_time:
+            print("입차 전 결제입니다. / createDate : " + create_date + " / inCarTime : " + text_1)
+            return True
+        else:
+            print("입차 후 결제입니다. / createDate : " + create_date + " / inCarTime : " + text_1)
+            return False

@@ -548,9 +548,9 @@ def get_har_in_value(park_id, ticket_name):
                     return web_info[11]
 
             elif park_id == Parks.NICE_HONG_MUN_KWAN:
-                if ticket_name[-4:] == "4시간권":
+                if ticket_name == "4시간권":
                     return web_info[10]
-                elif ticket_name[-4:] == "8시간권":
+                elif ticket_name == "8시간권":
                     return web_info[11]
 
             else:
@@ -694,6 +694,13 @@ def web_har_in(target, driver):
                             Util.sleep(1)
                             element_text_area.send_keys("11")
                             Util.sleep(1)
+
+                        if Parks.NICE_HONG_MUN_KWAN:
+                            create_date = target[4]
+                            if not ParkUtil.check_nice_date(park_id, create_date, driver):
+                                print(Colors.RED + "입차 후 결제입니다." + Colors.ENDC)
+                                return False
+                            print(Colors.RED + "입차 전 결제입니다." + Colors.ENDC)
 
                         if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
                             har_in_script = web_info[WebInfo.methodHarInFunc].replace("discountTypeValue",

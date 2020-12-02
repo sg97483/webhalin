@@ -42,7 +42,7 @@ def get_sql(now_date, logger, is_park_test, testPark):
     parking_lot_range = "(" + str_lots + ")"
 
     logger.info("today is : " + now_date + "\n")
-    sql = "SELECT id, parkId, agCarNumber, totalTicketType FROM T_PAYMENT_HISTORY WHERE " \
+    sql = "SELECT id, parkId, agCarNumber, totalTicketType, createDate FROM T_PAYMENT_HISTORY WHERE " \
           "parkId IN " + parking_lot_range + " " \
           "AND cancelledYN IS NULL " \
           "AND (inCarCheck = 'N' OR actualInDtm IS NOT NULL) " \

@@ -27,9 +27,9 @@ driver.implicitly_wait(3)
 #         
 '''
 
-testPark = Parks.MEGABOX_SUNGSU
+testPark = Parks.NICE_HONG_MUN_KWAN
 is_park_test = True
-is_no_db_test = False
+is_no_db_test = True
 
 # WebHarIn page Login info
 parkName = 0
@@ -174,12 +174,13 @@ while True:
     if is_no_db_test:
         # pid, park_id
         # id, parkId, agCarNumber, totalTicketType
-        tempTarget1 = ['0', '18913', '47보9363', '평일1일권']
-        tempTarget2 = ['0', '18577', '296루7472', '평일1일권']
+        tempTarget1 = ['0', '19208', '43라0120', '평일1일권', '2020-12-03 12:00:00']
+        # tempTarget2 = ['0', '18577', '296루7472', '평일1일권']
 
         try:
             web_har_in(tempTarget1)
-            web_har_in(tempTarget2)
+            # web_har_in(tempTarget2)
+            break
         except Exception as ex:
             print(Colors.RED + str(ex) + Colors.ENDC)
     else:
