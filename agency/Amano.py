@@ -407,7 +407,7 @@ mapIdToWebInfo = {
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "13",  # 당일권(파킹셰어)
             "",  #
-            "",
+            "12",  # 심야권(파킹셰어) (판매 : 5500 )
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
     # 롯데시티호텔명동
