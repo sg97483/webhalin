@@ -182,7 +182,7 @@ mapIdToWebInfo = {
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "9",  # 24hr(플랫폼)
             "14",  # 주말(플랫폼)
-            "13",  # 야간권
+            "15",  # 야간권
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
             "12",  # 3시간권
             "11",  # 5시간권
@@ -479,7 +479,7 @@ def log_out_web(park_id, driver):
 def get_har_in_value(park_id, ticket_name):
     web_info = mapIdToWebInfo[park_id]
 
-    if ticket_name[-3:] == "심야권":
+    if ticket_name[-3:] == "심야권" or ticket_name[-3:] == "야간권":
         return web_info[WebInfo.night]
     elif ticket_name == "평일1일권":
         return web_info[WebInfo.weekday]
@@ -695,7 +695,7 @@ def web_har_in(target, driver):
                             element_text_area.send_keys("11")
                             Util.sleep(1)
 
-                        if Parks.NICE_HONG_MUN_KWAN:
+                        if park_id == Parks.NICE_HONG_MUN_KWAN:
                             create_date = target[4]
                             if not ParkUtil.check_nice_date(park_id, create_date, driver):
                                 print(Colors.RED + "입차 후 결제입니다." + Colors.ENDC)
