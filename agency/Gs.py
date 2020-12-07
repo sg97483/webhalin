@@ -221,10 +221,8 @@ def web_har_in(target, driver):
                         driver.find_element_by_css_selector(
                             "#tr_dislist > td > table > tbody > tr:nth-child(3) > td > input.btn.btn-info").click()
                     Util.sleep(2)
-
-                    if not park_id == Parks.DMCC:
-                        driver.switch_to.alert.accept()
-
+                    driver.switch_to.alert.accept()
+                    Util.sleep(3)
                     return True
 
                 return False
