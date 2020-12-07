@@ -357,7 +357,7 @@ mapIdToWebInfo = {
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "3",  # 파킹셰어 종일권 (판매 : 10000 )
             "3",  # 파킹셰어 종일권 (판매 : 10000 )
-            "",
+            "4",  # 파킹셰어 야간권 (판매 : 5000 )
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
     # 건국빌딩
