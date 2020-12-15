@@ -482,6 +482,14 @@ mapIdToWebInfo = {
             "javascript:applyDiscount('07', '1', '01|15|16|', 'ppark', '1', '0');",
             "javascript:applyDiscount('07', '1', '01|15|16|', 'ppark', '1', '0');",
             "javascript:applyDiscount('91', '1', '', 'ppark(야간)', '1', '0');",
+            ],
+    # (하이시티파킹) 역삼우정에쉐르2차
+    19374: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
+            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+            "chk",
+            "javascript:applyDiscount('08', '1', '04|', 'ppark', '1', '0');",
+            "javascript:applyDiscount('08', '1', '04|', 'ppark', '1', '0');",
+            "",
             ]
 }
 
