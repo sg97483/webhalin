@@ -28,8 +28,8 @@ driver.implicitly_wait(3)
 '''
 
 testPark = Parks.NICE_HONG_MUN_KWAN
-is_park_test = True
-is_no_db_test = True
+is_park_test = False
+is_no_db_test = False
 
 # WebHarIn page Login info
 parkName = 0
@@ -198,7 +198,7 @@ while True:
         newFolder = 'C:/Users/wisemobile5/Desktop/WEBHALIN/' + nowDate
 
         nowTime = now.strftime('%H%M')
-        file_name = nowDate + "_" + nowTime + "_" + str(repeatCnt) + ".py"
+        file_name = nowDate + "_" + nowTime + "_" + str(repeatCnt) + ".txt"
 
         file_url = newFolder + "\\" + file_name
 
