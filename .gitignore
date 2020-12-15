@@ -6,3 +6,5 @@ payment_list/
 beforeLog/
 2020*/
 2020*.py
+/*.txt
+log/
