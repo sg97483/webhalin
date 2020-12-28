@@ -212,7 +212,7 @@ mapIdToUrl = {
     19247: "http://203.234.211.229",  # 아마노 눈스퀘어
     19267: "http://hipjungan.iptime.org",  # 하이파킹 정안빌딩
     19250: "http://stower.iptime.org",  # 광화문S타워
-    19240: "http://gstimes0084.iptime.org/index.php",  # 상봉듀오트리스
+    19240: "http://gstimes0084.iptime.org/index.php/login",  # 상봉듀오트리스
     19239: "http://59.15.76.103",  # MDM타워 당산
     19272: "http://59.15.186.7:8090",  # 힐스테이트에코마곡나루역
     19271: "http://220.85.76.134:8090",  # 강남빌딩

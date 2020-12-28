@@ -95,7 +95,7 @@ mapIdToWebInfo = {
             ""],
     # 상봉듀오트리스
     19240: ["login_id", "login_pw",
-            "//*[@id='bodyCSS']/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input",
+            """//*[@id="third"]/div/div/div/div[5]/div/input""",
             "searchCarNo", "//*[@id='btnSearch']",
             "",  # 차량번호 클릭
             "javascript:fnDisCount('56:전액무료(웹) / 잔여수량 99996', '1');",
@@ -157,9 +157,8 @@ def web_har_in(target, driver):
             # print(driver.current_url)
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
             if ParkUtil.first_access(park_id, driver.current_url):
-                element_id = driver.find_element_by_id(web_info[WebInfo.inputId])
-                element_id.clear()
-                element_id.send_keys(web_har_in_info[WebInfo.webHarInId])
+
+                driver.find_element_by_id(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
 
                 if park_id == Parks.DMC_S_CITY:
                     driver.find_element_by_id(web_info[WebInfo.inputPw]).clear()
