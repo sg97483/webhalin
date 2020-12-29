@@ -82,7 +82,8 @@ parkTypeHighCity = [
     Parks.GRAND_CENTRAL,
     Parks.MI_SEONG_BUILDING,
     Parks.NH_GWANG_MYEONG,
-    Parks.YEOK_SAM_ECHERE
+    Parks.YEOK_SAM_ECHERE,
+    Parks.HAEUNDAE_IPARK
 ]
 
 parkTypeHighCity2 = [
@@ -183,7 +184,8 @@ parkTypeGs = [
     Parks.URBANIEL_CHEN_HO,
     Parks.SANGBONG_DUOTRIS,
     Parks.MODERN_GYEDONG_BUILDING,
-    Parks.MERCURE_AMBASSADOR
+    Parks.MERCURE_AMBASSADOR,
+    Parks.MAGOK_SPRINGTOWER
 ]
 
 parkType_ip_time = [
@@ -425,7 +427,7 @@ parkTypeNoRequestMain = [
     Parks.HOTEL_SUNSHINE,
     Parks.GS_GUN_GUK_BUILDING,
     Parks.NC_GANG_NAM,
-    Parks.FINE_AVENUE
+    Parks.FINE_AVENUE,
 ]
 
 type_to_search_css = {

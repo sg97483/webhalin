@@ -117,6 +117,16 @@ mapIdToWebInfo = {
             "javascript:fnDisCount('57:전액무료(웹)', '1');",
             "javascript:fnDisCount('57:전액무료(웹)', '1');",
             ""],
+
+    #마곡스프링파크타워
+    19081: ["login_id", "login_pw",
+            "//*[@id='bodyCSS']/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # 차량번호 클릭
+            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');", #1일권
+            "javascript:fnDisCount('84:48시간 무료 / 잔여수량 996', '1');", #2일권
+            "javascript:fnDisCount('85:72시간 무료 / 잔여수량 995', '1');"],  #3일권
+
 }
 
 
@@ -198,7 +208,8 @@ def web_har_in(target, driver):
                     or park_id == Parks.NONHYEON_BUILDING \
                     or park_id == Parks.MEGABOX_SUNGSU \
                     or park_id == Parks.KDB_LIFE \
-                    or park_id == Parks.MODERN_GYEDONG_BUILDING:
+                    or park_id == Parks.MODERN_GYEDONG_BUILDING \
+                    or park_id == Parks.MAGOK_SPRINGTOWER:
                 driver.implicitly_wait(3)
                 Util.click_element_id('btnSearch', driver)
             else:
@@ -207,7 +218,8 @@ def web_har_in(target, driver):
             # if park_id == Parks.DMC_S_CITY:
             #     Util.sleep(5)
             Util.sleep(2)
-
+            if park_id==Parks.MAGOK_SPRINGTOWER:
+                driver.find_element_by_id('Reserve4').send_keys('1')
             if ParkUtil.check_search(park_id, driver):
                 if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
                     Util.click_element_selector("#divAjaxCarList > tbody > tr > td > a", driver)

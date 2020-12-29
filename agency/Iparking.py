@@ -79,7 +79,8 @@ i_parking_hi_parking = [
     Parks.AUTOWAY_TOWER,
     Parks.NUN_SQUARE,
     Parks.BUILDING_94,
-    Parks.YEOUIDO_NH_CAPITAL
+    Parks.YEOUIDO_NH_CAPITAL,
+    Parks.BIT_FLEX
 ]
 
 
@@ -121,16 +122,17 @@ def web_har_in(target, driver):
             # print(driver.current_url)
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
             if ParkUtil.first_access(park_id, driver.current_url):
+                Util.sleep(3)
                 if ParkUtil.check_first_conn(park_type):
-
                     driver.find_element_by_id("skip").click()
-
+                    print("skip")
+                    Util.sleep(1)
                 driver.find_element_by_id(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
                 driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
-
                 driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
-
                 Util.sleep(1)
+
+
                 driver.find_element_by_id("gohome").click()
                 driver.find_element_by_xpath("//*[@id='start']").click()
                 if park_id in i_parking_hi_parking:

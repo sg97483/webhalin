@@ -379,7 +379,7 @@ mapIdToWebInfo = {
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
     # NC 강남점
-    19334: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
+    19334: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "8",  # 당일권 (판매 : 12000 )

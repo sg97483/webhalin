@@ -238,7 +238,8 @@ mapIdToUrl = {
     19266: "http://112.217.205.146:8090",  # 미성빌딩
     19329: "http://59.15.45.203:8090",  # NH농협은행광명시지부
     16212: "http://1.232.56.21",  # 파인에비뉴
-    19374: "http://121.134.95.242:8090"  # 역삼우정에쉐르2차
+    19374: "http://121.134.95.242:8090",  # 역삼우정에쉐르2차
+    19396: "http://hedipark.iptime.org:8090/index.php/login"
 }
 
 lotOptionList = {
@@ -445,6 +446,7 @@ lotOptionList = {
     19329: ["NH농협은행광명시지부", "ppark", "1234"],
     16212: ["파인에비뉴", "parkingpark", "park001^^"],
     19374: ["역삼우정에쉐르2차", "ppark", "1234"],
+    19396: ["해운대아이파크", "ppark", "1234"],
 }
 
 NON = 0
@@ -632,6 +634,8 @@ MI_SEONG_BUILDING = 19266
 NH_GWANG_MYEONG = 19329
 FINE_AVENUE = 16212
 YEOK_SAM_ECHERE = 19374
+HAEUNDAE_IPARK = 19396
+MAGOK_SPRINGTOWER = 19081
 
 # NICE_KB_BUPYEONG_PLAZA = 19280  # 19280	KB금융 부평프라자	10
 # NICE_INGYE_CULTURE = 19281  # 19281	경기문화재단 인계동사무소	10
