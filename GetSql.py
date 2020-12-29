@@ -47,6 +47,7 @@ def get_sql(now_date, logger, is_park_test, testPark):
           "AND cancelledYN IS NULL " \
           "AND (inCarCheck = 'N' OR actualInDtm IS NOT NULL) " \
           "AND reservedStDtm LIKE '" + now_date + "%' " \
+          "AND reservedEdDtm LIKE '" + now_date + "%' " \
           "AND TotalTicketType NOT LIKE '월주차%' " \
           "AND TotalTicketType NOT LIKE '월연장%' " \
           "AND TotalTicketType NOT LIKE '%자동결제%' " \
