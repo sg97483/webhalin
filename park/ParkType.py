@@ -222,7 +222,8 @@ park_type_aj_park = [
     Parks.AJ_HOUSE_DIBIZ,
     Parks.AJ_EWHA,
     Parks.AJ_HONG_IK_SPORTS_SPA,
-    Parks.AJ_GUWOL_CENTRAL
+    Parks.AJ_GUWOL_CENTRAL,
+    Parks.AJ_AMSA
 ]
 
 park_type_old_aj = [
@@ -234,7 +235,8 @@ park_type_etc = [
     Parks.WESTERN_853,
     Parks.DREAM_TOWER_NIGHT,
     Parks.DREAM_TOWER_HOLIDAY,
-    Parks.DIAT_GALLERY_2
+    Parks.DIAT_GALLERY_2,
+    Parks.HUMAX_VILLAGE
 ]
 
 park_type_nice = [

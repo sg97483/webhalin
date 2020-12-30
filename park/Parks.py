@@ -181,6 +181,7 @@ mapIdToUrl = {
     19212: "https://mobile.ajpark.co.kr/partner/",  # AJ이화주차장점
     19226: "https://mobile.ajpark.co.kr/partner/",  # AJ 홍익스포츠스파
     16434: "https://mobile.ajpark.co.kr/partner/",  # AJ 구월중앙점
+    19221: "https://mobile.ajpark.co.kr/partner/",  # AJ암사점
 
     19004: "http://221.148.11.134:8090",
     19180: "http://hipgnpb.iptime.org:8090",
@@ -449,6 +450,7 @@ lotOptionList = {
     19374: ["역삼우정에쉐르2차", "ppark", "1234"],
     19396: ["해운대아이파크", "ppark", "1234"],
     19243: ["강동홈플러스", "ppark", "1234"],
+
 }
 
 NON = 0
@@ -551,6 +553,7 @@ AJ_NON_HYEN = 19156  # AJ파크 논현점
 AJ_HAB_JONG = 19157  # AJ파크 합정역점
 AJ_DONG_MYO = 19158  # AJ파크 동묘점
 AJ_GANG_NAM = 19162  # AJ파크 강남점
+AJ_AMSA = 19221 # AJ파크 암사점
 URIM_RODEO_SWEET = 45009
 AJ_MUNJUNG_PRAVIDA = 19160  # 문정프라비다점
 GANG_NAM_L7 = 19004
