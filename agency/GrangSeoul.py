@@ -14,16 +14,16 @@ mapIdToWebInfo = {
 
 def click_har_in_script(ticke_name, driver):
     if ticke_name == "4시간권":
-        driver.find_element_by_xpath("//*[@id='discount_click_name' and @value='4시간쿠폰']").click()
+        driver.find_element_by_xpath("/html/body/div[2]/div[2]/div/form/div[4]/div/input[9]").click()
         return True
     elif ticke_name == "저녁권" or ticke_name == "6시간권":
-        driver.find_element_by_xpath("//*[@id='discount_click_name' and @value='4시간쿠폰']").click()
-        driver.find_element_by_xpath("//*[@id='discount_click_name' and @value='2시간쿠폰']").click()
+        driver.find_element_by_xpath("/html/body/div[2]/div[2]/div/form/div[4]/div/input[9]").click()
+        driver.find_element_by_xpath("/html/body/div[2]/div[2]/div/form/div[4]/div/input[5]").click()
         return True
     elif ticke_name.startswith("12시간"):
-        driver.find_element_by_xpath("//*[@id='discount_click_name' and @value='4시간쿠폰']").click()
-        driver.find_element_by_xpath("//*[@id='discount_click_name' and @value='4시간쿠폰']").click()
-        driver.find_element_by_xpath("//*[@id='discount_click_name' and @value='4시간쿠폰']").click()
+        driver.find_element_by_xpath("/html/body/div[2]/div[2]/div/form/div[4]/div/input[9]").click()
+        driver.find_element_by_xpath("/html/body/div[2]/div[2]/div/form/div[4]/div/input[9]").click()
+        driver.find_element_by_xpath("/html/body/div[2]/div[2]/div/form/div[4]/div/input[9]").click()
         return True
     else:
         print("유효하지 않는 주차권 입니다.")
