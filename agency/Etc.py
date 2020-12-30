@@ -98,7 +98,7 @@ def web_har_in(target, driver):
 
                         if ori_car_num[-7:] == td_car_num:
                             try:
-                                driver.find_element_by_css_selector('#sc-page-content > div > div > div > div.uk-card-body > div > div.uk-width-1-1.uk-grid-margin.uk-first-column > div > table > tbody > tr:nth-child(1)').click()
+                                driver.find_element_by_css_selector('#sc-page-content > div > div.uk-width-2-3\@l > div > div.uk-card-body > div > div.uk-width-1-2\@l.uk-first-column > div.uk-margin-mini-top.uk-grid-small.uk-grid.uk-grid-stack > div > div > div').click()
                             except NoSuchElementException:
                                 print("웨스턴853 여러 개 차량번호 클릭 실패")
 
