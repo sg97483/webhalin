@@ -80,14 +80,16 @@ def web_har_in(target, driver):
                     driver.find_element_by_xpath(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
                     driver.find_element_by_xpath(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
                     driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
-
+                #로그인완료
                 driver.implicitly_wait(3)
 
+                #차번호입력
                 driver.find_element_by_xpath(web_info[WebInfo.inputSearch]).send_keys(search_id)
                 driver.implicitly_wait(3)
+                print("차번호 입력")
                 Util.sleep(2)
                 try:
-                    tr_text = driver.find_element_by_css_selector("#sc-page-content > div > div.uk-width-1-3\@l.uk-first-column > div > div.uk-card-body > div > div.uk-width-1-1.uk-grid-margin.uk-first-column > div > table > tbody > tr:nth-child(1) > td:nth-child(1)").text
+                    tr_text = driver.find_element_by_css_selector("#sc-page-content > div > div > div > div.uk-card-body > div > div.uk-width-1-1.uk-grid-margin.uk-first-column > div > table > tbody > tr:nth-child(1) > td:nth-child(1) > span").text
                     text = re.sub('<.+?>', '', tr_text, 0, re.I | re.S)
                     trim_text = text.strip()
                     # print(trim_text)
