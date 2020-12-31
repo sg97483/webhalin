@@ -79,8 +79,7 @@ i_parking_hi_parking = [
     Parks.AUTOWAY_TOWER,
     Parks.NUN_SQUARE,
     Parks.BUILDING_94,
-    Parks.YEOUIDO_NH_CAPITAL,
-    Parks.BIT_FLEX
+    Parks.YEOUIDO_NH_CAPITAL
 ]
 
 

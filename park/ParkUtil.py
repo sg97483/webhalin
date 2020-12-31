@@ -112,10 +112,14 @@ def check_same_car_num(parkId, oriCarNum, driver):
         return False
     else:
         td_car_num_0 = driver.find_element_by_css_selector(element_car_num).text
+        print("나누기전 : " + td_car_num_0)
         td_car_num_1 = re.sub('<.+?>', '', td_car_num_0, 0, re.I | re.S)
         td_car_num_2 = td_car_num_1.strip()
-        td_car_num_3 = td_car_num_2.split('\n')
-        td_car_num = td_car_num_3[0][-7:]
+        global td_car_num
+        if(len(td_car_num_2.split(' '))>1):
+            td_car_num = td_car_num_2.split(' ')[0][-7:]
+        else:
+            td_car_num = td_car_num_2[-7:]
 
         print("검색된 차량번호 : " + td_car_num + " == " + "기존 차량번호 : " + oriCarNum + " / " + oriCarNum[-7:])
 
