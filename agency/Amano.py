@@ -448,12 +448,23 @@ mapIdToWebInfo = {
             "8",  # 평일 심야권 (판매 : 7000 )
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
             "10"  # 평일 3시간권 (판매 : 10000 )
-            ]
+            ],
+    # 동신교회
+    # 16096: ["userId", "userPwd", """//*[@id="loginForm"]/li[3]/input""",
+    #         "schCarNo", "//*[@id='sForm']/input[4]",
+    #         "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+    #         "11",  # 평일당일권(파킹셰어) (판매 : 20000 )
+    #         "10",   # 평일 3시간권 (판매 : 10000 )
+    #         "",
+    #         "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
+    #         ""
+    #         ]
 }
 
 amano_need_log_out = [
     Parks.GOLDEN_TOWER,
-    Parks.GANG_NAM_FINANCE
+    Parks.GANG_NAM_FINANCE,
+    Parks.HAP_JEONG_STATION_YOUTH_HOUSE
 ]
 
 have_not_tree_time = {
@@ -552,7 +563,11 @@ def get_har_in_value(park_id, ticket_name):
                     return web_info[10]
                 elif ticket_name == "8시간권":
                     return web_info[11]
-
+            # elif park_id == Parks.DONGSIN_CHURCH:
+            #     if ticket_name == "평일1일권":
+            #         return web_info[]
+            #     elif ticket_name == "3시간권":
+            #         return web_info[]
             else:
                 if Util.get_week_or_weekend() == 0:
                     return web_info[WebInfo.weekday]
@@ -660,9 +675,9 @@ def web_har_in(target, driver):
                 if park_id == Parks.T_TOWER:
                     car_num = soup.find(id='tblList')  # 트라팰리스
                 else:
-                    car_num = soup.find("tr")  # 와이플러스 및 나머지
+                    car_num = driver.find_element_by_xpath('''//*[@id="carNo"]''')  # 와이플러스 및 나머지
 
-                car_text = car_num.get_text()
+                car_text = car_num.text
                 text = re.sub('<.+?>', '', car_text, 0, re.I | re.S)
                 trim_text = text.strip()
 
