@@ -174,7 +174,7 @@ while True:
     if is_no_db_test:
         # pid, park_id
         # id, parkId, agCarNumber, totalTicketType
-        tempTarget1 = ['0', '19208', '43라0120', '평일1일권', '2020-12-03 12:00:00']
+        tempTarget1 = ['0', '19208', '43라0120', '평일1일권', '2020-12-03 12:00:00', '202101040000']
         # tempTarget2 = ['0', '18577', '296루7472', '평일1일권']
 
         try:
@@ -218,7 +218,13 @@ while True:
             print(i, sep='\n')
 
             try:
-                web_har_in(i)
+                targetTime = i[5][8:12]
+                print("예정입차시간 - "+targetTime)
+                if(targetTime<nowTime):
+                    print("예정입차시간 < 현재시간")
+                    web_har_in(i)
+                else:
+                    print("입차시간이 아직 되지 않았음.")
             except Exception as ex:
                 print(Colors.RED + str(ex) + Colors.ENDC)
 
