@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+from selenium.common.exceptions import NoAlertPresentException, TimeoutException
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import Util
 import Colors
 from park import ParkUtil, ParkType, Parks
@@ -240,7 +243,20 @@ def web_har_in(target, driver):
                         driver.find_element_by_css_selector(
                             "#tr_dislist > td > table > tbody > tr:nth-child(3) > td > input.btn.btn-info").click()
                     Util.sleep(2)
-                    driver.switch_to.alert.accept()
+                    try:
+                        # wait for the alert to show up
+                        WebDriverWait(driver, 3).until(EC.alert_is_present(),
+                                                        'Timed out waiting for PA creation ' +
+                                                        'confirmation popup to appear.')
+                        # if it does
+                        driver.switch_to.alert.accept()
+                        print
+                        "alert accepted"
+                    except TimeoutException:
+                        print
+                        "no alert"
+
+
                     Util.sleep(3)
                     return True
 
