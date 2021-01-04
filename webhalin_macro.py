@@ -48,7 +48,6 @@ methodHarIn1 = 6
 methodHarIn2 = 7
 methodHarIn3 = 8
 methodHarInFunc = 9
-# btnLogOut = 10
 
 connParkId = []
 
@@ -76,7 +75,6 @@ def in_car_check_db(pid, park_id):
 
 
 def push_fcm_in_car_check(pid):
-    # print(Colors.BLUE + "푸쉬 발송 테스트 : " + str(pid) + Colors.ENDC)
     api_host = "http://cafe.wisemobile.kr:8080"
     params_get = "?msgType=parked&id=" + str(pid)
     url_push_fcm = api_host + "/fcm/sendFcmTest" + params_get
@@ -166,20 +164,11 @@ def web_har_in(target):
 repeatCnt = 0
 
 while True:
-    # if is_part_test:
-    #     print(Colors.BLUE + "퓌쉬 테스트 시작" + Colors.ENDC)
-    #     pid = 235564
-    #     push_fcm_in_car_check(pid)
-
     if is_no_db_test:
-        # pid, park_id
-        # id, parkId, agCarNumber, totalTicketType
         tempTarget1 = ['0', '19208', '43라0120', '평일1일권', '2020-12-03 12:00:00', '202101040000']
-        # tempTarget2 = ['0', '18577', '296루7472', '평일1일권']
 
         try:
             web_har_in(tempTarget1)
-            # web_har_in(tempTarget2)
             break
         except Exception as ex:
             print(Colors.RED + str(ex) + Colors.ENDC)
@@ -202,8 +191,6 @@ while True:
 
         file_url = newFolder + "\\" + file_name
 
-        # logging.basicConfig(file_name= file_url', file_name)
-
         file_handler = logging.FileHandler(file_name, encoding="utf-8")
         streamHandler = logging.StreamHandler()
         logger.addHandler(file_handler)
@@ -219,7 +206,7 @@ while True:
 
             try:
                 targetTime = i[5][8:12]
-                print("예정입차시간 - "+targetTime)
+                print("예정입차시간 - "+targetTime[0:2]+"시 "+targetTime[2:4]+"분")
                 if(targetTime<nowTime):
                     print("예정입차시간 < 현재시간")
                     web_har_in(i)
