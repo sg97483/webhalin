@@ -641,10 +641,10 @@ def web_har_in(target, driver):
             # print(driver.current_url)
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
             if ParkUtil.first_access(park_id, driver.current_url):
-                if park_id == Parks.NY_TOWER:
-                    driver.implicitly_wait(3)
-                    driver.find_element_by_xpath("//*[@id='modal-window']/div/div/div[3]/a[1]").click()
-                    Util.sleep(3)
+                # if park_id == Parks.NY_TOWER:
+                #     driver.implicitly_wait(3)
+                #     driver.find_element_by_xpath("//*[@id='modal-window']/div/div/div[3]/a[1]").click()
+                #     Util.sleep(3)
 
                 web_har_in_login(driver, park_id)
 
