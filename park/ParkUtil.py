@@ -189,3 +189,11 @@ def check_nice_date(parkId, create_date, driver):
         else:
             print("입차 후 결제입니다. / createDate : " + str(create_date) + " / inCarTime : " + text_1)
             return False
+
+def timeCheck(nowTime, targetTime):
+    now = int(nowTime[0:2])*60 + int(nowTime[2:4])
+    target = int(targetTime[0:2])*60 + int(targetTime[2:4])
+    if(now-30>target):
+        return True
+    else:
+        return False

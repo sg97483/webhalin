@@ -9,7 +9,7 @@ import ChromeDriver
 import Colors
 import GetSql
 import LimitLot
-from park import ParkType, Parks
+from park import ParkType, Parks, ParkUtil
 import Util
 
 from agency import Iptime, Gs, HighCity, Iparking, AJpark, Darae, Amano, Blue, Etc, OldAJ, GrangSeoul, Nice
@@ -206,8 +206,9 @@ while True:
 
             try:
                 targetTime = i[5][8:12]
-                print("예정입차시간 - "+targetTime[0:2]+"시 "+targetTime[2:4]+"분")
-                if(targetTime<nowTime):
+                print("예정 시간  - " + targetTime[0:2]+"시 "+targetTime[2:4]+"분")
+                print("현재 시간  - " + nowTime[0:2]+"시 "+nowTime[2:4]+"분")
+                if(ParkUtil.timeCheck(nowTime, targetTime)):
                     print("예정입차시간 < 현재시간")
                     web_har_in(i)
                 else:
