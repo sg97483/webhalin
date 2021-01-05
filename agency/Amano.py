@@ -450,15 +450,15 @@ mapIdToWebInfo = {
             "10"  # 평일 3시간권 (판매 : 10000 )
             ],
     # 동신교회
-    # 16096: ["userId", "userPwd", """//*[@id="loginForm"]/li[3]/input""",
-    #         "schCarNo", "//*[@id='sForm']/input[4]",
-    #         "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-    #         "11",  # 평일당일권(파킹셰어) (판매 : 20000 )
-    #         "10",   # 평일 3시간권 (판매 : 10000 )
-    #         "",
-    #         "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
-    #         ""
-    #         ]
+    16096: ["userId", "userPwd", """//*[@id="loginForm"]/li[3]/input""",
+            "schCarNo", "//*[@id='sForm']/input[4]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "11",  # 평일당일권(파킹셰어) (판매 : 20000 )
+            "10",   # 평일 3시간권 (판매 : 10000 )
+            "",
+            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
+            ""
+            ]
 }
 
 amano_need_log_out = [
@@ -527,11 +527,11 @@ def get_har_in_value(park_id, ticket_name):
 
             elif park_id == Parks.YEOKSAM_BUILDING:
                 if str(ticket_name).startswith("주간권"):
-                    return web_info[WebInfo.methodHarIn3]
+                    return web_info[12]
                 elif str(ticket_name).startswith("5시간권"):
                     return web_info[11]
                 elif str(ticket_name).startswith("야간권"):
-                    return web_info[12]
+                    return web_info[8]
 
             elif park_id == Parks.JAYANG_PALACE:
                 if ticket_name[-4:] == "2시간권":
