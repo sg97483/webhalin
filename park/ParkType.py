@@ -83,7 +83,8 @@ parkTypeHighCity = [
     Parks.MI_SEONG_BUILDING,
     Parks.NH_GWANG_MYEONG,
     Parks.YEOK_SAM_ECHERE,
-    Parks.HAEUNDAE_IPARK
+    Parks.HAEUNDAE_IPARK,
+
 ]
 
 parkTypeHighCity2 = [
@@ -136,7 +137,8 @@ parkTypeAmano = [
     Parks.LOTTE_CITY_HOTEL_MYEONG_DONG,
     Parks.GANG_NAM_FINANCE,
     Parks.GRACE_TOWER,
-    Parks.FINE_AVENUE
+    Parks.FINE_AVENUE,
+    Parks.URIM_TWIN_PARK
 ]
 
 parkTypeBlue = [

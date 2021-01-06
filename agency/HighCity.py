@@ -490,7 +490,8 @@ mapIdToWebInfo = {
             "javascript:applyDiscount('08', '1', '04|', 'ppark', '1', '0');",
             "javascript:applyDiscount('08', '1', '04|', 'ppark', '1', '0');",
             "",
-            ]
+            ],
+
 }
 
 

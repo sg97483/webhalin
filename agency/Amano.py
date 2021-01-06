@@ -458,6 +458,15 @@ mapIdToWebInfo = {
             "",
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
             ""
+            ],
+
+    # 유림트윈파크(하이파킹)
+    19397: ["user_id", "password", "//*[@id='btnLogin']",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "7",
+            "7",
+            "",
             ]
 }
 

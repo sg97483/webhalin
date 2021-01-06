@@ -241,7 +241,9 @@ mapIdToUrl = {
     16212: "http://1.232.56.21",  # 파인에비뉴
     19374: "http://121.134.95.242:8090",  # 역삼우정에쉐르2차
     19396: "http://hedipark.iptime.org:8090/index.php/login",   #해운대아이파크(하이파킹)
-    19243: "http://gstimes0012.iptime.org/index.php/login"    #강동홈플러스(GS)
+    19243: "http://gstimes0012.iptime.org/index.php/login",    #강동홈플러스(GS)
+    19397: "http://222.108.145.84/login"    # 유림트윈파크(하이파킹)
+
 }
 
 lotOptionList = {
@@ -450,6 +452,7 @@ lotOptionList = {
     19374: ["역삼우정에쉐르2차", "ppark", "1234"],
     19396: ["해운대아이파크", "ppark", "1234"],
     19243: ["강동홈플러스", "ppark", "1234"],
+    19397: ["유림트윈파크", "ppark", "1234"],
 
 }
 
@@ -643,6 +646,7 @@ HAEUNDAE_IPARK = 19396
 MAGOK_SPRINGTOWER = 19081
 GANGDONG_HOMEPLUS = 19243
 DONGSIN_CHURCH = 16096
+URIM_TWIN_PARK = 19397
 
 NICE_LOTTECASTLE_PRESIDENT = 19207 # 19207 롯데캐슬프레지던트(상가) 주차장
 NICE_KB_BUPYEONG_PLAZA = 19280  # 19280	KB금융 부평프라자	10
