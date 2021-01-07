@@ -461,13 +461,25 @@ mapIdToWebInfo = {
             ],
 
     # 유림트윈파크(하이파킹)
-    19397: ["user_id", "password", "//*[@id='btnLogin']",
+    19397: ["user_id", "password", "//*[@id='loginForm']/li[3]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "7",
             "7",
             "",
-            ]
+            ],
+    # 뉴욕프라자주차장(마두역)
+    45010: ["userId", "userPwd", "//*[@id='loginForm']/li[3]/input",
+            "schCarNo", "//*[@id='sForm']/input[4]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "848", # 당일권(평일)
+            "",
+            "",    # 심야권
+            "javascript:document.getElementById('discountTypeValue').click",
+            "",
+            "847"  # 2시간권(파킹셰어)
+            ],
+
 }
 
 amano_need_log_out = [
@@ -577,6 +589,10 @@ def get_har_in_value(park_id, ticket_name):
             #         return web_info[]
             #     elif ticket_name == "3시간권":
             #         return web_info[]
+
+            elif park_id == Parks.NEWYORK_PLAZA:
+                if ticket_name == "2시간권":
+                    return web_info[11]
             else:
                 if Util.get_week_or_weekend() == 0:
                     return web_info[WebInfo.weekday]

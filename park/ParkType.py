@@ -138,7 +138,8 @@ parkTypeAmano = [
     Parks.GANG_NAM_FINANCE,
     Parks.GRACE_TOWER,
     Parks.FINE_AVENUE,
-    Parks.URIM_TWIN_PARK
+    Parks.URIM_TWIN_PARK,
+    Parks.NEWYORK_PLAZA
 ]
 
 parkTypeBlue = [
