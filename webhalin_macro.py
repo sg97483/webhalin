@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import os
+
 import requests
 import time
 import pymysql
@@ -182,16 +184,20 @@ while True:
         curs = conn.cursor()
 
         now = datetime.datetime.now()
-
+        nowYM = now.strftime('%Y%m')
         nowDate = now.strftime('%Y%m%d')
-        newFolder = 'C:/Users/wisemobile5/Desktop/WEBHALIN/' + nowDate
+
+        log_dir = 'C:\AndroidWork\webharin\parkingpark-macro/logs/' + nowYM
+
+        if not os.path.exists(log_dir):
+            os.makedirs(log_dir)
 
         nowTime = now.strftime('%H%M')
         file_name = nowDate + "_" + nowTime + "_" + str(repeatCnt) + ".txt"
 
-        file_url = newFolder + "\\" + file_name
+        file_url = log_dir + "\\" + file_name
 
-        file_handler = logging.FileHandler(file_name, encoding="utf-8")
+        file_handler = logging.FileHandler(file_url, encoding="utf-8")
         streamHandler = logging.StreamHandler()
         logger.addHandler(file_handler)
         logger.addHandler(streamHandler)
