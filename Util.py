@@ -8,7 +8,7 @@ import Colors
 
 
 def all_trim(temp_str):
-    return ''.join(temp_str.split())
+    return ''.join(str(temp_str).split())
 
 
 def sleep(second):
