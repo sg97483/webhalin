@@ -8,3 +8,4 @@ beforeLog/
 2020*.py
 /*.txt
 log/
+/logs/
