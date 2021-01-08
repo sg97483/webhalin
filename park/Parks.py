@@ -262,7 +262,7 @@ lotOptionList = {
     16184: ["hsbc", "ppark", "1234"],
     20863: ["리버타워", "ppark", "1234"],
     15437: ["웰츠타워", "ppark", "1234"],
-    # 16001: ["더프라임타워","ppark","1234"],
+    16001: ["더프라임타워","ppark","1234"],
     18969: ["제일오피스텔", "ppark", "1234"],
     18972: ["서소문한화빌딩", "ppark", "1234"],
     18973: ["동익드미라벨", "park", "1234"],
@@ -650,6 +650,7 @@ GANGDONG_HOMEPLUS = 19243
 DONGSIN_CHURCH = 16096
 URIM_TWIN_PARK = 19397
 NEWYORK_PLAZA = 45010
+THE_PRIME_TOWER = 16001
 
 NICE_LOTTECASTLE_PRESIDENT = 19207 # 19207 롯데캐슬프레지던트(상가) 주차장
 NICE_KB_BUPYEONG_PLAZA = 19280  # 19280	KB금융 부평프라자	10

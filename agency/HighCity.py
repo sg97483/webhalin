@@ -492,6 +492,15 @@ mapIdToWebInfo = {
             "",
             ],
 
+    # (하이파킹) 더프라임타워
+    16001: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
+            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+            "chk",
+            "",
+            "javascript:applyDiscount('17', '5', '16|', '파킹박(주말)', '999934499');", # 주말1일권
+            "",
+            ],
+
 }
 
 
@@ -523,7 +532,9 @@ def get_har_in_script(park_id, ticket_name):
                 return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]
             else:
                 return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
-
+    elif park_id == Parks.THE_PRIME_TOWER:
+        if ticket_name == "주말1일권":
+            return mapIdToWebInfo[park_id][7]
     else:
         # todo 요일 구분이 필요없는 현장 1969, 2868
         if Util.get_week_or_weekend() == 0:

@@ -84,6 +84,7 @@ parkTypeHighCity = [
     Parks.NH_GWANG_MYEONG,
     Parks.YEOK_SAM_ECHERE,
     Parks.HAEUNDAE_IPARK,
+    Parks.THE_PRIME_TOWER
 
 ]
 
