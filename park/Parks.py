@@ -244,6 +244,8 @@ mapIdToUrl = {
     19243: "http://gstimes0012.iptime.org/index.php/login",    #강동홈플러스(GS)
     19397: "http://222.108.145.84/login",    # 유림트윈파크(하이파킹)
     45010: "http://www.amanopark.co.kr",    # 뉴욕프라자주차장(마두역) 아마노
+    12373: "http://www.amanopark.co.kr",    # 송파빌딩 주차장 (아마노)
+
 
 }
 
@@ -455,6 +457,7 @@ lotOptionList = {
     19243: ["강동홈플러스", "ppark", "1234"],
     19397: ["유림트윈파크", "ppark", "1234"],
     45010: ["뉴욕프라자주차장(마두역)", "parkingpark10", "park001^^"],
+    12373: ["송파빌딩 주차장", "parkingpark6", "park001^^"],
 
 }
 
@@ -651,6 +654,7 @@ DONGSIN_CHURCH = 16096
 URIM_TWIN_PARK = 19397
 NEWYORK_PLAZA = 45010
 THE_PRIME_TOWER = 16001
+SONGPA_BUILDING = 12373
 
 NICE_LOTTECASTLE_PRESIDENT = 19207 # 19207 롯데캐슬프레지던트(상가) 주차장
 NICE_KB_BUPYEONG_PLAZA = 19280  # 19280	KB금융 부평프라자	10
