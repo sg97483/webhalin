@@ -20,7 +20,7 @@ def click_har_in_script(ticke_name, driver):
         driver.find_element_by_xpath("/html/body/div[2]/div[2]/div/form/div[4]/div/input[9]").click()
         driver.find_element_by_xpath("/html/body/div[2]/div[2]/div/form/div[4]/div/input[5]").click()
         return True
-    elif ticke_name.startswith("12시간"):
+    elif ticke_name.endswith("12시간권"):
         driver.find_element_by_xpath("/html/body/div[2]/div[2]/div/form/div[4]/div/input[9]").click()
         driver.find_element_by_xpath("/html/body/div[2]/div[2]/div/form/div[4]/div/input[9]").click()
         driver.find_element_by_xpath("/html/body/div[2]/div[2]/div/form/div[4]/div/input[9]").click()
