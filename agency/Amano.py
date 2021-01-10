@@ -396,7 +396,7 @@ mapIdToWebInfo = {
            "schCarNo", "//*[@id='sForm']/input[3]",
            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
            "9",  # 평일 종일권
-           "",  #
+           "10",  #
            "",
            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
            "8"  # 유료 3시간
