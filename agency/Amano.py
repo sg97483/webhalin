@@ -480,6 +480,18 @@ mapIdToWebInfo = {
             "847"  # 2시간권(파킹셰어)
             ],
 
+    # 송파빌딩
+    12373: ["userId", "userPwd", "//*[@id='loginForm']/li[3]/input",
+            "schCarNo", "//*[@id='sForm']/input[4]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "", # 당일권(평일)
+            "812",
+            "",    # 심야권
+            "javascript:document.getElementById('discountTypeValue').click",
+            "",
+            "847"  # 2시간권(파킹셰어)
+            ],
+
 }
 
 amano_need_log_out = [
