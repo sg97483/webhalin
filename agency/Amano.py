@@ -497,7 +497,8 @@ mapIdToWebInfo = {
 amano_need_log_out = [
     Parks.GOLDEN_TOWER,
     Parks.GANG_NAM_FINANCE,
-    Parks.HAP_JEONG_STATION_YOUTH_HOUSE
+    Parks.HAP_JEONG_STATION_YOUTH_HOUSE,
+    Parks.SONGPA_BUILDING
 ]
 
 have_not_tree_time = {
