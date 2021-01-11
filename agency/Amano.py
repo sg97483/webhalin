@@ -498,7 +498,8 @@ amano_need_log_out = [
     Parks.GOLDEN_TOWER,
     Parks.GANG_NAM_FINANCE,
     Parks.HAP_JEONG_STATION_YOUTH_HOUSE,
-    Parks.SONGPA_BUILDING
+    Parks.SONGPA_BUILDING,
+    Parks.ACE_TOWER
 ]
 
 have_not_tree_time = {
