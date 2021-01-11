@@ -707,7 +707,11 @@ def web_har_in(target, driver):
 
             if ParkUtil.check_search(park_id, driver):
                 driver.implicitly_wait(3)
-                driver.find_element_by_css_selector(web_info[WebInfo.btnItem]).click()
+                try:
+                    driver.find_element_by_css_selector(web_info[WebInfo.btnItem]).click()
+                except NoSuchElementException:
+                    log_out_web(park_id, driver)
+                    return False
 
                 html = driver.page_source
                 soup = BeautifulSoup(html, 'html.parser')
@@ -770,7 +774,6 @@ def web_har_in(target, driver):
                 log_out_web(park_id, driver)
                 return False
 
-            log_out_web(park_id, driver)
             return False
         else:
             print(Colors.BLUE + "현재 웹할인 페이지 분석이 되어 있지 않는 주차장입니다." + Colors.ENDC)
