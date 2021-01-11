@@ -143,8 +143,8 @@ mapIdToWebInfo = {
             """//*[@id="bodyCSS"]/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]""",
             "searchCarNo", "//*[@id='btnSearch']",
             "",  # 차량번호 클릭
-            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');", #1일권
-            "",
+            "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999997');", #1일권
+            "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999997');", #1일권
             ""],
 
 }
@@ -160,6 +160,16 @@ def get_har_in_script(park_id, ticket_name):
         return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]
     else:
         return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
+
+gs_need_log_out =[
+    Parks.KB_TOWER
+]
+
+def log_out_web(park_id, driver):
+    if park_id in gs_need_log_out:
+        driver.find_element_by_xpath("//*[@id='bodyCSS']/div[1]/div/ul/li[3]/a").click()
+        driver.implicitly_wait(3)
+        print(Colors.BLUE + "로그아웃" + Colors.ENDC)
 
 
 def web_har_in(target, driver):
@@ -238,7 +248,7 @@ def web_har_in(target, driver):
 
             # if park_id == Parks.DMC_S_CITY:
             #     Util.sleep(5)
-            Util.sleep(2)
+            Util.sleep(3)
             if park_id==Parks.MAGOK_SPRINGTOWER:
                 driver.find_element_by_id('Reserve4').send_keys('1')
             if ParkUtil.check_search(park_id, driver):
@@ -266,7 +276,7 @@ def web_har_in(target, driver):
                         print
                         "no alert"
 
-
+                    log_out_web(park_id, driver)
                     Util.sleep(3)
                     return True
 
