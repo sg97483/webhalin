@@ -492,6 +492,18 @@ mapIdToWebInfo = {
             "847"  # 2시간권(파킹셰어)
             ],
 
+    # 돈암동일하이빌
+    19130: ["userId", "userPwd", "//*[@id='btnLogin']",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "14", # 24시간/당일권(평일)
+            "",
+            "15",    # 심야권
+            "javascript:document.getElementById('discountTypeValue').click",
+            "11", # 2시간권(파킹셰어)
+            "12"  # 3시간권(파킹셰어)
+            ],
+
 }
 
 amano_need_log_out = [
@@ -499,7 +511,8 @@ amano_need_log_out = [
     Parks.GANG_NAM_FINANCE,
     Parks.HAP_JEONG_STATION_YOUTH_HOUSE,
     Parks.SONGPA_BUILDING,
-    Parks.ACE_TOWER
+    Parks.ACE_TOWER,
+    19130
 ]
 
 have_not_tree_time = {
@@ -598,6 +611,16 @@ def get_har_in_value(park_id, ticket_name):
                     return web_info[10]
                 elif ticket_name == "8시간권":
                     return web_info[11]
+
+            elif park_id == 19130:
+                if ticket_name == "평일1일권":
+                    return web_info[6]
+                elif ticket_name == "2시간권":
+                    return web_info[10]
+                elif ticket_name == "3시간권":
+                    return web_info[11]
+                elif str(ticket_name).endsWith("심야권"):
+                    return web_info[8]
             # elif park_id == Parks.DONGSIN_CHURCH:
             #     if ticket_name == "평일1일권":
             #         return web_info[]
