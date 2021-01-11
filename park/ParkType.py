@@ -191,7 +191,8 @@ parkTypeGs = [
     Parks.MODERN_GYEDONG_BUILDING,
     Parks.MERCURE_AMBASSADOR,
     Parks.MAGOK_SPRINGTOWER,
-    Parks.GANGDONG_HOMEPLUS
+    Parks.GANGDONG_HOMEPLUS,
+    Parks.KB_TOWER
 ]
 
 parkType_ip_time = [
