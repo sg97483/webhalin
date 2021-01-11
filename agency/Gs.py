@@ -202,6 +202,7 @@ def web_har_in(target, driver):
                         or park_id == Parks.NONHYEON_BUILDING \
                         or park_id == Parks.KDB_LIFE \
                         or park_id == Parks.MODERN_GYEDONG_BUILDING \
+                        or park_id == Parks.KB_TOWER \
                         or park_id == Parks.MERCURE_AMBASSADOR:
                     Util.click_element_xpath(web_info[WebInfo.btnLogin], driver)
                 else:
