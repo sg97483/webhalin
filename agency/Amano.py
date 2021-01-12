@@ -461,7 +461,7 @@ mapIdToWebInfo = {
             ],
 
     # 유림트윈파크(하이파킹)
-    19397: ["user_id", "password", "//*[@id='loginForm']/li[3]/input",
+    19397: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "7",
@@ -492,13 +492,28 @@ mapIdToWebInfo = {
             "847"  # 2시간권(파킹셰어)
             ],
 
+    # 돈암동일하이빌
+    19130: ["userId", "userPwd", "//*[@id='btnLogin']",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "14", # 24시간/당일권(평일)
+            "",
+            "15",    # 심야권
+            "javascript:document.getElementById('discountTypeValue').click",
+            "11", # 2시간권(파킹셰어)
+            "12"  # 3시간권(파킹셰어)
+            ],
+
 }
 
 amano_need_log_out = [
     Parks.GOLDEN_TOWER,
     Parks.GANG_NAM_FINANCE,
     Parks.HAP_JEONG_STATION_YOUTH_HOUSE,
-    Parks.SONGPA_BUILDING
+    Parks.SONGPA_BUILDING,
+    Parks.ACE_TOWER,
+    19130,
+    Parks.URIM_TWIN_PARK
 ]
 
 have_not_tree_time = {
@@ -597,6 +612,16 @@ def get_har_in_value(park_id, ticket_name):
                     return web_info[10]
                 elif ticket_name == "8시간권":
                     return web_info[11]
+
+            elif park_id == 19130:
+                if ticket_name == "평일1일권":
+                    return web_info[6]
+                elif ticket_name == "2시간권":
+                    return web_info[10]
+                elif ticket_name == "3시간권":
+                    return web_info[11]
+                elif str(ticket_name).endsWith("심야권"):
+                    return web_info[8]
             # elif park_id == Parks.DONGSIN_CHURCH:
             #     if ticket_name == "평일1일권":
             #         return web_info[]
@@ -706,7 +731,11 @@ def web_har_in(target, driver):
 
             if ParkUtil.check_search(park_id, driver):
                 driver.implicitly_wait(3)
-                driver.find_element_by_css_selector(web_info[WebInfo.btnItem]).click()
+                try:
+                    driver.find_element_by_css_selector(web_info[WebInfo.btnItem]).click()
+                except NoSuchElementException:
+                    log_out_web(park_id, driver)
+                    return False
 
                 html = driver.page_source
                 soup = BeautifulSoup(html, 'html.parser')
@@ -769,7 +798,6 @@ def web_har_in(target, driver):
                 log_out_web(park_id, driver)
                 return False
 
-            log_out_web(park_id, driver)
             return False
         else:
             print(Colors.BLUE + "현재 웹할인 페이지 분석이 되어 있지 않는 주차장입니다." + Colors.ENDC)

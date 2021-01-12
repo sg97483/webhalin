@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from selenium.common.exceptions import NoAlertPresentException, TimeoutException
+from selenium.common.exceptions import NoAlertPresentException, TimeoutException, NoSuchElementException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import Util
@@ -138,6 +138,15 @@ mapIdToWebInfo = {
             "",
             ""],
 
+    # KB금융타워
+    19400: ["login_id", "login_pw",
+            """//*[@id="bodyCSS"]/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]""",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # 차량번호 클릭
+            "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999997');", #1일권
+            "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999997');", #1일권
+            ""],
+
 }
 
 
@@ -151,6 +160,16 @@ def get_har_in_script(park_id, ticket_name):
         return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]
     else:
         return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
+
+gs_need_log_out =[
+    Parks.KB_TOWER
+]
+
+def log_out_web(park_id, driver):
+    if park_id in gs_need_log_out:
+        driver.find_element_by_xpath("//*[@id='bodyCSS']/div[1]/div/ul/li[3]/a").click()
+        driver.implicitly_wait(3)
+        print(Colors.BLUE + "로그아웃" + Colors.ENDC)
 
 
 def web_har_in(target, driver):
@@ -193,6 +212,7 @@ def web_har_in(target, driver):
                         or park_id == Parks.NONHYEON_BUILDING \
                         or park_id == Parks.KDB_LIFE \
                         or park_id == Parks.MODERN_GYEDONG_BUILDING \
+                        or park_id == Parks.KB_TOWER \
                         or park_id == Parks.MERCURE_AMBASSADOR:
                     Util.click_element_xpath(web_info[WebInfo.btnLogin], driver)
                 else:
@@ -222,19 +242,25 @@ def web_har_in(target, driver):
                     or park_id == Parks.MODERN_GYEDONG_BUILDING \
                     or park_id == Parks.MAGOK_SPRINGTOWER:
                 driver.implicitly_wait(3)
+
                 Util.click_element_id('btnSearch', driver)
             else:
-                driver.find_element_by_xpath(web_info[WebInfo.btnSearch]).click()
+                try:
+                    driver.find_element_by_xpath(web_info[WebInfo.btnSearch]).click()
+                except NoSuchElementException:
+                    log_out_web(park_id, driver)
+                    return False
 
-            # if park_id == Parks.DMC_S_CITY:
-            #     Util.sleep(5)
-            Util.sleep(2)
+            Util.sleep(3)
             if park_id==Parks.MAGOK_SPRINGTOWER:
                 driver.find_element_by_id('Reserve4').send_keys('1')
             if ParkUtil.check_search(park_id, driver):
                 if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
-                    Util.click_element_selector("#divAjaxCarList > tbody > tr > td > a", driver)
-
+                    try:
+                        Util.click_element_selector("#divAjaxCarList > tbody > tr > td > a", driver)
+                    except NoSuchElementException:
+                        log_out_web(park_id, driver)
+                        return False
                     Util.sleep(3)
                     harin_script = get_har_in_script(park_id, ticket_name)
                     driver.execute_script(harin_script)
@@ -256,10 +282,10 @@ def web_har_in(target, driver):
                         print
                         "no alert"
 
-
+                    log_out_web(park_id, driver)
                     Util.sleep(3)
                     return True
-
+                log_out_web(park_id, driver)
                 return False
         else:
             print(Colors.BLUE + "현재 웹할인 페이지 분석이 되어 있지 않는 주차장입니다." + Colors.ENDC)
