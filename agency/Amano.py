@@ -461,7 +461,7 @@ mapIdToWebInfo = {
             ],
 
     # 유림트윈파크(하이파킹)
-    19397: ["user_id", "password", "//*[@id='loginForm']/li[3]/input",
+    19397: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "7",
