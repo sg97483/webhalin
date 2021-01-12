@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from selenium.common.exceptions import NoAlertPresentException, TimeoutException
+from selenium.common.exceptions import NoAlertPresentException, TimeoutException, NoSuchElementException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import Util
@@ -242,19 +242,25 @@ def web_har_in(target, driver):
                     or park_id == Parks.MODERN_GYEDONG_BUILDING \
                     or park_id == Parks.MAGOK_SPRINGTOWER:
                 driver.implicitly_wait(3)
+
                 Util.click_element_id('btnSearch', driver)
             else:
-                driver.find_element_by_xpath(web_info[WebInfo.btnSearch]).click()
+                try:
+                    driver.find_element_by_xpath(web_info[WebInfo.btnSearch]).click()
+                except NoSuchElementException:
+                    log_out_web(park_id, driver)
+                    return False
 
-            # if park_id == Parks.DMC_S_CITY:
-            #     Util.sleep(5)
             Util.sleep(3)
             if park_id==Parks.MAGOK_SPRINGTOWER:
                 driver.find_element_by_id('Reserve4').send_keys('1')
             if ParkUtil.check_search(park_id, driver):
                 if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
-                    Util.click_element_selector("#divAjaxCarList > tbody > tr > td > a", driver)
-
+                    try:
+                        Util.click_element_selector("#divAjaxCarList > tbody > tr > td > a", driver)
+                    except NoSuchElementException:
+                        log_out_web(park_id, driver)
+                        return False
                     Util.sleep(3)
                     harin_script = get_har_in_script(park_id, ticket_name)
                     driver.execute_script(harin_script)
