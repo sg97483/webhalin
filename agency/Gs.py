@@ -279,7 +279,7 @@ def web_har_in(target, driver):
                     log_out_web(park_id, driver)
                     Util.sleep(3)
                     return True
-
+                log_out_web(park_id, driver)
                 return False
         else:
             print(Colors.BLUE + "현재 웹할인 페이지 분석이 되어 있지 않는 주차장입니다." + Colors.ENDC)
