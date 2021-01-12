@@ -504,6 +504,18 @@ mapIdToWebInfo = {
             "12"  # 3시간권(파킹셰어)
             ],
 
+    # 미사메디피아타워
+    19407: ["userId", "userPwd", "//*[@id='btnLogin']",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "", # 24시간/당일권(평일)
+            "",
+            "15",    # 심야권
+            "javascript:document.getElementById('discountTypeValue').click",
+            "", # 2시간권(파킹셰어)
+            ""  # 3시간권(파킹셰어)
+            ],
+
 }
 
 amano_need_log_out = [
