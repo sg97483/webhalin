@@ -3,6 +3,7 @@ import datetime
 
 from selenium.common.exceptions import NoSuchElementException
 
+from agency import Gs
 from park import ParkType, Parks
 import re
 import Colors
@@ -88,6 +89,7 @@ def check_search(park_id, driver):
         # print(trim_text)
         if trim_text.startswith("검색") or trim_text.startswith("입차") or trim_text.startswith("차량"):
             print(Colors.YELLOW + "미입차" + Colors.ENDC)
+            Gs.log_out_web(park_id, driver)
             return False
         else:
             return True
