@@ -278,9 +278,10 @@ mapIdToWebInfo = {
     19174: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
-            "javascript:applyDiscount('34', '1', '', '파킹박', '1', '0');",
-            "javascript:applyDiscount('34', '1', '', '파킹박', '1', '0');",
-            "javascript:applyDiscount('35', '1', '', '파킹박(야간)', '1', '0');"
+            "javascript:applyDiscount('34', '1', '47|', '파킹박', '1', '0');",
+            "javascript:applyDiscount('34', '1', '47|', '파킹박', '1', '0');",
+            "javascript:applyDiscount('35', '1', '47|', '파킹박(야간)', '1', '0');",
+            "javascript:applyDiscount('43', '1', '47|', '파킹박(3시간)', '1', '0');"
             ],
     # (하이파킹) 강남 롯데호텔L7
     19004: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
@@ -535,6 +536,15 @@ def get_har_in_script(park_id, ticket_name):
     elif park_id == Parks.THE_PRIME_TOWER:
         if ticket_name == "주말1일권":
             return mapIdToWebInfo[park_id][7]
+    elif park_id == Parks.ULGI_TWIN_TOWER:
+        if ticket_name == "평일1일권":
+            return mapIdToWebInfo[park_id][6]
+        elif ticket_name == "주말1일권":
+            return mapIdToWebInfo[park_id][7]
+        elif ticket_name == "심야권":
+            return mapIdToWebInfo[park_id][8]
+        elif ticket_name == "3시간권":
+            return mapIdToWebInfo[park_id][9]
     else:
         # todo 요일 구분이 필요없는 현장 1969, 2868
         if Util.get_week_or_weekend() == 0:
