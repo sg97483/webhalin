@@ -283,9 +283,9 @@ mapIdToWebInfo = {
     19247: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "1",  # 15시간권
-            "1",  # 15시간권
-            "",  #
+            "19",  # 평일1일권 1호기
+            "20",  # 주말권
+            "20",  # 평일1일권 2호기
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
     # 정안빌딩
@@ -643,6 +643,12 @@ def get_har_in_value(park_id, ticket_name):
             elif park_id == Parks.NEWYORK_PLAZA:
                 if ticket_name == "2시간권":
                     return web_info[11]
+
+            elif park_id == 19247: #아마노 눈스퀘어
+                if ticket_name == "평일1일권(1호기)":
+                    return web_info[6]
+                elif ticket_name == "평일1일권(2호기)":
+                    return web_info[7]
             else:
                 if Util.get_week_or_weekend() == 0:
                     return web_info[WebInfo.weekday]
