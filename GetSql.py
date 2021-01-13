@@ -20,3 +20,8 @@ def get_sql(now_date, logger, is_park_test, testPark):
     # "ORDER BY actualInDtm DESC, parkId DESC;"
     # "AND parkId IN ('" + str(testPark) + "') " \
     return sql
+
+def get_garageName(parkId):
+    sql = "SELECT garageName FROM T_PARKING_LOT WHERE id = '" + parkId
+
+    return sql

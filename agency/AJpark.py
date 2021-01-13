@@ -1,12 +1,23 @@
 # -*- coding: utf-8 -*-
 import re
+import smtplib
+from email.mime.text import MIMEText
 
+import pymysql
 from selenium.webdriver.support.select import Select
 
 import Colors
+import GetSql
 import Util
 import WebInfo
 from park import ParkUtil, ParkType
+
+conn = pymysql.connect(host='49.236.134.172', port=3306, user='root', password='#orange8398@@',
+                               db='parkingpark',
+                               charset='utf8')
+curs = conn.cursor()
+
+
 
 mapIdToWebInfo = {
     # AJ파크 공덕효성해링턴스퀘어점
@@ -268,6 +279,9 @@ def web_har_in(target, driver):
 
                     try:
                         if int(aj_cnt) < 1:
+                            curs.execute(GetSql.get_garageName(park_id))
+                            rows = curs.fetchall()
+                            sendmail_ajCount0(rows+" 지점 " + ticket_name + " 할인권 구매부탁드립니다.")
                             print(Colors.RED + "주차권이 부족합니다." + Colors.ENDC)
                             return False
                         else:
@@ -287,3 +301,25 @@ def web_har_in(target, driver):
     else:
         print(Colors.BLUE + "웹할인 페이지가 없는 주차장 입니다." + Colors.ENDC)
         return False
+
+
+def sendmail_ajCount0(text):
+    sendEmail = "parkingpark_dev_koo@wisemobile.co.kr"
+    recvEmail = "parkingpark@wisemobile.co.kr"
+    password = "qorhvkdy2!"
+
+    smtpName = "smtp.wisemobile.com"  # smtp 서버 주소
+    smtpPort = 587  # smtp 포트 번호
+
+    msg = MIMEText(text)  # MIMEText(text , _charset = "utf8")
+
+    msg['Subject'] = "  AJ파크 주차권 구매사항  - 아직 테스트 단계라 오류일 수 있습니다."
+    msg['From'] = sendEmail
+    msg['To'] = recvEmail
+    print(msg.as_string())
+
+    s = smtplib.SMTP(smtpName, smtpPort)  # 메일 서버 연결
+    s.starttls()  # TLS 보안 처리
+    s.login(sendEmail, password)  # 로그인
+    s.sendmail(sendEmail, recvEmail, msg.as_string())  # 메일 전송, 문자열로 변환하여 보냅니다.
+    s.close()  # smtp 서버 연결을 종료합니다.
