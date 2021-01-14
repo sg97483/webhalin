@@ -240,6 +240,7 @@ def web_har_in(target, driver):
                     or park_id == Parks.MEGABOX_SUNGSU \
                     or park_id == Parks.KDB_LIFE \
                     or park_id == Parks.MODERN_GYEDONG_BUILDING \
+                    or park_id == Parks.KB_TOWER \
                     or park_id == Parks.MAGOK_SPRINGTOWER:
                 driver.implicitly_wait(3)
 
