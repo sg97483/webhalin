@@ -23,6 +23,13 @@ mapIdToWebInfo = {
             "",
             "javascript:onclickDiscount('20200708091117-03829', '00019', '앱서비스', '06로0473', '매수차감', form1.remark.value);",
             "javascript:onclickDiscount('20200708091117-03829', '00019', '앱서비스', '06로0473', '매수차감', form1.remark.value);"],
+
+    # 발산 파크프라자
+    19070: ["name", "pwd", "//*[@id='login']/table[1]/tbody/tr[3]/td[2]/input",
+            "carNumber", "/html/body/table[2]/tbody/tr[5]/td/input",
+            "",
+            "/html/body/table[2]/tbody/tr[4]/td[1]/p[1]/input",
+            "/html/body/table[2]/tbody/tr[4]/td[1]/p[1]/input"],
 }
 
 
@@ -113,7 +120,7 @@ def web_har_in(target, driver):
                     # driver.execute_script(harin_script)
                     if park_id == Parks.GMG_TOWER:
                         driver.find_element_by_id("BTN_당일 무료").click()
-                    elif park_id == Parks.SUN_HWA_BUILDING:
+                    elif park_id == Parks.SUN_HWA_BUILDING or park_id == 19070:
                         driver.find_element_by_xpath("/html/body/table[2]/tbody/tr[4]/td[1]/p[1]/input").click()
                     else:
                         print(Colors.BLUE + "할인권 버튼을 찾을 수 없습니다." + Colors.ENDC)
