@@ -235,7 +235,8 @@ park_type_aj_park = [
 
 park_type_old_aj = [
     Parks.GMG_TOWER,
-    Parks.SUN_HWA_BUILDING
+    Parks.SUN_HWA_BUILDING,
+    19070
 ]
 
 park_type_etc = [

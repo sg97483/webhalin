@@ -162,7 +162,8 @@ def get_har_in_script(park_id, ticket_name):
         return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
 
 gs_need_log_out =[
-    Parks.KB_TOWER
+    Parks.KB_TOWER,
+    Parks.FINANCE_TOWER
 ]
 
 def log_out_web(park_id, driver):
