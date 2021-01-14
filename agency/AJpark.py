@@ -278,7 +278,7 @@ def web_har_in(target, driver):
                     print(Colors.RED + aj_cnt + Colors.ENDC)
 
                     try:
-                        if int(aj_cnt) < 1:
+                        if int(aj_cnt) < 2:
                             curs.execute(GetSql.get_garageName(park_id))
                             rows = curs.fetchall()
                             sendmail_ajCount0(rows+" 지점 " + ticket_name + " 할인권 구매부탁드립니다.")
