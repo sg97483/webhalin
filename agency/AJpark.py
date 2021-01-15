@@ -273,17 +273,17 @@ def web_har_in(target, driver):
                     aj_ticket_info = select.first_selected_option.text
                     print(Colors.BLUE + aj_ticket_info + Colors.ENDC)
                     aj_ticket_cnt_txt = aj_ticket_info[-6:]
-                    aj_ticket_cnt = re.findall("\d+", aj_ticket_cnt_txt)
-                    aj_cnt = aj_ticket_cnt[0]
-                    print(Colors.RED + aj_cnt + Colors.ENDC)
+                    aj_ticket_cnt = int(re.findall('[0-9]+', aj_ticket_cnt_txt)[0])
+
 
                     try:
-                        if int(aj_cnt) < 2:
+                        if aj_ticket_cnt < 2:
                             curs.execute(GetSql.get_garageName(park_id))
                             rows = curs.fetchall()
-                            sendmail_ajCount0(rows+" 지점 " + ticket_name + " 할인권 구매부탁드립니다.")
+
+                            sendmail_ajCount0(str(rows[0])+" 지점 " + ticket_name + " 할인권 구매부탁드립니다.")
                             print(Colors.RED + "주차권이 부족합니다." + Colors.ENDC)
-                            return False
+
                         else:
                             driver.implicitly_wait(3)
                             driver.find_element_by_id('discountSubmit').click()
@@ -293,6 +293,12 @@ def web_har_in(target, driver):
                     except ValueError as ex:
                         print(Colors.RED + "잘못된 주차권 갯수입니다. : " + ex + Colors.ENDC)
                         return False
+                    if aj_ticket_cnt==1:
+                        driver.implicitly_wait(3)
+                        driver.find_element_by_id('discountSubmit').click()
+                        driver.implicitly_wait(2)
+                        driver.find_element_by_xpath('/html/body/div[3]/div[2]/div/button[2]').click()
+                        return True
 
             return False
         else:
@@ -308,7 +314,7 @@ def sendmail_ajCount0(text):
     recvEmail = "parkingpark@wisemobile.co.kr"
     password = "qorhvkdy2!"
 
-    smtpName = "smtp.wisemobile.com"  # smtp 서버 주소
+    smtpName = "smtp.worksmobile.com"  # smtp 서버 주소
     smtpPort = 587  # smtp 포트 번호
 
     msg = MIMEText(text)  # MIMEText(text , _charset = "utf8")
