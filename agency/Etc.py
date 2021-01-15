@@ -45,7 +45,7 @@ mapIdToWebInfo = {
             "javascript:insertDiscount();"],
 
     # (하이파킹) 디아뜨갤러리 1차
-    19171: ["id", "pw", "//*[@id='btnLogin']",
+    19170: ["id", "pw", "//*[@id='btnLogin']",
             "//*[@id='discount']/div[1]/input[1]", "",
             "",
             "2",
