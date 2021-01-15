@@ -163,7 +163,9 @@ def get_har_in_script(park_id, ticket_name):
 
 gs_need_log_out =[
     Parks.KB_TOWER,
-    Parks.FINANCE_TOWER
+    Parks.FINANCE_TOWER,
+    Parks.KDB_LIFE,
+    Parks.SANGBONG_DUOTRIS
 ]
 
 def log_out_web(park_id, driver):

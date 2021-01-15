@@ -516,6 +516,20 @@ mapIdToWebInfo = {
             ""  # 3시간권(파킹셰어)
             ],
 
+    # 상암DDMC
+    19391: ["userId", "userPwd", "//*[@id='btnLogin']",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "9", # 24시간/당일권(평일)
+            "9",
+            "",    # 심야권
+            "javascript:document.getElementById('discountTypeValue').click",
+            "", # 2시간권(파킹셰어)
+            ""  # 3시간권(파킹셰어)
+            ],
+
+
+
 }
 
 amano_need_log_out = [
@@ -525,7 +539,9 @@ amano_need_log_out = [
     Parks.SONGPA_BUILDING,
     Parks.ACE_TOWER,
     19130,
-    Parks.URIM_TWIN_PARK, Parks.SUN_HWA_BUILDING
+    Parks.URIM_TWIN_PARK,
+    Parks.SUN_HWA_BUILDING,
+    19391
 ]
 
 have_not_tree_time = {
@@ -535,7 +551,8 @@ have_not_tree_time = {
     Parks.JANG_AN_SPIZON,
     Parks.HARIM_INTERNATIONAL,
     Parks.NC_GANG_NAM,
-    Parks.NICE_HONG_MUN_KWAN
+    Parks.NICE_HONG_MUN_KWAN,
+    19391
 }
 
 
