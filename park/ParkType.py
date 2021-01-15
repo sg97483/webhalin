@@ -142,7 +142,8 @@ parkTypeAmano = [
     Parks.URIM_TWIN_PARK,
     Parks.NEWYORK_PLAZA,
     Parks.SONGPA_BUILDING,
-    19130
+    19130,
+    19391
 ]
 
 parkTypeBlue = [
