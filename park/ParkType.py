@@ -247,7 +247,8 @@ park_type_etc = [
     Parks.DIAT_GALLERY_2,
     Parks.HUMAX_VILLAGE,
     19170, #디아뜨갤러리 1차
-    19201, #AW주차타워
+    19201, #AW주차타워,
+    19200, #AW컨벤션
 ]
 
 park_type_nice = [
