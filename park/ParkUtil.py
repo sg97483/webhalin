@@ -195,7 +195,7 @@ def check_nice_date(parkId, create_date, driver):
 def timeCheck(nowTime, targetTime):
     now = int(nowTime[0:2])*60 + int(nowTime[2:4])
     target = int(targetTime[0:2])*60 + int(targetTime[2:4])
-    if(now-30>target):
+    if(now>target):
         return True
     else:
         return False
