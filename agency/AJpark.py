@@ -319,7 +319,7 @@ def sendmail_ajCount0(text):
 
     msg = MIMEText(text)  # MIMEText(text , _charset = "utf8")
 
-    msg['Subject'] = "  AJ파크 주차권 구매사항  - 아직 테스트 단계라 오류일 수 있습니다."
+    msg['Subject'] = "  AJ파크 주차권 구매사항   "
     msg['From'] = sendEmail
     msg['To'] = recvEmail
     print(msg.as_string())
