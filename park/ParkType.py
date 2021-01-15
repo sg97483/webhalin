@@ -245,7 +245,9 @@ park_type_etc = [
     Parks.DREAM_TOWER_NIGHT,
     Parks.DREAM_TOWER_HOLIDAY,
     Parks.DIAT_GALLERY_2,
-    Parks.HUMAX_VILLAGE
+    Parks.HUMAX_VILLAGE,
+    19170, #디아뜨갤러리 1차
+    19201, #AW주차타워
 ]
 
 park_type_nice = [

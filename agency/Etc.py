@@ -43,6 +43,20 @@ mapIdToWebInfo = {
             "",
             "2",
             "javascript:insertDiscount();"],
+
+    # (하이파킹) 디아뜨갤러리 1차
+    19171: ["id", "pw", "//*[@id='btnLogin']",
+            "//*[@id='discount']/div[1]/input[1]", "",
+            "",
+            "2",
+            "javascript:insertDiscount();"],
+
+    # AW주차타워
+    19201: ["id", "pw", "//*[@id='btnLogin']",
+            "//*[@id='discount']/div[1]/input[1]", "",
+            "",
+            "2",
+            "javascript:insertDiscount();"],
 }
 
 
@@ -184,7 +198,7 @@ def web_har_in(target, driver):
 
                 return False
 
-            elif park_id == Parks.DIAT_GALLERY_2:
+            elif park_id == Parks.DIAT_GALLERY_2 or park_id == 19170 or park_id == 19201:
                 if ParkUtil.check_first_conn(park_id):
                     driver.find_element_by_id(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
                     driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
@@ -194,8 +208,15 @@ def web_har_in(target, driver):
                 driver.implicitly_wait(2)
                 driver.find_element_by_id("ContentPlaceHolder1_btnParking").click()
                 driver.implicitly_wait(2)
-                driver.find_element_by_id("ContentPlaceHolder1_Repeater1_btnParkCd_1").click()
+
+                if(park_id == Parks.DIAT_GALLERY_2):
+                    driver.find_element_by_id("ContentPlaceHolder1_Repeater1_btnParkCd_1").click()
+                elif(park_id == 19170):
+                    driver.find_element_by_id("ContentPlaceHolder1_Repeater1_btnParkCd_0").click()
+                elif(park_id == 19201):
+                    driver.find_element_by_id("ContentPlaceHolder1_Repeater1_btnParkCd_3").click()
                 driver.implicitly_wait(2)
+
                 driver.find_element_by_id("txtInCardNo").click()
                 driver.execute_script("document.getElementById('txtInCardNo').innerHTML = '" + search_id + "';")
                 driver.implicitly_wait(2)
