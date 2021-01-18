@@ -172,7 +172,7 @@ gs_need_log_out =[
 def log_out_web(park_id, driver):
     if park_id in gs_need_log_out:
         if park_id == Parks.FINANCE_TOWER:
-            driver.find_element_by_xpath("//*[@id='bodyCSS']/div[1]/div/ul/li[3]/a").click()
+            driver.find_element_by_xpath("//*[@id='bodyCSS']/div[1]/div/div[1]/ul/li[3]/a").click()
         else:
             driver.find_element_by_xpath("//*[@id='bodyCSS']/div[1]/div/ul/li[3]/a").click()
         driver.implicitly_wait(3)
