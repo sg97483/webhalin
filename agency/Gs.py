@@ -130,6 +130,7 @@ mapIdToWebInfo = {
             "javascript:fnDisCount('84:48시간 무료 / 잔여수량 996', '1');", #2일권
             "javascript:fnDisCount('85:72시간 무료 / 잔여수량 995', '1');"],  #3일권
 
+    # 강동홈플러스(GS타임즈)
     19243: ["login_id", "login_pw",
             """//*[@id="bodyCSS"]/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]""",
             "searchCarNo", "//*[@id='btnSearch']",
@@ -170,7 +171,10 @@ gs_need_log_out =[
 
 def log_out_web(park_id, driver):
     if park_id in gs_need_log_out:
-        driver.find_element_by_xpath("//*[@id='bodyCSS']/div[1]/div/ul/li[3]/a").click()
+        if park_id == Parks.FINANCE_TOWER:
+            driver.find_element_by_xpath("//*[@id='bodyCSS']/div[1]/div/ul/li[3]/a").click()
+        else:
+            driver.find_element_by_xpath("//*[@id='bodyCSS']/div[1]/div/ul/li[3]/a").click()
         driver.implicitly_wait(3)
         print(Colors.BLUE + "로그아웃" + Colors.ENDC)
 
