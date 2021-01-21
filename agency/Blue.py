@@ -133,6 +133,7 @@ def web_har_in(target, driver):
                         pass
                     else:
                         try:
+                            driver.implicitly_wait(3)
                             driver.switch_to.alert.accept()
                         except Exception as ex:
                             print("예상치 못한 에러\n", ex)
