@@ -171,11 +171,21 @@ gs_need_log_out =[
 
 def log_out_web(park_id, driver):
     if park_id in gs_need_log_out:
-        if park_id == Parks.FINANCE_TOWER:
-            driver.find_element_by_xpath("//*[@id='bodyCSS']/div[1]/div/div[1]/ul/li[3]/a").click()
-        else:
-            driver.find_element_by_xpath("//*[@id='bodyCSS']/div[1]/div/ul/li[3]/a").click()
+        Util.sleep(1)
+        driver.find_element_by_xpath("//*[@href='/index.php/login/doLogout").click()
+        # if park_id == Parks.FINANCE_TOWER:
+        #     driver.find_element_by_xpath("//*[@id='bodyCSS']/div[1]/div/div[1]/ul/li[3]/a").click()
+        # elif park_id == Parks.MAGOK_SPRINGTOWER \
+        #         or park_id == Parks.MERCURE_AMBASSADOR \
+        #         or park_id == Parks.SANGBONG_DUOTRIS \
+        #         or park_id == Parks.SANGBONG_DUOTRIS\
+        #         or park_id == Parks.URBANIEL_CHEN_HO\
+        #         or park_id == Parks.PARK_BUILDING:
+        #     driver.find_element_by_xpath("/html/body/div/div[1]/div/div/ul/li[4]/a").click()
+        # else:
+        #     driver.find_element_by_xpath("//*[@id='bodyCSS']/div[1]/div/ul/li[3]/a").click()
         driver.implicitly_wait(3)
+        Util.sleep(3)
         print(Colors.BLUE + "로그아웃" + Colors.ENDC)
 
 
