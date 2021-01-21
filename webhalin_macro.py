@@ -215,11 +215,11 @@ while True:
                 targetTime = i[5][8:12]
                 print("예정 시간  - " + targetTime[0:2]+"시 "+targetTime[2:4]+"분")
                 print("현재 시간  - " + nowTime[0:2]+"시 "+nowTime[2:4]+"분")
-                if(ParkUtil.timeCheck(nowTime, targetTime)):
-                    print("예정입차시간 < 현재시간")
-                    web_har_in(i)
-                else:
-                    print("입차시간이 아직 되지 않았음.")
+                # if(ParkUtil.timeCheck(nowTime, targetTime)):
+                #     print("예정입차시간 < 현재시간")
+                web_har_in(i)
+                # else:
+                #     print("입차시간이 아직 되지 않았음.")
             except Exception as ex:
                 print(Colors.RED + str(ex) + Colors.ENDC)
 
