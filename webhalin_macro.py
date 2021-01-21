@@ -21,6 +21,7 @@ logger.setLevel(logging.DEBUG)
 
 driver = ChromeDriver.get()
 driver.implicitly_wait(3)
+driver.maximize_window()
 
 '''
 # parkId: [id_name, pw_name, login_btn_xpath,
