@@ -211,30 +211,30 @@ def web_har_in(target, driver):
             # todo 현재 URL을 가지고와서 비교 후 자동로그인
             # print(driver.current_url)
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
-            if ParkUtil.first_access(park_id, driver.current_url):
 
-                driver.find_element_by_id(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
 
-                if park_id == Parks.DMC_S_CITY:
-                    driver.find_element_by_id(web_info[WebInfo.inputPw]).clear()
+            driver.find_element_by_id(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
 
-                driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
+            if park_id == Parks.DMC_S_CITY:
+                driver.find_element_by_id(web_info[WebInfo.inputPw]).clear()
 
-                driver.implicitly_wait(3)
+            driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
 
-                if park_id == Parks.FINANCE_TOWER \
-                        or park_id == Parks.DMC_S_CITY \
-                        or park_id == Parks.NONHYEON_BUILDING \
-                        or park_id == Parks.KDB_LIFE \
-                        or park_id == Parks.MODERN_GYEDONG_BUILDING \
-                        or park_id == Parks.KB_TOWER \
-                        or park_id == Parks.MERCURE_AMBASSADOR:
-                    Util.click_element_xpath(web_info[WebInfo.btnLogin], driver)
-                else:
-                    driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
+            driver.implicitly_wait(3)
 
-                # discount_url = login_url + ParkUtil.get_park_discount_url(park_type)
-                # driver.get(discount_url)
+            if park_id == Parks.FINANCE_TOWER \
+                    or park_id == Parks.DMC_S_CITY \
+                    or park_id == Parks.NONHYEON_BUILDING \
+                    or park_id == Parks.KDB_LIFE \
+                    or park_id == Parks.MODERN_GYEDONG_BUILDING \
+                    or park_id == Parks.KB_TOWER \
+                    or park_id == Parks.MERCURE_AMBASSADOR:
+                Util.click_element_xpath(web_info[WebInfo.btnLogin], driver)
+            else:
+                driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
+
+            # discount_url = login_url + ParkUtil.get_park_discount_url(park_type)
+            # driver.get(discount_url)
 
             driver.implicitly_wait(3)
 
