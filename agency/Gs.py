@@ -164,12 +164,6 @@ def get_har_in_script(park_id, ticket_name):
     else:
         return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
 
-gs_need_log_out =[
-    Parks.KB_TOWER,
-    Parks.FINANCE_TOWER,
-    Parks.KDB_LIFE,
-    Parks.SANGBONG_DUOTRIS
-]
 
 def log_out_web(park_id, driver):
     Util.sleep(1)
@@ -245,7 +239,8 @@ def web_har_in(target, driver):
             driver.implicitly_wait(3)
 
             if park_id == Parks.DMC_S_CITY \
-                    or park_id == Parks.KDB_LIFE:
+                    or park_id == Parks.KDB_LIFE\
+                    or park_id == Parks.FINANCE_TOWER:
                 Util.sleep(3)
                 Util.input_element_id("searchCarNo", driver, search_id)
             #     옆으로 이동
