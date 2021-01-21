@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from selenium.common.exceptions import NoAlertPresentException, TimeoutException, NoSuchElementException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import Util
@@ -171,26 +172,24 @@ gs_need_log_out =[
 ]
 
 def log_out_web(park_id, driver):
-    if park_id in gs_need_log_out:
-        Util.sleep(1)
+    Util.sleep(1)
 
-        next = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,"//a[@href='/index.php/login/doLogout' and text()='로그아웃']")))
-        driver.implicitly_wait(3)
-        next.click()
-        # if park_id == Parks.FINANCE_TOWER:
-        #     driver.find_element_by_xpath("//*[@id='bodyCSS']/div[1]/div/div[1]/ul/li[3]/a").click()
-        # elif park_id == Parks.MAGOK_SPRINGTOWER \
-        #         or park_id == Parks.MERCURE_AMBASSADOR \
-        #         or park_id == Parks.SANGBONG_DUOTRIS \
-        #         or park_id == Parks.SANGBONG_DUOTRIS\
-        #         or park_id == Parks.URBANIEL_CHEN_HO\
-        #         or park_id == Parks.PARK_BUILDING:
-        #     driver.find_element_by_xpath("/html/body/div/div[1]/div/div/ul/li[4]/a").click()
-        # else:
-        #     driver.find_element_by_xpath("//*[@id='bodyCSS']/div[1]/div/ul/li[3]/a").click()
-        driver.implicitly_wait(3)
-        Util.sleep(3)
-        print(Colors.BLUE + "로그아웃" + Colors.ENDC)
+    driver.find_element_by_xpath("//a[contains(@href, 'doLogout')]").click()
+    print(Colors.BLUE + "로그아웃" + Colors.ENDC)
+    # if park_id == Parks.FINANCE_TOWER:
+    #     driver.find_element_by_xpath("//*[@id='bodyCSS']/div[1]/div/div[1]/ul/li[3]/a").click()
+    # elif park_id == Parks.MAGOK_SPRINGTOWER \
+    #         or park_id == Parks.MERCURE_AMBASSADOR \
+    #         or park_id == Parks.SANGBONG_DUOTRIS \
+    #         or park_id == Parks.SANGBONG_DUOTRIS\
+    #         or park_id == Parks.URBANIEL_CHEN_HO\
+    #         or park_id == Parks.PARK_BUILDING:
+    #     driver.find_element_by_xpath("/html/body/div/div[1]/div/div/ul/li[4]/a").click()
+    # else:
+    #     driver.find_element_by_xpath("//*[@id='bodyCSS']/div[1]/div/ul/li[3]/a").click()
+    driver.implicitly_wait(3)
+    Util.sleep(3)
+
 
 
 def web_har_in(target, driver):
