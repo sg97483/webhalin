@@ -174,7 +174,7 @@ def log_out_web(park_id, driver):
     if park_id in gs_need_log_out:
         Util.sleep(1)
 
-        next = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,"//a[@href='/index.php/login/doLogout']")))
+        next = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,"//a[@href='/index.php/login/doLogout' and text()='로그아웃']")))
         driver.implicitly_wait(3)
         next.click()
         # if park_id == Parks.FINANCE_TOWER:
