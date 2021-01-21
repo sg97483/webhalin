@@ -174,7 +174,8 @@ gs_need_log_out =[
 def log_out_web(park_id, driver):
     Util.sleep(1)
 
-    driver.find_element_by_xpath("//a[contains(@href, 'doLogout')]").click()
+    element = driver.find_element_by_xpath("//a[contains(@href, 'doLogout')]")
+    driver.execute_script("arguments[0].click();",element)
     print(Colors.BLUE + "로그아웃" + Colors.ENDC)
     # if park_id == Parks.FINANCE_TOWER:
     #     driver.find_element_by_xpath("//*[@id='bodyCSS']/div[1]/div/div[1]/ul/li[3]/a").click()
