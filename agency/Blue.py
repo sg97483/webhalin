@@ -154,7 +154,9 @@ def web_har_in(target, driver):
                             print("예상치 못한 에러\n", ex)
                     log_out_web(driver)
                     return True
-            log_out_web(driver)
+                else:
+                    log_out_web(driver)
+
             return False
         else:
             print(Colors.BLUE + "현재 웹할인 페이지 분석이 되어 있지 않는 주차장입니다." + Colors.ENDC)
