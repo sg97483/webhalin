@@ -69,7 +69,15 @@ blue_pass = [
     Parks.FRYDIUM_BUILDING,
     Parks.HOTEL_SUNSHINE
 ]
+def log_out_web(driver):
+    Util.sleep(1)
 
+    element = driver.find_element_by_xpath("//a[contains(@href, 'doLogout')]")
+    driver.execute_script("arguments[0].click();",element)
+    print(Colors.BLUE + "로그아웃" + Colors.ENDC)
+
+    driver.implicitly_wait(3)
+    Util.sleep(3)
 
 def get_har_in_script(park_id, ticket_name):
     if Util.get_week_or_weekend() == 0:
@@ -102,12 +110,12 @@ def web_har_in(target, driver):
             # todo 현재 URL을 가지고와서 비교 후 자동로그인
             # print(driver.current_url)
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
-            if ParkUtil.first_access(park_id, driver.current_url):
-                driver.find_element_by_id(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
-                driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
 
-                driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
-                driver.implicitly_wait(3)
+            driver.find_element_by_id(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
+            driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
+
+            driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
+            driver.implicitly_wait(3)
 
             driver.find_element_by_id(web_info[WebInfo.inputSearch]).send_keys(search_id)
             Util.sleep(3)
@@ -137,9 +145,9 @@ def web_har_in(target, driver):
                             driver.switch_to.alert.accept()
                         except Exception as ex:
                             print("예상치 못한 에러\n", ex)
-
+                    log_out_web(driver)
                     return True
-
+            log_out_web(driver)
             return False
         else:
             print(Colors.BLUE + "현재 웹할인 페이지 분석이 되어 있지 않는 주차장입니다." + Colors.ENDC)
