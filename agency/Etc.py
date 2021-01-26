@@ -256,11 +256,18 @@ def web_har_in(target, driver):
                             driver.implicitly_wait(2)
                             driver.execute_script("javascript:next()")
                             driver.implicitly_wait(2)
-                            driver.find_element_by_xpath("//*[@id='form1']/div[17]/div/div/div[2]/div[1]/button")
-                            # driver.find_element_by_xpath("//*[@id='form1']/div[17]/div/div/div[2]/div[1]/button")
-                            driver.implicitly_wait(2)
-                            driver.execute_script("javascript:showItem(349408703206216,'파킹박','[무료]',0,'기타','[무한]','1','[무한]')")
-                            # driver.find_element_by_xpath("//*[@id='form1']/div[17]/div/div/div[3]/button")
+                            if park_id==19170:
+                                driver.find_element_by_xpath("//*[@id='form1']/div[17]/div/div/div[2]/div[2]/button")
+                                driver.implicitly_wait(2)
+                                driver.execute_script(
+                                    "javascript:showItem(349408328678582,'파킹박','[무료]',0,'기타','[무한]','1','[무한]')")
+                            else:
+                                driver.find_element_by_xpath("//*[@id='form1']/div[17]/div/div/div[2]/div[1]/button")
+                                driver.implicitly_wait(2)
+                                driver.execute_script(
+                                    "javascript:showItem(349408703206216,'파킹박','[무료]',0,'기타','[무한]','1','[무한]')")
+
+
                             driver.implicitly_wait(2)
                             driver.execute_script("javascript:validate();")
                             driver.implicitly_wait(2)
