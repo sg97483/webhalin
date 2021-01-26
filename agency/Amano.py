@@ -10,7 +10,7 @@ import re
 from selenium.webdriver.common.keys import Keys
 
 mapIdToWebInfo = {
-    # amano 남산트라펠리스
+    # T타워 남산트라팰리스
     16239: ["userId", "userPwd", "//input[@type='submit']",
             "schCarNo", "//input[@type='button']",
             "#tblList > tbody > tr",
@@ -454,7 +454,7 @@ mapIdToWebInfo = {
             "schCarNo", "//*[@id='sForm']/input[4]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "11",  # 평일당일권(파킹셰어) (판매 : 20000 )
-            "10",   # 평일 3시간권 (판매 : 10000 )
+            "10",  # 평일 3시간권 (판매 : 10000 )
             "",
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
             ""
@@ -472,9 +472,9 @@ mapIdToWebInfo = {
     45010: ["userId", "userPwd", "//*[@id='loginForm']/li[3]/input",
             "schCarNo", "//*[@id='sForm']/input[4]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "848", # 당일권(평일)
+            "848",  # 당일권(평일)
             "",
-            "",    # 심야권
+            "",  # 심야권
             "javascript:document.getElementById('discountTypeValue').click",
             "",
             "847"  # 2시간권(파킹셰어)
@@ -484,9 +484,9 @@ mapIdToWebInfo = {
     12373: ["userId", "userPwd", "//*[@id='loginForm']/li[3]/input",
             "schCarNo", "//*[@id='sForm']/input[4]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "", # 당일권(평일)
+            "",  # 당일권(평일)
             "812",
-            "",    # 심야권
+            "",  # 심야권
             "javascript:document.getElementById('discountTypeValue').click",
             "",
             "847"  # 2시간권(파킹셰어)
@@ -496,11 +496,11 @@ mapIdToWebInfo = {
     19130: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "14", # 24시간/당일권(평일)
+            "14",  # 24시간/당일권(평일)
             "",
-            "15",    # 심야권
+            "15",  # 심야권
             "javascript:document.getElementById('discountTypeValue').click",
-            "11", # 2시간권(파킹셰어)
+            "11",  # 2시간권(파킹셰어)
             "12"  # 3시간권(파킹셰어)
             ],
 
@@ -508,11 +508,11 @@ mapIdToWebInfo = {
     19407: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "", # 24시간/당일권(평일)
+            "",  # 24시간/당일권(평일)
             "",
-            "15",    # 심야권
+            "15",  # 심야권
             "javascript:document.getElementById('discountTypeValue').click",
-            "", # 2시간권(파킹셰어)
+            "",  # 2시간권(파킹셰어)
             ""  # 3시간권(파킹셰어)
             ],
 
@@ -520,15 +520,13 @@ mapIdToWebInfo = {
     19391: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "9", # 24시간/당일권(평일)
+            "9",  # 24시간/당일권(평일)
             "9",
-            "",    # 심야권
+            "",  # 심야권
             "javascript:document.getElementById('discountTypeValue').click",
-            "", # 2시간권(파킹셰어)
+            "",  # 2시간권(파킹셰어)
             ""  # 3시간권(파킹셰어)
             ],
-
-
 
 }
 
@@ -590,6 +588,8 @@ def get_har_in_value(park_id, ticket_name):
                 elif ticket_name[-3:] == "연박권" \
                         or ticket_name == "2일권":
                     return web_info[10]
+                elif str(ticket_name).startswith("일주차"):
+                    return web_info[WebInfo.weekday]
 
             elif park_id == Parks.TWIN_TREE:
                 if ticket_name == "6시간권":
@@ -661,7 +661,7 @@ def get_har_in_value(park_id, ticket_name):
                 if ticket_name == "2시간권":
                     return web_info[11]
 
-            elif park_id == 19247: #아마노 눈스퀘어
+            elif park_id == 19247:  # 아마노 눈스퀘어
                 if ticket_name == "평일1일권(1호기)":
                     return web_info[6]
                 elif ticket_name == "평일1일권(2호기)":
