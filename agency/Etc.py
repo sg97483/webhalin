@@ -42,28 +42,28 @@ mapIdToWebInfo = {
             "//*[@id='discount']/div[1]/input[1]", "",
             "",
             "2",
-            "javascript:insertDiscount();"],
+            "javascript:showItem(349408703206216,'파킹박','[무료]',0,'기타','[무한]','1','[무한]');"],
 
     # (하이파킹) 디아뜨갤러리 1차
     19170: ["id", "pw", "//*[@id='btnLogin']",
             "//*[@id='discount']/div[1]/input[1]", "",
             "",
             "2",
-            "javascript:insertDiscount();"],
+            "javascript:showItem(349408328678582,'파킹박','[무료]',0,'기타','[무한]','1','[무한]');"],
 
     # AW주차타워
     19201: ["id", "pw", "//*[@id='btnLogin']",
             "//*[@id='discount']/div[1]/input[1]", "",
             "",
             "2",
-            "javascript:insertDiscount();"],
+            "javascript:showItem(429919833400581,'파킹박','[무료]',0,'기타','[무한]','1','[무한]');"],
 
     # AW컨벤션
     19200: ["id", "pw", "//*[@id='btnLogin']",
             "//*[@id='discount']/div[1]/input[1]", "",
             "",
             "2",
-            "javascript:insertDiscount();"],
+            "javascript:showItem(429920254504999,'파킹박','[무료]',0,'기타','[무한]','1','[무한]');"],
 }
 
 
@@ -259,13 +259,11 @@ def web_har_in(target, driver):
                             if park_id==19170:
                                 driver.find_element_by_xpath("//*[@id='form1']/div[17]/div/div/div[2]/div[2]/button")
                                 driver.implicitly_wait(2)
-                                driver.execute_script(
-                                    "javascript:showItem(349408328678582,'파킹박','[무료]',0,'기타','[무한]','1','[무한]')")
+                                driver.execute_script(web_info[6])
                             else:
                                 driver.find_element_by_xpath("//*[@id='form1']/div[17]/div/div/div[2]/div[1]/button")
                                 driver.implicitly_wait(2)
-                                driver.execute_script(
-                                    "javascript:showItem(349408703206216,'파킹박','[무료]',0,'기타','[무한]','1','[무한]')")
+                                driver.execute_script(web_info[6])
 
 
                             driver.implicitly_wait(2)
