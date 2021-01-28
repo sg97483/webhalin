@@ -32,7 +32,7 @@ driver.maximize_window()
 
 testPark = Parks.NICE_HONG_MUN_KWAN
 is_park_test = False
-is_no_db_test = False
+is_no_db_test = True
 
 # WebHarIn page Login info
 parkName = 0
@@ -168,7 +168,7 @@ repeatCnt = 0
 
 while True:
     if is_no_db_test:
-        tempTarget1 = ['0', '14541', '52도5922', '평일1일권', '2021-01-08 08:00:00', '202101080800']
+        tempTarget1 = ['0', '19170', '26노5048', '평일1일권', '2021-01-28 08:00:00', '202101280800']
 
         try:
             web_har_in(tempTarget1)
