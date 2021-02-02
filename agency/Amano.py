@@ -737,7 +737,7 @@ def web_har_in(target, driver):
             web_info = mapIdToWebInfo[park_id]
             web_har_in_info = ParkUtil.get_park_lot_option(park_id)
             # todo 현재 URL을 가지고와서 비교 후 자동로그인
-            # print(driver.current_url)
+
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
             if ParkUtil.first_access(park_id, driver.current_url):
                 # if park_id == Parks.NY_TOWER:
@@ -749,14 +749,6 @@ def web_har_in(target, driver):
 
             Util.close_popup(driver)
             Util.close_modal(driver)
-
-            # discount_url = login_url + ParkUtil.get_park_discount_url(park_type)
-            # if not str(discount_url).startswith(driver.current_url):
-            #     driver.get(discount_url)
-            #     driver.implicitly_wait(3)
-            #
-            #     Util.close_popup(driver)
-            #     Util.close_modal(driver)
 
             driver.find_element_by_id(web_info[WebInfo.inputSearch]).send_keys(search_id)
             Util.sleep(3)
