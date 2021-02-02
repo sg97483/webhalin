@@ -504,6 +504,15 @@ mapIdToWebInfo = {
             "",
             ],
 
+    # (하이파킹) 서대문 NH농협생명 빌딩2
+    19122: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
+            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+            "chk",
+            "javascript:applyDiscount('99', '1', '01|', '파킹박', '1', '0');", # 평일1일권
+            "javascript:applyDiscount('99', '1', '01|', '파킹박', '1', '0');", # 주말1일권
+            "javascript:applyDiscount('91', '1', '', '파킹박(야간)', '1', '0');", # 심야권
+            ],
+
 }
 
 
@@ -548,6 +557,12 @@ def get_har_in_script(park_id, ticket_name):
             return mapIdToWebInfo[park_id][8]
         elif ticket_name == "3시간권":
             return mapIdToWebInfo[park_id][9]
+    elif park_id == 19122:
+        if str(ticket_name).endswith("1일권"):
+            return mapIdToWebInfo[park_id][6]
+        elif ticket_name == "심야권":
+            return mapIdToWebInfo[park_id][8]
+
     else:
         # todo 요일 구분이 필요없는 현장 1969, 2868
         if Util.get_week_or_weekend() == 0:
