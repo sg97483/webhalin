@@ -121,12 +121,22 @@ def web_har_in(target, driver):
             # todo 현재 URL을 가지고와서 비교 후 자동로그인
             # print(driver.current_url)
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
+            try:
+                driver.find_element_by_xpath("//*[@id='popupOk']").click()
+            except:
+                print("팝업창 없음")
+
             if ParkUtil.first_access(park_id, driver.current_url):
                 Util.sleep(3)
                 if ParkUtil.check_first_conn(park_type):
                     driver.find_element_by_id("skip").click()
                     print("skip")
-                    Util.sleep(1)
+                    Util.sleep(2)
+                    try:
+                        driver.find_element_by_xpath("//*[@id='popupOk']").click()
+                    except:
+                        print("팝업창 없음")
+
                 driver.find_element_by_id(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
                 driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
                 driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
