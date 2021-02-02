@@ -84,7 +84,8 @@ parkTypeHighCity = [
     Parks.NH_GWANG_MYEONG,
     Parks.YEOK_SAM_ECHERE,
     Parks.HAEUNDAE_IPARK,
-    Parks.THE_PRIME_TOWER
+    Parks.THE_PRIME_TOWER,
+    19122
 
 ]
 
@@ -242,6 +243,7 @@ park_type_old_aj = [
 
 park_type_etc = [
     Parks.WESTERN_853,
+    19410, #공덕푸르지오시티
     Parks.DREAM_TOWER_NIGHT,
     Parks.DREAM_TOWER_HOLIDAY,
     Parks.DIAT_GALLERY_2,
@@ -249,6 +251,7 @@ park_type_etc = [
     19170, #디아뜨갤러리 1차
     19201, #AW주차타워,
     19200, #AW컨벤션
+
 ]
 
 park_type_nice = [

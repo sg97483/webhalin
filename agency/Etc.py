@@ -18,6 +18,13 @@ mapIdToWebInfo = {
             "",
             ""],
 
+    # (하이파킹) 공덕푸르지오시티
+    19410: ["""//*[@id='sc-login-form']/div/div[1]/div/input""", """//*[@id='sc-login-form']/div/div[2]/div/input""", """//*[@id="sc-login-form"]/div/div[3]/a""",
+            """//*[@id="sc-page-content"]/div/div/div/div[2]/div/div[1]/div/input""", "",
+            "",
+            "",
+            ""],
+
     # 휴맥스빌리지
     19195: ["""//*[@id="sc-login-form"]/div/div[1]/div/input""", """//*[@id="sc-login-form"]/div/div[2]/div/input""", """//*[@id="sc-login-form"]/div/div[3]/a""",
             """//*[@id="sc-page-content"]/div/div/div/div[2]/div/div[1]/div/input""", "",
@@ -97,7 +104,7 @@ def web_har_in(target, driver):
             web_har_in_info = ParkUtil.get_park_lot_option(park_id)
 
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
-            if park_id == Parks.WESTERN_853 or park_id == Parks.HUMAX_VILLAGE:
+            if park_id == Parks.WESTERN_853 or park_id == Parks.HUMAX_VILLAGE or park_id == 19410:
                 if ParkUtil.check_first_conn(park_id):
                     driver.find_element_by_xpath(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
                     driver.find_element_by_xpath(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
@@ -138,7 +145,7 @@ def web_har_in(target, driver):
                                 try:
                                     driver.find_element_by_css_selector('#sc-page-content > div > div > div > div.uk-card-body > div > div.uk-width-1-1.uk-grid-margin.uk-first-column > div > table > tbody > tr:nth-child(1)').click()
                                 except NoSuchElementException:
-                                    print("웨스턴853/휴맥스빌리지 여러 개 차량번호 클릭 실패")
+                                    print("웨스턴853/휴맥스빌리지/공덕푸르지오시티 여러 개 차량번호 클릭 실패")
 
                                 driver.find_element_by_css_selector(
                                     '#sc-page-content > div > div.uk-width-2-3\@l > div > div.uk-card-body > div > div.uk-width-1-2\@l.uk-first-column > div.uk-margin-mini-top.uk-grid-small.uk-grid.uk-grid-stack > div > div > div').click()
