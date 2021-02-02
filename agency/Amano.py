@@ -467,6 +467,7 @@ mapIdToWebInfo = {
             "7",
             "7",
             "",
+            "javascript:document.getElementById('discountTypeValue').click"
             ],
     # 뉴욕프라자주차장(마두역)
     45010: ["userId", "userPwd", "//*[@id='loginForm']/li[3]/input",
