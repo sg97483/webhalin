@@ -132,7 +132,7 @@ def web_har_in(target, driver):
                         td_car_num = td_car_num_3[0][-7:]
 
                         print("검색된 차량번호 : " + td_car_num + " == " + "기존 차량번호 : " + ori_car_num + " / " + ori_car_num[-7:])
-                        search_date_text = driver.find_element_by_xpath("""//*[@id="sc-page-content"]/div/div[2]/div/div[2]/div/div[1]/div[1]/div[6]""").text
+                        search_date_text = driver.find_element_by_xpath("""//*[@id="sc-page-content"]/div/div[1]/div/div[2]/div/div[2]/div/table/tbody/tr[1]/td[2]""").text
                         now = datetime.datetime.now()
 
                         nowDate = now.strftime('%m%d')
@@ -141,15 +141,14 @@ def web_har_in(target, driver):
                         if ori_car_num[-7:] == td_car_num:
                             # 웹할인 페이지 리스트의 입차날짜와 현재날짜 비교
                             if nowDate == search_date:
+                                driver.implicitly_wait(2)
+                                Util.sleep(1)
                                 try:
                                     driver.find_element_by_css_selector('#sc-page-content > div > div > div > div.uk-card-body > div > div.uk-width-1-1.uk-grid-margin.uk-first-column > div > table > tbody > tr:nth-child(1)').click()
+                                    driver.find_element_by_css_selector('#sc-page-content > div > div.uk-width-2-3\@l > div > div.uk-card-body > div > div.uk-width-1-2\@l.uk-first-column > div.uk-margin-mini-top.uk-grid-small.uk-grid.uk-grid-stack > div > div > div').click()
                                 except NoSuchElementException:
                                     print("웨스턴853/휴맥스빌리지/공덕푸르지오시티 여러 개 차량번호 클릭 실패")
 
-                                driver.find_element_by_css_selector(
-                                    '#sc-page-content > div > div.uk-width-2-3\@l > div > div.uk-card-body > div > div.uk-width-1-2\@l.uk-first-column > div.uk-margin-mini-top.uk-grid-small.uk-grid.uk-grid-stack > div > div > div').click()
-                                # harin_script = get_har_in_script(park_id, ticket_name)
-                                # driver.execute_script(harin_script)
                                 return True
                             else:
                                 print(Colors.MARGENTA + "입차날짜가 틀립니다." + Colors.ENDC)
