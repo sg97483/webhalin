@@ -115,7 +115,6 @@ def web_har_in(target, driver):
                 #차번호입력
                 driver.find_element_by_xpath(web_info[WebInfo.inputSearch]).send_keys(search_id)
                 driver.implicitly_wait(3)
-                print("차번호 입력")
                 Util.sleep(2)
                 try:
                     tr_text = driver.find_element_by_css_selector("#sc-page-content > div > div > div > div.uk-card-body > div > div.uk-width-1-1.uk-grid-margin.uk-first-column > div > table > tbody > tr:nth-child(1) > td:nth-child(1) > span").text
@@ -133,7 +132,7 @@ def web_har_in(target, driver):
                         td_car_num = td_car_num_3[0][-7:]
 
                         print("검색된 차량번호 : " + td_car_num + " == " + "기존 차량번호 : " + ori_car_num + " / " + ori_car_num[-7:])
-                        search_date_text = driver.find_element_by_xpath("""//*[@id="sc-page-content"]/div/div[1]/div/div[2]/div/div[2]/div/table/tbody/tr[1]/td[2]""").text
+                        search_date_text = driver.find_element_by_xpath("""//*[@id="sc-page-content"]/div/div[2]/div/div[2]/div/div[1]/div[1]/div[6]""").text
                         now = datetime.datetime.now()
 
                         nowDate = now.strftime('%m%d')
