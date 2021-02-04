@@ -97,7 +97,7 @@ def web_har_in(target, driver):
     park_id = int(Util.all_trim(target[1]))
     ori_car_num = Util.all_trim(target[2])
     ticket_name = target[3]
-
+    Util.sleep(2)
     if park_id == 15309 and ticket_name == "심야권":
         print(Colors.RED + "오토웨이 타워 심야권 이용 고객입니다." + Colors.ENDC)
         return False
@@ -114,6 +114,7 @@ def web_har_in(target, driver):
         if park_id in mapIdToWebInfo:
             login_url = ParkUtil.get_park_url(park_id)
             driver.implicitly_wait(3)
+            Util.sleep(2)
             driver.get(login_url)
 
             web_info = mapIdToWebInfo[park_id]
