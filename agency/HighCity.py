@@ -22,7 +22,9 @@ mapIdToWebInfo = {
             "license_plate_number", "//input[@type='button']",
             "chk",
             "javascript:applyDiscount('20', '1', '', '파킹박');",
-            "javascript:applyDiscount('20', '1', '', '파킹박');"],
+            "javascript:applyDiscount('20', '1', '', '파킹박');",
+            "javascript:applyDiscount('91', '1', '', '파킹박(야간)');"],
+
     # 와이즈파크
     15644: ["user_id", "password", "//input[@type='button']",
             "license_plate_number", "//input[@type='button']",
@@ -537,7 +539,8 @@ def get_har_in_script(park_id, ticket_name):
             or park_id == Parks.GANG_NAM_L7\
             or park_id == Parks.GANG_NAM_BUILDING\
             or park_id == Parks.ICON_YEOKSAM\
-            or park_id == Parks.TWIN_CITY:
+            or park_id == Parks.TWIN_CITY\
+            or park_id == Parks.PLATINUM:
         if ticket_name == "심야권":
             return mapIdToWebInfo[park_id][WebInfo.methodHarIn3]
         else:
