@@ -15,7 +15,7 @@ def get_sql(now_date, logger, is_park_test, testPark):
     if is_park_test:
         sql += "AND parkId IN ('" + str(testPark) + "') "
 
-    sql += "ORDER BY actualInDtm DESC, parkId DESC;"
+    sql += "ORDER BY reservedStDtm ASC;"
     # "ORDER BY actualInDtm ASC, parkId ASC;"
     # "ORDER BY actualInDtm DESC, parkId DESC;"
     # "AND parkId IN ('" + str(testPark) + "') " \
