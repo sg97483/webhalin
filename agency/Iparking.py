@@ -4,6 +4,8 @@ import Colors
 from park import ParkUtil, ParkType, Parks
 import WebInfo
 import re
+from selenium import webdriver
+from urllib.request import Request, urlopen
 
 mapIdToWebInfo = {
     # Iparking 서초 마제스타
@@ -93,6 +95,21 @@ def get_har_in_script(park_id, ticket_name):
 
 
 def web_har_in(target, driver):
+    options = webdriver.ChromeOptions()
+    # options.add_argument('--headless')
+    # options.add_argument("--disable-extensions")
+    # options.add_argument("disable-infobars")
+    # options.add_argument("window-size=1920x1080")
+    options.add_argument("no-sandbox")
+    options.add_argument("disable-gpu")
+    options.add_argument("--lang=ko_KR")
+    options.add_argument('--proxy-server=socks5://127.0.0.1:9150')
+    options.add_argument(
+        'user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36')
+    chrome_driver = 'C:/Users/park/chromedriver/chromedriver.exe'
+    # chrome_driver = webdriver.Chrome(ChromeDriverManager().install())
+    driver = webdriver.Chrome(chrome_driver, chrome_options=options)
+    driver.maximize_window()
     pid = target[0]
     park_id = int(Util.all_trim(target[1]))
     ori_car_num = Util.all_trim(target[2])
@@ -178,9 +195,9 @@ def web_har_in(target, driver):
                             driver.find_element_by_id("popupOk").click()
                         except Exception as ex:
                             print("예상치 못한 에러\n", ex)
-
+                        driver.close()
                         return True
-
+                driver.close()
                 return False
         else:
             print(Colors.BLUE + "현재 웹할인 페이지 분석이 되어 있지 않는 주차장입니다." + Colors.ENDC)
