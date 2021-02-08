@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
+from selenium.webdriver.support.wait import WebDriverWait
+
 import Util
 import Colors
 from park import ParkUtil, ParkType, Parks
 import WebInfo
 import re
 from selenium import webdriver
-from urllib.request import Request, urlopen
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 mapIdToWebInfo = {
     # Iparking 서초 마제스타
@@ -140,33 +143,38 @@ def web_har_in(target, driver):
             # print(driver.current_url)
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
             try:
-                driver.find_element_by_xpath("//*[@id='popupOk']").click()
+                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//*[@id='popupOk']"))).click()
+                # driver.find_element_by_xpath("//*[@id='popupOk']").click()
             except:
                 print("팝업창 없음")
 
             if ParkUtil.first_access(park_id, driver.current_url):
-                Util.sleep(4)
-
-                driver.find_element_by_id("skip").click()
+                Util.sleep(2)
+                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "skip"))).click()
                 print("skip")
-                Util.sleep(5)
+                Util.sleep(2)
                 try:
-                    driver.find_element_by_xpath("//*[@id='popupOk']").click()
+                    WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH,"//*[@id='popupOk']"))).click()
                 except:
                     print("팝업창 없음")
 
-                Util.sleep(4)
+                Util.sleep(2)
                 driver.find_element_by_id(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
                 driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
                 driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
-                Util.sleep(3)
+                Util.sleep(2)
 
 
-                driver.find_element_by_id("gohome").click()
-                driver.find_element_by_xpath("//*[@id='start']").click()
+                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "gohome"))).click()
+
+                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//*[@id='start']"))).click()
+                # driver.find_element_by_id("gohome").click()
+                # driver.find_element_by_xpath("//*[@id='start']").click()
                 if park_id in i_parking_hi_parking:
-                    driver.find_element_by_xpath(
-                        "//*[@id = 'storeSelect'] / option[" + web_info[WebInfo.methodHarIn1] + "]").click()
+                    WebDriverWait(driver, 10).until(
+                        EC.presence_of_element_located((By.XPATH, "//*[@id = 'storeSelect'] / option[" + web_info[WebInfo.methodHarIn1] + "]"))).click()
+                    # driver.find_element_by_xpath(
+                    #     "//*[@id = 'storeSelect'] / option[" + web_info[WebInfo.methodHarIn1] + "]").click()
 
                 # discount_url = login_url + ParkUtil.get_park_discount_url(park_type)
                 # driver.get(discount_url)
