@@ -298,6 +298,10 @@ def web_har_in(target, driver):
                         driver.find_element_by_id('discountSubmit').click()
                         driver.implicitly_wait(2)
                         driver.find_element_by_xpath('/html/body/div[3]/div[2]/div/button[2]').click()
+                        curs.execute(GetSql.get_garageName(park_id))
+                        rows = curs.fetchall()
+                        sendmail_ajCount0(str(rows[0]) + " 지점 " + ticket_name + " 할인권 구매부탁드립니다.")
+                        print(Colors.RED + "주차권이 부족합니다." + Colors.ENDC)
                         return True
 
             return False
