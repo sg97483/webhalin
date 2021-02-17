@@ -200,10 +200,12 @@ def web_har_in(target, driver):
                         Util.sleep(3)
                         try:
                             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-                            driver.find_element_by_css_selector("#productList > tr > td:nth-child(3) > button").click()
+                            WebDriverWait(driver, 10).until(
+                                EC.presence_of_element_located((By.CSS_SELECTOR, "#productList > tr > td:nth-child(3) > button"))).click()
                             driver.find_element_by_id("popupOk").click()
                         except Exception as ex:
                             print("예상치 못한 에러\n", ex)
+                            return False
                         driver.close()
                         return True
                 driver.close()
