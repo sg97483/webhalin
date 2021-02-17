@@ -529,6 +529,18 @@ mapIdToWebInfo = {
             ""  # 3시간권(파킹셰어)
             ],
 
+    # 홈런 주차장
+    19371: ["userId", "userPwd", "//*[@id='btnLogin']",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "11",  # 12시간 평일
+            "12",  # 12시간 주말
+            "",  # 심야권
+            "javascript:document.getElementById('discountTypeValue').click",
+            "13",  # 5시간권
+            ""
+            ],
+
 }
 
 amano_need_log_out = [
@@ -667,6 +679,18 @@ def get_har_in_value(park_id, ticket_name):
                     return web_info[6]
                 elif ticket_name == "평일1일권(2호기)":
                     return web_info[7]
+
+            elif park_id == 19371:
+                if ticket_name == "12시간권":
+                    if Util.get_week_or_weekend() == 0:
+                        return web_info[WebInfo.weekday]
+                    else:
+                        return web_info[WebInfo.weekend]
+                elif ticket_name == "5시간권":
+                    return web_info[10]
+                elif ticket_name == "심야권":
+                    return web_info[8]
+
             else:
                 if Util.get_week_or_weekend() == 0:
                     return web_info[WebInfo.weekday]

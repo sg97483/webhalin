@@ -144,7 +144,8 @@ parkTypeAmano = [
     Parks.NEWYORK_PLAZA,
     Parks.SONGPA_BUILDING,
     19130,
-    19391
+    19391,
+    19371
 ]
 
 parkTypeBlue = [
