@@ -196,18 +196,22 @@ def web_har_in(target, driver):
                     print(Colors.YELLOW + "검색 결과가 없습니다." + Colors.ENDC)
                 else:
                     if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
-                        driver.find_element_by_id("next").click()
-                        Util.sleep(3)
+
                         try:
+                            WebDriverWait(driver, 10).until(
+                                EC.presence_of_element_located((By.ID, "next"))).click()
+                            Util.sleep(3)
                             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
                             WebDriverWait(driver, 10).until(
                                 EC.presence_of_element_located((By.CSS_SELECTOR, "#productList > tr > td:nth-child(3) > button"))).click()
+                            Util.sleep(2)
                             driver.find_element_by_id("popupOk").click()
                         except Exception as ex:
                             print("예상치 못한 에러\n", ex)
                             return False
                         driver.close()
                         return True
+
                 driver.close()
                 return False
         else:
