@@ -87,8 +87,8 @@ mapIdToWebInfo = {
             "//*[@id='bodyCSS']/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input",
             "searchCarNo", "//*[@id='btnSearch']",
             "",  # 차량번호 클릭
-            "javascript:fnDisCount('39:파킹박', '1');",
-            "javascript:fnDisCount('39:파킹박', '1');",
+            "javascript:fnDisCount('33:파킹박', '1');",
+            "javascript:fnDisCount('33:파킹박', '1');",
             ""],
     # (하이파킹) 어바니엘천호
     19196: ["login_id", "login_pw",
