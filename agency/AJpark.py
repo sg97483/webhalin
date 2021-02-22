@@ -275,7 +275,16 @@ def web_har_in(target, driver):
                     aj_ticket_cnt_txt = aj_ticket_info[-6:]
                     aj_ticket_cnt = int(re.findall('[0-9]+', aj_ticket_cnt_txt)[0])
 
-
+                    if aj_ticket_cnt==1:
+                        driver.implicitly_wait(3)
+                        driver.find_element_by_id('discountSubmit').click()
+                        driver.implicitly_wait(2)
+                        driver.find_element_by_xpath('/html/body/div[3]/div[2]/div/button[2]').click()
+                        curs.execute(GetSql.get_garageName(park_id))
+                        rows = curs.fetchall()
+                        sendmail_ajCount0(str(rows[0]) + " 지점 " + ticket_name + " 할인권 구매부탁드립니다.")
+                        print(Colors.RED + "주차권이 부족합니다." + Colors.ENDC)
+                        return True
                     try:
                         if aj_ticket_cnt < 2:
                             curs.execute(GetSql.get_garageName(park_id))
@@ -293,16 +302,7 @@ def web_har_in(target, driver):
                     except ValueError as ex:
                         print(Colors.RED + "잘못된 주차권 갯수입니다. : " + ex + Colors.ENDC)
                         return False
-                    if aj_ticket_cnt==1:
-                        driver.implicitly_wait(3)
-                        driver.find_element_by_id('discountSubmit').click()
-                        driver.implicitly_wait(2)
-                        driver.find_element_by_xpath('/html/body/div[3]/div[2]/div/button[2]').click()
-                        curs.execute(GetSql.get_garageName(park_id))
-                        rows = curs.fetchall()
-                        sendmail_ajCount0(str(rows[0]) + " 지점 " + ticket_name + " 할인권 구매부탁드립니다.")
-                        print(Colors.RED + "주차권이 부족합니다." + Colors.ENDC)
-                        return True
+
 
             return False
         else:
