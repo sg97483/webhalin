@@ -291,7 +291,7 @@ park_type_nice = [
     Parks.NICE_HONGIK_YEMUN,
     Parks.NICE_DGB,
     Parks.NICE_DONGTAN_DONGYEON,
-    19398
+    19398,19402,19403,19404,19405
 ]
 
 # 키의 갯수 주차권을 분류하기 위함
