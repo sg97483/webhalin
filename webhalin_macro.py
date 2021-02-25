@@ -237,6 +237,6 @@ while True:
             except Exception as ex:
                 print(Colors.RED + str(ex) + Colors.ENDC)
 
-    time.sleep(300)
+    time.sleep(600)
 
     print("메크로 재시작")

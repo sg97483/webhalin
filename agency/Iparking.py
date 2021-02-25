@@ -98,21 +98,6 @@ def get_har_in_script(park_id, ticket_name):
 
 
 def web_har_in(target, driver):
-    options = webdriver.ChromeOptions()
-    # options.add_argument('--headless')
-    # options.add_argument("--disable-extensions")
-    # options.add_argument("disable-infobars")
-    # options.add_argument("window-size=1920x1080")
-    options.add_argument("no-sandbox")
-    options.add_argument("disable-gpu")
-    options.add_argument("--lang=ko_KR")
-    options.add_argument('--proxy-server=socks5://127.0.0.1:9150')
-    options.add_argument(
-        'user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36')
-    chrome_driver = 'C:/Users/park/chromedriver/chromedriver.exe'
-    # chrome_driver = webdriver.Chrome(ChromeDriverManager().install())
-    driver = webdriver.Chrome(chrome_driver, chrome_options=options)
-    driver.maximize_window()
     pid = target[0]
     park_id = int(Util.all_trim(target[1]))
     ori_car_num = Util.all_trim(target[2])
@@ -140,25 +125,23 @@ def web_har_in(target, driver):
             web_info = mapIdToWebInfo[park_id]
             web_har_in_info = ParkUtil.get_park_lot_option(park_id)
             # todo 현재 URL을 가지고와서 비교 후 자동로그인
-            # print(driver.current_url)
-            # 재접속이 아닐 때, 그러니까 처음 접속할 때
+
             try:
                 WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//*[@id='popupOk']"))).click()
-                # driver.find_element_by_xpath("//*[@id='popupOk']").click()
             except:
                 print("팝업창 없음")
 
             if ParkUtil.first_access(park_id, driver.current_url):
-                Util.sleep(2)
-                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "skip"))).click()
-                print("skip")
-                Util.sleep(2)
+                try:
+                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "skip"))).click()
+                    print("skip")
+                except:
+                    print("skip 불가능")
                 try:
                     WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH,"//*[@id='popupOk']"))).click()
                 except:
                     print("팝업창 없음")
 
-                Util.sleep(2)
                 driver.find_element_by_id(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
                 driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
                 driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
@@ -168,8 +151,7 @@ def web_har_in(target, driver):
                 WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "gohome"))).click()
 
                 WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//*[@id='start']"))).click()
-                # driver.find_element_by_id("gohome").click()
-                # driver.find_element_by_xpath("//*[@id='start']").click()
+
                 if park_id in i_parking_hi_parking:
                     WebDriverWait(driver, 10).until(
                         EC.presence_of_element_located((By.XPATH, "//*[@id = 'storeSelect'] / option[" + web_info[WebInfo.methodHarIn1] + "]"))).click()
@@ -206,13 +188,11 @@ def web_har_in(target, driver):
                                 EC.presence_of_element_located((By.CSS_SELECTOR, "#productList > tr > td:nth-child(3) > button"))).click()
                             Util.sleep(2)
                             driver.find_element_by_id("popupOk").click()
+                            return True
                         except Exception as ex:
                             print("예상치 못한 에러\n", ex)
                             return False
-                        driver.close()
-                        return True
 
-                driver.close()
                 return False
         else:
             print(Colors.BLUE + "현재 웹할인 페이지 분석이 되어 있지 않는 주차장입니다." + Colors.ENDC)
