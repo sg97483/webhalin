@@ -275,7 +275,7 @@ def web_har_in(target, driver):
                     aj_ticket_cnt_txt = aj_ticket_info[-6:]
                     aj_ticket_cnt = int(re.findall('[0-9]+', aj_ticket_cnt_txt)[0])
 
-                    if aj_ticket_cnt==1:
+                    if aj_ticket_cnt==1 or aj_ticket_cnt==2:
                         driver.implicitly_wait(3)
                         driver.find_element_by_id('discountSubmit').click()
                         driver.implicitly_wait(2)
@@ -286,14 +286,15 @@ def web_har_in(target, driver):
                         print(Colors.RED + "주차권이 부족합니다." + Colors.ENDC)
                         return True
                     try:
-                        if aj_ticket_cnt < 2:
+                        if aj_ticket_cnt < 1: # 주차권이 0매인 경우
                             curs.execute(GetSql.get_garageName(park_id))
                             rows = curs.fetchall()
 
                             sendmail_ajCount0(str(rows[0])+" 지점 " + ticket_name + " 할인권 구매부탁드립니다.")
                             print(Colors.RED + "주차권이 부족합니다." + Colors.ENDC)
+                            return False
 
-                        else:
+                        else: # 주차권이 부족하지 않을 때
                             driver.implicitly_wait(3)
                             driver.find_element_by_id('discountSubmit').click()
                             driver.implicitly_wait(2)
@@ -302,8 +303,6 @@ def web_har_in(target, driver):
                     except ValueError as ex:
                         print(Colors.RED + "잘못된 주차권 갯수입니다. : " + ex + Colors.ENDC)
                         return False
-
-
             return False
         else:
             print(Colors.BLUE + "현재 웹할인 페이지 분석이 되어 있지 않는 주차장입니다." + Colors.ENDC)
