@@ -12,13 +12,6 @@ import Util
 import WebInfo
 from park import ParkUtil, ParkType
 
-conn = pymysql.connect(host='49.236.134.172', port=3306, user='root', password='#orange8398@@',
-                               db='parkingpark',
-                               charset='utf8')
-curs = conn.cursor()
-
-
-
 mapIdToWebInfo = {
     # AJ파크 공덕효성해링턴스퀘어점
     19146: ["email", "password", "//*[@id='login']",
@@ -275,6 +268,11 @@ def web_har_in(target, driver):
                     aj_ticket_cnt_txt = aj_ticket_info[-6:]
                     aj_ticket_cnt = int(re.findall('[0-9]+', aj_ticket_cnt_txt)[0])
 
+                    conn = pymysql.connect(host='49.236.134.172', port=3306, user='root', password='#orange8398@@',
+                                           db='parkingpark',
+                                           charset='utf8')
+                    curs = conn.cursor()
+
                     if aj_ticket_cnt==1 or aj_ticket_cnt==2:
                         driver.implicitly_wait(3)
                         driver.find_element_by_id('discountSubmit').click()
@@ -331,4 +329,4 @@ def sendmail_ajCount0(text):
     s.starttls()  # TLS 보안 처리
     s.login(sendEmail, password)  # 로그인
     s.sendmail(sendEmail, recvEmail, msg.as_string())  # 메일 전송, 문자열로 변환하여 보냅니다.
-    s.close()  # smtp 서버 연결을 종료합니다.
+    s.quit()  # smtp 서버 연결을 종료합니다.
