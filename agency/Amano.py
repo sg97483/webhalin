@@ -575,7 +575,8 @@ amano_need_log_out = [
     19130,
     Parks.URIM_TWIN_PARK,
     Parks.SUN_HWA_BUILDING,
-    19391
+    19391,
+    18946
 ]
 
 have_not_tree_time = {
