@@ -145,7 +145,9 @@ parkTypeAmano = [
     Parks.SONGPA_BUILDING,
     19130,
     19391,
-    19371
+    19371,
+    18946,
+    12817
 ]
 
 parkTypeBlue = [

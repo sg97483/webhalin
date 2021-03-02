@@ -540,6 +540,29 @@ mapIdToWebInfo = {
             "13",  # 5시간권
             ""
             ],
+    # (안국역) 삼환빌딩 주차장
+    12817: ["userId", "userPwd", "//*[@id='btnLogin']",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "11",  # 평일1일권
+            "12",  # 주말1일권
+            "",  # 심야권
+            "javascript:document.getElementById('discountTypeValue').click",
+            "",  # 2시간권
+            ""
+            ],
+
+    # 북한연구소
+    18946: ["userId", "userPwd", "//*[@id='loginForm']/li[3]/input",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "808",  # 평일1일권
+            "",  # 주말1일권
+            "",  # 심야권
+            "javascript:document.getElementById('discountTypeValue').click",
+            "",
+            ""
+            ],
 
 }
 
