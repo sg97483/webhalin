@@ -195,7 +195,16 @@ mapIdToWebInfo = {
             1,  # 평일종일권
             0,  # 주말종일권
             2  # 야간권
-            ]
+            ],
+
+    # AJ파크 암사점
+    19227: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일종일권
+            0,  # 주말종일권
+            0  # 야간권
+            ],
 }
 
 
