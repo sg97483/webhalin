@@ -577,7 +577,7 @@ mapIdToWebInfo = {
 
     # 북한연구소
     18946: ["userId", "userPwd", "//*[@id='loginForm']/li[3]/input",
-            "schCarNo", "//*[@id='sForm']/input[3]",
+            "schCarNo", "//*[@id='sForm']/input[4]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "808",  # 평일1일권
             "",  # 주말1일권
