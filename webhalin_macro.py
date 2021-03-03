@@ -14,7 +14,7 @@ import LimitLot
 from park import ParkType, Parks, ParkUtil
 import Util
 
-from agency import Iptime, Gs, HighCity, Iparking, AJpark, Darae, Amano, Blue, Etc, OldAJ, GrangSeoul, Nice
+from agency import Iptime, Gs, HighCity, Iparking, AJpark, Darae, Amano, Blue, Etc, OldAJ, GrangSeoul, Nice, AplusAsset
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -159,7 +159,9 @@ def web_har_in(target):
     elif park_id == Parks.GRANG_SEUOL:
         exec_web_har_in(GrangSeoul, target, driver)
         return True
-
+    elif park_id == 15740:
+        exec_web_har_in(AplusAsset, target, driver)
+        return True
     else:
         print(Colors.BLUE + "웹할인 페이지가 없는 주차장 입니다." + Colors.ENDC)
 

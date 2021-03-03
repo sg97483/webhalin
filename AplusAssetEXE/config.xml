@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ConfigDataClient xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ParkIP>175.196.70.3</ParkIP>
+  <Code>D0037</Code>
+  <Port>25025</Port>
+</ConfigDataClient>

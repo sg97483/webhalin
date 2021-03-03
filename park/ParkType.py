@@ -260,7 +260,7 @@ park_type_etc = [
     19414, #나라키움 여의도빌딩
 
 ]
-
+park_type_aplus = [15740]
 park_type_nice = [
     Parks.NICE_KB_BUPYEONG_PLAZA,
     Parks.NICE_INGYE_CULTURE,
