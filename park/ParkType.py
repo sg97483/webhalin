@@ -200,7 +200,8 @@ parkTypeGs = [
     Parks.MERCURE_AMBASSADOR,
     Parks.MAGOK_SPRINGTOWER,
     Parks.GANGDONG_HOMEPLUS,
-    Parks.KB_TOWER
+    Parks.KB_TOWER,
+    19237
 ]
 
 parkType_ip_time = [

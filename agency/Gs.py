@@ -150,6 +150,15 @@ mapIdToWebInfo = {
             "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999997');", #1일권
             ""],
 
+    # 중앙로공영주차장
+    19237: ["login_id", "login_pw", "//*[@id='bodyCSS']/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",
+            "javascript:fnDisCount('56:전액무료(웹)', '1');", # 평일1일권
+            "javascript:fnDisCount('56:전액무료(웹)', '1');", # 주말1일권
+            "javascript:fnDisCount('56:전액무료(웹)', '1');", # 심야권
+            ],
+
 }
 
 
@@ -159,7 +168,10 @@ def get_har_in_script(park_id, ticket_name):
             return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]
         else:
             return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
-    if Util.get_week_or_weekend() == 0:
+
+    if str(ticket_name).endswith("심야권"):
+        return mapIdToWebInfo[park_id][WebInfo.night]
+    elif Util.get_week_or_weekend() == 0:
         return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]
     else:
         return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
