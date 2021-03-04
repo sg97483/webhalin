@@ -59,8 +59,10 @@ def web_har_in(target,driver):
             else:
                 continue
         print("미입차")
+        main_dialog.close()
         return False
     else:
+        main_dialog.close()
         return False
 
 
