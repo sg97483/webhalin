@@ -58,10 +58,11 @@ def web_har_in(target,driver):
                 return True
             else:
                 continue
-        print("미입차")
+        print(Colors.RED + "미입차" + Colors.ENDC)
         main_dialog.close()
         return False
     else:
+        print(Colors.RED + "미입차" + Colors.ENDC)
         main_dialog.close()
         return False
 
