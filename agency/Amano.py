@@ -587,6 +587,18 @@ mapIdToWebInfo = {
             ""
             ],
 
+    # NC백화점 중앙로점
+    19335: ["userId", "userPwd", "//*[@id='btnLogin']",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "6",  # 평일1일권
+            "6",  # 주말1일권
+            "",
+            "javascript:document.getElementById('discountTypeValue').click",
+            "",
+            ""
+            ],
+
 }
 
 amano_need_log_out = [
@@ -892,6 +904,7 @@ def web_har_in(target, driver):
                             Util.sleep(2)
                             Util.close_modal(driver)
                             log_out_web(park_id, driver)
+
                             return True
 
                 log_out_web(park_id, driver)
