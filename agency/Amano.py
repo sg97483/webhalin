@@ -599,6 +599,18 @@ mapIdToWebInfo = {
             ""
             ],
 
+    # T412 빌딩(구 대치2빌딩)(선릉역)
+    19064: ["userId", "userPwd", "//*[@id='btnLogin']",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "",
+            "",
+            "24", # 심야권
+           "javascript:document.getElementById('discountTypeValue').click",
+            "",
+            ""
+            ],
+
 }
 
 amano_need_log_out = [
