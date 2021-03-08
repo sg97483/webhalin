@@ -224,10 +224,12 @@ def web_har_in(target, driver):
             # print(driver.current_url)
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
 
+            if park_id == Parks.DMC_S_CITY or park_id == Parks.MEGABOX_SUNGSU:
+                driver.find_element_by_id(web_info[WebInfo.inputId]).clear()
 
             driver.find_element_by_id(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
 
-            if park_id == Parks.DMC_S_CITY:
+            if park_id == Parks.DMC_S_CITY or park_id == Parks.MEGABOX_SUNGSU:
                 driver.find_element_by_id(web_info[WebInfo.inputPw]).clear()
 
             driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])

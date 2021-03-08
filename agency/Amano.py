@@ -560,7 +560,7 @@ mapIdToWebInfo = {
             "14",  # 주말1일권
             "13",  # 심야권
             "javascript:document.getElementById('discountTypeValue').click",
-            "",  # 2시간권
+            "",
             ""
             ],
     # NC백화점 강서점
