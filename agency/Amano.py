@@ -22,6 +22,18 @@ mapIdToWebInfo = {
             "7",  # 3일권(판매:24000 차감 : 4320 )
             # "#article > div > div.stitle > p > a > img"
             ],
+    # 동익드미라벨
+    18973: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#tblList > tbody > tr",
+            "31",
+            "",
+            "",
+            "javascript:document.getElementById('btnSave').click",
+            "",
+            ""
+            ],
+
     # 와이플러스
     19028: ["userId", "userPwd", "//input[@type='submit']",
             "schCarNo", "//input[@type='button']",  # "//*[@id='sForm']/input[3]",
@@ -605,11 +617,13 @@ mapIdToWebInfo = {
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "",
             "",
-            "24", # 심야권
-           "javascript:document.getElementById('discountTypeValue').click",
+            "24",  # 심야권
+            "javascript:document.getElementById('discountTypeValue').click",
             "",
             ""
             ],
+
+
 
 }
 
@@ -762,6 +776,11 @@ def get_har_in_value(park_id, ticket_name):
                 elif ticket_name == "심야권":
                     return web_info[8]
 
+            elif park_id == 18973:
+                if ticket_name == "1일권":
+                    return web_info[WebInfo.weekday]
+
+
             else:
                 if Util.get_week_or_weekend() == 0:
                     return web_info[WebInfo.weekday]
@@ -862,8 +881,8 @@ def web_har_in(target, driver):
 
                 html = driver.page_source
                 soup = BeautifulSoup(html, 'html.parser')
-                if park_id == Parks.T_TOWER:
-                    car_num = soup.find(id='tblList')  # 트라팰리스
+                if park_id == Parks.T_TOWER or park_id == 18973:
+                    car_num = soup.find(id='tblList')  # 트라팰리스, 동익드미라벨
                 else:
                     car_num = driver.find_element_by_xpath('''//*[@id="carNo"]''')  # 와이플러스 및 나머지
 
@@ -881,7 +900,7 @@ def web_har_in(target, driver):
                     discount_type_value = get_har_in_value(park_id, ticket_name)
 
                     if discount_type_value != "":
-                        if park_id == Parks.T_TOWER:
+                        if park_id == Parks.T_TOWER or park_id == 18973:
                             pe_id = driver.find_element_by_id('peId')
                             driver.execute_script("arguments[0].value = '" + pe_id_value + "';", pe_id)
                             car_no = driver.find_element_by_id('carNo')

@@ -151,7 +151,8 @@ parkTypeAmano = [
     19333,
     19376,
     19335,
-    19064
+    19064,
+    18973
 ]
 
 parkTypeBlue = [
@@ -477,7 +478,7 @@ mapToAgency = {
     DARAE: "#search_form > table > tbody > tr:nth-child(2) > td:nth-child(2)",
     I_PARKING: "#carList > tr > td:nth-child(2)",
     GS: "#divAjaxCarList > tbody > tr > td",
-    Parks.T_TOWER: "#tblList > tbody > tr > td:nth-child(2)",
+    Parks.T_TOWER: "#tblList > tbody > tr > td:nth-child(2)",18973: "#tblList > tbody > tr > td:nth-child(2)",
     IP_TIME: "#DataGrid1 > tbody > tr:nth-child(2) > td:nth-child(1)",
     # IP_TIME: "#listSearch > table:nth-child(7) > tbody > tr:nth-child(2)",
     GRANG_SEOUL: "#carList > table > tbody > tr > td:nth-child(2) > a",
