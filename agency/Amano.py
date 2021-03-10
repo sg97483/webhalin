@@ -835,6 +835,9 @@ def web_har_in(target, driver):
     ori_car_num = Util.all_trim(target[2])
     ticket_name = target[3]
     park_type = ParkType.get_park_type(park_id)
+    if park_id == 18973 and ticket_name != "1일권":
+        print("1일권이 아님")
+        return False
 
     trim_car_num = Util.all_trim(ori_car_num)
     search_id = trim_car_num[-4:]
