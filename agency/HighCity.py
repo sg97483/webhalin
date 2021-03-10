@@ -515,6 +515,15 @@ mapIdToWebInfo = {
             "javascript:applyDiscount('91', '1', '', '파킹박(야간)', '1', '0');", # 심야권
             ],
 
+    # (하이파킹) 서울역 주차장
+    20864: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
+            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+            "chk",
+            "javascript:applyDiscount('12', '', '5', '01|', 'ppark', '1', '0');", # 평일1일권
+            "",
+            "",
+            ],
+
 }
 
 
@@ -560,7 +569,7 @@ def get_har_in_script(park_id, ticket_name):
             return mapIdToWebInfo[park_id][8]
         elif ticket_name == "3시간권":
             return mapIdToWebInfo[park_id][9]
-    elif park_id == 19122 or park_id == 19325:
+    elif park_id == 19122 or park_id == 19325 or park_id == 20864:
         if str(ticket_name).endswith("1일권"):
             return mapIdToWebInfo[park_id][6]
         elif ticket_name == "심야권":
@@ -580,6 +589,10 @@ def web_har_in(target, driver):
     ori_car_num = Util.all_trim(target[2])
     ticket_name = target[3]
     park_type = ParkType.get_park_type(park_id)
+
+    if park_id==20864 and ticket_name!="평일1일권":
+        print("서울역주차장 연박권")
+        return False
 
     trim_car_num = Util.all_trim(ori_car_num)
     search_id = trim_car_num[-4:]
