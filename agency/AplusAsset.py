@@ -25,7 +25,6 @@ def web_har_in(target,driver):
     Util.sleep(2)
     login_dialog.Edit.type_keys('1')
     Util.sleep(2)
-    # login_dialog.print_control_identifiers()
     login_dialog.Button2.click()
     Util.sleep(2)
 
@@ -49,6 +48,11 @@ def web_har_in(target,driver):
 
                 # -------- 할인완료 창 --------
                 final_dialog = app.window(title_re='할인요청')
+
+                if(ticket_name=="심야권"):
+                    final_dialog.ComboBox.select("어플 야간권")
+
+                # final_dialog.print_control_identifiers()
                 final_dialog.요청.click()
                 Util.sleep(1)
                 keyboard.send_keys('{ENTER}')
