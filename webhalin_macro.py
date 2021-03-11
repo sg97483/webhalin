@@ -34,27 +34,6 @@ testPark = Parks.NICE_HONG_MUN_KWAN
 is_park_test = False
 is_no_db_test = False
 
-# WebHarIn page Login info
-parkName = 0
-webHarInId = 1
-webHarInPw = 2
-webHarInType = 3
-
-# WebHarIn page components info
-inputId = 0
-inputPw = 1
-btnLogin = 2
-inputSearch = 3
-btnSearch = 4
-btnItem = 5
-methodHarIn1 = 6
-methodHarIn2 = 7
-methodHarIn3 = 8
-methodHarInFunc = 9
-
-connParkId = []
-
-
 def logging_info(target):
     log_pid = target[0]
     log_park_id = Util.all_trim(target[1])
@@ -91,14 +70,17 @@ def push_fcm_in_car_check(pid):
         print(Colors.BLUE + "푸쉬 리퀘스트 에러 : " + exPush + Colors.ENDC)
 
 
-def exec_web_har_in(park_type, target, chrome_driver):
+def exec_web_har_in(park_type, target, chrome_driver, lotName=None):
     pid = target[0]
     park_id = int(Util.all_trim(target[1]))
-
-    if park_type.web_har_in(target, chrome_driver):
+    if park_type == AJpark:
+        if AJpark.web_har_in(target,chrome_driver,lotName):
+            logging_info(target)
+            in_car_check_db(pid, park_id)
+    elif park_type.web_har_in(target, chrome_driver):
         logging_info(target)
         in_car_check_db(pid, park_id)
-        push_fcm_in_car_check(pid)
+        # push_fcm_in_car_check(pid)
     else:
         print("실패")
 
@@ -107,7 +89,8 @@ def web_har_in(target):
     pid = target[0]
     park_id = int(Util.all_trim(target[1]))
     park_type = ParkType.get_park_type(park_id)
-
+    curs.execute(GetSql.get_garageName(park_id))
+    lotName = str(curs.fetchall()[0])
     if park_type == ParkType.HIGH_CITY or park_type == ParkType.HIGH_CITY_2:
         exec_web_har_in(HighCity, target, driver)
         return True
@@ -137,7 +120,7 @@ def web_har_in(target):
         return True
 
     elif park_type == ParkType.AJ_PARK:
-        exec_web_har_in(AJpark, target, driver)
+        exec_web_har_in(AJpark, target, driver, lotName)
         return True
 
     elif park_type == ParkType.ETC:
@@ -168,6 +151,12 @@ def web_har_in(target):
 
 repeatCnt = 0
 
+conn = pymysql.connect(host='49.236.134.172', port=3306, user='root', password='#orange8398@@',
+                               db='parkingpark',
+                               charset='utf8')
+curs = conn.cursor()
+
+
 while True:
     if is_no_db_test:
         tempTarget1 = ['0', '14541', '52도5922', '평일1일권', '2021-01-08 08:00:00', '202101080800']
@@ -181,10 +170,6 @@ while True:
         repeatCnt += 1
         logger.info("반복 횟수 : " + str(repeatCnt))
 
-        conn = pymysql.connect(host='49.236.134.172', port=3306, user='root', password='#orange8398@@',
-                               db='parkingpark',
-                               charset='utf8')
-        curs = conn.cursor()
 
         now = datetime.datetime.now()
         nowYM = now.strftime('%Y%m')

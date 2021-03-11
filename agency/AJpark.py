@@ -3,11 +3,9 @@ import re
 import smtplib
 from email.mime.text import MIMEText
 
-import pymysql
 from selenium.webdriver.support.select import Select
 
 import Colors
-import GetSql
 import Util
 import WebInfo
 from park import ParkUtil, ParkType
@@ -223,7 +221,7 @@ AJ_PARK_ID = "parkingpark@wisemobile.co.kr"
 AJ_PARK_PW = "@wise0413"
 
 
-def web_har_in(target, driver):
+def web_har_in(target, driver, lotName):
     pid = target[0]
     park_id = int(Util.all_trim(target[1]))
     ori_car_num = Util.all_trim(target[2])
@@ -235,11 +233,6 @@ def web_har_in(target, driver):
 
     print("parkId = " + str(park_id) + ", " + "searchId = " + search_id)
     print(Colors.BLUE + ticket_name + Colors.ENDC)
-
-    # if ticket_name == "심야권" or ticket_name == "저녁권":
-    #     if not ParkUtil.is_night_time():
-    #         print(Colors.BLUE + "현재 심야권 시간이 아닙니다." + Colors.ENDC)
-    #         return False
 
     if ParkUtil.is_park_in(park_id):
         if park_id in mapIdToWebInfo:
@@ -277,27 +270,18 @@ def web_har_in(target, driver):
                     aj_ticket_cnt_txt = aj_ticket_info[-6:]
                     aj_ticket_cnt = int(re.findall('[0-9]+', aj_ticket_cnt_txt)[0])
 
-                    conn = pymysql.connect(host='49.236.134.172', port=3306, user='root', password='#orange8398@@',
-                                           db='parkingpark',
-                                           charset='utf8')
-                    curs = conn.cursor()
-
                     if aj_ticket_cnt==1 or aj_ticket_cnt==2:
                         driver.implicitly_wait(3)
                         driver.find_element_by_id('discountSubmit').click()
                         driver.implicitly_wait(2)
                         driver.find_element_by_xpath('/html/body/div[3]/div[2]/div/button[2]').click()
-                        curs.execute(GetSql.get_garageName(park_id))
-                        rows = curs.fetchall()
-                        sendmail_ajCount0(str(rows[0]) + " 지점 " + ticket_name + " 할인권 구매부탁드립니다.")
+
+                        sendmail_ajCount0(str(lotName) + " 지점 " + ticket_name + " 할인권 구매부탁드립니다.")
                         print(Colors.RED + "주차권이 부족합니다." + Colors.ENDC)
                         return True
                     try:
                         if aj_ticket_cnt < 1: # 주차권이 0매인 경우
-                            curs.execute(GetSql.get_garageName(park_id))
-                            rows = curs.fetchall()
-
-                            sendmail_ajCount0(str(rows[0])+" 지점 " + ticket_name + " 할인권 구매부탁드립니다.")
+                            sendmail_ajCount0(str(lotName)+" 지점 " + ticket_name + " 할인권 구매부탁드립니다.")
                             print(Colors.RED + "주차권이 부족합니다." + Colors.ENDC)
                             return False
 
