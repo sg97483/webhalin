@@ -151,13 +151,15 @@ def web_har_in(target):
 
 repeatCnt = 0
 
-conn = pymysql.connect(host='49.236.134.172', port=3306, user='root', password='#orange8398@@',
-                               db='parkingpark',
-                               charset='utf8')
-curs = conn.cursor()
+
 
 
 while True:
+    conn = pymysql.connect(host='49.236.134.172', port=3306, user='root', password='#orange8398@@',
+                           db='parkingpark',
+                           charset='utf8')
+    curs = conn.cursor()
+
     if is_no_db_test:
         tempTarget1 = ['0', '14541', '52도5922', '평일1일권', '2021-01-08 08:00:00', '202101080800']
 
