@@ -166,7 +166,8 @@ parkTypeBlue = [
     Parks.MILLENNIUM_SEOUL_HILTON,
     Parks.URIM_RODEO_SWEET,
     Parks.FRYDIUM_BUILDING,
-    Parks.HOTEL_SUNSHINE
+    Parks.HOTEL_SUNSHINE,
+    19375
 ]
 
 parkTypeDarae = [

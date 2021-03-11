@@ -10,55 +10,82 @@ mapIdToWebInfo = {
     # 2형태 경복궁 BLUE
     4588: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
            "carNumber", "/html/body/div[2]/ul/li/button",
-           "chk_info1",
            "",
+           "chk_info1",
+           "chk_info1",
            ""],
     # 동화빌딩
     19082: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
             "carNumber", "/html/body/div[2]/ul/li/button",
+            "",
+            "chk_info1",
             "chk_info1"
             ],
     # 어반플레이스 호텔
     18967: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
             "carNumber", "/html/body/div[2]/ul/li/button",
+            "",
+            "chk_info1"
             "chk_info1"
             ],
     # 키움 나대지
     19063: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
             "carNumber", "/html/body/div[2]/ul/li/button",
+            "",
+            "chk_info1",
             "chk_info1"
+
             ],
     # 삼성화재서비스빌딩
     19048: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
             "carNumber", "/html/body/div[2]/ul/li/button",
+            "",
             "chk_info1",  # 파킹박
-            "chk_info2"  # 야간권
+            "chk_info1"  #
             ],
     # (하이파킹) 어바니엘한강
     19056: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
             "carNumber", "/html/body/div[2]/ul/li/button",
-            "chk_info1"  # 파킹박
+            "",
+            "chk_info1",  # 파킹박
+            "chk_info1"
             ],
     # (하이파킹) 밀레니엄 서울 힐튼 주차장(서울역)
     14541: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
             "carNumber", "/html/body/div[2]/ul/li/button",
-            "chk_info1"  # 파킹박
+            "",
+            "chk_info1",  # 파킹박
+            "chk_info1"
             ],
     # (하이파킹)우림로데오스위트
     45009: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
             "carNumber", "/html/body/div[2]/ul/li/button",
-            "chk_info1"  # 파킹박
+            "",
+            "chk_info1",  # 파킹박
+            "chk_info1"
             ],
     # (하이파킹)우림로데오스위트
     19203: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
             "carNumber", "/html/body/div[2]/ul/li/button",
-            "chk_info1"  # 파킹박
+            "",
+            "chk_info1",  # 파킹박
+            "chk_info1"
             ],
     # 호텔선샤인
     19202: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
             "carNumber", "/html/body/div[2]/ul/li/button",
-            "chk_info1"  # 파킹박
-            ]
+            "",
+            "chk_info1",  # 파킹박
+            "chk_info1"
+            ],
+
+    # 카이트타워
+    19375: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
+            "carNumber", "/html/body/div[2]/ul/li/button",
+            "",
+            "chk_info1",  # 심야권
+            "chk_info2",  # 주말1일권
+            ],
 }
 
 blue_pass = [
@@ -135,7 +162,8 @@ def web_har_in(target, driver):
 
                 if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
                     driver.implicitly_wait(3)
-                    driver.find_element_by_id(web_info[WebInfo.btnItem]).click()
+
+                    driver.find_element_by_id(get_har_in_script(park_id,ticket_name)).click()
 
                     if park_id in blue_pass:
                         pass
