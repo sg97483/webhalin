@@ -190,7 +190,7 @@ while True:
         nowYM = now.strftime('%Y%m')
         nowDate = now.strftime('%Y%m%d')
 
-        log_dir = 'C:\AndroidWork\webharin\parkingpark-macro/logs/' + nowYM
+        log_dir = './logs/' + nowYM
 
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
