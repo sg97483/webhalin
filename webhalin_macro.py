@@ -80,7 +80,7 @@ def exec_web_har_in(park_type, target, chrome_driver, lotName=None):
     elif park_type.web_har_in(target, chrome_driver):
         logging_info(target)
         in_car_check_db(pid, park_id)
-        # push_fcm_in_car_check(pid)
+        push_fcm_in_car_check(pid)
     else:
         print("실패")
 
