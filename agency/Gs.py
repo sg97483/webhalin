@@ -57,6 +57,7 @@ mapIdToWebInfo = {
             "",  # 차량번호 클릭
             "javascript:fnDisCount('55:24시간무료(웹)', '1');",
             "javascript:fnDisCount('55:24시간무료(웹)', '1');",
+            "javascript:fnDisCount('55:24시간무료(웹)', '1');",
             ""],
     # 논현빌딩
     11290: ["login_id", "login_pw",
@@ -129,8 +130,8 @@ mapIdToWebInfo = {
             "searchCarNo", "//*[@id='btnSearch']",
             "",  # 차량번호 클릭
             "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');", #1일권
-            "javascript:fnDisCount('84:48시간 무료 / 잔여수량 996', '1');", #2일권
-            "javascript:fnDisCount('85:72시간 무료 / 잔여수량 995', '1');"],  #3일권
+            "",
+            ""],
 
     # 강동홈플러스(GS타임즈)
     19243: ["login_id", "login_pw",
@@ -168,6 +169,10 @@ def get_har_in_script(park_id, ticket_name):
             return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]
         else:
             return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
+
+    if park_id == Parks.MAGOK_SPRINGTOWER:
+        if str(ticket_name).endswith("1일권"):
+            return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]
 
     if str(ticket_name).endswith("심야권"):
         return mapIdToWebInfo[park_id][WebInfo.night]
@@ -211,7 +216,9 @@ def web_har_in(target, driver):
 
     print("parkId = " + str(park_id) + ", " + "searchId = " + search_id)
     print(Colors.BLUE + ticket_name + Colors.ENDC)
-
+    if park_id == Parks.MAGOK_SPRINGTOWER and ticket_name != "1일권":
+        print("마곡스프링파크 1일권 아님")
+        return False
     if ParkUtil.is_park_in(park_id):
         if park_id in mapIdToWebInfo:
             login_url = ParkUtil.get_park_url(park_id)
