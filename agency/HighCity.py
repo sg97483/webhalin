@@ -593,6 +593,9 @@ def web_har_in(target, driver):
     if park_id==20864 and ticket_name!="평일1일권":
         print("서울역주차장 연박권")
         return False
+    if park_id==16001 and ticket_name!="주말1일권":
+        print("더프라임타워 연박권")
+        return False
 
     trim_car_num = Util.all_trim(ori_car_num)
     search_id = trim_car_num[-4:]
