@@ -623,8 +623,6 @@ mapIdToWebInfo = {
             ""
             ],
 
-
-
 }
 
 amano_need_log_out = [
@@ -867,6 +865,8 @@ def web_har_in(target, driver):
             Util.close_popup(driver)
             Util.close_modal(driver)
 
+            if park_id == 12050:
+                driver.find_element_by_id(web_info[WebInfo.inputSearch]).clear()
             driver.find_element_by_id(web_info[WebInfo.inputSearch]).send_keys(search_id)
             Util.sleep(3)
 
