@@ -457,6 +457,7 @@ parkTypeNoRequestMain = [
     Parks.GS_GUN_GUK_BUILDING,
     Parks.NC_GANG_NAM,
     Parks.FINE_AVENUE,
+    19376,
 ]
 
 type_to_search_css = {
