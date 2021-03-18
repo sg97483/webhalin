@@ -2,15 +2,11 @@
 import re
 import time
 
-from bs4 import BeautifulSoup
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import Util
-from park import ParkType, Parks, ParkUtil
 import Colors
-import requests
-import json
 
 value_client_code = '0005'
 value_access_token = 'BNQ8gkHyk0Rd52ioTYAGKg=='
@@ -33,13 +29,13 @@ def web_har_in(target, driver):
     print("parkId = " + str(park_id) + ", " + "searchId = " + search_id)
     print(Colors.BLUE + ticket_name + Colors.ENDC)
 
-
     driver.get(nice_url)
     time.sleep(3)
 
     # 처음 로그인 팝업 확인
     try:
-        WebDriverWait(driver, 3).until(EC.alert_is_present(),'Timed out waiting for PA creation ' +'confirmation popup to appear.')
+        WebDriverWait(driver, 3).until(EC.alert_is_present(),
+                                       'Timed out waiting for PA creation ' + 'confirmation popup to appear.')
         driver.switch_to.alert.accept()
         time.sleep(3)
     except TimeoutException:
@@ -63,10 +59,10 @@ def web_har_in(target, driver):
     count = len(driver.find_elements_by_xpath("/html/body/table[1]/tbody/tr"))
 
     # 차량리스트 검색 for문
-    for index in range(2, count+1):
-
+    for index in range(2, count + 1):
         sale_table = driver.find_element_by_xpath("/html/body/table[1]/tbody/tr[" + str(index) + "]")
-        searched_car_number = driver.find_element_by_xpath("/html/body/table[1]/tbody/tr[" + str(index) + "]/td[1]").text
+        searched_car_number = driver.find_element_by_xpath(
+            "/html/body/table[1]/tbody/tr[" + str(index) + "]/td[1]").text
         print("나누기전 : " + searched_car_number)
         td_car_num_1 = re.sub('<.+?>', '', searched_car_number, 0, re.I | re.S)
         td_car_num_2 = td_car_num_1.strip()
@@ -87,13 +83,14 @@ def web_har_in(target, driver):
             print("sale_count : " + str(sale_count))
 
             # 할인권리스트 for문
-            for sale_index in range(1, sale_count+1):
-                sale_text = driver.find_element_by_xpath("/html/body/table[1]/tbody/tr[" + str(index) + "]/td[11]/b["+str(sale_index)+"]")
+            for sale_index in range(1, sale_count + 1):
+                sale_text = driver.find_element_by_xpath(
+                    "/html/body/table[1]/tbody/tr[" + str(index) + "]/td[11]/b[" + str(sale_index) + "]")
                 print(sale_text.text)
 
                 # 1일권
-                if str(ticket_name).endswith('1일권'):
-                    if (sale_text.text == '입차일 당일'):
+                if str(ticket_name).endswith('1일권') or str(ticket_name).endswith('당일권'):
+                    if sale_text.text == '입차일 당일':
                         sale_text.click()
                         try:
                             driver.find_element_by_css_selector(
@@ -106,7 +103,7 @@ def web_har_in(target, driver):
 
                 # 심야권
                 elif str(ticket_name).endswith('심야권') or str(ticket_name).endswith('야간권'):
-                    if(str(sale_text.text).startswith('17') and str(sale_text.text)[6] == '0'):
+                    if str(sale_text.text).startswith('17') and str(sale_text.text)[6] == '0':
                         sale_text.click()
                         try:
                             driver.find_element_by_css_selector(
@@ -114,7 +111,7 @@ def web_har_in(target, driver):
                         except Exception as ex:
                             print(Colors.RED + str(ex) + Colors.ENDC)
                         return True
-                    elif(str(sale_text.text).startswith('18') and str(sale_text.text)[6] == '0'):
+                    elif str(sale_text.text).startswith('18') and str(sale_text.text)[6] == '0':
                         sale_text.click()
                         try:
                             driver.find_element_by_css_selector(
@@ -122,7 +119,7 @@ def web_har_in(target, driver):
                         except Exception as ex:
                             print(Colors.RED + str(ex) + Colors.ENDC)
                         return True
-                    elif (str(sale_text.text).startswith('19') and str(sale_text.text)[6] == '0'):
+                    elif str(sale_text.text).startswith('19') and str(sale_text.text)[6] == '0':
                         sale_text.click()
                         try:
                             driver.find_element_by_css_selector(
@@ -130,7 +127,7 @@ def web_har_in(target, driver):
                         except Exception as ex:
                             print(Colors.RED + str(ex) + Colors.ENDC)
                         return True
-                    elif (str(sale_text.text).startswith('20') and str(sale_text.text)[6] == '0'):
+                    elif str(sale_text.text).startswith('20') and str(sale_text.text)[6] == '0':
                         sale_text.click()
                         try:
                             driver.find_element_by_css_selector(
@@ -138,7 +135,8 @@ def web_har_in(target, driver):
                         except Exception as ex:
                             print(Colors.RED + str(ex) + Colors.ENDC)
                         return True
-                    elif (str(sale_text.text).startswith('22') and str(sale_text.text)[6:].startswith('10')): # 나이스파크 월피점
+                    elif (str(sale_text.text).startswith('22') and str(sale_text.text)[6:].startswith(
+                            '10')):  # 나이스파크 월피점
                         sale_text.click()
                         try:
                             driver.find_element_by_css_selector(
@@ -148,8 +146,20 @@ def web_har_in(target, driver):
                         return True
                     else:
                         continue
+
+                # 부천 시네마존 평일 오후권
+                elif park_id == 19296 and str(ticket_name).endswith('오후권'):
+                    if str(sale_text.text).startswith('08'):
+                        sale_text.click()
+                        try:
+                            driver.find_element_by_css_selector(
+                                "#modal-window > div > div > div.modal-buttons > a").click()
+                        except Exception as ex:
+                            print(Colors.RED + str(ex) + Colors.ENDC)
+                        return True
                 else:
                     continue
+
             print("할인권 적용 실패")
             return False
         else:
@@ -158,4 +168,3 @@ def web_har_in(target, driver):
 
         return False
     return False
-
