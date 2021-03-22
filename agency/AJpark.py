@@ -233,7 +233,9 @@ def web_har_in(target, driver, lotName):
 
     print("parkId = " + str(park_id) + ", " + "searchId = " + search_id)
     print(Colors.BLUE + ticket_name + Colors.ENDC)
-
+    if str(ticket_name).endswith('연박권'):
+        print("AJ파크 연박권")
+        return False
     if ParkUtil.is_park_in(park_id):
         if park_id in mapIdToWebInfo:
             login_url = ParkUtil.get_park_url(park_id)
