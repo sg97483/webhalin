@@ -147,6 +147,19 @@ def web_har_in(target, driver):
                     else:
                         continue
 
+                # 3시간권
+                elif str(ticket_name).endswith('3시간권'):
+                    if sale_text.text == '3시간':
+                        sale_text.click()
+                        try:
+                            driver.find_element_by_css_selector(
+                                "#modal-window > div > div > div.modal-buttons > a").click()
+                        except Exception as ex:
+                            print(Colors.RED + str(ex) + Colors.ENDC)
+                        return True
+                    else:
+                        continue
+
                 # 부천 시네마존 평일 오후권
                 elif park_id == 19296 and str(ticket_name).endswith('오후권'):
                     if str(sale_text.text).startswith('08'):
