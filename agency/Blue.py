@@ -25,7 +25,7 @@ mapIdToWebInfo = {
     18967: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
             "carNumber", "/html/body/div[2]/ul/li/button",
             "",
-            "chk_info1"
+            "chk_info1",
             "chk_info1"
             ],
     # 키움 나대지
