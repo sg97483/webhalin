@@ -260,9 +260,26 @@ def web_har_in(target, driver, lotName):
 
             driver.implicitly_wait(3)
 
-            if ParkUtil.check_search(park_id, driver):
-                if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
-                    driver.find_element_by_class_name('selectCarInfo').click()
+            count = len(driver.find_elements_by_xpath("/html/body/div[1]/section/div/section/div"))
+            for index in range(1, count + 1):
+                sale_table = driver.find_element_by_xpath("/html/body/div[1]/section/div/section/div[" + str(index) + "]")
+                searched_car_number = driver.find_element_by_xpath(
+                     "/html/body/div[1]/section/div/section/div[" + str(index) + "]/div/dl[1]/dd").text
+                print("나누기전 : " + searched_car_number)
+                td_car_num_1 = re.sub('<.+?>', '', searched_car_number, 0, re.I | re.S)
+                td_car_num_2 = td_car_num_1.strip()
+                td_car_num_3 = td_car_num_2.split('\n')
+
+                global td_car_num
+                if len(td_car_num_3[0].split(' ')) > 1:
+                    td_car_num = td_car_num_3[0].split(' ')[0][-7:]
+                else:
+                    td_car_num = td_car_num_3[0][-7:]
+
+                print("검색된 차량번호 : " + td_car_num + " == " + "기존 차량번호 : " + ori_car_num + " / " + ori_car_num[-7:])
+
+                if ori_car_num[-7:] == td_car_num or ori_car_num == td_car_num:
+                    driver.find_element_by_xpath("/html/body/div[1]/section/div/section/div["+str(index)+"]").find_element_by_class_name("selectCarInfo").click()
 
                     select = Select(driver.find_element_by_id('selectDiscount'))
                     select.select_by_index(get_har_in_script(park_id, ticket_name))
@@ -296,6 +313,11 @@ def web_har_in(target, driver, lotName):
                     except ValueError as ex:
                         print(Colors.RED + "잘못된 주차권 갯수입니다. : " + ex + Colors.ENDC)
                         return False
+
+                else:
+                    print(Colors.MARGENTA + "차량번호가 틀립니다." + Colors.ENDC)
+                    continue
+                return False
             return False
         else:
             print(Colors.BLUE + "현재 웹할인 페이지 분석이 되어 있지 않는 주차장입니다." + Colors.ENDC)
@@ -306,9 +328,9 @@ def web_har_in(target, driver, lotName):
 
 
 def sendmail_ajCount0(text):
-    sendEmail = "parkingpark_dev_koo@wisemobile.co.kr"
+    sendEmail = "parkingpark_dev_daseulkim@wisemobile.co.kr"
     recvEmail = "parkingpark@wisemobile.co.kr"
-    password = "qorhvkdy3@"
+    password = "!k4850218"
 
     smtpName = "smtp.worksmobile.com"  # smtp 서버 주소
     smtpPort = 587  # smtp 포트 번호
