@@ -39,8 +39,8 @@ def web_har_in(target,driver):
         # --------차 리스트 받아서 하나씩 검사--------
         for i in range(0,listCount):
             carItem = main_dialog.ListView.texts()[i*3+1]
-            print(carItem)
-            if (trim_car_num == carItem[-7:]):
+            print("검색된 차량번호 : " + carItem + " == " + "기존 차량번호 : " + trim_car_num + " / " + trim_car_num[-7:])
+            if carItem == trim_car_num[-7:] or carItem == trim_car_num:
                 main_dialog.ListView.get_item(i).select()
                 Util.sleep(1)
                 main_dialog.할인처리.click()
