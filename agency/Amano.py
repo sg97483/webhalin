@@ -687,16 +687,12 @@ def get_har_in_value(park_id, ticket_name):
                 elif str(ticket_name).startswith("일주차"):
                     return web_info[WebInfo.weekday]
 
-            elif park_id == Parks.TWIN_TREE:
+            elif park_id == Parks.TWIN_TREE or Parks.JIN_YANG_BUILDING:
                 if ticket_name == "6시간권":
                     return web_info[10]
 
             elif park_id == Parks.JANG_AN_SPIZON:
                 if ticket_name == "4시간권":
-                    return web_info[10]
-
-            elif park_id == Parks.JIN_YANG_BUILDING:
-                if ticket_name == "6시간권":
                     return web_info[10]
 
             elif park_id == Parks.YEOKSAM_BUILDING:
@@ -707,12 +703,7 @@ def get_har_in_value(park_id, ticket_name):
                 elif str(ticket_name).startswith("야간권"):
                     return web_info[8]
 
-            elif park_id == Parks.JAYANG_PALACE:
-                if ticket_name[-4:] == "2시간권":
-                    return web_info[11]
-
-            # 오목교주차장
-            elif park_id == Parks.OMOK_BRIDGE:
+            elif park_id == Parks.JAYANG_PALACE or Parks.OMOK_BRIDGE or Parks.LOTTE_CITY_HOTEL_MYEONG_DONG or Parks.NEWYORK_PLAZA:
                 if ticket_name[-4:] == "2시간권":
                     return web_info[11]
 
@@ -728,10 +719,6 @@ def get_har_in_value(park_id, ticket_name):
                 elif ticket_name[-3:] == "5일권":
                     return web_info[13]
 
-            elif park_id == Parks.LOTTE_CITY_HOTEL_MYEONG_DONG:
-                if ticket_name[-4:] == "2시간권":
-                    return web_info[11]
-
             elif park_id == Parks.NICE_HONG_MUN_KWAN:
                 if ticket_name == "4시간권":
                     return web_info[10]
@@ -739,23 +726,15 @@ def get_har_in_value(park_id, ticket_name):
                     return web_info[11]
 
             elif park_id == 19130:
-                if ticket_name == "평일1일권":
-                    return web_info[6]
-                elif ticket_name == "2시간권":
+                if ticket_name == "2시간권":
                     return web_info[10]
                 elif ticket_name == "3시간권":
                     return web_info[11]
-                elif str(ticket_name).endsWith("심야권"):
-                    return web_info[8]
             # elif park_id == Parks.DONGSIN_CHURCH:
             #     if ticket_name == "평일1일권":
             #         return web_info[]
             #     elif ticket_name == "3시간권":
             #         return web_info[]
-
-            elif park_id == Parks.NEWYORK_PLAZA:
-                if ticket_name == "2시간권":
-                    return web_info[11]
 
             elif park_id == 19247:  # 아마노 눈스퀘어
                 if ticket_name == "평일1일권(1호기)":
@@ -771,13 +750,6 @@ def get_har_in_value(park_id, ticket_name):
                         return web_info[WebInfo.weekend]
                 elif ticket_name == "5시간권":
                     return web_info[10]
-                elif ticket_name == "심야권":
-                    return web_info[8]
-
-            elif park_id == 18973:
-                if ticket_name == "1일권":
-                    return web_info[WebInfo.weekday]
-
 
             else:
                 if Util.get_week_or_weekend() == 0:
@@ -833,6 +805,8 @@ def web_har_in(target, driver):
     ori_car_num = Util.all_trim(target[2])
     ticket_name = target[3]
     park_type = ParkType.get_park_type(park_id)
+
+    # 동익드미라벨 연박권
     if park_id == 18973 and ticket_name != "1일권":
         print("1일권이 아님")
         return False
@@ -855,11 +829,6 @@ def web_har_in(target, driver):
 
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
             if ParkUtil.first_access(park_id, driver.current_url):
-                # if park_id == Parks.NY_TOWER:
-                #     driver.implicitly_wait(3)
-                #     driver.find_element_by_xpath("//*[@id='modal-window']/div/div/div[3]/a[1]").click()
-                #     Util.sleep(3)
-
                 web_har_in_login(driver, park_id)
 
             Util.close_popup(driver)
@@ -874,6 +843,7 @@ def web_har_in(target, driver):
 
             Util.sleep(1)
 
+            # 차량번호 검색
             if ParkUtil.check_search(park_id, driver):
                 driver.implicitly_wait(3)
                 try:
@@ -884,10 +854,11 @@ def web_har_in(target, driver):
 
                 html = driver.page_source
                 soup = BeautifulSoup(html, 'html.parser')
+                # T타워 / 동익드미라벨
                 if park_id == Parks.T_TOWER or park_id == 18973:
-                    car_num = soup.find(id='tblList')  # 트라팰리스, 동익드미라벨
+                    car_num = soup.find(id='tblList')
                 else:
-                    car_num = driver.find_element_by_xpath('''//*[@id="carNo"]''')  # 와이플러스 및 나머지
+                    car_num = driver.find_element_by_xpath('''//*[@id="carNo"]''')
 
                 car_text = car_num.text
                 text = re.sub('<.+?>', '', car_text, 0, re.I | re.S)
@@ -903,6 +874,8 @@ def web_har_in(target, driver):
                     discount_type_value = get_har_in_value(park_id, ticket_name)
 
                     if discount_type_value != "":
+
+                        # T타워 / 동익드미라벨
                         if park_id == Parks.T_TOWER or park_id == 18973:
                             pe_id = driver.find_element_by_id('peId')
                             driver.execute_script("arguments[0].value = '" + pe_id_value + "';", pe_id)
@@ -912,16 +885,14 @@ def web_har_in(target, driver):
                             driver.execute_script("arguments[0].value = '" + discount_type_value + "';",
                                                   discount_type)
 
-                        if park_id == Parks.GOLDEN_TOWER \
-                                or park_id == Parks.GANG_NAM_FINANCE:
-                            # or park_id == Parks.KUN_KUK_BUILDING:
+                        # 비고에 텍스트 입력
+                        if park_id == Parks.GOLDEN_TOWER or Parks.GANG_NAM_FINANCE:
                             element_text_area = driver.find_element_by_id('memo')
-                            # element_text_area.send_keys(Keys.TAB)
-                            # element_text_area.clear()
                             Util.sleep(1)
                             element_text_area.send_keys("11")
                             Util.sleep(1)
 
+                        # 홍문관
                         if park_id == Parks.NICE_HONG_MUN_KWAN:
                             create_date = target[4]
                             if not ParkUtil.check_nice_date(park_id, create_date, driver):
@@ -929,6 +900,7 @@ def web_har_in(target, driver):
                                 return False
                             print(Colors.RED + "입차 전 결제입니다." + Colors.ENDC)
 
+                        # 차량번호 일치하는지 확인
                         if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
                             har_in_script = web_info[WebInfo.methodHarInFunc].replace("discountTypeValue",
                                                                                       discount_type_value) + "()"
