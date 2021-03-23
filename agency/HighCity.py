@@ -502,7 +502,7 @@ mapIdToWebInfo = {
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
             "",
-            "javascript:applyDiscount('17', '5', '16|', '파킹박(주말)', '999934499');", # 주말1일권
+            "javascript:applyDiscount('17', '5', '16|', '파킹박(주말)', '999934499');",  # 주말1일권
             "",
             ],
 
@@ -510,16 +510,16 @@ mapIdToWebInfo = {
     19122: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
-            "javascript:applyDiscount('99', '1', '01|', '파킹박', '1', '0');", # 평일1일권
-            "javascript:applyDiscount('99', '1', '01|', '파킹박', '1', '0');", # 주말1일권
-            "javascript:applyDiscount('91', '1', '', '파킹박(야간)', '1', '0');", # 심야권
+            "javascript:applyDiscount('99', '1', '01|', '파킹박', '1', '0');",  # 평일1일권
+            "javascript:applyDiscount('99', '1', '01|', '파킹박', '1', '0');",  # 주말1일권
+            "javascript:applyDiscount('91', '1', '', '파킹박(야간)', '1', '0');",  # 심야권
             ],
 
     # (하이파킹) 서울역 주차장
     20864: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
-            "javascript:applyDiscount('12', '', '5', '01|', 'ppark', '1', '0');", # 평일1일권
+            "javascript:applyDiscount('12', '', '5', '01|', 'ppark', '1', '0');",  # 평일1일권
             "",
             "",
             ],
@@ -528,59 +528,33 @@ mapIdToWebInfo = {
 
 
 def get_har_in_script(park_id, ticket_name):
-    if park_id == Parks.WISE_PARK:  # 와이즈파크
-        if ticket_name == "3시간권":
-            return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
-        else:
-            return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]
-
-    elif park_id == Parks.GUUI_WELLTZ:
-        if ticket_name == "심야권" or str(ticket_name).endswith("연박권"):
-            return mapIdToWebInfo[park_id][WebInfo.methodHarIn3]
-        else:
-            if Util.get_week_or_weekend() == 0:
-                return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]
-            else:
-                return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
-
-    elif park_id == Parks.DGB_FINANCE_CENTER \
-            or park_id == Parks.CENTRAL_TOWER \
-            or park_id == Parks.GANG_NAM_L7\
-            or park_id == Parks.GANG_NAM_BUILDING\
-            or park_id == Parks.ICON_YEOKSAM\
-            or park_id == Parks.TWIN_CITY\
-            or park_id == Parks.PLATINUM:
-        if ticket_name == "심야권":
-            return mapIdToWebInfo[park_id][WebInfo.methodHarIn3]
-        else:
-            if Util.get_week_or_weekend() == 0:
-                return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]
-            else:
-                return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
-    elif park_id == Parks.THE_PRIME_TOWER:
-        if ticket_name == "주말1일권":
-            return mapIdToWebInfo[park_id][7]
-    elif park_id == Parks.ULGI_TWIN_TOWER:
-        if ticket_name == "평일1일권":
-            return mapIdToWebInfo[park_id][6]
-        elif ticket_name == "주말1일권":
-            return mapIdToWebInfo[park_id][7]
-        elif ticket_name == "심야권":
-            return mapIdToWebInfo[park_id][8]
-        elif ticket_name == "3시간권":
-            return mapIdToWebInfo[park_id][9]
-    elif park_id == 19122 or park_id == 19325 or park_id == 20864:
-        if str(ticket_name).endswith("1일권"):
-            return mapIdToWebInfo[park_id][6]
-        elif ticket_name == "심야권":
-            return mapIdToWebInfo[park_id][8]
-
+    if ticket_name[-3:] == "심야권" or ticket_name[-3:] == "야간권":
+        return mapIdToWebInfo[WebInfo.night]
+    elif ticket_name == "평일1일권":
+        return mapIdToWebInfo[WebInfo.weekday]
+    elif ticket_name == "주말1일권" or ticket_name == "토요일권" or ticket_name == "일요일권":
+        return mapIdToWebInfo[WebInfo.weekend]
     else:
-        # todo 요일 구분이 필요없는 현장 1969, 2868
-        if Util.get_week_or_weekend() == 0:
-            return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]
+        if park_id == Parks.WISE_PARK:  # 와이즈파크
+            if ticket_name == "3시간권":
+                return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
+            else:
+                return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]
+
+        elif park_id == Parks.GUUI_WELLTZ:
+            if str(ticket_name).endswith("연박권"):
+                return mapIdToWebInfo[park_id][WebInfo.methodHarIn3]
+
+        elif park_id == Parks.ULGI_TWIN_TOWER:
+            if ticket_name == "3시간권":
+                return mapIdToWebInfo[park_id][9]
+
         else:
-            return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
+            # todo 요일 구분이 필요없는 현장 1969, 2868
+            if Util.get_week_or_weekend() == 0:
+                return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]
+            else:
+                return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
 
 
 def web_har_in(target, driver):
@@ -590,10 +564,10 @@ def web_har_in(target, driver):
     ticket_name = target[3]
     park_type = ParkType.get_park_type(park_id)
 
-    if park_id==20864 and ticket_name!="평일1일권":
+    if park_id == 20864 and ticket_name != "평일1일권":
         print("서울역주차장 연박권")
         return False
-    if park_id==16001 and ticket_name!="주말1일권":
+    if park_id == 16001 and ticket_name != "주말1일권":
         print("더프라임타워 연박권")
         return False
 
@@ -611,18 +585,13 @@ def web_har_in(target, driver):
 
             web_info = mapIdToWebInfo[park_id]
             web_har_in_info = ParkUtil.get_park_lot_option(park_id)
-            # todo 현재 URL을 가지고와서 비교 후 자동로그인
-            # print(driver.current_url)
+
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
             if ParkUtil.first_access(park_id, driver.current_url):
 
                 driver.find_element_by_id(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
                 driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
-
                 driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
-
-                # discount_url = login_url + ParkUtil.get_park_discount_url(park_type)
-                # driver.get(discount_url)
 
                 driver.implicitly_wait(3)
 
@@ -630,7 +599,6 @@ def web_har_in(target, driver):
                 Util.sleep(3)
 
                 driver.find_element_by_xpath(web_info[WebInfo.btnSearch]).click()
-
                 Util.sleep(1)
 
                 if ParkUtil.check_search(park_id, driver):
