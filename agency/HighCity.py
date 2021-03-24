@@ -16,7 +16,9 @@ mapIdToWebInfo = {
             "license_plate_number", "//input[@type='button']",
             "chk",
             "javascript:applyDiscount('62', '1', '', '파킹박', '1')",
-            "javascript:applyDiscount('62', '1', '', '파킹박', '1')"],
+            "javascript:applyDiscount('62', '1', '', '파킹박', '1')",
+            "javascript:applyDiscount('66', '1', '', '파킹박(야간)', '1') ",
+            ],
     # 플래티넘타워
     12130: ["user_id", "password", "//input[@type='button']",
             "license_plate_number", "//input[@type='button']",
@@ -29,6 +31,7 @@ mapIdToWebInfo = {
     15644: ["user_id", "password", "//input[@type='button']",
             "license_plate_number", "//input[@type='button']",
             "chk",
+            "javascript:applyDiscount('11', '1', '', '파킹박 종일권', '1', '0');",
             "javascript:applyDiscount('11', '1', '', '파킹박 종일권', '1', '0');",
             "javascript:applyDiscount('03', '2', '01|09|10|', '3시간무료', '1', '0');"],
     # K스퀘어
@@ -78,6 +81,7 @@ mapIdToWebInfo = {
             "chk",
             "javascript:applyDiscount('95', '1', '', '파킹박', '1');",
             "javascript:applyDiscount('95', '1', '', '파킹박', '1');",
+            "javascript:applyDiscount('82', '1', '', '파킹박(야간)', '1') ;",
             ""],
     # 알파돔타워
     19089: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
@@ -101,13 +105,7 @@ mapIdToWebInfo = {
             "javascript:applyDiscount('19', '1', '07|09|10|23|', '파킹박(주말)', '999999999', '0');",
             "javascript:applyDiscount('18', '1', '07|09|10|23|', '파킹박(야간)', '999999999', '0');"
             ],
-    # DDMC
-    15619: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
-            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
-            "chk",
-            "javascript:applyDiscount('10', '1', '02|', '파킹박', '999999999');",
-            "javascript:applyDiscount('10', '1', '02|', '파킹박', '999999999');"
-            ],
+
     # 트윈시티남산
     16003: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
@@ -151,7 +149,8 @@ mapIdToWebInfo = {
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
             "javascript:applyDiscount('96', '1', '01|', '파킹박', '999999999', '0');",
-            "javascript:applyDiscount('96', '1', '01|', '파킹박', '999999999', '0');"
+            "javascript:applyDiscount('96', '1', '01|', '파킹박', '999999999', '0');",
+            "javascript:applyDiscount('82', '1', '', '파킹박(야간)', '999999999', '0') ;",
             ],
     # 서소문한화빌딩
     18972: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
@@ -172,7 +171,8 @@ mapIdToWebInfo = {
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
             "javascript:applyDiscount('05', '1', '', '파킹박', '999999999', '0');",
-            "javascript:applyDiscount('05', '1', '', '파킹박', '999999999', '0');"
+            "javascript:applyDiscount('05', '1', '', '파킹박', '999999999', '0');",
+            "javascript:applyDiscount('32', '1', '', '파킹박(야간)', '999999999', '0') ;",
             ],
     # 센트럴플레이스
     12997: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
@@ -201,7 +201,8 @@ mapIdToWebInfo = {
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
             "javascript:applyDiscount('97', '1', '', '파킹박', '999999999');",
-            "javascript:applyDiscount('97', '1', '', '파킹박', '999999999');"
+            "javascript:applyDiscount('97', '1', '', '파킹박', '999999999');",
+            "javascript:applyDiscount('91', '1', '', '파킹박(야간)', '999999999') ;",
             ],
     # 여의도 리버타워
     20863: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
@@ -222,14 +223,16 @@ mapIdToWebInfo = {
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
             "javascript:applyDiscount('96', '1', '', '파킹박');",
-            "javascript:applyDiscount('96', '1', '', '파킹박');"
+            "javascript:applyDiscount('96', '1', '', '파킹박');",
+            "javascript:applyDiscount('89', '1', '', '파킹박(야간)') ;",
             ],
     # (하이파킹) 왕십리 W스퀘어(RAK성동빌딩)
     12183: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
             "javascript:applyDiscount('97', '1', '', '파킹박', '1', '0');",
-            "javascript:applyDiscount('97', '1', '', '파킹박', '1', '0');"
+            "javascript:applyDiscount('97', '1', '', '파킹박', '1', '0');",
+            "javascript:applyDiscount('81', '1', '26|27|', '파킹박(야간)', '1', '0') ;",
             ],
     # (하이파킹) DGB금융센터 주차장
     18971: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
@@ -328,21 +331,25 @@ mapIdToWebInfo = {
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
             "javascript:applyDiscount('20', '1', '', 'ppark', '1', '0');",
-            "javascript:applyDiscount('20', '1', '', 'ppark', '1', '0');"
+            "javascript:applyDiscount('20', '1', '', 'ppark', '1', '0');",
+            "javascript:applyDiscount('32', '1', '', 'ppark(야간)', '1', '0') ;",
             ],
     # (하이파킹)오투타워(구 HP빌딩)
     19083: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
             "javascript:applyDiscount('95', '1', '', '파킹박', '1', '0');",
-            "javascript:applyDiscount('95', '1', '', '파킹박', '1', '0');"
+            "javascript:applyDiscount('95', '1', '', '파킹박', '1', '0');",
+            "javascript:applyDiscount('89', '1', '', '파킹박(야간)', '1', '0') ;",
+
             ],
     # 오렌지센터
     19197: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
             "javascript:applyDiscount('16', '1', '', 'ppark', '999999999', '0');",
-            "javascript:applyDiscount('16', '1', '', 'ppark', '999999999', '0');"
+            "javascript:applyDiscount('16', '1', '', 'ppark', '999999999', '0');",
+            "javascript:applyDiscount('31', '1', '', 'ppark(야간)', '999999999', '0') ;",
             ],
     # (하이파킹) 오라카이대학로
     19181: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
@@ -370,21 +377,24 @@ mapIdToWebInfo = {
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
             "javascript:applyDiscount('96', '1', '', '파킹박');",
-            "javascript:applyDiscount('96', '1', '', '파킹박');"
+            "javascript:applyDiscount('96', '1', '', '파킹박');",
+            "javascript:applyDiscount('88', '1', '', '파킹박(야간)') ;",
             ],
     #  문정플라자
     19022: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
             "javascript:applyDiscount('35', '1', '', 'ppark', '1', '0');",
-            "javascript:applyDiscount('35', '1', '', 'ppark', '1', '0');"
+            "javascript:applyDiscount('35', '1', '', 'ppark', '1', '0');",
+            "javascript:applyDiscount('98', '1', '04|', 'ppark(야간)', '1', '0') ;",
             ],
     #  코리아나호텔
     19248: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
             "javascript:applyDiscount('13', '1', '01|02|03|', 'ppark', '999999999', '0');",
-            "javascript:applyDiscount('13', '1', '01|02|03|', 'ppark', '999999999', '0');"
+            "javascript:applyDiscount('13', '1', '01|02|03|', 'ppark', '999999999', '0');",
+            "javascript:applyDiscount('31', '1', '', 'ppark(야간)', '999999999', '0');",
             ],
     #  힐스테이트에코마곡나루역
     19272: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
@@ -470,14 +480,14 @@ mapIdToWebInfo = {
             "chk",
             "javascript:applyDiscount('08', '1', '01|', 'ppark', '999999999', '0');",
             "javascript:applyDiscount('08', '1', '01|', 'ppark', '999999999', '0');",
-            "",
+            "javascript:applyDiscount('91', '1', '', 'ppark(야간)', '999999999', '0'); ",
             ],
     # 미성빌딩
     19266: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
             "javascript:applyDiscount('12', '1', '04|09|03|06|02|01|05|10|11|13|14|97|98|', 'ppark');",
-            "",
+            "javascript:applyDiscount('12', '1', '04|09|03|06|02|01|05|10|11|13|14|97|98|', 'ppark');",
             "",
             ],
     # NH농협은행광명시지부
@@ -537,7 +547,7 @@ def get_har_in_script(park_id, ticket_name):
     else:
         if park_id == Parks.WISE_PARK:  # 와이즈파크
             if ticket_name == "3시간권":
-                return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
+                return mapIdToWebInfo[park_id][WebInfo.methodHarIn3]
             else:
                 return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]
 
@@ -548,7 +558,9 @@ def get_har_in_script(park_id, ticket_name):
         elif park_id == Parks.ULGI_TWIN_TOWER:
             if ticket_name == "3시간권":
                 return mapIdToWebInfo[park_id][9]
-
+        elif park_id == Parks.W_SQARE:
+            if ticket_name == "저녁권":
+                return mapIdToWebInfo[park_id][WebInfo.night]
         else:
             # todo 요일 구분이 필요없는 현장 1969, 2868
             if Util.get_week_or_weekend() == 0:
