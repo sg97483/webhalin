@@ -529,11 +529,11 @@ mapIdToWebInfo = {
 
 def get_har_in_script(park_id, ticket_name):
     if ticket_name[-3:] == "심야권" or ticket_name[-3:] == "야간권":
-        return mapIdToWebInfo[WebInfo.night]
+        return mapIdToWebInfo[park_id][WebInfo.night]
     elif ticket_name == "평일1일권":
-        return mapIdToWebInfo[WebInfo.weekday]
+        return mapIdToWebInfo[park_id][WebInfo.weekday]
     elif ticket_name == "주말1일권" or ticket_name == "토요일권" or ticket_name == "일요일권":
-        return mapIdToWebInfo[WebInfo.weekend]
+        return mapIdToWebInfo[park_id][WebInfo.weekend]
     else:
         if park_id == Parks.WISE_PARK:  # 와이즈파크
             if ticket_name == "3시간권":
