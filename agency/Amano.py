@@ -687,7 +687,8 @@ def get_har_in_value(park_id, ticket_name):
                 elif str(ticket_name).startswith("일주차"):
                     return web_info[WebInfo.weekday]
 
-            elif park_id == Parks.TWIN_TREE or Parks.JIN_YANG_BUILDING:
+            elif park_id == Parks.TWIN_TREE \
+                    or park_id == Parks.JIN_YANG_BUILDING:
                 if ticket_name == "6시간권":
                     return web_info[10]
 
@@ -703,7 +704,10 @@ def get_har_in_value(park_id, ticket_name):
                 elif str(ticket_name).startswith("야간권"):
                     return web_info[8]
 
-            elif park_id == Parks.JAYANG_PALACE or Parks.OMOK_BRIDGE or Parks.LOTTE_CITY_HOTEL_MYEONG_DONG or Parks.NEWYORK_PLAZA:
+            elif park_id == Parks.JAYANG_PALACE \
+                    or park_id == Parks.OMOK_BRIDGE \
+                    or park_id == Parks.LOTTE_CITY_HOTEL_MYEONG_DONG \
+                    or park_id == Parks.NEWYORK_PLAZA:
                 if ticket_name[-4:] == "2시간권":
                     return web_info[11]
 
@@ -886,7 +890,7 @@ def web_har_in(target, driver):
                                                   discount_type)
 
                         # 비고에 텍스트 입력
-                        if park_id == Parks.GOLDEN_TOWER or Parks.GANG_NAM_FINANCE:
+                        if park_id == Parks.GOLDEN_TOWER or park_id == Parks.GANG_NAM_FINANCE:
                             element_text_area = driver.find_element_by_id('memo')
                             Util.sleep(1)
                             element_text_area.send_keys("11")
