@@ -195,12 +195,12 @@ mapIdToWebInfo = {
             2  # 야간권
             ],
 
-    # AJ파크 암사점
+    # 더피나클강남
     19227: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
-            0,  # 평일종일권
-            0,  # 주말종일권
+            0,  # 야간권
+            0,  # 야간권
             0  # 야간권
             ],
 }
@@ -233,7 +233,7 @@ def web_har_in(target, driver, lotName):
 
     print("parkId = " + str(park_id) + ", " + "searchId = " + search_id)
     print(Colors.BLUE + ticket_name + Colors.ENDC)
-    if str(ticket_name).endswith('연박권'):
+    if str(ticket_name).endswith('연박권') or str(ticket_name).endswith('2일권'):
         print("AJ파크 연박권")
         return False
     if ParkUtil.is_park_in(park_id):

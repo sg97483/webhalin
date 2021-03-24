@@ -17,12 +17,14 @@ mapIdToWebInfo = {
             "",  # 차량번호 클릭
             "javascript:fnDisCount('55:24시간무료(웹)', '1');",
             "javascript:fnDisCount('55:24시간무료(웹)', '1');",
+            "javascript:fnDisCount('55:24시간무료(웹)', '1');",
             ""],
     # 안녕인사동
     19166: ["login_id", "login_pw",
             "//*[@id='bodyCSS']/div/div/div[2]/div/div/div/table/tbody/tr[5]/td/div/div[1]/input",
             "searchCarNo", "//*[@id='btnSearch']",
             "",  # 차량번호 클릭
+            "javascript:fnDisCount('83:24시간무료(웹)', '1');",
             "javascript:fnDisCount('83:24시간무료(웹)', '1');",
             "javascript:fnDisCount('83:24시간무료(웹)', '1');",
             ""],
@@ -34,7 +36,7 @@ mapIdToWebInfo = {
             "javascript:fnDisCount('55:24시간무료(웹)', '1');",
             "javascript:fnDisCount('55:24시간무료(웹)', '1');",
             "javascript:fnDisCount('55:24시간무료(웹)', '1');"],
-    # DMS-S CITY
+    # DMC-S CITY
     19044: ["login_id", "login_pw",
             "//*[@id='bodyCSS']/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]",
             "searchCarNo", "//*[@id='btnSearch']",
@@ -74,12 +76,14 @@ mapIdToWebInfo = {
             "",  # 차량번호 클릭
             "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 9968', '2');",
             "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 9968', '2');",
+            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 9968', '2');",
             ""],
     # KDB생명
     45655: ["login_id", "login_pw",
             "//*[@id='bodyCSS']/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]",
             "searchCarNo", "//*[@id='btnSearch']",
             "",  # 차량번호 클릭
+            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 9549');",  # 1일권
             "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 9549');",  # 1일권
             "javascript:fnDisCount('56:전액무료(웹) / 잔여수량 9956');",  # 전액 무료
             ""],
@@ -88,6 +92,7 @@ mapIdToWebInfo = {
             "//*[@id='bodyCSS']/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input",
             "searchCarNo", "//*[@id='btnSearch']",
             "",  # 차량번호 클릭
+            "javascript:fnDisCount('33:파킹박', '1');",
             "javascript:fnDisCount('33:파킹박', '1');",
             "javascript:fnDisCount('33:파킹박', '1');",
             ""],
@@ -122,6 +127,7 @@ mapIdToWebInfo = {
             "",  # 차량번호 클릭
             "javascript:fnDisCount('57:전액무료(웹)', '1');",
             "javascript:fnDisCount('57:전액무료(웹)', '1');",
+            "javascript:fnDisCount('57:전액무료(웹)', '1');",
             ""],
 
     #마곡스프링파크타워
@@ -131,6 +137,7 @@ mapIdToWebInfo = {
             "",  # 차량번호 클릭
             "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');", #1일권
             "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');",
+            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');",
             ""],
 
     # 강동홈플러스(GS타임즈)
@@ -139,6 +146,7 @@ mapIdToWebInfo = {
             "searchCarNo", "//*[@id='btnSearch']",
             "",  # 차량번호 클릭
             "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');", #1일권
+            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');",
             "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');",
             ""],
 
@@ -199,6 +207,10 @@ def web_har_in(target, driver):
     if park_id == Parks.MAGOK_SPRINGTOWER and ticket_name != "1일권":
         print("마곡스프링파크 1일권 아님")
         return False
+    if str(ticket_name).endswith("연박권"):
+        print("GS 연박권")
+        return False
+
     if ParkUtil.is_park_in(park_id):
         if park_id in mapIdToWebInfo:
             login_url = ParkUtil.get_park_url(park_id)
