@@ -243,7 +243,7 @@ mapIdToWebInfo = {
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "15",  # 종일권
             "18",  # 종일권(주말)(파킹셰어) (판매 : 5000 )
-            "",
+            "19",
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
             "17",  # 3시간권
             "16"  # 2시간권
