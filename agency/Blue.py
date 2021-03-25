@@ -96,7 +96,7 @@ blue_pass = [
     Parks.MILLENNIUM_SEOUL_HILTON,
     Parks.URIM_RODEO_SWEET,
     Parks.FRYDIUM_BUILDING,
-    Parks.HOTEL_SUNSHINE
+    Parks.HOTEL_SUNSHINE,19202,19375
 ]
 def log_out_web(driver):
     Util.sleep(1)
