@@ -553,16 +553,16 @@ mapIdToWebInfo = {
             ""
             ],
     # (안국역) 삼환빌딩 주차장
-    12817: ["userId", "userPwd", "//*[@id='btnLogin']",
-            "schCarNo", "//*[@id='sForm']/input[3]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "11",  # 평일1일권
-            "12",  # 주말1일권
-            "",  # 심야권
-            "javascript:document.getElementById('discountTypeValue').click",
-            "",  # 2시간권
-            ""
-            ],
+    # 12817: ["userId", "userPwd", "//*[@id='btnLogin']",
+    #         "schCarNo", "//*[@id='sForm']/input[3]",
+    #         "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+    #         "11",  # 평일1일권
+    #         "12",  # 주말1일권
+    #         "",  # 심야권
+    #         "javascript:document.getElementById('discountTypeValue').click",
+    #         "",  # 2시간권
+    #         ""
+    #         ],
 
     # 상암 전자회관
     19376: ["userId", "userPwd", "//*[@id='btnLogin']",
