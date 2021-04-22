@@ -57,7 +57,11 @@ def first_access(park_id, current_url):
 
 def get_park_search_css(park_id):
     park_type = ParkType.get_park_type(park_id)
+
     park_search_css = ParkType.type_to_search_css[park_type]
+   # if park_id != 19415 : park_search_css = ParkType.type_to_search_css[park_type]
+   # elif park_id == 19415 : park_search_css = "#divAjaxCarList > tr"
+
 
     return park_search_css
 
@@ -84,9 +88,12 @@ def check_search(park_id, driver):
     try:
         park_search_css = get_park_search_css(park_id)
 
-        tr_text = driver.find_element_by_css_selector(park_search_css).text
+        tr_text = driver.find_element_by_css_selector(park_search_css).text #서치된 텍스트
+        print(Colors.GREEN + tr_text + Colors.ENDC)
         text = re.sub('<.+?>', '', tr_text, 0, re.I | re.S)
+
         trim_text = text.strip()
+
         # print(trim_text)
         if trim_text.startswith("검색") or trim_text.startswith("입차") or trim_text.startswith("차량"):
             print(Colors.YELLOW + "미입차" + Colors.ENDC)
@@ -95,6 +102,7 @@ def check_search(park_id, driver):
         else:
             return True
     except NoSuchElementException:
+        print(Colors.GREEN + "체크 서치" + Colors.ENDC)
         print(Colors.GREEN + "해당 엘리멘트가 존재하지 않습니다." + Colors.ENDC)
         return True
 
@@ -111,6 +119,7 @@ def check_same_car_num(parkId, oriCarNum, driver):
     #     # print(element_car_num)
 
     if element_car_num == "":
+        print(Colors.YELLOW + "엘리멘트 카넘버" + Colors.ENDC)
         print(Colors.YELLOW + "해당 엘리멘트가 존재하지 않습니다." + Colors.ENDC)
         return False
     else:

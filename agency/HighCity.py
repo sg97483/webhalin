@@ -159,7 +159,7 @@ mapIdToWebInfo = {
             "javascript:applyDiscount('17', '1', '21|23|', '파킹박(평일)', '999891999');",
             "javascript:applyDiscount('25', '1', '23|', '파킹박(주말)', '999891999');"
             ],
-    # 롯데호텔 L7
+    # 홍대 롯데호텔 L7
     19038: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",

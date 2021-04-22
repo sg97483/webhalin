@@ -15,6 +15,7 @@ AJ_PARK = 29
 HIGH_CITY_2 = 30
 ETC = 31
 NICE = 32
+GS2= 33
 
 # 주차장 타입별 주차장들
 parkTypeHighCity = [
@@ -206,9 +207,12 @@ parkTypeGs = [
     Parks.MAGOK_SPRINGTOWER,
     Parks.GANGDONG_HOMEPLUS,
     Parks.KB_TOWER,
-    19237
-]
+    19237,
 
+]
+parkTypeGs2 = [
+    19415, #더에셋
+]
 parkType_ip_time = [
     Parks.E_WHA_APM,
     Parks.SAMSUNG_SEOUL_MEDICAL_CENTER,
@@ -467,10 +471,12 @@ type_to_search_css = {
     DARAE: "#search_form > table > tbody > tr:nth-child(2) > td",
     GRANG_SEOUL: "#carList > table > tbody > tr > td:nth-child(2) > a",
     GS: "#divAjaxCarList > tbody > tr",
+    GS2: "#divAjaxCarList > tr",
     HIGH_CITY: "#search_form > table > tbody > tr > td:nth-child(2) > table:nth-child(3) > tbody > tr:nth-child(2)",
     IP_TIME: "#DataGrid1 > tbody > tr:nth-child(2) > td:nth-child(1)",
     HIGH_CITY_2: "#search_form > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)",
     OLD_AJ: "body > table:nth-child(4) > tbody > tr:nth-child(3) > td:nth-child(2)"
+
 }
 
 mapToAgency = {
@@ -481,6 +487,7 @@ mapToAgency = {
     DARAE: "#search_form > table > tbody > tr:nth-child(2) > td:nth-child(2)",
     I_PARKING: "#carList > tr > td:nth-child(2)",
     GS: "#divAjaxCarList > tbody > tr > td",
+    GS2: "#divAjaxCarList > tr > td",
     Parks.T_TOWER: "#tblList > tbody > tr > td:nth-child(2)",18973: "#tblList > tbody > tr > td:nth-child(2)",
     IP_TIME: "#DataGrid1 > tbody > tr:nth-child(2) > td:nth-child(1)",
     # IP_TIME: "#listSearch > table:nth-child(7) > tbody > tr:nth-child(2)",
@@ -499,6 +506,7 @@ mapToHarinUrl = {
     DARAE: "/discount/discount_regist.php",
     I_PARKING: "/html/home.html#!",
     GS: "/main",
+    GS2: "/main",
     IP_TIME: "/ListSearch.aspx",
     GRANG_SEOUL: "/ezTicket/carSearch",
     AJ_PARK: "home.do",
@@ -525,6 +533,8 @@ def get_park_type(park_id):
         return I_PARKING
     elif park_id in parkTypeGs:
         return GS
+    elif park_id in parkTypeGs2:
+        return GS2
     elif park_id in parkType_ip_time:
         return IP_TIME
     elif park_id in parkType_grang_seoul:

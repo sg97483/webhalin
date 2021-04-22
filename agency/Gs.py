@@ -167,7 +167,14 @@ mapIdToWebInfo = {
             "javascript:fnDisCount('56:전액무료(웹)', '1');", # 주말1일권
             "javascript:fnDisCount('56:전액무료(웹)', '1');", # 심야권
             ],
-
+    # 더에셋
+    19415: ["login_id", "login_pw", "//*[@id='bodyCSS']/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",
+            "javascript:fnDisCount('54:12시간무료(플랫폼)', '1');", # 12시간 무료
+            "javascript:fnDisCount('55:24시간무료(플랫폼)', '1');", # 24시간무료
+            "javascript:fnDisCount('56:14시간무료(플랫폼)', '1');", # 14시간 무료(심야,주말)
+            ],
 }
 
 
@@ -284,7 +291,7 @@ def web_har_in(target, driver):
             if ParkUtil.check_search(park_id, driver):
                 if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
                     try:
-                        Util.click_element_selector("#divAjaxCarList > tbody > tr > td > a", driver)
+                        Util.click_element_selector("#divAjaxCarList > tr > td > a", driver)
                     except NoSuchElementException:
                         log_out_web(driver)
                         return False

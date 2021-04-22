@@ -32,7 +32,7 @@ driver.maximize_window()
 
 testPark = Parks.NICE_HONG_MUN_KWAN
 is_park_test = False
-is_no_db_test = False
+is_no_db_test = False #test
 
 def logging_info(target):
     log_pid = target[0]
@@ -49,11 +49,11 @@ def logging_info(target):
 
 
 def in_car_check_db(pid, park_id):
-    sql_in_car_check = "UPDATE T_PAYMENT_HISTORY SET inCarCheck = 'Y', agHp = 1 WHERE id ='" + str(pid) + "'"
-    curs.execute(sql_in_car_check)
-    conn.commit()
-    logger.info(" 할인 되었습니다. / \"" + Parks.mapIdToUrl[park_id] + "\"")
-    logger.info("\n")
+        sql_in_car_check = "UPDATE T_PAYMENT_HISTORY SET inCarCheck = 'Y', agHp = 1 WHERE id ='" + str(pid) + "'"
+        curs.execute(sql_in_car_check)
+        conn.commit()
+        logger.info(" 할인 되었습니다. / \"" + Parks.mapIdToUrl[park_id] + "\"")
+        logger.info("\n")
 
 
 def push_fcm_in_car_check(pid):
@@ -100,7 +100,7 @@ def web_har_in(target):
         exec_web_har_in(Amano, target, driver)
         return True
 
-    elif park_type == ParkType.GS:
+    elif park_type == ParkType.GS or park_type == ParkType.GS2:
         exec_web_har_in(Gs, target, driver)
         return True
 
@@ -160,9 +160,9 @@ while True:
                            db='parkingpark',
                            charset='utf8')
     curs = conn.cursor()
-
+    #test
     if is_no_db_test:
-        tempTarget1 = ['0', '14541', '52도5922', '평일1일권', '2021-01-08 08:00:00', '202101080800']
+        tempTarget1 = ['0', '19331', '03머9073', '평일1일권', '2021-04-21 08:00:00', '20210420800']
 
         try:
             web_har_in(tempTarget1)

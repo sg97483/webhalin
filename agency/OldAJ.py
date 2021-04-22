@@ -52,6 +52,10 @@ def web_har_in(target, driver):
         print(Colors.BLUE + "직접주차입니다." + Colors.ENDC)
         return False
 
+    if (ticket_name !="평일1일권" or ticket_name !="주말1일권") and park_id == 19070 :
+        print(Colors.BLUE + "발산파크 연박권입니다." + Colors.ENDC)
+        return False
+
     trim_car_num = Util.all_trim(ori_car_num)
     search_id = trim_car_num[-4:]
 
