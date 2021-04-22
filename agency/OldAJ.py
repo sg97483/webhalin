@@ -51,9 +51,13 @@ def web_har_in(target, driver):
     if ticket_name == "직접주차":
         print(Colors.BLUE + "직접주차입니다." + Colors.ENDC)
         return False
-
+    #발산 연박 개수대로 수동 넣어주어야함
     if (ticket_name !="평일1일권" or ticket_name !="주말1일권") and park_id == 19070 :
         print(Colors.BLUE + "발산파크 연박권입니다." + Colors.ENDC)
+        return False
+    #순화빌딩 9170 LPR 인식 문제
+    if park_id == 16173 and ori_car_num =='11다9170' :
+        print(Colors.BLUE + "웹할인 확인이 필요한 차량입니다" + Colors.ENDC)
         return False
 
     trim_car_num = Util.all_trim(ori_car_num)
