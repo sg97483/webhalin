@@ -108,10 +108,6 @@ def web_har_in(target):
         exec_web_har_in(Gs, target, driver)
         return True
 
-    elif park_type == ParkType.GS2:
-        exec_web_har_in(Gs, target, driver)
-        return True
-
     elif park_type == ParkType.I_PARKING:
         exec_web_har_in(Iparking, target, driver)
         return True
@@ -170,7 +166,7 @@ while True:
     curs = conn.cursor()
     #test
     if is_no_db_test:
-        tempTarget1 = ['0', '19209', '101호8920', '평일1일권', '2021-04-23 08:00:00', '20210423800']
+        tempTarget1 = ['0', '19400', '360도3068', '평일1일권', '2021-04-26 08:00:00', '20210426800']
 
         try:
             web_har_in(tempTarget1)

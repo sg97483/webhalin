@@ -155,8 +155,8 @@ mapIdToWebInfo = {
             """//*[@id="bodyCSS"]/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]""",
             "searchCarNo", "//*[@id='btnSearch']",
             "",  # 차량번호 클릭
-            "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999997');", #1일권
-            "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999997');", #1일권
+            "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999706');;", #1일권
+            "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999706');", #1일권
             ""],
 
     # 중앙로공영주차장
@@ -291,7 +291,7 @@ def web_har_in(target, driver):
             if ParkUtil.check_search(park_id, driver):
                 if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
                     try:
-                        Util.click_element_selector("#divAjaxCarList > tr > td > a", driver)
+                        Util.click_element_selector("#divAjaxCarList > tbody> tr > td > a", driver)
                     except NoSuchElementException:
                         log_out_web(driver)
                         return False

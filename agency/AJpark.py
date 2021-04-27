@@ -289,7 +289,7 @@ def web_har_in(target, driver, lotName):
                     aj_ticket_cnt_txt = aj_ticket_info[-6:]
                     aj_ticket_cnt = int(re.findall('[0-9]+', aj_ticket_cnt_txt)[0])
 
-                    if aj_ticket_cnt == 1:
+                    if aj_ticket_cnt == 1 or aj_ticket_cnt == 2:
                         sendmail_ajCount0(str(lotName) + " 지점 " + ticket_name + " 할인권 구매부탁드립니다.")
                         print(Colors.RED + "주차권이 부족합니다." + Colors.ENDC)
                         driver.implicitly_wait(3)
