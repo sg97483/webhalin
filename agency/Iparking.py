@@ -78,6 +78,12 @@ mapIdToWebInfo = {
             "2"
             ],
 
+    # KT 구로지밸리
+   19425: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
 }
 
 i_parking_hi_parking = [

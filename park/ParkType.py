@@ -186,7 +186,8 @@ parkTypeIparking = [
     Parks.DIAT_CENTRAL,
     Parks.BIT_FLEX,
     Parks.YEOUIDO_NH_CAPITAL,
-    Parks.ISU_GONG_YONG
+    Parks.ISU_GONG_YONG,
+    19425
 ]
 
 parkTypeGs = [
