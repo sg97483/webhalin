@@ -155,7 +155,7 @@ mapIdToWebInfo = {
             """//*[@id="bodyCSS"]/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]""",
             "searchCarNo", "//*[@id='btnSearch']",
             "",  # 차량번호 클릭
-            "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999706');;", #1일권
+            "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999706');", #1일권
             "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999706');", #1일권
             ""],
 

@@ -166,7 +166,7 @@ while True:
     curs = conn.cursor()
     #test
     if is_no_db_test:
-        tempTarget1 = ['0', '19400', '360도3068', '평일1일권', '2021-04-26 08:00:00', '20210426800']
+        tempTarget1 = ['0', '19180', '75보9451', '평일1일권', '2021-05-12 08:00:00', '20210512800']
 
         try:
             web_har_in(tempTarget1)
@@ -231,6 +231,6 @@ while True:
             except Exception as ex:
                 print(Colors.RED + str(ex) + Colors.ENDC)
 
-    time.sleep(600)
+    time.sleep(1200)
 
     print("메크로 재시작")
