@@ -82,13 +82,14 @@ mapIdToWebInfo = {
             "18"  # 3시간권
             ],
     # 서울기록원
-    19128: ["userId", "userPwd", "btnLogin",
+    19428: ["userId", "userPwd", "btnLogin",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "4",  # 평일1일권
             "",  # 주말1일권 X
             "7",  # 심야권
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+            "9",  # 3시간권
             ],
     # 강남 N타워
     19077: ["userId", "userPwd", "//input[@type='submit']",
