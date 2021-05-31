@@ -155,7 +155,7 @@ mapIdToWebInfo = {
             """//*[@id="bodyCSS"]/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]""",
             "searchCarNo", "//*[@id='btnSearch']",
             "",  # 차량번호 클릭
-            "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999706');;", #1일권
+            "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999706');", #1일권
             "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999706');", #1일권
             ""],
 
@@ -175,8 +175,15 @@ mapIdToWebInfo = {
             "javascript:fnDisCount('55:24시간무료(플랫폼)', '1');", # 24시간무료
             "javascript:fnDisCount('56:14시간무료(플랫폼)', '1');", # 14시간 무료(심야,주말)
             ],
-}
 
+    # TnS빌딩
+    19430: ["login_id", "login_pw",
+            "//*[@id='bodyCSS']/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # 차량번호 클릭
+            "javascript:fnDisCount('78:ppark(웹)', '1');",
+            ],
+}
 
 def get_har_in_script(park_id, ticket_name):
     if str(ticket_name).endswith("심야권"):
@@ -218,6 +225,12 @@ def web_har_in(target, driver):
         print("GS 연박권")
         return False
 
+    if park_id == Parks.KB_TOWER and ori_car_num == "116라7178":
+        print("kb금융타워 116라7178 제외")
+        return False
+
+
+
     if ParkUtil.is_park_in(park_id):
         if park_id in mapIdToWebInfo:
             login_url = ParkUtil.get_park_url(park_id)
@@ -246,7 +259,7 @@ def web_har_in(target, driver):
                     or park_id == Parks.KDB_LIFE \
                     or park_id == Parks.MODERN_GYEDONG_BUILDING \
                     or park_id == Parks.KB_TOWER \
-                    or park_id == Parks.MERCURE_AMBASSADOR:
+                    or park_id == Parks.MERCURE_AMBASSADOR :
                 Util.click_element_xpath(web_info[WebInfo.btnLogin], driver)
             else:
                 driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
@@ -290,6 +303,9 @@ def web_har_in(target, driver):
             # 차량 검색
             if ParkUtil.check_search(park_id, driver):
                 if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
+                    if park_id == 19430:
+                        Util.click_element_selector("#divAjaxCarList > tr > td > a", driver)
+
                     try:
                         Util.click_element_selector("#divAjaxCarList > tbody> tr > td > a", driver)
                     except NoSuchElementException:
