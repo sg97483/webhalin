@@ -303,11 +303,11 @@ def web_har_in(target, driver):
             # 차량 검색
             if ParkUtil.check_search(park_id, driver):
                 if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
-                    if park_id == 19430:
-                        Util.click_element_selector("#divAjaxCarList > tr > td > a", driver)
-
                     try:
-                        Util.click_element_selector("#divAjaxCarList > tbody> tr > td > a", driver)
+                        if park_id == 19430 or park_id == 19415:
+                            Util.click_element_selector("#divAjaxCarList > tr > td > a", driver)
+                        else:
+                            Util.click_element_selector("#divAjaxCarList > tbody> tr > td > a", driver)
                     except NoSuchElementException:
                         log_out_web(driver)
                         return False
