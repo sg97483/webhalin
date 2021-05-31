@@ -175,6 +175,16 @@ mapIdToWebInfo = {
             "javascript:fnDisCount('55:24시간무료(플랫폼)', '1');", # 24시간무료
             "javascript:fnDisCount('56:14시간무료(플랫폼)', '1');", # 14시간 무료(심야,주말)
             ],
+
+    # TnS빌딩
+    19430: ["login_id", "login_pw",
+            "//*[@id='bodyCSS']/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "//*[@id='divAjaxCarList']",  # 차량번호 클릭
+            "javascript:fnDisCount('78:ppark(웹)', '1');",
+            "",
+            "",
+            ""],
 }
 
 
@@ -217,6 +227,12 @@ def web_har_in(target, driver):
     if str(ticket_name).endswith("연박권"):
         print("GS 연박권")
         return False
+
+    if park_id == Parks.KB_TOWER and ori_car_num == "116라7178":
+        print("kb금융타워 116라7178 제외")
+        return False
+        # 순화빌딩 9170 LPR 인식 문제
+
 
     if ParkUtil.is_park_in(park_id):
         if park_id in mapIdToWebInfo:

@@ -533,7 +533,13 @@ mapIdToWebInfo = {
             "",
             "",
             ],
-
+    # (하이파킹) 디아뜨갤러리 1차 updated web
+    19170: ["user_id", "password", "//input[@type='button']",
+            "license_plate_number",  "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+            "chk",
+            "javascript:applyDiscount('07', 'CP0802', '1', '01|', 'ppark', '999999999', '0') ",  # 평일1일권
+            "",
+            "",],
 }
 
 

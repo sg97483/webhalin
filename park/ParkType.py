@@ -87,7 +87,8 @@ parkTypeHighCity = [
     Parks.HAEUNDAE_IPARK,
     Parks.THE_PRIME_TOWER,
     19122,
-    20864
+    20864,
+    19170, #디아뜨갤러리 1차
 
 ]
 
@@ -210,9 +211,11 @@ parkTypeGs = [
     Parks.KB_TOWER,
     19237,
 
+
 ]
 parkTypeGs2 = [
     19415, #더에셋
+    19430, #TnS빌딩
 ]
 parkType_ip_time = [
     Parks.E_WHA_APM,
@@ -265,8 +268,7 @@ park_type_etc = [
     Parks.DREAM_TOWER_HOLIDAY,
     Parks.DIAT_GALLERY_2,
     Parks.HUMAX_VILLAGE,
-    19170, #디아뜨갤러리 1차
-    19201, #AW주차타워,
+        19201, #AW주차타워,
     19200, #AW컨벤션
     19414, #나라키움 여의도빌딩
 
