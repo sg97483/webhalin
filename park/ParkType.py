@@ -268,9 +268,10 @@ park_type_etc = [
     Parks.DREAM_TOWER_HOLIDAY,
     Parks.DIAT_GALLERY_2,
     Parks.HUMAX_VILLAGE,
-        19201, #AW주차타워,
+    19201, #AW주차타워,
     19200, #AW컨벤션
     19414, #나라키움 여의도빌딩
+    19429,  #신한L타워
 
 ]
 park_type_aplus = [15740]
