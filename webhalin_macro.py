@@ -14,7 +14,7 @@ import LimitLot
 from park import ParkType, Parks, ParkUtil
 import Util
 
-from agency import Iptime, Gs, HighCity, Iparking, AJpark, Darae, Amano, Blue, Etc, OldAJ, GrangSeoul, Nice, AplusAsset
+from agency import Iptime, Gs, HighCity, Iparking, AJpark, Darae, Amano, Blue, Etc, OldAJ, GrangSeoul, Nice, AplusAsset, CenterSquare
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -78,6 +78,10 @@ def exec_web_har_in(park_type, target, chrome_driver, lotName=None):
             logging_info(target)
             in_car_check_db(pid, park_id)
             push_fcm_in_car_check(pid)
+    elif park_type == CenterSquare :
+        park_type.web_har_in(target)
+        in_car_check_db(pid, park_id)
+        push_fcm_in_car_check(pid)
     elif park_type.web_har_in(target, chrome_driver):
         logging_info(target)
         in_car_check_db(pid, park_id)
@@ -150,6 +154,9 @@ def web_har_in(target):
     elif park_id == 15740:
         exec_web_har_in(AplusAsset, target, driver)
         return True
+    elif park_id== 19426:
+        exec_web_har_in(CenterSquare, target, driver)
+        return True
     else:
         print(Colors.BLUE + "웹할인 페이지가 없는 주차장 입니다." + Colors.ENDC)
 
@@ -166,7 +173,7 @@ while True:
     curs = conn.cursor()
     #test
     if is_no_db_test:
-        tempTarget1 = ['0', '19415', '112주 6873', '평일1일권', '2021-05-31 08:00:00', '202105310800']
+        tempTarget1 = ['0', '19426', '113누4254', '평일1일권', '2021-06-02 08:00:00', '202106020800']
 
         try:
             web_har_in(tempTarget1)
