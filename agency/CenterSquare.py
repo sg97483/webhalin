@@ -116,3 +116,4 @@ def web_har_in(target):
     driver.find_element_by_xpath('// *[ @ id = "button-1006-btnEl"]').click()
     time.sleep(1)
     driver.close()
+    return True
