@@ -41,7 +41,7 @@ def web_har_in(target):
     driver.find_element_by_xpath('//*[@id="btn_search-btnEl"]').send_keys(Keys.ENTER)
 
     try:
-
+        global dd1
         dd1 = driver.find_element_by_xpath('//*[@id="gridview-1012"]/table/tbody/tr[2]/td[2]/div').text
     except:
         driver.switch_to.default_content()
@@ -60,13 +60,13 @@ def web_har_in(target):
         driver.find_element_by_xpath('//*[@id="gridview-1012"]/table/tbody/tr[2]/td[2]/div').click()
     else:
         print(Colors.GREEN + "차량번호 다름" + Colors.ENDC)
-
+        global dd2
         dd2 = driver.find_element_by_xpath('//*[@id="gridview-1012"]/table/tbody/tr[3]/td[2]/div').text
         if ori_car_num == dd2:
             driver.find_element_by_xpath('//*[@id="gridview-1012"]/table/tbody/tr[3]/td[2]/div').click()
         else:
             print(Colors.GREEN + "두번째 차량번호 다름" + Colors.ENDC)
-
+            global dd3
             dd3 = driver.find_element_by_xpath('//*[@id="gridview-1012"]/table/tbody/tr[4]/td[2]/div').text
             if ori_car_num == dd3:
                 driver.find_element_by_xpath('//*[@id="gridview-1012"]/table/tbody/tr[4]/td[2]/div').click()
@@ -116,4 +116,3 @@ def web_har_in(target):
     driver.find_element_by_xpath('// *[ @ id = "button-1006-btnEl"]').click()
     time.sleep(1)
     driver.close()
-    return True
