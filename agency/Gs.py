@@ -150,14 +150,14 @@ mapIdToWebInfo = {
             "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');",
             ""],
 
-    # KB금융타워
-    19400: ["login_id", "login_pw",
-            """//*[@id="bodyCSS"]/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]""",
-            "searchCarNo", "//*[@id='btnSearch']",
-            "",  # 차량번호 클릭
-            "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999706');", #1일권
-            "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999706');", #1일권
-            ""],
+    # # KB금융타워
+    # 19400: ["login_id", "login_pw",
+    #         """//*[@id="bodyCSS"]/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]""",
+    #         "searchCarNo", "//*[@id='btnSearch']",
+    #         "",  # 차량번호 클릭
+    #         "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999706');", #1일권
+    #         "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 99999706');", #1일권
+    #         ""],
 
     # 중앙로공영주차장
     19237: ["login_id", "login_pw", "//*[@id='bodyCSS']/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input",
@@ -225,9 +225,9 @@ def web_har_in(target, driver):
         print("GS 연박권")
         return False
 
-    if park_id == Parks.KB_TOWER and ori_car_num == "116라7178":
-        print("kb금융타워 116라7178 제외")
-        return False
+    # if park_id == Parks.KB_TOWER and ori_car_num == "116라7178":
+    #     print("kb금융타워 116라7178 제외")
+    #     return False
 
 
 
