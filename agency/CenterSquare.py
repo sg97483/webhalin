@@ -48,7 +48,7 @@ def web_har_in(target):
         time.sleep(1)
         driver.find_element_by_xpath('// *[ @ id = "button-1006-btnEl"]').click()
         time.sleep(1)
-        driver.close()
+
         print(Colors.BLUE + "검색값 없음"+ Colors.ENDC)
         return False
 
@@ -73,7 +73,7 @@ def web_har_in(target):
                 time.sleep(1)
                 driver.find_element_by_xpath('// *[ @ id = "button-1006-btnEl"]').click()
                 time.sleep(1)
-                driver.close()
+
                 print(Colors.GREEN + "세번째 차량번호 다름" + Colors.ENDC)
                 print(Colors.GREEN + "실패" + Colors.ENDC)
                 return False
@@ -113,6 +113,6 @@ def web_har_in(target):
     driver.find_element_by_xpath('// *[ @ id = "button-1006-btnEl"]').click()
     time.sleep(1)
 
-    driver.close()
+
 
     return True
