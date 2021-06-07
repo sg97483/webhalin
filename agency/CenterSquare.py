@@ -26,6 +26,8 @@ def web_har_in(target):
     driver.implicitly_wait(3)
     driver.get(login_url)
 
+    driver.find_element_by_xpath('// *[ @ id = "t_userid-inputEl"]').clear()
+
     driver.find_element_by_xpath('// *[ @ id = "t_userid-inputEl"]').send_keys('ppark')
 
     driver.find_element_by_xpath('// *[ @ id = "t_pwd-inputEl"]').send_keys('1234')
