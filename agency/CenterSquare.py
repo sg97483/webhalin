@@ -84,28 +84,28 @@ def web_har_in(target):
 
     if ticket_name == '3시간권':
         try:
-            driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[1]').click()
-        except:
-            print("1021경로1")
             driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[1]').click()
+        except:
+            print("실패")
+            return False
     elif ticket_name == '12시간권':
         try:
-            driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[2]').click()
-        except:
-            print("1021경로2")
             driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[2]').click()
+        except:
+            print("실패")
+            return False
     elif ticket_name == '심야권':
         try:
-            driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[3]').click()
-        except:
-            print("1021경로3")
             driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[3]').click()
+        except:
+            print("실패")
+            return False
     elif ticket_name == '24시간권':
         try:
-            driver.find_element_by_xpath('// *[ @ id = "boundlist-1019-listEl"] / ul / li[4]').click()
-        except:
-            print("1021경로4")
             driver.find_element_by_xpath('// *[ @ id = "boundlist-1021-listEl"] / ul / li[4]').click()
+        except:
+            print("실패")
+            return False
 
     driver.find_element_by_xpath('// *[ @ id = "btn_save-btnEl"]').click()
     time.sleep(1)

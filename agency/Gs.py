@@ -304,13 +304,17 @@ def web_har_in(target, driver):
             if ParkUtil.check_search(park_id, driver):
                 if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
                     if park_id == 19430:
-                        Util.click_element_selector("#divAjaxCarList > tr > td > a", driver)
-
-                    try:
-                        Util.click_element_selector("#divAjaxCarList > tbody> tr > td > a", driver)
-                    except NoSuchElementException:
-                        log_out_web(driver)
-                        return False
+                        try:
+                            Util.click_element_selector("#divAjaxCarList > tr > td > a", driver)
+                        except NoSuchElementException:
+                            log_out_web(driver)
+                            return False
+                    else:
+                        try:
+                            Util.click_element_selector("#divAjaxCarList > tbody> tr > td > a", driver)
+                        except NoSuchElementException:
+                            log_out_web(driver)
+                            return False
                     Util.sleep(3)
                     harin_script = get_har_in_script(park_id, ticket_name)
                     driver.execute_script(harin_script)
