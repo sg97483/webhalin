@@ -85,29 +85,33 @@ def web_har_in(target):
     if ticket_name == '3시간권':
         try:
             driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[1]').click()
+            print("3시간권 : 1021처리")
         except:
             driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[1]').click()
             print("3시간권 : 1019처리")
 
     elif ticket_name == '12시간권':
         try:
-            driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[1]').click()
+            driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[2]').click()
+            print("12시간권 : 1021처리")
         except:
-            driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[1]').click()
+            driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[2]').click()
             print("12시간권 : 1019처리")
 
     elif ticket_name == '심야권':
         try:
-            driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[1]').click()
+            driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[3]').click()
+            print("심야권 : 1021처리")
         except:
-            driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[1]').click()
+            driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[3]').click()
             print("심야권 : 1019처리")
 
     elif ticket_name == '24시간권':
         try:
-            driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[1]').click()
+            driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[4]').click()
+            print("24시간권 : 1021처리")
         except:
-            driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[1]').click()
+            driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[4]').click()
             print("24시간권 : 1019처리")
 
 
