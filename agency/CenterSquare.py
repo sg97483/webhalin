@@ -86,24 +86,28 @@ def web_har_in(target):
         try:
             driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[1]').click()
         except:
+            driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[1]').click()
             print("실패")
             return False
     elif ticket_name == '12시간권':
         try:
-            driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[2]').click()
+            driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[1]').click()
         except:
+            driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[1]').click()
             print("실패")
             return False
     elif ticket_name == '심야권':
         try:
-            driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[3]').click()
+            driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[1]').click()
         except:
+            driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[1]').click()
             print("실패")
             return False
     elif ticket_name == '24시간권':
         try:
-            driver.find_element_by_xpath('// *[ @ id = "boundlist-1021-listEl"] / ul / li[4]').click()
+            driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[1]').click()
         except:
+            driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[1]').click()
             print("실패")
             return False
 
