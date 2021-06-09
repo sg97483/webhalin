@@ -156,11 +156,11 @@ def web_har_in(target, driver):
                                 driver.implicitly_wait(2)
                                 Util.sleep(1)
                                 try:
-                                    driver.find_element_by_css_selector('#sc-page-content > div > div > div > div.uk-card-body > div > div.uk-width-1-1.uk-grid-margin.uk-first-column > div > table > tbody > tr:nth-child(1)').click()
-                                    driver.find_element_by_css_selector('#sc-page-content > div > div.uk-width-2-3\@l > div > div.uk-card-body > div > div.uk-width-1-2\@l.uk-first-column > div.uk-margin-mini-top.uk-grid-small.uk-grid.uk-grid-stack > div > div > div').click()
+                                    driver.find_element_by_css_selector('#scrollbar > div > table > tbody > tr > td:nth-child(1)').click()
+                                    driver.find_element_by_xpath('//*[@id="sc-page-content"]/div/div[2]/div/div[2]/div/div[1]/div[2]/div/div/div/div[1]').click()
                                 except NoSuchElementException:
                                     print("웨스턴853/휴맥스빌리지/공덕푸르지오시티 여러 개 차량번호 클릭 실패")
-
+                                    return False
                                 return True
                             else:
                                 print(Colors.MARGENTA + "입차날짜가 틀립니다." + Colors.ENDC)
