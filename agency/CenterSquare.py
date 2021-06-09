@@ -87,29 +87,29 @@ def web_har_in(target):
             driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[1]').click()
         except:
             driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[1]').click()
-            print("실패")
-            return False
+            print("3시간권 : 1019처리")
+
     elif ticket_name == '12시간권':
         try:
             driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[1]').click()
         except:
             driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[1]').click()
-            print("실패")
-            return False
+            print("12시간권 : 1019처리")
+
     elif ticket_name == '심야권':
         try:
             driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[1]').click()
         except:
             driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[1]').click()
-            print("실패")
-            return False
+            print("심야권 : 1019처리")
+
     elif ticket_name == '24시간권':
         try:
             driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[1]').click()
         except:
             driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[1]').click()
-            print("실패")
-            return False
+            print("24시간권 : 1019처리")
+
 
     driver.find_element_by_xpath('// *[ @ id = "btn_save-btnEl"]').click()
     time.sleep(1)
