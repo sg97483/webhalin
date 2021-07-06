@@ -189,7 +189,8 @@ parkTypeIparking = [
     Parks.BIT_FLEX,
     Parks.YEOUIDO_NH_CAPITAL,
     Parks.ISU_GONG_YONG,
-    19425
+    19425, # kt구로지밸리
+    19433 # 서초꽃마을
 ]
 
 parkTypeGs = [
@@ -275,6 +276,7 @@ park_type_etc = [
     19200, #AW컨벤션
     19414, #나라키움 여의도빌딩
     19429,  #신한L타워
+    19431 #하이파킹 t타워
 
 
 ]

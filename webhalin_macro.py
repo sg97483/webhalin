@@ -173,7 +173,7 @@ while True:
     curs = conn.cursor()
     #test
     if is_no_db_test:
-        tempTarget1 = ['0', '19070', '38너7620', '2일권(연박용)', '2021-07-01 08:00:00', '202107010800']
+        tempTarget1 = ['0', '19433', '64두5544', '평일1일권', '2021-07-06 08:00:00', '202107060800']
 
         try:
             web_har_in(tempTarget1)
