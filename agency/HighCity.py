@@ -170,8 +170,8 @@ mapIdToWebInfo = {
     16170: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
-            "javascript:applyDiscount('05', '1', '', '파킹박', '999999999', '0');",
-            "javascript:applyDiscount('05', '1', '', '파킹박', '999999999', '0');",
+            "javascript:applyDiscount('05', 'CP0802', '1', '', '파킹박', '999999999', '0');",
+            "javascript:applyDiscount('05', 'CP0802', '1', '', '파킹박', '999999999', '0');",
             "javascript:applyDiscount('32', '1', '', '파킹박(야간)', '999999999', '0') ;",
             ],
     # 센트럴플레이스
