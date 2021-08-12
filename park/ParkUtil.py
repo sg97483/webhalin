@@ -117,6 +117,9 @@ def check_same_car_num(parkId, oriCarNum, driver):
     # else:
     #     element_car_num = ParkType.mapToAgency[park_type]
     #     # print(element_car_num)
+    print("차량번호 길이 : " + str(len(oriCarNum)))
+    print("차량번호 길이 -7 : " + str((oriCarNum[-7:])))
+    print("차량번호 길이 -8 : " + str((oriCarNum[-8:])))
 
     if element_car_num == "":
         print(Colors.YELLOW + "엘리멘트 카넘버" + Colors.ENDC)
@@ -135,12 +138,18 @@ def check_same_car_num(parkId, oriCarNum, driver):
             td_car_num = td_car_num_3[0][-7:]
 
         print("검색된 차량번호 : " + td_car_num + " == " + "기존 차량번호 : " + oriCarNum + " / " + oriCarNum[-7:])
-
-        if oriCarNum[-7:] == td_car_num:
-            return True
-        else:
-            print(Colors.MARGENTA + "차량번호가 틀립니다." + Colors.ENDC)
-            return False
+        if len(oriCarNum) == 8:
+            if oriCarNum[-8:] == td_car_num:
+                return True
+            else:
+                print(Colors.MARGENTA + "차량번호가 틀립니다.1" + Colors.ENDC)
+                return False
+        elif len(oriCarNum) == 7:
+            if oriCarNum[-7:] == td_car_num:
+                return True
+            else:
+                print(Colors.MARGENTA + "차량번호가 틀립니다.2" + Colors.ENDC)
+                return False
 
 
 def is_night_time():
