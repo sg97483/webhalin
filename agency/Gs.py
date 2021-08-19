@@ -183,6 +183,14 @@ mapIdToWebInfo = {
             "",  # 차량번호 클릭
             "javascript:fnDisCount('78:ppark(웹)', '1');",
             ],
+    #D타워
+    19401: ["login_id", "login_pw",
+            "//*[@id='bodyCSS']/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # 차량번호 클릭
+            "fnDisCount('64:3시간유료(웹) / 잔여수량 999999999', '2');", #3시간무료
+            "fnDisCount('75:24시간유료(웹) / 잔여수량 999999994', '2');",  #24시간무료
+            ],
 }
 
 def get_har_in_script(park_id, ticket_name):
@@ -225,9 +233,7 @@ def web_har_in(target, driver):
         print("GS 연박권")
         return False
 
-    # if park_id == Parks.KB_TOWER and ori_car_num == "116라7178":
-    #     print("kb금융타워 116라7178 제외")
-    #     return False
+
 
 
 
@@ -303,7 +309,7 @@ def web_har_in(target, driver):
             # 차량 검색
             if ParkUtil.check_search(park_id, driver):
                 if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
-                    if park_id == 19430:
+                    if park_id == 19415 or 19430 or 19401 :
                         try:
                             Util.click_element_selector("#divAjaxCarList > tr > td > a", driver)
                         except NoSuchElementException:

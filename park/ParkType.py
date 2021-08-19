@@ -192,7 +192,7 @@ parkTypeIparking = [
     19425, # kt구로지밸리
     19433 # 서초꽃마을
 ]
-
+#tbody 있음
 parkTypeGs = [
     Parks.FINANCE_TOWER,
     Parks.HI_INSADONG,
@@ -214,10 +214,13 @@ parkTypeGs = [
     19237,
 
 
+
 ]
 parkTypeGs2 = [
     19415, #더에셋
     19430, #TnS빌딩
+19401,#디타워
+
 ]
 parkType_ip_time = [
     Parks.E_WHA_APM,
