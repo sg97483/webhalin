@@ -171,7 +171,7 @@ mapIdToWebInfo = {
     19415: ["login_id", "login_pw", "//*[@id='bodyCSS']/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input",
             "searchCarNo", "//*[@id='btnSearch']",
             "",
-            "javascript:fnDisCount('54:12시간무료(플랫폼)', '1');", # 12시간 무료
+            "javascript:fnDisCount('54:12시간무료(플랫폼)', '1');", # 12시간 무료 (6)
             "javascript:fnDisCount('55:24시간무료(플랫폼)', '1');", # 24시간무료
             "javascript:fnDisCount('56:14시간무료(플랫폼)', '1');", # 14시간 무료(심야,주말)
             ],
@@ -182,24 +182,39 @@ mapIdToWebInfo = {
             "searchCarNo", "//*[@id='btnSearch']",
             "",  # 차량번호 클릭
             "javascript:fnDisCount('78:ppark(웹)', '1');",
+            "javascript:fnDisCount('78:ppark(웹)', '1');",
             ],
     #D타워
     19401: ["login_id", "login_pw",
             "//*[@id='bodyCSS']/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input",
             "searchCarNo", "//*[@id='btnSearch']",
             "",  # 차량번호 클릭
-            "fnDisCount('64:3시간유료(웹) / 잔여수량 999999999', '2');", #3시간무료
             "fnDisCount('75:24시간유료(웹) / 잔여수량 999999994', '2');",  #24시간무료
+            "fnDisCount('75:24시간유료(웹) / 잔여수량 999999994', '2');",  # 24시간무료
+            "fnDisCount('64:3시간유료(웹) / 잔여수량 999999999', '2');",  #3시간무료
             ],
 }
 
 def get_har_in_script(park_id, ticket_name):
-    if str(ticket_name).endswith("심야권"):
-        return mapIdToWebInfo[park_id][WebInfo.night]
-    elif Util.get_week_or_weekend() == 0:
-        return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]
+
+    if park_id == "19415":
+        if str(ticket_name).endswith("심야권"):
+            return mapIdToWebInfo[park_id][WebInfo.night]
+        elif str(ticket_name).endswith("주말1일권"):
+            return mapIdToWebInfo[park_id][WebInfo.methodHarIn3]
+        elif str(ticket_name).endswith("평일 1일권"):
+            return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]  #평일
+        elif str(ticket_name).endswith("평일 12시간권"):
+            return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]  #주말
     else:
-        return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
+        if str(ticket_name).endswith("심야권"):
+            return mapIdToWebInfo[park_id][WebInfo.night]
+        elif str(ticket_name).endswith("주말3시간권"):
+            return mapIdToWebInfo[park_id][WebInfo.methodHarIn3]
+        elif Util.get_week_or_weekend() == 0:
+            return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]  #평일
+        else:
+            return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]  #주말
 
 
 def log_out_web(driver):

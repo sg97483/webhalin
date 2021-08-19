@@ -117,9 +117,9 @@ def check_same_car_num(parkId, oriCarNum, driver):
     # else:
     #     element_car_num = ParkType.mapToAgency[park_type]
     #     # print(element_car_num)
-    print("차량번호 길이 : " + str(len(oriCarNum)))
-    print("차량번호 길이 -7 : " + str((oriCarNum[-7:])))
-    print("차량번호 길이 -8 : " + str((oriCarNum[-8:])))
+    # print("차량번호 길이 : " + str(len(oriCarNum)))
+    # print("차량번호 길이 -7 : " + str((oriCarNum[-7:])))
+    # print("차량번호 길이 -8 : " + str((oriCarNum[-8:])))
 
     if element_car_num == "":
         print(Colors.YELLOW + "엘리멘트 카넘버" + Colors.ENDC)
