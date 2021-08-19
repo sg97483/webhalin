@@ -138,16 +138,16 @@ def check_same_car_num(parkId, oriCarNum, driver):
             td_car_num = td_car_num_3[0][-7:]
 
         print("검색된 차량번호 : " + td_car_num + " == " + "기존 차량번호 : " + oriCarNum + " / " + oriCarNum[-7:])
-        if len(oriCarNum) == 8:
-            if oriCarNum[-8:] == td_car_num:
+        # if len(oriCarNum) == 8:
+        #     if oriCarNum[-8:] == td_car_num:
+        #         return True
+        #     else:
+        #         print(Colors.MARGENTA + "차량번호가 틀립니다.1" + Colors.ENDC)
+        #         return False
+        # if len(oriCarNum) == 7:
+        if oriCarNum[-7:] == td_car_num:
                 return True
-            else:
-                print(Colors.MARGENTA + "차량번호가 틀립니다.1" + Colors.ENDC)
-                return False
-        elif len(oriCarNum) == 7:
-            if oriCarNum[-7:] == td_car_num:
-                return True
-            else:
+        else:
                 print(Colors.MARGENTA + "차량번호가 틀립니다.2" + Colors.ENDC)
                 return False
 
