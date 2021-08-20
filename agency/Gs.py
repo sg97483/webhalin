@@ -197,7 +197,7 @@ mapIdToWebInfo = {
 
 def get_har_in_script(park_id, ticket_name):
 
-    if park_id == "19415":
+    if park_id == 19415:
         if str(ticket_name).endswith("심야권"):
             return mapIdToWebInfo[park_id][WebInfo.night]
         elif str(ticket_name).endswith("주말1일권"):
