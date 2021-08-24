@@ -624,6 +624,18 @@ mapIdToWebInfo = {
             ""
             ],
 
+        # 케이스퀘어시티
+        19444: ["userId", "userPwd", "//*[@id='btnLogin']",
+                "schCarNo", "//*[@id='sForm']/input[3]",
+                "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+                "17",#1일권
+                "17", #주말1일권
+                "17", #심야권
+                "javascript:document.getElementById('discountTypeValue').click",
+                "",
+                ""
+                ],
+
 }
 
 amano_need_log_out = [
@@ -755,6 +767,14 @@ def get_har_in_value(park_id, ticket_name):
                         return web_info[WebInfo.weekend]
                 elif ticket_name == "5시간권":
                     return web_info[10]
+
+            elif park_id == 19444: #케이스퀘어
+                if ticket_name[-3:] == "1일권":
+                    return web_info[WebInfo.methodHarIn1]
+                elif ticket_name[-3:] == "심야권":
+                     return web_info[WebInfo.methodHarIn1]
+
+
 
             else:
                 if Util.get_week_or_weekend() == 0:
