@@ -635,6 +635,17 @@ mapIdToWebInfo = {
                 "",
                 ""
                 ],
+        # 메트로타워
+        19437: ["userId", "userPwd", "//*[@id='btnLogin']",
+                "schCarNo", "//*[@id='sForm']/input[3]",
+                "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+                "9",  # 1일권
+                "",  # 주말1일권
+                "",  # 심야권
+                "javascript:document.getElementById('discountTypeValue').click",
+                "",
+                ""
+                ],
 
 }
 
