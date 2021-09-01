@@ -574,7 +574,7 @@ def get_har_in_script(park_id, ticket_name):
 
         elif park_id == Parks.GUUI_WELLTZ:
             if str(ticket_name).endswith("연박권"):
-                return mapIdToWebInfo[park_id][WebInfo.methodHarIn3]
+                return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
 
         elif park_id == Parks.ULGI_TWIN_TOWER:
             if ticket_name == "3시간권":
