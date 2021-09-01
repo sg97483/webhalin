@@ -91,6 +91,7 @@ parkTypeHighCity = [
     20864,
     19170, #디아뜨갤러리 1차
     19204,
+    15111,
 
 ]
 
@@ -215,6 +216,7 @@ parkTypeGs = [
     Parks.GANGDONG_HOMEPLUS,
     # Parks.KB_TOWER,
     19237,
+    19447, #포스트빌
 
 
 

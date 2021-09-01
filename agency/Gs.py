@@ -193,6 +193,17 @@ mapIdToWebInfo = {
             "fnDisCount('75:24시간유료(웹) / 잔여수량 999999994', '2');",  # 24시간무료
             "fnDisCount('64:3시간유료(웹) / 잔여수량 999999999', '2');",  #3시간무료
             ],
+    # 포스트빌
+    19447: ["login_id", "login_pw",
+            "//*[@id='bodyCSS']/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # 차량번호 클릭
+            "fnDisCount('75:24시간유료(웹) / 잔여수량 999999994', '2');",  # 24시간무료
+            "fnDisCount('75:24시간유료(웹) / 잔여수량 999999994', '2');",  # 24시간무료
+            "fnDisCount('64:3시간유료(웹) / 잔여수량 999999999', '2');",  # 3시간무료
+            ],
+
+
 }
 
 def get_har_in_script(park_id, ticket_name):
@@ -324,12 +335,20 @@ def web_har_in(target, driver):
             # 차량 검색
             if ParkUtil.check_search(park_id, driver):
                 if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
-                    if park_id == 19415 or 19430 or 19401 :
+                    if park_id == 19447:
+                        try:
+                            Util.click_element_selector("#divAjaxCarList > tbody > tr > td > a", driver)
+                        except NoSuchElementException:
+                            log_out_web(driver)
+                            return False
+
+                    elif park_id == 19415 or park_id == 19430 or park_id == 19401:
                         try:
                             Util.click_element_selector("#divAjaxCarList > tr > td > a", driver)
                         except NoSuchElementException:
                             log_out_web(driver)
                             return False
+
                     else:
                         try:
                             Util.click_element_selector("#divAjaxCarList > tbody> tr > td > a", driver)

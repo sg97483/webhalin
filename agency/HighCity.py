@@ -548,6 +548,13 @@ mapIdToWebInfo = {
             "javascript:applyDiscount('92', '1', '', 'ppark', '999995999')  ",  # 평일1일권
             "javascript:applyDiscount('95', '1', '', 'ppark(야간)', '999995999') ",#야간권
             "", ],
+     # 현대인텔렉스
+     15111: ["user_id", "password", "//input[@type='button']",
+                "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+                "chk",
+                "javascript:applyDiscount('92', '1', '', 'ppark', '999995999')  ",  # 평일1일권
+                "javascript:applyDiscount('95', '1', '', 'ppark(야간)', '999995999') ",  # 야간권
+                "", ],
 }
 
 
