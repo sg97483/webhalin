@@ -202,7 +202,15 @@ mapIdToWebInfo = {
             "fnDisCount('75:24시간유료(웹) / 잔여수량 999999994', '2');",  # 24시간무료
             "fnDisCount('64:3시간유료(웹) / 잔여수량 999999999', '2');",  # 3시간무료
             ],
-
+    # 강남역(GS타임즈)
+    19392: ["login_id", "login_pw",
+            """//*[@id="bodyCSS"]/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input""",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # 차량번호 클릭
+            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');",  # 1일권
+            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');",
+            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');",
+            ""],
 
 }
 

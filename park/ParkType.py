@@ -174,7 +174,8 @@ parkTypeBlue = [
     Parks.URIM_RODEO_SWEET,
     Parks.FRYDIUM_BUILDING,
     Parks.HOTEL_SUNSHINE,
-    19375
+    19375,
+    19416
 ]
 
 parkTypeDarae = [
@@ -217,6 +218,8 @@ parkTypeGs = [
     # Parks.KB_TOWER,
     19237,
     19447, #포스트빌
+19392, #강남역
+
 
 
 
@@ -225,6 +228,7 @@ parkTypeGs2 = [
     19415, #더에셋
     19430, #TnS빌딩
 19401,#디타워
+
 
 ]
 parkType_ip_time = [

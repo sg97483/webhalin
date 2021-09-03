@@ -86,6 +86,13 @@ mapIdToWebInfo = {
             "chk_info1",  # 심야권
             "chk_info2",  # 주말1일권
             ],
+    #청담에비뉴
+    19416: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
+            "carNumber", "/html/body/div[2]/ul/li/button",
+            "",
+            "chk_info1",  # 1일권
+            "chk_info1",  # 주말1일권
+            ],
 }
 
 blue_pass = [
@@ -96,7 +103,8 @@ blue_pass = [
     Parks.MILLENNIUM_SEOUL_HILTON,
     Parks.URIM_RODEO_SWEET,
     Parks.FRYDIUM_BUILDING,
-    Parks.HOTEL_SUNSHINE,19202,19375
+    Parks.HOTEL_SUNSHINE,19202,19375,
+
 ]
 def log_out_web(driver):
     Util.sleep(1)
