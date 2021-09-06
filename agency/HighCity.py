@@ -596,9 +596,9 @@ def web_har_in(target, driver):
     ticket_name = target[3]
     park_type = ParkType.get_park_type(park_id)
 
-    if park_id == 20864 and ticket_name != "평일1일권":
-        print("서울역주차장 연박권")
-        return False
+    # if park_id == 20864 and ticket_name != "평일1일권":
+    #     print("서울역주차장 연박권")
+    #     return False
     if park_id == 16001 and ticket_name != "주말1일권":
         print("더프라임타워 연박권")
         return False
