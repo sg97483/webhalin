@@ -195,7 +195,8 @@ parkTypeIparking = [
     Parks.YEOUIDO_NH_CAPITAL,
     Parks.ISU_GONG_YONG,
     19425, # kt구로지밸리
-    19433 # 서초꽃마을
+    19433, # 서초꽃마을
+    19448 #예전빌딩
 ]
 #tbody 있음
 parkTypeGs = [
