@@ -127,7 +127,11 @@ def web_har_in(target, driver):
                     # harin_script = get_har_in_script(park_id, ticket_name)
                     # driver.execute_script(harin_script)
                     if park_id == Parks.GMG_TOWER:
-                        driver.find_element_by_id("BTN_당일 무료").click()
+                        if ticket_name =='평일1일권' or ticket_name =='주말1일권':
+                            driver.find_element_by_id("BTN_당일 무료").click()
+                        else:
+                            print(Colors.BLUE+"연박권 "+Colors.ENDC)
+                            return False
                     elif park_id == Parks.SUN_HWA_BUILDING or park_id == 19070:
                         driver.find_element_by_xpath("/html/body/table[2]/tbody/tr[4]/td[1]/p[1]/input").click()
                     else:
