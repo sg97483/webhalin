@@ -211,7 +211,15 @@ mapIdToWebInfo = {
             "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');",
             "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');",
             ""],
-
+    #한국경제신문
+    19450: ["login_id", "login_pw",
+            "//*[@id='third']/div/div/div/div[5]/div/input",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # 차량번호 클릭
+            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');",  # 1일권
+            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');",
+            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');",
+            ""],
 
 }
 
