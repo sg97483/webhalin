@@ -38,11 +38,11 @@ mapIdToWebInfo = {
     19028: ["userId", "userPwd", "//input[@type='submit']",
             "schCarNo", "//input[@type='button']",  # "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "15",  # 당일권(파킹셰어) (판매 : 19000 )
-            "9",  # 주말 24시간권
+            "15",  # 당일9권(파킹셰어)
+            "16",  # 주말 9시간권
             "",
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
-            "10"  # 3시간권
+
             ],
     # 파크엠 1일권
     19121: ["userId", "userPwd", "//input[@type='submit']",
@@ -351,7 +351,7 @@ mapIdToWebInfo = {
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "15",  # 종일권(평일)
-            "16",  # 파킹셰어 종일권(주말) (판매 : 10000 )
+            "15",  # 파킹셰어 종일권(주말) (판매 : 10000 )
             "14",  # 야간권
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],

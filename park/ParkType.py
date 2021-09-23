@@ -196,7 +196,9 @@ parkTypeIparking = [
     Parks.ISU_GONG_YONG,
     19425, # kt구로지밸리
     19433, # 서초꽃마을
-    19448 #예전빌딩
+    19448, #예전빌딩
+    19449, #	강남헤븐리치더써밋761
+    19446, #미래에셋플러스
 ]
 #tbody 있음
 parkTypeGs = [

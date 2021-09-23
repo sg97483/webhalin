@@ -212,6 +212,7 @@ mapIdToWebInfo = {
             "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');",
             ""],
 
+
 }
 
 def get_har_in_script(park_id, ticket_name):

@@ -97,6 +97,19 @@ mapIdToWebInfo = {
             "#carList > tr",
             "2"
             ],
+    # 	강남헤븐리치더써밋761
+    19449: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
+    #미래에셋플러스
+    19446: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
+
 
 }
 
@@ -204,7 +217,14 @@ def web_har_in(target, driver):
                                 EC.presence_of_element_located((By.ID, "next"))).click()
                             Util.sleep(3)
                             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-                            WebDriverWait(driver, 10).until(
+
+                            if park_id == 19446:
+                               print(Colors.YELLOW +"분당"+ Colors.ENDC)
+                               WebDriverWait(driver, 10).until(
+                               EC.presence_of_element_located(
+                                       (By.XPATH, "//*[@id='productList']/tr[3]/td[3]/button"))).click()
+                            else:
+                                WebDriverWait(driver, 10).until(
                                 EC.presence_of_element_located((By.CSS_SELECTOR, "#productList > tr > td:nth-child(3) > button"))).click()
                             Util.sleep(2)
                             driver.find_element_by_id("popupOk").click()
