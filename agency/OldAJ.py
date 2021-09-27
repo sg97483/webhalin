@@ -21,8 +21,8 @@ mapIdToWebInfo = {
     16173: ["name", "pwd", "//*[@id='login']/table[1]/tbody/tr[3]/td[2]/input",
             "carNumber", "/html/body/table[2]/tbody/tr[5]/td/input",
             "",
-            "javascript:onclickDiscount('20200708091117-03829', '00019', '앱서비스', '06로0473', '매수차감', form1.remark.value);",
-            "javascript:onclickDiscount('20200708091117-03829', '00019', '앱서비스', '06로0473', '매수차감', form1.remark.value);"],
+            "javascript:onclickDiscount('1440', '20210927105212-00468', '00019', '앱서비스', '0000000000', '매수차감', form1.remark.value);",
+            "javascript:onclickDiscount('1440', '20210927105212-00468', '00019', '앱서비스', '0000000000', '매수차감', form1.remark.value);"],
 
     # 발산 파크프라자
     19070: ["name", "pwd", "//*[@id='login']/table[1]/tbody/tr[3]/td[2]/input",
@@ -96,7 +96,7 @@ def web_har_in(target, driver):
             if park_id == Parks.SUN_HWA_BUILDING:
                 try:
                     tr_text = driver.find_element_by_css_selector(
-                        "body > table:nth-child(4) > tbody > tr:nth-child(2) > td:nth-child(2) > p:nth-child(2)").text
+                        "body > table:nth-child(5) > tbody > tr:nth-child(2) > td:nth-child(2) > p:nth-child(2)").text
 
                     text = re.sub('<.+?>', '', tr_text, 0, re.I | re.S)
                     trim_text = text.strip()
@@ -113,42 +113,121 @@ def web_har_in(target, driver):
                         return False
                 except NoSuchElementException as ex:
                     print(Colors.BLUE + "날짜 선택을 건너뜁니다. " + ex.msg + Colors.ENDC)
+                try:
+                    tr_text = driver.find_element_by_css_selector("body > table:nth-child(5) > tbody > tr:nth-child(3) > td:nth-child(2)").text
+                    text = re.sub('<.+?>', '', tr_text, 0, re.I | re.S)
+                    trim_text = text.strip()
 
-            # 차량 번호 검색 및 비교 시도
-            try:
-                tr_text = driver.find_element_by_css_selector("body > table:nth-child(4) > tbody > tr:nth-child(3) > td:nth-child(2)").text
-                text = re.sub('<.+?>', '', tr_text, 0, re.I | re.S)
-                trim_text = text.strip()
+                    split_trim_text = trim_text.split()
+                    trim_text = split_trim_text[3]
 
-                split_trim_text = trim_text.split()
-                trim_text = split_trim_text[3]
+                    if ori_car_num[-7:] == trim_text[-7:]:
 
-                if ori_car_num[-7:] == trim_text[-7:]:
-                    # harin_script = get_har_in_script(park_id, ticket_name)
-                    # driver.execute_script(harin_script)
-                    if park_id == Parks.GMG_TOWER:
-                        if ticket_name =='평일1일권' or ticket_name =='주말1일권':
-                            driver.find_element_by_id("BTN_당일 무료").click()
+                        if park_id == Parks.SUN_HWA_BUILDING:
+                            driver.find_element_by_xpath("/html/body/table[2]/tbody/tr[5]/td[1]/p[6]/input").click()
                         else:
-                            print(Colors.BLUE+"연박권 "+Colors.ENDC)
+                            print(Colors.BLUE + "할인권 버튼을 찾을 수 없습니다." + Colors.ENDC)
                             return False
-                    elif park_id == Parks.SUN_HWA_BUILDING or park_id == 19070:
-                        driver.find_element_by_xpath("/html/body/table[2]/tbody/tr[4]/td[1]/p[1]/input").click()
-                    else:
-                        print(Colors.BLUE + "할인권 버튼을 찾을 수 없습니다." + Colors.ENDC)
-                        return False
                     driver.implicitly_wait(3)
                     alert = Alert(driver)
                     alert.accept()
                     driver.implicitly_wait(3)
                     return True
 
-            except NoSuchElementException as ex:
-                print(Colors.RED + "예외 발생 : " + ex.msg + Colors.ENDC)
-                print(Colors.BLUE + "검색결과가 없습니다." + Colors.ENDC)
+                except NoSuchElementException as ex:
+                    print(Colors.RED + "예외 발생 : " + ex.msg + Colors.ENDC)
+                    print(Colors.BLUE + "검색결과가 없습니다." + Colors.ENDC)
+                    return False
+                # try:
+                #     tr_text = driver.find_element_by_css_selector(
+                #         "body > table:nth-child(5) > tbody > tr:nth-child(2) > td:nth-child(2) > p:nth-child(2)").text
+                #
+                #     text = re.sub('<.+?>', '', tr_text, 0, re.I | re.S)
+                #     trim_text = text.strip()
+                #     split_trim_text = trim_text.split(":")
+                #     search_day_text = split_trim_text[1].strip()
+                #
+                #     today = datetime.datetime.now()
+                #     today_text = today.strftime('%Y-%m-%d')
+                #
+                #     if today_text == search_day_text:
+                #         driver.find_element_by_xpath("/html/body/table[2]/tbody/tr[2]").click()
+                #     else:
+                #         print(Colors.BLUE + "금일 날짜에 맞는 데이터가 없습니다." + Colors.ENDC)
+                #         return False
+                # except NoSuchElementException as ex:
+                #     print(Colors.BLUE + "날짜 선택을 건너뜁니다. " + ex.msg + Colors.ENDC)
+            else:
+                # 차량 번호 검색 및 비교 시도
+                try:
+                    tr_text = driver.find_element_by_css_selector(
+                        "body > table:nth-child(4) > tbody > tr:nth-child(3) > td:nth-child(2)").text
+
+                    text = re.sub('<.+?>', '', tr_text, 0, re.I | re.S)
+                    trim_text = text.strip()
+                    split_trim_text = trim_text.split()
+                    trim_text = split_trim_text[3]
+                    print(Colors.RED + "예외 발생 : " + tr_text)
+                    if ori_car_num[-7:] == trim_text[-7:]:
+                        # harin_script = get_har_in_script(park_id, ticket_name)
+                        # driver.execute_script(harin_script)
+                        if park_id == Parks.GMG_TOWER:
+                            if ticket_name == '평일1일권' or ticket_name == '주말1일권':
+                                driver.find_element_by_id("BTN_당일 무료").click()
+                            else:
+                                print(Colors.BLUE + "연박권 " + Colors.ENDC)
+                                return False
+                        elif park_id == Parks.SUN_HWA_BUILDING or park_id == 19070:
+                            driver.find_element_by_xpath("/html/body/table[2]/tbody/tr[4]/td[1]/p[1]/input").click()
+
+                        else:
+                            print(Colors.BLUE + "할인권 버튼을 찾을 수 없습니다." + Colors.ENDC)
+                            return False
+                        driver.implicitly_wait(3)
+                        alert = Alert(driver)
+                        alert.accept()
+                        driver.implicitly_wait(3)
+                        return True
+
+                except NoSuchElementException as ex:
+                    print(Colors.RED + "예외 발생 : " + ex.msg + Colors.ENDC)
+                    print(Colors.BLUE + "검색결과가 없습니다." + Colors.ENDC)
+                    return False
+
                 return False
 
-            return False
+
+
+            # if park_id == Parks.SUN_HWA_BUILDING:
+            #     try:
+            #         tr_text = driver.find_element_by_css_selector("body > table:nth-child(5) > tbody > tr:nth-child(3) > td:nth-child(2)").text
+            #         text = re.sub('<.+?>', '', tr_text, 0, re.I | re.S)
+            #         trim_text = text.strip()
+            #
+            #         split_trim_text = trim_text.split()
+            #         trim_text = split_trim_text[3]
+            #
+            #         if ori_car_num[-7:] == trim_text[-7:]:
+            #
+            #             if park_id == Parks.SUN_HWA_BUILDING:
+            #                 driver.find_element_by_xpath("/html/body/table[2]/tbody/tr[5]/td[1]/p[6]/input").click()
+            #             else:
+            #                 print(Colors.BLUE + "할인권 버튼을 찾을 수 없습니다." + Colors.ENDC)
+            #                 return False
+            #         driver.implicitly_wait(3)
+            #         alert = Alert(driver)
+            #         alert.accept()
+            #         driver.implicitly_wait(3)
+            #         return True
+            #
+            #     except NoSuchElementException as ex:
+            #         print(Colors.RED + "예외 발생 : " + ex.msg + Colors.ENDC)
+            #         print(Colors.BLUE + "검색결과가 없습니다." + Colors.ENDC)
+            #         return False
+
+
+
+
         else:
             print(Colors.BLUE + "현재 웹할인 페이지 분석이 되어 있지 않는 주차장입니다." + Colors.ENDC)
             return False
