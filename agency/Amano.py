@@ -646,6 +646,15 @@ mapIdToWebInfo = {
                 "",
                 ""
                 ],
+        # 니즈몰
+        19451: ["userId", "userPwd", "//input[@type='submit']",
+                "schCarNo", "//*[@id='sForm']/input[3]",
+                "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+                "9",  # 평일 야간권 (판매 : 8000 )
+                "9",  # 평일 야간권 (판매 : 8000 )
+                "9",  # 평일 야간권 (판매 : 8000 )
+                "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+                ],
 
 }
 
