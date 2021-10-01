@@ -133,7 +133,7 @@ def web_har_in(target, driver):
 
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
             if park_id == Parks.WESTERN_853 or park_id == Parks.HUMAX_VILLAGE or park_id == 19410 or park_id == 19414 \
-                    or park_id == 19429 or park_id==19431 or park_id==19427:
+                    or park_id == 19429 or park_id==19431 or park_id==19427 or park_id==19452:
                 if ParkUtil.check_first_conn(park_id):
                     driver.find_element_by_xpath(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
                     driver.find_element_by_xpath(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
