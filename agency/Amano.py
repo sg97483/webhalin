@@ -655,7 +655,15 @@ mapIdToWebInfo = {
                 "9",  # 평일 야간권 (판매 : 8000 )
                 "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
                 ],
-
+        #교대역 동측 공영주차장
+        19453: ["userId", "userPwd", "//input[@type='submit']",
+                "schCarNo", "//*[@id='sForm']/input[3]",
+                "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+                "9",  # 평일 야간권 (판매 : 8000 )
+                "9",  # 평일 야간권 (판매 : 8000 )
+                "9",  # 평일 야간권 (판매 : 8000 )
+                "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+                ],
 }
 
 amano_need_log_out = [

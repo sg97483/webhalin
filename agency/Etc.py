@@ -93,8 +93,12 @@ mapIdToWebInfo = {
             "",
             "",
             ""],
-    #
-
+    #한국지식재산센터
+    19452:  ["""//*[@id="sc-login-form"]/div/div[1]/div/input""", """//*[@id="sc-login-form"]/div/div[2]/div/input""", """//*[@id="sc-login-form"]/div/div[3]/a""",
+            """//*[@id="sc-page-content"]/div/div/div/div[2]/div/div[1]/div/input""", "",
+            "",
+            "",
+            ""],
 }
 
 
