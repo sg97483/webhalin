@@ -92,7 +92,7 @@ parkTypeHighCity = [
     19170, #디아뜨갤러리 1차
     19204,
     15111,
-
+    15437,
 ]
 
 parkTypeHighCity2 = [
@@ -163,6 +163,8 @@ parkTypeAmano = [
     19437,
     19451,
     19453,
+    19438,
+    19017,
 ]
 
 parkTypeBlue = [

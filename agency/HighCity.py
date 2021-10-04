@@ -555,6 +555,13 @@ mapIdToWebInfo = {
                 "javascript:applyDiscount('94', '1', '', 'ppark', '999995999')  ",  # 평일1일권
                 "javascript:applyDiscount('91', '1', '', 'ppark(야간)', '999995999') ",  # 야간권
                 "", ],
+    # 구의웰츠
+    15437: ["user_id", "password", "//input[@type='button']",
+            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+            "chk",
+            "javascript:applyDiscount('16', '1', '', 'ppark', '999995999')  ",  # 평일1일권
+            "javascript:applyDiscount('18', '1', '', 'ppark', '999995999') ",  #주말
+            "javascript:applyDiscount('17', '1', '', 'ppark(야간)', '999995999') ",],
 }
 
 

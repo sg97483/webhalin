@@ -63,14 +63,14 @@ mapIdToWebInfo = {
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
     # ECC
-    12050: ["userId", "userPwd", "//input[@type='submit']",
-            "schCarNo", "//*[@id='sForm']/input[3]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "3",  # 평일1일권
-            "4",  # 주말1일권
-            "",
-            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-            ],
+    # 12050: ["userId", "userPwd", "//input[@type='submit']",
+    #         "schCarNo", "//*[@id='sForm']/input[3]",
+    #         "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+    #         "3",  # 평일1일권
+    #         "4",  # 주말1일권
+    #         "",
+    #         "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+    #         ],
     # 퍼시픽타워
     19151: ["userId", "userPwd", "//input[@type='submit']",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -350,8 +350,8 @@ mapIdToWebInfo = {
     19258: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "15",  # 종일권(평일)
-            "15",  # 파킹셰어 종일권(주말) (판매 : 10000 )
+            "",  # 종일권(평일)
+            "16",  # 파킹셰어 종일권(주말) (판매 : 10000 )
             "14",  # 야간권
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
@@ -664,6 +664,24 @@ mapIdToWebInfo = {
                 "9",  # 평일 야간권 (판매 : 8000 )
                 "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
                 ],
+        # 여의도 우체국
+        19438: ["userId", "userPwd", "//input[@type='submit']",
+                "schCarNo", "//*[@id='sForm']/input[3]",
+                "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+                "11",  # 평일 야간권 (판매 : 8000 )
+                "11",  # 평일 야간권 (판매 : 8000 )
+                "11",  # 평일 야간권 (판매 : 8000 )
+                "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+                ],
+        # 안양헤븐리치
+        19017: ["userId", "userPwd", "//input[@type='submit']",
+                "schCarNo", "//*[@id='sForm']/input[3]",
+                "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+                "9",  # 평일 야간권 (판매 : 8000 )
+                "11",  # 평일 야간권 (판매 : 8000 )
+                "11",  # 평일 야간권 (판매 : 8000 )
+                "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+                ],
 }
 
 amano_need_log_out = [
@@ -887,7 +905,7 @@ def web_har_in(target, driver):
             Util.close_popup(driver)
             Util.close_modal(driver)
 
-            if park_id == 12050:
+            if park_id == 19258:
                 driver.find_element_by_id(web_info[WebInfo.inputSearch]).clear()
             driver.find_element_by_id(web_info[WebInfo.inputSearch]).send_keys(search_id)
             Util.sleep(3)
