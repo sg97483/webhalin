@@ -179,7 +179,8 @@ parkTypeBlue = [
     Parks.FRYDIUM_BUILDING,
     Parks.HOTEL_SUNSHINE,
     19375,
-    19416
+    19416,
+    19423
 ]
 
 parkTypeDarae = [

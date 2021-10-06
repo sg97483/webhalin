@@ -93,6 +93,13 @@ mapIdToWebInfo = {
             "chk_info1",  # 1일권
             "chk_info1",  # 주말1일권
             ],
+    # 메타랩스 아비스타
+    19423: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
+            "carNumber", "/html/body/div[2]/ul/li/button",
+            "",
+            "chk_info1",  # 1일권
+            "",
+            ],
 }
 
 blue_pass = [
