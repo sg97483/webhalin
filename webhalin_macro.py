@@ -154,9 +154,9 @@ def web_har_in(target):
     elif park_id == 15740:
         exec_web_har_in(AplusAsset, target, driver)
         return True
-    elif park_id== 19426:
-        exec_web_har_in(CenterSquare, target, driver)
-        return True
+    # elif park_id== 19426:
+    #     exec_web_har_in(CenterSquare, target, driver)
+    #     return True
     else:
         print(Colors.BLUE + "웹할인 페이지가 없는 주차장 입니다." + Colors.ENDC)
 

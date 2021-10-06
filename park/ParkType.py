@@ -16,7 +16,7 @@ HIGH_CITY_2 = 30
 ETC = 31
 NICE = 32
 GS2= 33
-CENTER_SQUARE =34
+#CENTER_SQUARE =34
 
 # 주차장 타입별 주차장들
 parkTypeHighCity = [
@@ -249,7 +249,7 @@ parkType_ip_time = [
 
 parkType_grang_seoul = [Parks.GRANG_SEUOL]
 
-parkType_center_square = [Parks.CENTER_SQUARE]
+#parkType_center_square = [Parks.CENTER_SQUARE]
 
 park_type_aj_park = [
     Parks.AJ_EULJIRO_3,
@@ -580,5 +580,5 @@ def get_park_type(park_id):
         return OLD_AJ
     elif park_id in park_type_nice:
         return NICE
-    elif park_id in parkType_center_square:
-        return CENTER_SQUARE
+    # elif park_id in parkType_center_square:
+    #     return CENTER_SQUARE
