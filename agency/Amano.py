@@ -350,8 +350,8 @@ mapIdToWebInfo = {
     19258: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "",  # 종일권(평일)
-            "16",  # 파킹셰어 종일권(주말) (판매 : 10000 )
+            "15",  # 종일권(평일)
+            "15",  # 파킹셰어 종일권(주말) (판매 : 10000 )
             "14",  # 야간권
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
