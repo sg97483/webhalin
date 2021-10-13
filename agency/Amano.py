@@ -682,6 +682,16 @@ mapIdToWebInfo = {
                 "11",  # 평일 야간권 (판매 : 8000 )
                 "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
                 ],
+
+        # 해동본타워
+        19408: ["userId", "userPwd", "//input[@type='submit']",
+                "schCarNo", "//*[@id='sForm']/input[3]",
+                "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+                "15",
+                "15",
+                "15",
+                "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+                ],
 }
 
 amano_need_log_out = [

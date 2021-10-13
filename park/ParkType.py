@@ -165,6 +165,7 @@ parkTypeAmano = [
     19453,
     19438,
     19017,
+    19408,
 ]
 
 parkTypeBlue = [
