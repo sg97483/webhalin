@@ -157,6 +157,7 @@ def web_har_in(target):
     # elif park_id== 19426:
     #     exec_web_har_in(CenterSquare, target, driver)
     #     return True
+
     else:
         print(Colors.BLUE + "웹할인 페이지가 없는 주차장 입니다." + Colors.ENDC)
 
@@ -173,7 +174,7 @@ while True:
     curs = conn.cursor()
     #test
     if is_no_db_test:
-        tempTarget1 = ['0', '19408', '33소9323', '평일1일권', '2021-09-27 08:00:00', '202109270800']
+        tempTarget1 = ['0', '19227', '108가5701', '주말1일권', '2021-09-27 08:00:00', '202109270800']
 
         try:
             web_har_in(tempTarget1)

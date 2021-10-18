@@ -233,8 +233,11 @@ def web_har_in(target, driver, lotName):
 
     print("parkId = " + str(park_id) + ", " + "searchId = " + search_id)
     print(Colors.BLUE + ticket_name + Colors.ENDC)
-    if str(ticket_name).endswith('연박권') or str(ticket_name).endswith('2일권'):
-        print("AJ파크 연박권")
+    # if str(ticket_name).endswith('연박권') or str(ticket_name).endswith('2일권'):
+    #     print("AJ파크 연박권")
+    #     return False
+    if park_id == 19141 and ori_car_num =='108가5701' :
+        print(Colors.BLUE + "108가5701 웹할인 확인이 필요한 차량입니다" + Colors.ENDC)
         return False
     if ParkUtil.is_park_in(park_id):
         if park_id in mapIdToWebInfo:
