@@ -220,6 +220,15 @@ mapIdToWebInfo = {
             "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');",
             "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 999978');",
             ""],
+    # 부천 국민차 매매단지
+    19436: ["login_id", "login_pw",
+            "//*[@id='bodyCSS']/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # 차량번호 클릭
+            "javascript:fnDisCount('3:파킹박 / 잔여수량 999999969');",  # 1일권
+            "javascript:fnDisCount('3:파킹박 / 잔여수량 999999969');",
+            "javascript:fnDisCount('3:파킹박 / 잔여수량 999999969');",
+            ""],
 
 }
 

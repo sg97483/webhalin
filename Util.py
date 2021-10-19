@@ -73,4 +73,4 @@ def close_popup(driver):
 
     except NoSuchElementException:
         print(Colors.RED + "모달(팝업)을 닫을 수 없습니다." + Colors.ENDC)
-        print("왜 안닫아")
+
