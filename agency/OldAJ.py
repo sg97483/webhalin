@@ -18,11 +18,11 @@ mapIdToWebInfo = {
             "javascript:onclickDiscount('20200407090327-00361', '00009', '당일 무료', '56너0427', '매수차감', form1.remark.value);",
             "javascript:onclickDiscount('20200407090327-00361', '00009', '당일 무료', '56너0427', '매수차감', form1.remark.value);"],
     # (하이파킹) 순화빌딩 주차장
-    16173: ["name", "pwd", "//*[@id='login']/table[1]/tbody/tr[3]/td[2]/input",
-            "carNumber", "/html/body/table[2]/tbody/tr[5]/td/input",
-            "",
-            "javascript:onclickDiscount('1440', '20210927105212-00468', '00019', '앱서비스', '0000000000', '매수차감', form1.remark.value);",
-            "javascript:onclickDiscount('1440', '20210927105212-00468', '00019', '앱서비스', '0000000000', '매수차감', form1.remark.value);"],
+    # 16173: ["name", "pwd", "//*[@id='login']/table[1]/tbody/tr[3]/td[2]/input",
+    #         "carNumber", "/html/body/table[2]/tbody/tr[5]/td/input",
+    #         "",
+    #         "javascript:onclickDiscount('1440', '20210927105212-00468', '00019', '앱서비스', '0000000000', '매수차감', form1.remark.value);",
+    #         "javascript:onclickDiscount('1440', '20210927105212-00468', '00019', '앱서비스', '0000000000', '매수차감', form1.remark.value);"],
 
     # 발산 파크프라자
     19070: ["name", "pwd", "//*[@id='login']/table[1]/tbody/tr[3]/td[2]/input",
@@ -56,9 +56,9 @@ def web_har_in(target, driver):
         print(Colors.BLUE + "발산파크 연박권입니다." + Colors.ENDC)
         return False
     #순화빌딩 9170 LPR 인식 문제
-    if park_id == 16173 and ori_car_num =='11다9170' :
-        print(Colors.BLUE + "웹할인 확인이 필요한 차량입니다" + Colors.ENDC)
-        return False
+    # if park_id == 16173 and ori_car_num =='11다9170' :
+    #     print(Colors.BLUE + "웹할인 확인이 필요한 차량입니다" + Colors.ENDC)
+    #     return False
 
     trim_car_num = Util.all_trim(ori_car_num)
     search_id = trim_car_num[-4:]
