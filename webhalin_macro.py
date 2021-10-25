@@ -32,7 +32,7 @@ driver.maximize_window()
 
 testPark = Parks.NICE_HONG_MUN_KWAN
 is_park_test = False
-is_no_db_test = False#False
+is_no_db_test = True#False
 
 
 def logging_info(target):
@@ -175,7 +175,7 @@ while True:
     curs = conn.cursor()
     #test
     if is_no_db_test:
-        tempTarget1 = ['0', '16173', '35로8410', '평일1일권', '2021-09-27 08:00:00', '202109270800']
+        tempTarget1 = ['0', '19061', '174오3083', '평일1일권', '2021-09-27 08:00:00', '202109270800']
 
         try:
             web_har_in(tempTarget1)
