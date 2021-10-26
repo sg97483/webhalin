@@ -351,7 +351,7 @@ mapIdToWebInfo = {
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "15",  # 종일권(평일)
-            "15",  # 파킹셰어 종일권(주말) (판매 : 10000 )
+            "16",  # 파킹셰어 종일권(주말) (판매 : 10000 )
             "14",  # 야간권
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
@@ -690,6 +690,35 @@ mapIdToWebInfo = {
                 "15",
                 "15",
                 "15",
+                "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+                ],
+        # 해동본타워
+        19455: ["userId", "userPwd", "//input[@type='submit']",
+                "schCarNo", "//*[@id='sForm']/input[3]",
+                "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+                "15",
+                "15",
+                "15",
+                "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+                ],
+
+        # 압구정 극동타워
+        19061: ["userId", "userPwd", "//input[@type='submit']",
+                "schCarNo", "//*[@id='sForm']/input[3]",
+                "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+                "15",
+                "15",
+                "15",
+                "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+                ],
+
+        # ns홈쇼핑 별관
+        19445: ["userId", "userPwd", "//input[@type='submit']",
+                "schCarNo", "//*[@id='sForm']/input[3]",
+                "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+                "9",
+                "9",
+                "9",
                 "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
                 ],
 }

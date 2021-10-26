@@ -93,6 +93,7 @@ parkTypeHighCity = [
     19204,
     15111,
     15437,
+    13044,
 ]
 
 parkTypeHighCity2 = [
@@ -166,6 +167,9 @@ parkTypeAmano = [
     19438,
     19017,
     19408,
+    19455,
+    19061,
+    19445,
 ]
 
 parkTypeBlue = [
