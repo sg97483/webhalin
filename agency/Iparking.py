@@ -111,6 +111,39 @@ mapIdToWebInfo = {
             ],
 
 
+    #바토프라자
+     19458: ["id", "password", "//*[@id='login']",
+             "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+             "#carList > tr",
+             "2"
+             ],
+    #동양프라자
+    19459: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
+    #다산법조메디컬타워
+    19461: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
+    #화광빌딩
+    19462: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
+    #영등포주차장
+    19463: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
+
+
+
 }
 
 i_parking_hi_parking = [

@@ -331,9 +331,9 @@ def web_har_in(target, driver, lotName):
 
 
 def sendmail_ajCount0(text):
-    sendEmail = "parkingpark_dev_daseulkim@wisemobile.co.kr"
+    sendEmail = "email@wisemobile.co.kr"
     recvEmail = "parkingpark@wisemobile.co.kr"
-    password = "!Parking0309"
+    password = "password"
 
     smtpName = "smtp.worksmobile.com"  # smtp 서버 주소
     smtpPort = 587  # smtp 포트 번호
