@@ -692,7 +692,7 @@ mapIdToWebInfo = {
                 "15",
                 "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
                 ],
-        # 해동본타워
+        # 운정메디컬프라자
         19455: ["userId", "userPwd", "//input[@type='submit']",
                 "schCarNo", "//*[@id='sForm']/input[3]",
                 "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
@@ -733,7 +733,9 @@ amano_need_log_out = [
     Parks.URIM_TWIN_PARK,
     Parks.SUN_HWA_BUILDING,
     19391,
-    18946
+    18946,
+    19258,
+    19438
 ]
 
 have_not_tree_time = {

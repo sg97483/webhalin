@@ -139,6 +139,9 @@ def web_har_in(target, driver):
             web_info = mapIdToWebInfo[park_id]
             web_har_in_info = ParkUtil.get_park_lot_option(park_id)
 
+            # 나라키움 매크로미완료>완료 오류 예외처리
+            if park_id == 19414 and ori_car_num == '31조2362':
+                return False
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
             if park_id == Parks.WESTERN_853 or park_id == Parks.HUMAX_VILLAGE or park_id == 19410 or park_id == 19414 \
                     or park_id == 19429 or park_id==19431 or park_id==19427 or park_id==19452 or park_id==16173:
