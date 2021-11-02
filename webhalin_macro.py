@@ -32,7 +32,7 @@ driver.maximize_window()
 
 testPark = Parks.NICE_HONG_MUN_KWAN
 is_park_test = False
-is_no_db_test =True#False
+is_no_db_test =False#False
 
 
 def logging_info(target):
