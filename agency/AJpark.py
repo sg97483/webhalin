@@ -243,7 +243,14 @@ mapIdToWebInfo = {
             0,  # 야간권
             0  # 야간권
             ],
-
+    #신한은행 의정부점(하이그린)
+    19471: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 야간권
+            0,  # 야간권
+            0  # 야간권
+            ],
 
 }
 
