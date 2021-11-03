@@ -141,6 +141,12 @@ mapIdToWebInfo = {
             "#carList > tr",
             "2"
             ],
+    #에이스골드타워
+    19470: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
 
 
 
