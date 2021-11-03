@@ -203,6 +203,48 @@ mapIdToWebInfo = {
             0,  # 야간권
             0  # 야간권
             ],
+    #정곡빌딩,
+    19464: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 야간권
+            0,  # 야간권
+            0  # 야간권
+            ],
+    #하이센스빌,
+    19465: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 야간권
+            0,  # 야간권
+            0  # 야간권
+            ],
+    #DMC역점,
+    19466: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 야간권
+            0,  # 야간권
+            0  # 야간권
+            ],
+    #영통동아점,
+    19467: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 야간권
+            0,  # 야간권
+            0  # 야간권
+            ],
+    # 상봉점,
+    19468: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 야간권
+            0,  # 야간권
+            0  # 야간권
+            ],
+
+
 }
 
 
@@ -332,7 +374,7 @@ def web_har_in(target, driver, lotName):
 
 def sendmail_ajCount0(text):
     sendEmail = "email@wisemobile.co.kr"
-    recvEmail = "parkingpark@wisemobile.co.kr"
+    recvEmail = "email@wisemobile.co.kr"
     password = "password"
 
     smtpName = "smtp.worksmobile.com"  # smtp 서버 주소
