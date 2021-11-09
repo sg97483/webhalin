@@ -225,7 +225,7 @@ mapIdToWebInfo = {
             "//*[@id='bodyCSS']/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]",
             "searchCarNo", "//*[@id='btnSearch']",
             "",  # 차량번호 클릭
-            "javascript:fnDisCount('3:파킹박 / 잔여수량 999999969');",  # 1일권
+            "javascript:fnDisCount('3:파킹박 / 잔여수량 999999953');",  # 1일권
             "javascript:fnDisCount('3:파킹박 / 잔여수량 999999969');",
             "javascript:fnDisCount('3:파킹박 / 잔여수량 999999969');",
             ""],
@@ -234,10 +234,57 @@ mapIdToWebInfo = {
             "//*[@id='bodyCSS']/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]",
             "searchCarNo", "//*[@id='btnSearch']",
             "",  # 차량번호 클릭
-            "javascript:fnDisCount('3:파킹박 / 잔여수량 999999969');",  # 1일권
-            "javascript:fnDisCount('3:파킹박 / 잔여수량 999999969');",
-            "javascript:fnDisCount('3:파킹박 / 잔여수량 999999969');",
+            "javascript:fnDisCount('74:12시간유료(웹) / 잔여수량 999', '2');",  # 1일권
+            "javascript:fnDisCount('74:12시간유료(웹) / 잔여수량 999', '2');",
+            "javascript:fnDisCount('74:12시간유료(웹) / 잔여수량 999', '2');",
             ""],
+    #서브원강남빌딩
+    19021: ["login_id", "login_pw",
+            "//*[@id='bodyCSS']/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # 차량번호 클릭
+            "javascript:fnDisCount('58:24시간할인(웹)무료 / 잔여수량 9999999');",  # 1일권
+            "javascript:fnDisCount('58:24시간할인(웹)무료 / 잔여수량 9999999');",
+            "javascript:fnDisCount('58:24시간할인(웹)무료 / 잔여수량 9999999');",
+            ""],
+    #롯데시네마도곡
+    19474:  ["login_id", "login_pw",
+            """//*[@id="bodyCSS"]/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input""",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # 차량번호 클릭
+            "javascript:fnDisCount('48:6시간무료(웹) / 잔여수량 1000', '1');",  # 6시간
+            "javascript:fnDisCount('48:6시간무료(웹) / 잔여수량 1000', '1');", #
+            "javascript:fnDisCount('45:3시간무료(웹) / 잔여수량 1000', '1');",
+            ""],
+    #포스트빌
+    19447:  ["login_id", "login_pw",
+            "//*[@id='bodyCSS']/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # 차량번호 클릭
+            "javascript:fnDisCount('75:24시간유료(웹)');",  # 1일권
+            "javascript:fnDisCount('75:24시간유료(웹)');", #1일권
+            "javascript:fnDisCount('74:12시간유료(웹)');", #12시간권
+            ""],
+
+    # 헤리츠웨딩홀
+    19125: ["login_id", "login_pw",
+            "//*[@id='bodyCSS']/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # 차량번호 클릭
+            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 9976');",  # 1일권
+            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 9976');",
+            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 9976');",
+            ""],
+    # 시티타워
+    13044: ["login_id", "login_pw",
+            "//*[@id='bodyCSS']/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # 차량번호 클릭
+            "javascript:fnDisCount('77:어플할인(웹)', '1');",  # 1일권
+            "javascript:fnDisCount('77:어플할인(웹)', '1');",
+            "javascript:fnDisCount('77:어플할인(웹)', '1');",
+            ""],
+
 
 }
 

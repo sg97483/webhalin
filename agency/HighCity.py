@@ -561,16 +561,18 @@ mapIdToWebInfo = {
             "chk",
             "javascript:applyDiscount('16', '1', '', 'ppark', '999995999')  ",  # 평일1일권
             "javascript:applyDiscount('18', '1', '', 'ppark', '999995999') ",  #주말
-            "javascript:applyDiscount('17', '1', '', 'ppark(야간)', '999995999') ",],
+            "javascript:applyDiscount('17', '1', '', 'ppark(야간)', '999995999') ",
+            ],
 
 
-        # 서울 시티타워
-        13044: ["login_id", "login_pw", "//input[@type='button']",
-                "searchCarNo", "/html/body/div/div[3]/div[2]/table/tbody/tr[3]/td/table/tbody/tr[4]/td[3]/button",
+        # 오라카이 청계산
+        19185: ["user_id", "password", "//input[@type='button']",
+                "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
                 "chk",
-                "javascript:applyDiscount('77', '1', '', 'ppark', '999995999')  ",  # 평일1일권
-                "javascript:applyDiscount('77', '1', '', 'ppark', '999995999') ",  # 주말
-                "javascript:applyDiscount('77', '1', '', 'ppark(야간)', '999995999') ", ],
+                "javascript:applyDiscount('31', '1', '', '파킹박', '1', '0')   ",  # 평일1일권
+                "javascript:applyDiscount('31', '1', '', '파킹박', '1', '0')  ",  # 주말
+                "javascript:applyDiscount('31', '1', '', '파킹박', '1', '0') ",
+                ],
 }
 
 
