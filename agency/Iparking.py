@@ -147,6 +147,12 @@ mapIdToWebInfo = {
             "#carList > tr",
             "2"
             ],
+    #미래에셋대우여의도빌딩
+    19473: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
 
 
 

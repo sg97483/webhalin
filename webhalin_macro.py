@@ -32,7 +32,7 @@ driver.maximize_window()
 
 testPark = Parks.NICE_HONG_MUN_KWAN
 is_park_test = False
-is_no_db_test =True#False
+is_no_db_test =False#False
 
 
 def logging_info(target):
@@ -175,14 +175,16 @@ while True:
     curs = conn.cursor()
     #test
     if is_no_db_test:
-        tempTarget1 = ['0', '19464', '49수0346 ', '평일1일권', '2021-10-29 08:00:00', '202110290800']
-        tempTarget2 = ['0', '19467', '338너2717', '평일1일권', '2021-10-29 08:00:00', '202110290800']
-        tempTarget3 = ['0', '19468', '69라1647', '평일1일권', '2021-10-29 08:00:00', '202110290800']
+        tempTarget1 = ['0', '19452', '24저9995', '평일1일권', '2021-11-05 08:00:00', '202111250800']
+        tempTarget2 = ['0', '19447', '165조2021', '평일1일권', '2021-10-29 08:00:00', '202110290800']
+        # tempTarget3 = ['0', '19185', '65러8393', '평일1일권', '2021-10-29 08:00:00', '202110290800']
+        # tempTarget4 = ['0', '19125', '173모6291', '평일1일권', '2021-10-29 08:00:00', '202110290800']
 
         try:
             web_har_in(tempTarget1)
             web_har_in(tempTarget2)
-            web_har_in(tempTarget3)
+            # web_har_in(tempTarget3)
+            # web_har_in(tempTarget4)
             break
         except Exception as ex:
             print(Colors.RED + str(ex) + Colors.ENDC)

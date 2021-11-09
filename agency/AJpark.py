@@ -48,8 +48,8 @@ mapIdToWebInfo = {
             "carNo", "searchSubmitByDate",
             "",
             1,  # 평일종일권
-            2,  # 주말종일권
-            0  # 야간권
+            0,  # 주말종일권
+            2  # 야간권
             ],
     # 논현점(AJ파크)
     19156: ["email", "password", "//*[@id='login']",
@@ -71,7 +71,7 @@ mapIdToWebInfo = {
     19162: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
-            2,  # 평일종일권
+            1,  # 평일종일권
             1,  # 주말종일권
             0  # 야간권
             ],
@@ -79,8 +79,9 @@ mapIdToWebInfo = {
     19160: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
-            1,  # 평일종일권
-            0  # 주말종일권
+            1, #평일
+            0,  # 주말종일권
+            1  #
             ],
     # 미스터홈즈 선정릉점
     19161: ["email", "password", "//*[@id='login']",
@@ -191,8 +192,8 @@ mapIdToWebInfo = {
             "carNo", "searchSubmitByDate",
             "",
             1,  # 평일종일권
-            0,  # 주말종일권
-            2  # 야간권
+            2,  # 주말종일권
+            0  # 야간권
             ],
 
     # 더피나클강남
@@ -207,49 +208,49 @@ mapIdToWebInfo = {
     19464: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
-            0,  # 야간권
-            0,  # 야간권
+            2,  # 평일3시간권
+            1,  # 주말권
             0  # 야간권
             ],
     #하이센스빌,
     19465: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
-            0,  # 야간권
-            0,  # 야간권
-            0  # 야간권
+            0,  # 평일권
+            0,  # 평일권
+            0  # 평일권
             ],
     #DMC역점,
     19466: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
-            0,  # 야간권
-            0,  # 야간권
-            0  # 야간권
+            2,  #평일
+            1,  #주말
+            0  # 3시간
             ],
     #영통동아점,
     19467: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
-            0,  # 야간권
-            0,  # 야간권
-            0  # 야간권
+            0,  # 종일권
+            0,  # 종일권
+            0  # 종일권
             ],
     # 상봉점,
     19468: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
-            0,  # 야간권
-            0,  # 야간권
-            0  # 야간권
+            1,  # 평일
+            0,  # 주말
+            1  #
             ],
     #신한은행 의정부점(하이그린)
     19471: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
-            0,  # 야간권
-            0,  # 야간권
-            0  # 야간권
+            0,  # 주말당일
+            0,  # 주말당일
+            0  # 주말당일
             ],
 
 }
