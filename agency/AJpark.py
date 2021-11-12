@@ -253,6 +253,24 @@ mapIdToWebInfo = {
             0  # 주말당일
             ],
 
+    #운현프라자(하이그린)
+    19490: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 주말당일
+            0,  # 주말당일
+            0  # 주말당일
+            ],
+
+    # 공덕역점
+    19491: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 주말당일
+            0,  # 주말당일
+            0  # 주말당일
+            ],
+
 }
 
 

@@ -573,6 +573,15 @@ mapIdToWebInfo = {
                 "javascript:applyDiscount('31', '1', '', '파킹박', '1', '0')  ",  # 주말
                 "javascript:applyDiscount('31', '1', '', '파킹박', '1', '0') ",
                 ],
+
+        # 	GS타임즈 반포2동공영(티바디쪽 뭐 안됨)
+        19492: ["user_id", "password", "//input[@type='button']",
+                "license_plate_number", "//*[@id=""search_form""]/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+                "chk",
+                "javascript:applyDiscount('09', 'CP0802', '1', '', '24시간(유료)', '0', '0') ",  # 평일1일권
+                "javascript:applyDiscount('16', 'CP0802', '1', '', '휴일 당일권', '0', '0')  ",  # 주말
+                "javascript:applyDiscount('08', 'CP0801', '99', '', '12시간(유료)', '99999999', '21600')  ", #12시간권
+                ],
 }
 
 

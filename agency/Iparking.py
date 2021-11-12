@@ -153,6 +153,26 @@ mapIdToWebInfo = {
             "#carList > tr",
             "2"
             ],
+    # 영동프라자
+    19475: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
+
+    # 이마트TR송림점
+    19476: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
+    # 이마트TR구성점
+    19477: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
+
 
 
 

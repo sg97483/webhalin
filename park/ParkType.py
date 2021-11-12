@@ -94,6 +94,7 @@ parkTypeHighCity = [
     15111,
     15437,
     19185,
+    19492,#반포2동공영
 
 ]
 
@@ -171,6 +172,8 @@ parkTypeAmano = [
     19455,
     19061,
     19445,
+    19488,
+    19489,
 ]
 
 parkTypeBlue = [
@@ -217,6 +220,9 @@ parkTypeIparking = [
     19463,#영등포주차장
     19470,#에이스골드타워
     19473,#미래에셋대우여의도빌딩
+    19475,#영동프라자
+    19476, #이마트TR송림점
+    19477, #이마트TR구성점
 ]
 #tbody 있음
 parkTypeGs = [
@@ -236,7 +242,7 @@ parkTypeGs = [
     Parks.MERCURE_AMBASSADOR,
     Parks.MAGOK_SPRINGTOWER,
     Parks.GANGDONG_HOMEPLUS,
-    # Parks.KB_TOWER,
+    Parks.KB_TOWER,
     19237,
     19447, #포스트빌
     19392, #강남역
@@ -248,6 +254,8 @@ parkTypeGs = [
     19447, #포스트빌
     19125, #헤리츠웨딩홀
     13044, #시티타워
+    19493,#판교아이스퀘어C1
+    19494,#판교아이스퀘어C2
 
 
 
@@ -305,6 +313,8 @@ park_type_aj_park = [
     19467,
     19468,
     19471,#신한은행 의정부점(하이그린)
+    19490,#운현프라자
+    19491, #공덕역점
 ]
 
 park_type_old_aj = [
