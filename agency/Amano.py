@@ -721,6 +721,25 @@ mapIdToWebInfo = {
                 "9",
                 "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
                 ],
+
+        # 현대델리안오피스텔
+        19488: ["userId", "userPwd", "//input[@type='submit']",
+                "schCarNo", "//*[@id='sForm']/input[3]",
+                "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+                "8",
+                "8",
+                "8",
+                "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+                ],
+        # 뉴본타워
+        19489: ["userId", "userPwd", "//input[@type='submit']",
+                "schCarNo", "//*[@id='sForm']/input[3]",
+                "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+                "8",
+                "10",
+                "9",
+                "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+                ],
 }
 
 amano_need_log_out = [
@@ -735,7 +754,9 @@ amano_need_log_out = [
     19391,
     18946,
     19258,
-    19438
+    19438,
+    19488,
+    19489
 ]
 
 have_not_tree_time = {
@@ -946,7 +967,7 @@ def web_har_in(target, driver):
             Util.close_popup(driver)
             Util.close_modal(driver)
 
-            if park_id == 19258:
+            if park_id == 19258 or park_id == 19438 or park_id == 19488 or park_id==19489:
                 driver.find_element_by_id(web_info[WebInfo.inputSearch]).clear()
             driver.find_element_by_id(web_info[WebInfo.inputSearch]).send_keys(search_id)
             Util.sleep(3)
