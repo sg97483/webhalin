@@ -78,15 +78,16 @@ mapIdToWebInfo = {
             "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 9968', '2');",
             "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 9968', '2');",
             ""],
-    # KDB생명
+    # KDB생명(연박권 따로빼기)
     45655: ["login_id", "login_pw",
             "//*[@id='bodyCSS']/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]",
             "searchCarNo", "//*[@id='btnSearch']",
             "",  # 차량번호 클릭
             "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 9549');",  # 1일권
-            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 9549');",  # 1일권
-            "javascript:fnDisCount('56:전액무료(웹) / 잔여수량 9956');",  # 전액 무료
-            ""],
+            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 9549');",  #
+            "javascript:fnDisCount('75:전액무료(웹) / 잔여수량 9956');",  # 전액 무료
+            "",
+            "javascript:fnDisCount('79:전액무료(웹) / 잔여수량 9956');","javascript:fnDisCount('80:전액무료(웹) / 잔여수량 9956');"],
     # (하이파킹) 파크빌딩
     19180: ["login_id", "login_pw",
             "//*[@id='bodyCSS']/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input",
@@ -317,6 +318,18 @@ def get_har_in_script(park_id, ticket_name):
             return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]  #평일
         elif str(ticket_name).endswith("평일 12시간권"):
             return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]  #주말
+    elif park_id == 45655: #KDB 연박
+        if str(ticket_name).endswith("평일1일권"):
+            return mapIdToWebInfo[park_id][WebInfo.methodHarIn1]
+        elif str(ticket_name).endswith("연박권(2일)"):
+            return mapIdToWebInfo[park_id][WebInfo.methodHarIn4]
+        elif str(ticket_name).endswith("연박권(3일)"):
+            return mapIdToWebInfo[park_id][WebInfo.methodHarIn5]
+        elif str(ticket_name).endswith("주말1일권"):
+            return mapIdToWebInfo[park_id][WebInfo.methodHarIn2]
+        elif str(ticket_name).endswith("평일심야권"):
+            return mapIdToWebInfo[park_id][WebInfo.methodHarIn3]
+
     else:
         if str(ticket_name).endswith("심야권"):
             return mapIdToWebInfo[park_id][WebInfo.night]
