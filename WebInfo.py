@@ -15,7 +15,8 @@ methodHarIn1 = 6
 methodHarIn2 = 7
 methodHarIn3 = 8
 methodHarInFunc = 9
-# btnLogOut = 10
+methodHarIn4 = 10 #2일연박
+methodHarIn5 = 11 #3일연박
 
 weekday = 6
 weekend = 7
