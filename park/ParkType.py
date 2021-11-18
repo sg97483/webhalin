@@ -223,6 +223,7 @@ parkTypeIparking = [
     19475,#영동프라자
     19476, #이마트TR송림점
     19477, #이마트TR구성점
+    19496, #구파발
 ]
 #tbody 있음
 parkTypeGs = [

@@ -180,6 +180,13 @@ mapIdToWebInfo = {
             "2"
             ],
 
+    #구파발
+    19496: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
+
 
 }
 
