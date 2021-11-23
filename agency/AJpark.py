@@ -270,7 +270,32 @@ mapIdToWebInfo = {
             0,  # 주말당일
             0  # 주말당일
             ],
+    #금촌
+    19500: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일
+            0,  # 주말당일
+            0  # 주말당일
+            ],
 
+    # 농협은행 파주지부
+    19501: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일
+            1,  # 주말당일
+            2  # 야간권
+            ],
+
+    #  금강주차빌딩점
+    19502: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일
+            1,  # 주말당일
+            2  # 야간권
+            ],
 }
 
 
