@@ -261,11 +261,13 @@ parkTypeGs = [
 
 
 
+
 ]
 parkTypeGs2 = [
     19415, #더에셋
     19430, #TnS빌딩
     19401,#디타워
+    19387,  # 동탄역푸르지오
 
 
 
@@ -316,12 +318,19 @@ park_type_aj_park = [
     19471,#신한은행 의정부점(하이그린)
     19490,#운현프라자
     19491, #공덕역점
+    19500,  #금촌
+    19501,  # 농협은행 파주지부
+    19502, #  금강주차빌딩점
 ]
 
 park_type_old_aj = [
     Parks.GMG_TOWER,
     Parks.SUN_HWA_BUILDING,
-    19070
+    19070,
+    19497,  # 롯데마트 영종도점
+    19499,  # 롯데마트 고양점
+19503,19504,19505
+
 ]
 
 park_type_etc = [
@@ -534,7 +543,7 @@ parkTypeNoRequestMain = [
     Parks.GS_GUN_GUK_BUILDING,
     Parks.NC_GANG_NAM,
     Parks.FINE_AVENUE,
-    19376,19335,19333
+    19376,19335,19333,19087
 ]
 
 type_to_search_css = {
@@ -561,7 +570,8 @@ mapToAgency = {
     I_PARKING: "#carList > tr > td:nth-child(2)",
     GS: "#divAjaxCarList > tbody > tr > td",
     GS2: "#divAjaxCarList > tr > td",
-    Parks.T_TOWER: "#tblList > tbody > tr > td:nth-child(2)",18973: "#tblList > tbody > tr > td:nth-child(2)",
+    Parks.T_TOWER: "#tblList > tbody > tr > td:nth-child(2)",
+    18973: "#tblList > tbody > tr > td:nth-child(2)",
     IP_TIME: "#DataGrid1 > tbody > tr:nth-child(2) > td:nth-child(1)",
     # IP_TIME: "#listSearch > table:nth-child(7) > tbody > tr:nth-child(2)",
     GRANG_SEOUL: "#carList > table > tbody > tr > td:nth-child(2) > a",

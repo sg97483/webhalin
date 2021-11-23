@@ -303,6 +303,15 @@ mapIdToWebInfo = {
             "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 9999', '1');",
             "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 9999', '1');",
             ""],
+    #동탄역푸르지오
+    19387: ["login_id", "login_pw",
+            "#bodyCSS > div > div > div.row.center.div_bordered > div.col-7 > div > div > table > tbody > tr:nth-child(5) > td > div > div:nth-child(1) > input",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # 차량번호 클릭
+            "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 9999', '1');",  # 1일권
+            "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 9999', '1');",
+            "javascript:fnDisCount('55:24시간무료(웹) / 잔여수량 9999', '1');",
+            ""],
 
 
 }
@@ -406,6 +415,8 @@ def web_har_in(target, driver):
                     or park_id == Parks.KB_TOWER \
                     or park_id == Parks.MERCURE_AMBASSADOR :
                 Util.click_element_xpath(web_info[WebInfo.btnLogin], driver)
+            elif park_id == 19387 :
+                Util.click_element_selector("#bodyCSS > div > div > div.row.center.div_bordered > div.col-7 > div > div > table > tbody > tr:nth-child(5) > td > div > div:nth-child(1) > input", driver)
             else:
                 driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
 

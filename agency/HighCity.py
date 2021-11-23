@@ -582,6 +582,8 @@ mapIdToWebInfo = {
                 "javascript:applyDiscount('16', 'CP0802', '1', '', '휴일 당일권', '0', '0')  ",  # 주말
                 "javascript:applyDiscount('08', 'CP0801', '99', '', '12시간(유료)', '99999999', '21600')  ", #12시간권
                 ],
+
+
 }
 
 

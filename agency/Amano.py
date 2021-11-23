@@ -655,13 +655,13 @@ mapIdToWebInfo = {
                 "9",  # 평일 야간권 (판매 : 8000 )
                 "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
                 ],
-        #교대역 동측 공영주차장
+        #교대역 동측 공영주차장(아이디값확인)
         19453: ["userId", "userPwd", "//input[@type='submit']",
                 "schCarNo", "//*[@id='sForm']/input[3]",
                 "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-                "9",  # 평일 야간권 (판매 : 8000 )
-                "9",  # 평일 야간권 (판매 : 8000 )
-                "9",  # 평일 야간권 (판매 : 8000 )
+                "4",  #
+                "8",  #
+                "8",  #
                 "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
                 ],
         # 여의도 우체국
@@ -712,13 +712,13 @@ mapIdToWebInfo = {
                 "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
                 ],
 
-        # ns홈쇼핑 별관
+        # ns홈쇼핑 별관(고급 x)
         19445: ["userId", "userPwd", "//input[@type='submit']",
                 "schCarNo", "//*[@id='sForm']/input[3]",
                 "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-                "9",
-                "9",
-                "9",
+                "9",#평일
+                "7",#심야
+                "8",#10시간
                 "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
                 ],
 
@@ -882,6 +882,15 @@ def get_har_in_value(park_id, ticket_name):
                 elif ticket_name[-3:] == "심야권":
                      return web_info[WebInfo.methodHarIn1]
 
+            elif park_id == 19444: #ns홈쇼핑 별관
+               if ticket_name == "평일1일권":
+                    return web_info[WebInfo.methodHarIn1]
+               elif ticket_name == "평일 심야권":
+                    return web_info[WebInfo.methodHarIn2]
+               elif ticket_name == "평일 10시간권":
+                    return web_info[WebInfo.methodHarIn3]
+               else:
+                    return web_info[web_info.methodHalIn1]
 
 
             else:
