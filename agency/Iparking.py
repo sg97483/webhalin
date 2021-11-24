@@ -186,6 +186,12 @@ mapIdToWebInfo = {
             "#carList > tr",
             "2"
             ],
+    #엠브리지
+    19507: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
 
 
 }
