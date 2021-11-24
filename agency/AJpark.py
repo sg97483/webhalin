@@ -296,6 +296,14 @@ mapIdToWebInfo = {
             1,  # 주말당일
             2  # 야간권
             ],
+    #  노원하계점
+    19506: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일
+            1,  # 주말당일
+            2  # 야간권
+            ],
 }
 
 
@@ -348,6 +356,7 @@ def web_har_in(target, driver, lotName):
                 driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(AJ_PARK_PW)
 
                 driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
+                print("로그인버튼  ")
 
             driver.find_element_by_id('webdiscount').click()
 
