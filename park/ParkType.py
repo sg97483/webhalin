@@ -225,6 +225,9 @@ parkTypeIparking = [
     19477, #이마트TR구성점
     19496, #구파발
     19507,#m브리지
+    19508,
+    19509,
+    19510,
 ]
 #tbody 있음
 parkTypeGs = [

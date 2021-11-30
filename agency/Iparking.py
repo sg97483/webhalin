@@ -192,6 +192,26 @@ mapIdToWebInfo = {
             "#carList > tr",
             "2"
             ],
+     # 이마트풍산점
+     19508: ["id", "password", "//*[@id='login']",
+             "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+             "#carList > tr",
+             "2"
+             ],
+     # 이마트트레이더스김포점
+     19509: ["id", "password", "//*[@id='login']",
+             "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+             "#carList > tr",
+             "2"
+             ],
+     # 예미지빌딩
+     19510: ["id", "password", "//*[@id='login']",
+             "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+             "#carList > tr",
+             "2"
+             ],
+
+
 
 
 }
