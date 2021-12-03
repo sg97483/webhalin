@@ -325,6 +325,7 @@ park_type_aj_park = [
     19500,  #금촌
     19501,  # 농협은행 파주지부
     19502, #  금강주차빌딩점
+    19511, #신촌e편한세상4단지
 ]
 
 park_type_old_aj = [
@@ -393,7 +394,7 @@ park_type_nice = [
     Parks.NICE_HONGIK_YEMUN,
     Parks.NICE_DGB,
     Parks.NICE_DONGTAN_DONGYEON,
-    19398,19402,19403,19404,19405,19400
+    19398,19402,19403,19404,19405,19400,19514,19513,19512
 ]
 
 # 키의 갯수 주차권을 분류하기 위함

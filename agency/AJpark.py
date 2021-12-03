@@ -304,6 +304,14 @@ mapIdToWebInfo = {
             1,  # 주말당일
             2  # 야간권
             ],
+    # 신촌e편한세상4단지
+    19511: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 야간권
+            0,  # 야간권
+            0  # 야간권
+    ],
 }
 
 
