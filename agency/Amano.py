@@ -756,7 +756,8 @@ amano_need_log_out = [
     19258,
     19438,
     19488,
-    19489
+    19489,
+    19437
 ]
 
 have_not_tree_time = {
