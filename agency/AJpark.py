@@ -311,7 +311,15 @@ mapIdToWebInfo = {
             0,  # 야간권
             0,  # 야간권
             0  # 야간권
-    ],
+            ],
+    # 신사 ICT
+    19516: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일권
+            0,  # 평일권
+            0  # 평일권
+            ],
 }
 
 
