@@ -153,7 +153,7 @@ parkTypeAmano = [
     Parks.NEWYORK_PLAZA,
     Parks.SONGPA_BUILDING,
     19130,
-    19391, #ddmc
+    #19391, #ddmc
     19371,
     18946,
     12817,
