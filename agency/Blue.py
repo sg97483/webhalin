@@ -21,13 +21,6 @@ mapIdToWebInfo = {
             "chk_info1",
             "chk_info1"
             ],
-    # 어반플레이스 호텔
-    18967: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
-            "carNumber", "/html/body/div[2]/ul/li/button",
-            "",
-            "chk_info1",
-            "chk_info1"
-            ],
     # 키움 나대지
     19063: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
             "carNumber", "/html/body/div[2]/ul/li/button",
@@ -42,13 +35,6 @@ mapIdToWebInfo = {
             "",
             "chk_info1",  # 파킹박
             "chk_info1"  #
-            ],
-    # (하이파킹) 어바니엘한강
-    19056: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
-            "carNumber", "/html/body/div[2]/ul/li/button",
-            "",
-            "chk_info1",  # 파킹박
-            "chk_info1"
             ],
     # (하이파킹) 밀레니엄 서울 힐튼 주차장(서울역)
     14541: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
@@ -71,21 +57,6 @@ mapIdToWebInfo = {
             "chk_info1",  # 파킹박
             "chk_info1"
             ],
-    # 호텔선샤인
-    19202: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
-            "carNumber", "/html/body/div[2]/ul/li/button",
-            "",
-            "chk_info1",  # 파킹박
-            "chk_info1"
-            ],
-
-    # 카이트타워
-    19375: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
-            "carNumber", "/html/body/div[2]/ul/li/button",
-            "",
-            "chk_info1",  # 심야권
-            "chk_info2",  # 주말1일권
-            ],
     #청담에비뉴
     19416: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
             "carNumber", "/html/body/div[2]/ul/li/button",
@@ -103,14 +74,11 @@ mapIdToWebInfo = {
 }
 
 blue_pass = [
-    Parks.URBAN_PLACE_HOTEL,
     Parks.KIUM_NADEGI,
     Parks.SAMSUNG_SERVICE_BUILDING,
-    Parks.URBANIEL_HAN_GANG,
     Parks.MILLENNIUM_SEOUL_HILTON,
     Parks.URIM_RODEO_SWEET,
     Parks.FRYDIUM_BUILDING,
-    Parks.HOTEL_SUNSHINE,19202,19375,
 
 ]
 def log_out_web(driver):
@@ -181,7 +149,8 @@ def web_har_in(target, driver):
                     driver.find_element_by_id(get_har_in_script(park_id,ticket_name)).click()
 
                     if park_id in blue_pass:
-                        pass
+                        #pass
+                        driver.find_element_by_id("scbutton").click()
                     else:
                         driver.find_element_by_id("scbutton").click()
 

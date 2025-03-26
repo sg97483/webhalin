@@ -18,27 +18,6 @@ mapIdToWebInfo = {
             "",
             ""],
 
-    # (하이파킹) 공덕푸르지오시티
-    19410: ["""//*[@id='sc-login-form']/div/div[1]/div/input""", """//*[@id='sc-login-form']/div/div[2]/div/input""", """//*[@id="sc-login-form"]/div/div[3]/a""",
-            """//*[@id="sc-page-content"]/div/div/div/div[2]/div/div[1]/div/input""", "",
-            "",
-            "",
-            ""],
-
-    # 휴맥스빌리지
-    19195: ["""//*[@id="sc-login-form"]/div/div[1]/div/input""", """//*[@id="sc-login-form"]/div/div[2]/div/input""", """//*[@id="sc-login-form"]/div/div[3]/a""",
-            """//*[@id="sc-page-content"]/div/div/div/div[2]/div/div[1]/div/input""", "",
-            "",
-            "",
-            ""],
-
-    # 나라키움 여의도빌딩
-    19414: ["""//*[@id="sc-login-form"]/div/div[1]/div/input""", """//*[@id="sc-login-form"]/div/div[2]/div/input""", """//*[@id="sc-login-form"]/div/div[3]/a""",
-            """//*[@id="sc-page-content"]/div/div/div/div[2]/div/div[1]/div/input""", "",
-            "",
-            "",
-            ""],
-
     # 드림타워 평일 심야권
     18930: ["user_id", "passwd", "//*[@id='login_div']/table/tbody/tr/td",
             "_search_Str", "/html/body/table[2]/tbody/tr[1]/td/form/table/tbody/tr[9]/td/table[2]/tbody/tr/td[5]/input",
@@ -51,66 +30,9 @@ mapIdToWebInfo = {
             "",
             "javascript:show_notice3('주말종일권','8000','')",
             "javascript:show_notice3('주말종일권','8000','')"],
-    # (하이파킹) 디아뜨갤러리 2차
-    19171: ["id", "pw", "//*[@id='btnLogin']",
-            "//*[@id='discount']/div[1]/input[1]", "",
-            "",
-            "javascript:showItem(349408703206216,'파킹박','[무료]',0,'기타','[무한]','1','[무한]');",
-            "javascript:showItem(349408703206216,'파킹박','[무료]',0,'기타','[무한]','1','[무한]');"],
 
-
-
-    # AW주차타워
-    19201: ["id", "pw", "//*[@id='btnLogin']",
-            "//*[@id='discount']/div[1]/input[1]", "",
-            "",
-            "javascript:showItem(429919833400581,'파킹박','[무료]',0,'기타','[무한]','1','[무한]');",
-            "javascript:showItem(429919833400581,'파킹박','[무료]',0,'기타','[무한]','1','[무한]');"],
-
-    # AW컨벤션
-    19200: ["id", "pw", "//*[@id='btnLogin']",
-            "//*[@id='discount']/div[1]/input[1]", "",
-            "",
-            "javascript:showItem(429920254504999,'파킹박','[무료]',0,'기타','[무한]','1','[무한]');",
-            "javascript:showItem(429920254504999,'파킹박','[무료]',0,'기타','[무한]','1','[무한]');"],
-
-    #신한 L타워
-    19429: ["""//*[@id="sc-login-form"]/div/div[1]/div/input""", """//*[@id="sc-login-form"]/div/div[2]/div/input""", """//*[@id="sc-login-form"]/div/div[3]/a""",
-            """//*[@id="sc-page-content"]/div/div/div/div[2]/div/div[1]/div/input""", "",
-            "",
-            "",
-            ""],
-
-    #하이파킹 t타워
-    19431: ["""//*[@id="sc-login-form"]/div/div[1]/div/input""", """//*[@id="sc-login-form"]/div/div[2]/div/input""", """//*[@id="sc-login-form"]/div/div[3]/a""",
-            """//*[@id="sc-page-content"]/div/div/div/div[2]/div/div[1]/div/input""", "",
-            "",
-            "",
-            ""],
     #하이파킹 종로플레이스
     19427: ["""//*[@id="sc-login-form"]/div/div[1]/div/input""", """//*[@id="sc-login-form"]/div/div[2]/div/input""", """//*[@id="sc-login-form"]/div/div[3]/a""",
-            """//*[@id="sc-page-content"]/div/div/div/div[2]/div/div[1]/div/input""", "",
-            "",
-            "",
-            ""],
-    #한국지식재산센터
-    19452:  ["""//*[@id="sc-login-form"]/div/div[1]/div/input""", """//*[@id="sc-login-form"]/div/div[2]/div/input""", """//*[@id="sc-login-form"]/div/div[3]/a""",
-            """//*[@id="sc-page-content"]/div/div/div/div[2]/div/div[1]/div/input""", "",
-            "",
-            "",
-            ""],
-
-    # 순화빌딩
-    16173:  ["//*[@id='sc-login-form']/div/div[1]/div/input", """//*[@id="sc-login-form"]/div/div[2]/div/input""",
-             """//*[@id="sc-login-form"]/div/div[3]/a""",
-             """//*[@id="sc-page-content"]/div/div/div/div[2]/div/div[1]/div/input""", "",
-             "",
-             "",
-             ""],
-
-    #국제빌딩
-    19472: ["""//*[@id="sc-login-form"]/div/div[1]/div/input""", """//*[@id="sc-login-form"]/div/div[2]/div/input""",
-            """//*[@id="sc-login-form"]/div/div[3]/a""",
             """//*[@id="sc-page-content"]/div/div/div/div[2]/div/div[1]/div/input""", "",
             "",
             "",
@@ -149,12 +71,8 @@ def web_har_in(target, driver):
             web_info = mapIdToWebInfo[park_id]
             web_har_in_info = ParkUtil.get_park_lot_option(park_id)
 
-            # 나라키움 매크로미완료>완료 오류 예외처리
-            if park_id == 19414 and ori_car_num == '31조2362':
-                return False
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
-            if park_id == Parks.WESTERN_853 or park_id == Parks.HUMAX_VILLAGE or park_id == 19410 or park_id == 19414 \
-                    or park_id == 19429 or park_id==19431 or park_id==19427 or park_id==19452 or park_id==16173 or park_id==19472:
+            if park_id == Parks.WESTERN_853 or park_id == Parks.HUMAX_VILLAGE or park_id==19427:
                 if ParkUtil.check_first_conn(park_id):
                     driver.find_element_by_xpath(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
                     driver.find_element_by_xpath(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
@@ -260,7 +178,7 @@ def web_har_in(target, driver):
 
                 return False
 
-            elif park_id == Parks.DIAT_GALLERY_2 or park_id == 19170 or park_id == 19201 or park_id == 19200:
+            elif park_id == park_id == 19170:
                 if ParkUtil.check_first_conn(park_id):
                     driver.find_element_by_id(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
                     driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
@@ -271,14 +189,8 @@ def web_har_in(target, driver):
                 driver.find_element_by_id("ContentPlaceHolder1_btnParking").click()
                 driver.implicitly_wait(2)
 
-                if(park_id == Parks.DIAT_GALLERY_2):
-                    driver.find_element_by_id("ContentPlaceHolder1_Repeater1_btnParkCd_1").click()
-                elif(park_id == 19170):
+                if(park_id == 19170):
                     driver.find_element_by_id("ContentPlaceHolder1_Repeater1_btnParkCd_0").click()
-                elif(park_id == 19201):
-                    driver.find_element_by_id("ContentPlaceHolder1_Repeater1_btnParkCd_3").click()
-                elif(park_id == 19200):
-                    driver.find_element_by_id("ContentPlaceHolder1_Repeater1_btnParkCd_4").click()
                 driver.implicitly_wait(2)
 
                 driver.find_element_by_id("txtInCardNo").click()

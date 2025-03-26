@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from park import Parks
+import pymysql
 
 # 주차장 별 비교해야 될 셀럭터
 HIGH_CITY = 20
-AMANO = 21
 BLUE = 22
 DARAE = 23
+AMANO = 21
 I_PARKING = 24
 GS = 25
 IP_TIME = 26
@@ -15,179 +16,58 @@ AJ_PARK = 29
 HIGH_CITY_2 = 30
 ETC = 31
 NICE = 32
+NICE_NEW = 43
 GS2= 33
+NEW_HIGH = 34
+KAIT_TOWER = 35
+ARC_PLACE = 37
+HIGH_MHP = 38
+HIGH_MHP_OPT = 42
+CENTER_SQUARE_NEW = 39
+CENTER_SQUARE = 40
+NEW_AMANO = 46
+NEW_KMPARK = 47
 #CENTER_SQUARE =34
 
 # 주차장 타입별 주차장들
 parkTypeHighCity = [
     15313,
-    Parks.PLATINUM,
     13007,
-    15644,
-    11917,
     18958,
-    15437,
-    15008,
-    14994,
-    12904,
-    11349,
-    Parks.ALPHA_DOM_TOWER,
     Parks.SC_BANK,
-    Parks.SIGNATURE_TOWER,
     Parks.DDMC,
     Parks.TWIN_CITY,
-    Parks.HSBC,
-    Parks.CITY_PLAZA,
-    Parks.CITY_PLAZA_2,
-    Parks.NAMSAN_TOWER,
-    Parks.CENTER_PLACE,
-    Parks.HANWHA_BUILDING,
-    Parks.LOTTE_L7,
     Parks.FAST_FIVE_TOWER,
-    Parks.CENTRAL_PLACE,
-    Parks.WEWORK_TOWER,
-    Parks.JUMP_MILAN,
-    Parks.TAEPYEONGRO_BUILDING,
     Parks.RIVER_TOWER,
-    Parks.TS_ONE,
-    Parks.KTB_BUILDING,
-    Parks.W_SQARE,
-    Parks.DGB_FINANCE_CENTER,
     Parks.PAN_GYO_ALPHARIUM_TOWER,
-    Parks.CENTRAL_TOWER,
-    Parks.KI_TOWER,
-    Parks.JEIL_OPISTEL,
-    Parks.SUSONG_SQAURE,
-    Parks.ULGI_TWIN_TOWER,
-    Parks.GANG_NAM_L7,
-    Parks.COSMO_TOWER,
-    Parks.ORAKAI_SWEETS,
-    Parks.YANGWOO_DRAMA_CITY,
     Parks.EG_BUILDING,
-    Parks.O_TWO_TOWER,
-    Parks.ORANGE_CENTER,
-    Parks.MOL_OF_K,
-    Parks.CENTERMARK_HOTEL,
-    Parks.KTNG_TOWER,
-    Parks.MUNJUNG_PLAZA,
+    #Parks.MUNJUNG_PLAZA,
     Parks.KOREANA_HOTEL,
     Parks.HILL_STATE_ECO_MAGOKNARU,
-    Parks.ING_ORANGE_TOWER,
-    Parks.KTNG_SUWON,
-    Parks.GANG_NAM_BUILDING,
-    Parks.YANGJAE_GONGYEONG,
     Parks.DONGSAN_GONGYEONG,
-    Parks.SHIN_NON_HYUN_W_TOWER,
     Parks.D_TOWER,
     Parks.BANPO_DONG_GONGYONG,
-    Parks.SUWON_STATION_MARKET,
     Parks.GRAND_CENTRAL,
-    Parks.MI_SEONG_BUILDING,
-    Parks.NH_GWANG_MYEONG,
-    Parks.YEOK_SAM_ECHERE,
     Parks.HAEUNDAE_IPARK,
-    Parks.THE_PRIME_TOWER,
-    19122,
     20864,
-    19170, #디아뜨갤러리 1차
-    19204,
-    15111,
-    15437,
     19185,
     19492,#반포2동공영
 
 ]
 
 parkTypeHighCity2 = [
-    Parks.MERITZ_FIRE,
     Parks.ORAKAI_DAEHAKRO
 ]
 
-parkTypeAmano = [
-    16239,
-    Parks.Y_PLUS,
-    Parks.PARK_M,
-    Parks.PARK_M_NIGHT,
-    Parks.ECC,
-    Parks.PACIFIC_TOWER,
-    Parks.SEOUL_GIROKWON,
-    Parks.N_TOWER,
-    Parks.SK_MYEONGDONG,
-    Parks.PODO_MALL,
-    Parks.WEST_GATE,
-    Parks.TWIN_TREE,
-    Parks.GOLDEN_TOWER,
-    Parks.JS_HOTEL,
-    Parks.ECC_MONTH,
-    Parks.JANG_AN_SPIZON,
-    Parks.JIN_YANG_BUILDING,
-    Parks.YEOKSAM_BUILDING,
-    Parks.HARIM_INTERNATIONAL,
-    Parks.SINRA_STAY_G_TOWER,
-    Parks.NY_TOWER,
-    Parks.ACE_TOWER,
-    Parks.JAYANG_PALACE,
-    Parks.NICE_HONG_MUN_KWAN,
-    Parks.CHUNGJEONGNO_HOUSE,
-    Parks.OMOK_BRIDGE,
-    Parks.MAGOK_RUMA_2,
-    Parks.NON_SQUARE,
-    Parks.JEONGAN_BUILDING,
-    Parks.GWANG_HWA_MUN_S_TOWER,
-    Parks.MDM_TOWER_DANG_SAN,
-    Parks.HANA_TOOJA_BUILDING,
-    # Parks.KUN_KUK_BUILDING,
-    Parks.STATE_TOWER_NAMSAN,
-    Parks.SEOGYO_DONG_NADAEJI,
-    Parks.KUN_KUK_MIDDLE,
-    Parks.GS_GUN_GUK_BUILDING,
-    Parks.GAM_SIN_DAE,
-    Parks.NC_GANG_NAM,
-    Parks.JONG_RO_THE_K,
-    Parks.HAP_JEONG_STATION_YOUTH_HOUSE,
-    Parks.LOTTE_CITY_HOTEL_MYEONG_DONG,
-    Parks.GANG_NAM_FINANCE,
-    Parks.GRACE_TOWER,
-    Parks.FINE_AVENUE,
-    Parks.URIM_TWIN_PARK,
-    Parks.NEWYORK_PLAZA,
-    Parks.SONGPA_BUILDING,
-    19130,
-    #19391, #ddmc
-    19371,
-    18946,
-    12817,
-    19333,
-    19376,
-    19335,
-    19064,
-    18973,
-    19444,
-    19437,
-    19451,
-    19453,
-    19438,
-    19017,
-    19408,
-    19455,
-    19061,
-    19445,
-    19488,
-    19489,
-]
 
 parkTypeBlue = [
     4588,
     19082,
-    18967,
     Parks.KIUM_NADEGI,
     Parks.SAMSUNG_SERVICE_BUILDING,
-    Parks.URBANIEL_HAN_GANG,
     Parks.MILLENNIUM_SEOUL_HILTON,
     Parks.URIM_RODEO_SWEET,
     Parks.FRYDIUM_BUILDING,
-    Parks.HOTEL_SUNSHINE,
-    19375,
     19416,
     19423
 ]
@@ -197,68 +77,23 @@ parkTypeDarae = [
 ]
 
 parkTypeIparking = [
-    18966,
-    Parks.AUTOWAY_TOWER,
-    Parks.NUN_SQUARE,
-    Parks.RAMIAN_YONGSAN_THE_CENTRAL,
-    Parks.BUILDING_94,
-    Parks.CONCORDIAN_BUILDING,
-    Parks.OUR_W_TOER,
-    Parks.DIAT_CENTRAL,
-    Parks.BIT_FLEX,
-    Parks.YEOUIDO_NH_CAPITAL,
-    Parks.ISU_GONG_YONG,
     19425, # kt구로지밸리
     19433, # 서초꽃마을
     19448, #예전빌딩
-    19449, #강남헤븐리치더써밋761
-    19446, #미래에셋플러스
-    19458, #바토프라자
     19459,#동양프라자
     19461,#다산법조메디컬타워
     19462,#화광빌딩
-    19463,#영등포주차장
-    19470,#에이스골드타워
-    19473,#미래에셋대우여의도빌딩
-    19475,#영동프라자
     19476, #이마트TR송림점
-    19477, #이마트TR구성점
-    19496, #구파발
-    19507,#m브리지
+    19921, #하이파킹 성수무신사캠퍼스N1
+    19579, #카카오 T 이마트구로점
     19508,
     19509,
-    19510,
 ]
 #tbody 있음
 parkTypeGs = [
-    Parks.FINANCE_TOWER,
-    Parks.HI_INSADONG,
-    19136,
-    Parks.DMC_S_CITY,
-    Parks.DMCC,
-    Parks.MEGABOX_SUNGSU,
-    Parks.NONHYEON_BUILDING,
-    Parks.ERE_BUILDING,
     Parks.KDB_LIFE,
-    Parks.PARK_BUILDING,
-    Parks.URBANIEL_CHEN_HO,
-    Parks.SANGBONG_DUOTRIS,
-    Parks.MODERN_GYEDONG_BUILDING,
-    Parks.MERCURE_AMBASSADOR,
-    Parks.MAGOK_SPRINGTOWER,
-    Parks.GANGDONG_HOMEPLUS,
-   # Parks.KB_TOWER,
     19237,
-    19447, #포스트빌
-    19392, #강남역
     19450, # 경제신문
-    19436, #국민차 매매단지
-    19460, #파스텔시티
-    19021, #서브원강남빌딩
-    19474, #롯데시네마도곡
-    19447, #포스트빌
-    19125, #헤리츠웨딩홀
-    13044, #시티타워
     19493,#판교아이스퀘어C1
     19494,#판교아이스퀘어C2
 
@@ -267,32 +102,204 @@ parkTypeGs = [
 
 
 ]
-parkTypeGs2 = [
-    19415, #더에셋
-    19430, #TnS빌딩
-    19401,#디타워
-    19387,  # 동탄역푸르지오
+
+# DB 연결 정보
+DB_CONFIG = {
+    'host': '49.236.134.172',
+    'port': 3306,
+    'user': 'root',
+    'password': '#orange8398@@',
+    'db': 'parkingpark',
+    'charset': 'utf8'
+}
+
+# 동일한 정보로 통합된 mapIdToWebInfo
+DEFAULT_WEB_INFO = ["username", "password", "//*[@id='app']/div/div[2]/div/div/main/div/form/button",
+                    "discountPlateNumberForm", "//*[@id='app']/div/div[2]/div/div/main/div[2]/div[1]/div[1]/form/button"]
+
+DEFAULT_WEB_INFO_NICE = ["mf_wfm_body_ibx_empCd", "mf_wfm_body_sct_password", "mf_wfm_body_btn_login",
+                    "mf_wfm_body_carNo", "mf_wfm_body_mobileOkBtn"]
+
+DEFAULT_WEB_INFO_NEW_AMANO = ["userId", "userPwd", "btnLogin",
+                    "schCarNo", "//*[@id='sForm']/input[3]"]
+
+DEFAULT_WEB_INFO_NEW_KMPARK = ["userId", "userPwd", "btnLogin",
+                    "schCarNo", "//*[@id='sForm']/input[3]"]
 
 
 
+def get_park_ids_by_urls(target_urls):
+    """
+    DB에서 특정 URL 리스트와 매칭된 park_id를 가져옵니다.
+    """
+    try:
+        conn = pymysql.connect(**DB_CONFIG)
+        curs = conn.cursor()
+        # SQL 쿼리 실행
+        format_strings = ','.join(['%s'] * len(target_urls))
+        sql = f"SELECT parkId FROM T_PARKING_WEB WHERE url IN ({format_strings})"
+        curs.execute(sql, target_urls)
+        rows = curs.fetchall()
+        return [row[0] for row in rows]  # park_id 리스트로 반환
+    except Exception as e:
+        print(f"DB 쿼리 실패: {e}")
+        return []
+    finally:
+        if conn:
+            conn.close()
+
+def get_park_ids_by_urls_nice(target_urls_nice):
+    """
+    DB에서 특정 URL 리스트와 매칭된 park_id를 가져옵니다.
+    """
+    try:
+        conn = pymysql.connect(**DB_CONFIG)
+        curs = conn.cursor()
+        # SQL 쿼리 실행
+        format_strings = ','.join(['%s'] * len(target_urls_nice))
+        sql = f"SELECT parkId FROM T_PARKING_WEB WHERE url IN ({format_strings})"
+        curs.execute(sql, target_urls_nice)
+        rows = curs.fetchall()
+        return [row[0] for row in rows]  # park_id 리스트로 반환
+    except Exception as e:
+        print(f"DB 쿼리 실패: {e}")
+        return []
+    finally:
+        if conn:
+            conn.close()
+
+
+def get_park_ids_by_urls_new_amano(target_urls_new_amano):
+    """
+    DB에서 특정 URL 리스트와 매칭된 park_id를 가져옵니다.
+    """
+    try:
+        conn = pymysql.connect(**DB_CONFIG)
+        curs = conn.cursor()
+        # SQL 쿼리 실행
+        format_strings = ','.join(['%s'] * len(target_urls_new_amano))
+        sql = f"SELECT parkId FROM T_PARKING_WEB WHERE url IN ({format_strings})"
+        curs.execute(sql, target_urls_new_amano)
+        rows = curs.fetchall()
+        return [row[0] for row in rows]  # park_id 리스트로 반환
+    except Exception as e:
+        print(f"DB 쿼리 실패: {e}")
+        return []
+    finally:
+        if conn:
+            conn.close()
+
+
+def get_park_ids_by_urls_new_kmpark(target_urls_new_kmpark):
+    """
+    DB에서 특정 URL 리스트와 매칭된 park_id를 가져옵니다.
+    """
+    try:
+        conn = pymysql.connect(**DB_CONFIG)
+        curs = conn.cursor()
+        # SQL 쿼리 실행
+        format_strings = ','.join(['%s'] * len(target_urls_new_kmpark))
+        sql = f"SELECT parkId FROM T_PARKING_WEB WHERE url IN ({format_strings})"
+        curs.execute(sql, target_urls_new_kmpark)
+        rows = curs.fetchall()
+        return [row[0] for row in rows]  # park_id 리스트로 반환
+    except Exception as e:
+        print(f"DB 쿼리 실패: {e}")
+        return []
+    finally:
+        if conn:
+            conn.close()
+
+
+# 대상 URL 리스트
+TARGET_URLS = [
+    "https://console.humax-parcs.com/login",
+    "https://console.humax-parcs.com/",
+    "https://console.humax-parcs.com"
 ]
+
+
+# 대상 URL 리스트
+TARGET_URLS_NICE = [
+    "https://npdc-i.nicepark.co.kr/",
+    "https://npdc-i.nicepark.co.kr",
+    "http://npdc-i.nicepark.co.kr/",
+    "http://npdc-i.nicepark.co.kr",
+    "http://npdc.nicepark.co.kr"
+]
+
+
+# 대상 URL 리스트
+TARGET_URLS_NEW_AMANO = [
+    "https://a14926.parkingweb.kr/login","https://a05203.parkingweb.kr","http://112.216.125.10",
+    "https://a18822.pweb.kr","https://a14041.parkingweb.kr/","https://a18147.pweb.kr/",
+    "https://a12647.parkingweb.kr/","https://www.amanopark.co.kr/",
+    "https://a093.parkingweb.kr/","https://a17687.pweb.kr/","http://112.217.102.42/","http://a15820.parkingweb.kr/",
+"https://a02248.parkingweb.kr/login","http://www.amanopark.co.kr","http://a03428.parkingweb.kr","http://1.225.4.44"
+,"http://59.15.76.103","http://121.160.237.7","https://a17389.parkingweb.kr/",
+    "https://a04088.parkingweb.kr","http://112.220.251.2","http://211.217.212.176/"
+    ,"https://a15061.parkingweb.kr/discount/registration","https://a18134.pweb.kr/login"
+,"http://175.114.59.25/discount/registration","http://211.202.87.149"
+    ,"http://211.244.148.17/","https://a15337.parkingweb.kr","http://121.134.61.62/login"]
+
+
+# 대상 URL 리스트
+TARGET_URLS_NEW_KMPARK = [
+    "http://kmp0000798.iptime.org/","http://kmp0000601.iptime.org/","http://kmp0000483.iptime.org/","http://kmp0000575.iptime.org/"]
+
+# DB에서 park_id 동적 조회
+dynamic_park_ids = get_park_ids_by_urls(TARGET_URLS)
+
+# DB에서 park_id 동적 조회
+dynamic_park_ids_nice = get_park_ids_by_urls_nice(TARGET_URLS_NICE)
+
+dynamic_park_ids_new_amano = get_park_ids_by_urls_new_amano(TARGET_URLS_NEW_AMANO)
+
+dynamic_park_ids_new_kmpark = get_park_ids_by_urls_new_kmpark(TARGET_URLS_NEW_KMPARK)
+
+
+# mapIdToWebInfo 동적 생성
+parkType_high_mhp = {
+    park_id: DEFAULT_WEB_INFO
+    for park_id in dynamic_park_ids
+}
+
+parkType_high_mhp_opt = {
+    park_id: DEFAULT_WEB_INFO
+    for park_id in dynamic_park_ids
+}
+
+parkType_nice = {
+    park_id: DEFAULT_WEB_INFO_NICE
+    for park_id in dynamic_park_ids_nice
+}
+
+parkType_new_amano = {
+    park_id: DEFAULT_WEB_INFO_NEW_AMANO
+    for park_id in dynamic_park_ids_new_amano
+}
+
+parkType_new_kmpark = {
+    park_id: DEFAULT_WEB_INFO_NEW_KMPARK
+    for park_id in dynamic_park_ids_new_kmpark
+}
+
+
 parkType_ip_time = [
-    Parks.E_WHA_APM,
-    Parks.SAMSUNG_SEOUL_MEDICAL_CENTER,
     Parks.SEOUL_SQAURE,
-    Parks.V_PLEX
+    Parks.SAMSUNG_HWAJAE
 ]
 
 parkType_grang_seoul = [Parks.GRANG_SEUOL]
-
-#parkType_center_square = [Parks.CENTER_SQUARE]
+parkType_kait_tower = [Parks.KAIT_TOWER]
+parkType_arc_place = [Parks.ARC_PLACE]
+parkType_center_square_new = [Parks.CENTER_SQUARE_NEW]
+parkType_center_square = [Parks.CENTER_SQUARE]
 
 park_type_aj_park = [
-    Parks.AJ_EULJIRO_3,
     Parks.AJ_JONGRO,
     Parks.AJ_T_MARK,
     Parks.AJ_JNS,
-    Parks.AJ_MDM,
     Parks.AJ_MYUNG_DONG,
     Parks.AJ_GONG_DUK,
     Parks.AJ_MUGYO,
@@ -302,31 +309,23 @@ park_type_aj_park = [
     Parks.AJ_HAB_JONG,
     Parks.AJ_DONG_MYO,
     Parks.AJ_GANG_NAM,
-    Parks.AJ_MUNJUNG_PRAVIDA,
-    Parks.AJ_MR_HOMZ,
     Parks.AJ_SINDUK,
-    Parks.HONGDAE_EILEX,
     Parks.NONHYEON_WELLSTONE,
     Parks.AJ_BANGBE,
-    Parks.AJ_HOUSE_DIBIZ,
-    Parks.AJ_EWHA,
-    Parks.AJ_HONG_IK_SPORTS_SPA,
     Parks.AJ_GUWOL_CENTRAL,
     Parks.AJ_AMSA,
-    19227,
     19464,
     19465,
-    19466,
     19467,
     19468,
-    19471,#신한은행 의정부점(하이그린)
     19490,#운현프라자
     19491, #공덕역점
     19500,  #금촌
-    19501,  # 농협은행 파주지부
     19502, #  금강주차빌딩점
     19511, #신촌e편한세상4단지
-    19516, # 신사 ICT
+    19516, # 신사 ICT 55까지
+19521,19522,19524,19525,19533,19534,19535,19536,19537,19538,19540,19541,19542,19543,19545,19546,19547,19548,19549,19550
+,19551,19552,19553,19554,19555
 ]
 
 park_type_old_aj = [
@@ -341,26 +340,15 @@ park_type_old_aj = [
 
 park_type_etc = [
     Parks.WESTERN_853,
-    19410, #공덕푸르지오시티
     Parks.DREAM_TOWER_NIGHT,
     Parks.DREAM_TOWER_HOLIDAY,
-    Parks.DIAT_GALLERY_2,
     Parks.HUMAX_VILLAGE,
-    19201, #AW주차타워,
-    19200, #AW컨벤션
-    19414, #나라키움 여의도빌딩
-    19429,  #신한L타워
-    19431, #하이파킹 t타워
     19427, #종로플레이스
-    19452, #지식센터
-    16173, #순화빌딩
-    19472,#국제빌딩
 
 
 ]
 park_type_aplus = [15740]
 park_type_nice = [
-    Parks.NICE_KB_BUPYEONG_PLAZA,
     Parks.NICE_INGYE_CULTURE,
     Parks.NICE_KYUNGBOK_UNIVERSITY,
     Parks.NICE_GOYANG_GLOBAL_THEME_PLAZA,
@@ -391,79 +379,39 @@ park_type_nice = [
     Parks.NICE_CHEONGNA_COMPETITION_TOWER,
     Parks.NICE_HANAMS_S_BIZ_TOWER,
     Parks.NICE_CHEONGGYE_DOOSAN_WEVE_THE_ZENITH,
-    Parks.NICE_SAMWON_TOWER,
+    # Parks.NICE_SAMWON_TOWER,
     Parks.NICE_HONGIK_YEMUN,
     Parks.NICE_DGB,
     Parks.NICE_DONGTAN_DONGYEON,
-    19398,19402,19403,19404,19405,19400,19514,19513,19512
+    19398,19402,19403,19404,19405,19514,19513,19512,19539
 ]
 
 # 키의 갯수 주차권을 분류하기 위함
 haveOneKey = [
-    Parks.PLATINUM,
     Parks.NAMSAN_SQUARE,
-    Parks.K_SQUARE,
     Parks.PARK_M,
     Parks.GYEONG_BOK_GUNG,
     Parks.G_VALLY,
     Parks.DONGHWA_BUILDING,
-    Parks.URBAN_PLACE_HOTEL,
-    Parks.MAJESTA,
-    Parks.ICON_YEOKSAM,
-    Parks.FINANCE_TOWER,
-    Parks.HI_INSADONG,
-    Parks.SI_TOWER,
-    Parks.ARK_PLACE,
     Parks.PACIFIC_TOWER,
-    Parks.ALPHA_DOM_TOWER,
     Parks.KIUM_NADEGI,
-    Parks.DMC_S_CITY,
     Parks.SC_BANK,
     Parks.DDMC,
-    Parks.DMCC,
     Parks.TWIN_CITY,
-    Parks.HSBC,
-    Parks.CITY_PLAZA,
-    Parks.CITY_PLAZA_2,
-    Parks.AUTOWAY_TOWER,
-    Parks.CENTER_PLACE,
-    Parks.LOTTE_L7,
-    Parks.MEGABOX_SUNGSU,
     Parks.FAST_FIVE_TOWER,
-    Parks.GOLDEN_TOWER,
-    Parks.E_WHA_APM,
-    Parks.CENTRAL_PLACE,
-    # Parks.KTB_BUILDING,
-    Parks.JUMP_MILAN,
-    Parks.TAEPYEONGRO_BUILDING,
-    Parks.NONHYEON_BUILDING,
     Parks.RIVER_TOWER,
     Parks.GMG_TOWER,
-    Parks.URBANIEL_HAN_GANG,
-    Parks.SAMSUNG_SEOUL_MEDICAL_CENTER,
-    Parks.W_SQARE,
     Parks.PAN_GYO_ALPHARIUM_TOWER,
-    Parks.ERE_BUILDING,
-    Parks.KI_TOWER,
     Parks.SINRA_STAY_G_TOWER,
     Parks.MILLENNIUM_SEOUL_HILTON,
     Parks.SEOUL_SQAURE,
-    Parks.ULGI_TWIN_TOWER,
+    Parks.SAMSUNG_HWAJAE,
     Parks.URIM_RODEO_SWEET,
-    Parks.GANG_NAM_L7,
     Parks.V_PLEX,
-    Parks.COSMO_TOWER,
     Parks.NY_TOWER,
-    Parks.MERITZ_FIRE,
-    Parks.ORAKAI_SWEETS,
-    Parks.YANGWOO_DRAMA_CITY,
     Parks.EG_BUILDING,
-    Parks.O_TWO_TOWER,
-    Parks.ORANGE_CENTER,
     Parks.ORAKAI_DAEHAKRO,
-    Parks.MOL_OF_K,
     Parks.FRYDIUM_BUILDING,
-    Parks.CENTERMARK_HOTEL,
     Parks.KOREANA_HOTEL
 ]
 
@@ -472,43 +420,28 @@ haveWeekKey = [
     Parks.ECC,
     Parks.ECC_MONTH,
     Parks.WEST_GATE,
-    Parks.HANWHA_BUILDING,
-    Parks.TS_ONE,
     Parks.HARIM_INTERNATIONAL
 ]
 
 haveTwoKey = [
-    Parks.WISE_PARK,
-    Parks.T_TOWER,
     Parks.Y_PLUS,
     Parks.SEOUL_GIROKWON,
-    Parks.NUN_SQUARE,
     Parks.SK_MYEONGDONG,
     Parks.PODO_MALL,
     Parks.SAMSUNG_SERVICE_BUILDING,
     Parks.GRANG_SEUOL,
+    Parks.KAIT_TOWER,
+    Parks.ARC_PLACE,
+    Parks.CENTER_SQUARE_NEW,
+    Parks.CENTER_SQUARE,
     Parks.JS_HOTEL,
-    Parks.KDB_LIFE,
-    Parks.BUILDING_94,
-    Parks.AJ_MUNJUNG_PRAVIDA
+    Parks.KDB_LIFE
 ]
 
 haveThreeKey = [
     Parks.AIA,
-    Parks.GUUI_WELLTZ,
-    Parks.ECHO_TERRACE,
-    Parks.WISE_TOWER,
     # Parks.N_TOWER,
-    Parks.SIGNATURE_TOWER,
-    Parks.NAMSAN_TOWER,
-    Parks.WEWORK_TOWER,
-    Parks.RAMIAN_YONGSAN_THE_CENTRAL,
-    Parks.DGB_FINANCE_CENTER,
-    Parks.CENTRAL_TOWER,
     Parks.JANG_AN_SPIZON,
-    Parks.JEIL_OPISTEL,
-    Parks.SUSONG_SQAURE,
-    Parks.AJ_MR_HOMZ,
     Parks.JAYANG_PALACE,
     Parks.CHUNGJEONGNO_HOUSE
 ]
@@ -519,47 +452,38 @@ haveFourKey = [
 
 haveFiveKey = [
     # Parks.HONG_MUN_KWAN
+    Parks.SEOUL_TRAIN
 ]
 
 parkTypeNoRequestMain = [
     Parks.GYEONG_BOK_GUNG,
-    Parks.URBAN_PLACE_HOTEL,
-    Parks.FINANCE_TOWER,
-    Parks.HI_INSADONG,
     Parks.DONGHWA_BUILDING,
     Parks.KIUM_NADEGI,
-    Parks.DMC_S_CITY,
-    Parks.DMCC,
-    Parks.SI_TOWER,
-    Parks.NONHYEON_BUILDING,
-    Parks.ERE_BUILDING,
     Parks.KDB_LIFE,
     Parks.SAMSUNG_SERVICE_BUILDING,
-    Parks.MEGABOX_SUNGSU,
     Parks.MILLENNIUM_SEOUL_HILTON,
-    Parks.PARK_BUILDING,
-    Parks.URBANIEL_HAN_GANG,
-    Parks.URBANIEL_CHEN_HO,
     Parks.NON_SQUARE,
-    Parks.MODERN_GYEDONG_BUILDING,
     Parks.SUN_HWA_BUILDING,
     Parks.PODO_MALL,
-    Parks.MERCURE_AMBASSADOR,
-    Parks.HOTEL_SUNSHINE,
-    Parks.GS_GUN_GUK_BUILDING,
     Parks.NC_GANG_NAM,
     Parks.FINE_AVENUE,
-    19376,19335,19333,19087
+    19376,19333,19869
 ]
 
 type_to_search_css = {
     AJ_PARK: "body > div.wrap > section > div > section > div:nth-child(2) > div > dl:nth-child(4) > dd",
-    AMANO: "#modal-window > div > div > div.modal-text",
     BLUE: "#divAjaxCarList > tr",
     DARAE: "#search_form > table > tbody > tr:nth-child(2) > td",
     GRANG_SEOUL: "#carList > table > tbody > tr > td:nth-child(2) > a",
+    KAIT_TOWER: "body > table:nth-child(4) > tbody > tr:nth-child(3) > td:nth-child(2)",
+    ARC_PLACE: "body > table:nth-child(4) > tbody > tr:nth-child(3) > td:nth-child(2)",
     GS: "#divAjaxCarList > tbody > tr",
     GS2: "#divAjaxCarList > tr",
+    HIGH_MHP: "#divAjaxCarList > tr",
+    HIGH_MHP_OPT: "#divAjaxCarList > tr",
+    NICE_NEW: "#divAjaxCarList > tr",
+    NEW_AMANO: "#modal-window > div > div > div.modal-text",
+    NEW_KMPARK: "#modal-window > div > div > div.modal-text",
     HIGH_CITY: "#search_form > table > tbody > tr > td:nth-child(2) > table:nth-child(3) > tbody > tr:nth-child(2)",
     IP_TIME: "#DataGrid1 > tbody > tr:nth-child(2) > td:nth-child(1)",
     HIGH_CITY_2: "#search_form > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)",
@@ -568,19 +492,23 @@ type_to_search_css = {
 }
 
 mapToAgency = {
-    HIGH_CITY: "#search_form > table > tbody > tr > td:nth-child(2) > table:nth-child(3) > tbody > tr:nth-child(2) > "
-               "td:nth-child(2)",
-    AMANO: "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected > td.cellselected",
+    HIGH_CITY: "input[type='hidden']",  # 차량번호 hidden input
     BLUE: "#carDetail > table:nth-child(1) > tbody > tr:nth-child(1) > td:nth-child(2)",
     DARAE: "#search_form > table > tbody > tr:nth-child(2) > td:nth-child(2)",
     I_PARKING: "#carList > tr > td:nth-child(2)",
     GS: "#divAjaxCarList > tbody > tr > td",
     GS2: "#divAjaxCarList > tr > td",
-    Parks.T_TOWER: "#tblList > tbody > tr > td:nth-child(2)",
+    HIGH_MHP: "#divAjaxCarList > tr > td",
+    HIGH_MHP_OPT: "#divAjaxCarList > tr > td",
+    NICE_NEW: "#divAjaxCarList > tr > td",
+    NEW_AMANO: "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected > td.cellselected",
+    NEW_KMPARK: "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected > td.cellselected",
     18973: "#tblList > tbody > tr > td:nth-child(2)",
     IP_TIME: "#DataGrid1 > tbody > tr:nth-child(2) > td:nth-child(1)",
     # IP_TIME: "#listSearch > table:nth-child(7) > tbody > tr:nth-child(2)",
     GRANG_SEOUL: "#carList > table > tbody > tr > td:nth-child(2) > a",
+    KAIT_TOWER: "/html/body/table[2]/tbody/tr[3]/td[2]/text()[1]",
+    ARC_PLACE: "/html/body/table[2]/tbody/tr[3]/td[2]/text()[1]",
     AJ_PARK: "body > div.wrap > section > div > section > div:nth-child(2) > div > dl:nth-child(4) > dd",
     HIGH_CITY_2: "#search_form > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)",
     OLD_AJ: "/html/body/table[2]/tbody/tr[3]/td[2]/text()[1]",
@@ -590,14 +518,20 @@ mapToAgency = {
 mapToHarinUrl = {
     HIGH_CITY: "/discount/discount_regist.asp",
     HIGH_CITY_2: "/discount/discount_regist.asp",
-    AMANO: "/discount/registration",
     BLUE: "/index.php/main/index",
     DARAE: "/discount/discount_regist.php",
     I_PARKING: "/html/home.html#!",
     GS: "/main",
     GS2: "/main",
+    HIGH_MHP: "/main",
+    HIGH_MHP_OPT: "/main",
+    NICE_NEW: "/main",
+    NEW_AMANO: "/discount/registration",
+    NEW_KMPARK: "/discount/registration",
     IP_TIME: "/ListSearch.aspx",
     GRANG_SEOUL: "/ezTicket/carSearch",
+    KAIT_TOWER: "/discount/carSearch.cs?userID=ppark&contextPath=",
+    ARC_PLACE: "/discount/carSearch.cs?userID=ppark&contextPath=",
     AJ_PARK: "home.do",
     OLD_AJ: "/discount/carSearch.cs?userID=ppark&contextPath="
 }
@@ -608,12 +542,12 @@ type_to_day_css = {
 
 
 def get_park_type(park_id):
+
+
     if park_id in parkTypeHighCity:
         return HIGH_CITY
     elif park_id in parkTypeHighCity2:
         return HIGH_CITY_2
-    elif park_id in parkTypeAmano:
-        return AMANO
     elif park_id in parkTypeBlue:
         return BLUE
     elif park_id in parkTypeDarae:
@@ -622,12 +556,26 @@ def get_park_type(park_id):
         return I_PARKING
     elif park_id in parkTypeGs:
         return GS
-    elif park_id in parkTypeGs2:
-        return GS2
+    elif park_id in parkType_high_mhp_opt:
+        return HIGH_MHP_OPT
+    elif park_id in parkType_nice:
+        return NICE_NEW
+    elif park_id in parkType_new_amano:
+        return NEW_AMANO
+    elif park_id in parkType_new_kmpark:
+        return NEW_KMPARK
     elif park_id in parkType_ip_time:
         return IP_TIME
     elif park_id in parkType_grang_seoul:
         return GRANG_SEOUL
+    elif park_id in parkType_kait_tower:
+        return KAIT_TOWER
+    elif park_id in parkType_arc_place:
+        return ARC_PLACE
+    elif park_id in parkType_center_square:
+        return CENTER_SQUARE
+    elif park_id in parkType_center_square_new:
+        return CENTER_SQUARE_NEW
     elif park_id in park_type_aj_park:
         return AJ_PARK
     elif park_id in park_type_etc:
@@ -636,5 +584,8 @@ def get_park_type(park_id):
         return OLD_AJ
     elif park_id in park_type_nice:
         return NICE
-    # elif park_id in parkType_center_square:
-    #     return CENTER_SQUARE
+
+
+    else:
+        print(f"DEBUG: park_id {park_id} does not match any parkType.")
+        return None

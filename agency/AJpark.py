@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 import smtplib
+import time
 from email.mime.text import MIMEText
 
 from selenium.webdriver.support.select import Select
@@ -31,17 +32,10 @@ mapIdToWebInfo = {
     19145: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
-            2,  # 평일종일권
-            0,  # 주말종일권
-            1  # 야간권
-            ],
-    # AJ파크 MDM타워점
-    19143: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            2,  # 평일종일권
-            0,  # 주말종일권
-            1  # 야간권
+            25002,  # 야간권
+            25001,  # 주말종일권
+            139775,  # 4시간권
+            42412  # 평일종일권
             ],
     # 합정역점(AJ파크)
     19157: ["email", "password", "//*[@id='login']",
@@ -59,14 +53,7 @@ mapIdToWebInfo = {
             0,  # 주말종일권 없음
             1  # 야간권
             ],
-    # AJ파크 을지로3가점
-    19139: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            2,  # 평일종일권
-            0,  # 주말종일권
-            1  # 야간권
-            ],
+
     # 강남역점(AJ파크)
     19162: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
@@ -75,28 +62,12 @@ mapIdToWebInfo = {
             1,  # 주말종일권
             0  # 야간권
             ],
-    # 문정프라비다점
-    19160: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1, #평일
-            0,  # 주말종일권
-            1  #
-            ],
-    # 미스터홈즈 선정릉점
-    19161: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일종일권
-            0,  # 주말종일권
-            2  # 야간권
-            ],
     # 종로관훈점
     19140: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
-            2,  # 평일종일권
-            0,  # 주말종일권
+            0,  # 평일종일권
+            2,  # 주말종일권
             1  # 야간권
             ],
     # 	AJ파크 티마크그랜드호텔점
@@ -115,14 +86,6 @@ mapIdToWebInfo = {
             0,  # 평일심야권
             0  # 평일심야권
             ],
-    # 	AJ파크 홍대아일렉스스퀘어점
-    19159: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일1일권
-            0,  # 주말1일권
-            2  # 야간권
-            ],
     # 	AJ파크 논현웰스톤
     19215: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
@@ -139,22 +102,6 @@ mapIdToWebInfo = {
             0,  # 주말1일권 안팜
             1  # 야간권
             ],
-    # 	AJ하우스디비즈
-    19218: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일1일권
-            0,  # 주말1일권 안팜
-            1  # 야간권
-            ],
-    # 	AJ이화주차장점
-    19212: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일1일권
-            0,  # 주말1일권
-            2  # 야간권
-            ],
     # AJ파크 서울가든호텔점
     19148: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
@@ -170,14 +117,6 @@ mapIdToWebInfo = {
             2,  # 평일종일권
             0,  # 주말종일권
             1  # 야간권
-            ],
-    # AJ파크 홍익스포츠스파
-    19226: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일종일권
-            0,  # 주말종일권
-            2  # 야간권
             ],
     # AJ파크 구월중앙점
     16434: ["email", "password", "//*[@id='login']",
@@ -196,14 +135,6 @@ mapIdToWebInfo = {
             0  # 야간권
             ],
 
-    # 더피나클강남
-    19227: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 야간권
-            0,  # 야간권
-            0  # 야간권
-            ],
     #정곡빌딩,
     19464: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
@@ -220,14 +151,6 @@ mapIdToWebInfo = {
             0,  # 평일권
             0  # 평일권
             ],
-    #DMC역점,
-    19466: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            2,  #평일
-            1,  #주말
-            0  # 3시간
-            ],
     #영통동아점,
     19467: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
@@ -243,14 +166,6 @@ mapIdToWebInfo = {
             1,  # 평일
             0,  # 주말
             1  #
-            ],
-    #신한은행 의정부점(하이그린)
-    19471: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 주말당일
-            0,  # 주말당일
-            0  # 주말당일
             ],
 
     #운현프라자(하이그린)
@@ -277,15 +192,6 @@ mapIdToWebInfo = {
             1,  # 평일
             0,  # 주말당일
             0  # 주말당일
-            ],
-
-    # 농협은행 파주지부
-    19501: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일
-            1,  # 주말당일
-            2  # 야간권
             ],
 
     #  금강주차빌딩점
@@ -320,6 +226,216 @@ mapIdToWebInfo = {
             0,  # 평일권
             0  # 평일권
             ],
+    # 리더스퀘어마곡점
+    19521: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일권
+            1,  # 주말
+            0  # 야간
+            ],
+    # 매그넘797점
+    19522: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일권
+            3,  # 평일권
+            2  # 평일권
+            ],
+    # M시그니처점
+    19524: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일권
+            2,  # 평일권
+            1  # 평일권
+            ],
+    #스페이스k 서울미술관점
+    19525: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일권
+            0,  # 평일권
+            2  # 평일권
+            ],
+    ##
+    # AJ파크 속초점
+    19533: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일권
+            1,  # 주말
+            0  # 야간
+            ],
+    # 원주 서영 에비뉴파크 1차점
+    19534: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일권
+            1,  # 주말
+            2  # 야간
+            ],
+    # 롯데슈퍼 오남2점
+    19535: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일권
+            1,  # 주말
+            0  # 야간
+            ],
+    # 안산한미타워점
+    19536: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            2  # 야간
+            ],
+    # 신영프라자점
+    19537: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
+            ],
+    #의왕월드비젼점
+    19538: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
+            ],
+    # 대전둔산점
+    19540: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
+            ],
+    # 건양타워점
+    19541: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
+            ],
+    # 대전지족점
+    19542: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
+            ],
+    # 옥타브상가점
+    19543: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일권
+            1,  # 주말
+            0  # 야간
+            ],
+    # 옥타브상가B동점
+    19544: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
+            ],
+    # 다정센타프라자2점
+    19545: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
+            ],
+    # 스마트큐브1차점
+    19546: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
+            ],
+    # 메가타워1점
+    19547: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
+            ],
+    # 고운드림빌딩점
+    19548: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
+            ],
+    # 금남프라자점
+    19549: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일권
+            1,  # 주말
+            0  # 야간
+            ],
+    # 지엘플렉스1점
+    19550: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
+            ],
+    # 지엘플렉스2점
+    19551: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
+            ],
+    #  영토프라자점
+    19552: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
+            ],
+    # 펜타포트 1블럭 상가점
+    19553: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
+            ],
+    # 에스엘주차타워점
+    19554: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            0,  # 평일권
+            1,  # 주말
+            0  # 야간
+            ],
+    # 청주용암점
+    19555: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
+            ],
+
 }
 
 
@@ -367,9 +483,18 @@ def web_har_in(target, driver, lotName):
             # todo 현재 URL을 가지고와서 비교 후 자동로그인
             # print(driver.current_url)
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
+
+
             if ParkUtil.first_access(park_id, driver.current_url):
+
+                #Util.close_popup(driver)
+                #print(Colors.BLUE + "팝업테스트" + Colors.ENDC)
+                #driver.find_element_by_id('expiresChk').click()
+                print(Colors.BLUE + "팝업테스트" + Colors.ENDC)
+
                 driver.find_element_by_id(web_info[WebInfo.inputId]).send_keys(AJ_PARK_ID)
                 driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(AJ_PARK_PW)
+
 
                 driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
                 print("로그인버튼  ")

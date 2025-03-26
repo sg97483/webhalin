@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 import datetime
+from selenium.webdriver.support import expected_conditions as EC
 
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
 
 from agency import Gs
 from park import ParkType, Parks
@@ -9,10 +12,13 @@ import re
 import Colors
 import time
 
+from park.ParkType import AMANO
+
 connParkId = []
 
 
 def is_park_in(park_id):
+
     if park_id in Parks.mapIdToUrl:
         return True
     else:
@@ -58,16 +64,14 @@ def first_access(park_id, current_url):
 def get_park_search_css(park_id):
     park_type = ParkType.get_park_type(park_id)
 
+
     park_search_css = ParkType.type_to_search_css[park_type]
-   # if park_id != 19415 : park_search_css = ParkType.type_to_search_css[park_type]
-   # elif park_id == 19415 : park_search_css = "#divAjaxCarList > tr"
 
 
     return park_search_css
 
 
 check_searched_car_number_self = [
-    Parks.T_TOWER,
     Parks.ORAKAI_DAEHAKRO,
     18973
 ]
@@ -85,16 +89,51 @@ def get_park_css(park_id):
 
 
 def check_search(park_id, driver):
+    print(Colors.GREEN + "체크 서치1" + Colors.ENDC)
     try:
+        print(Colors.GREEN + "체크 서치2" + Colors.ENDC)
+
+        # AMANO인 경우 별도 처리
+        if ParkType.get_park_type(park_id) == AMANO:
+            print("AMANO 타입 주차장 처리 중...")
+            try:
+                # 팝업 메시지를 확인하거나 별도의 처리
+                modal_text_element = WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located((By.CSS_SELECTOR, "#modal-window > div > div > div.modal-text"))
+                )
+                modal_text = modal_text_element.text.strip()
+                print(f"DEBUG: modal_text = {modal_text}")
+
+                # 텍스트 조건에 따라 처리
+                if "미입차" in modal_text or "차량 정보 없음" in modal_text:
+                    print(Colors.YELLOW + "미입차 상태로 확인됨." + Colors.ENDC)
+                    Gs.log_out_web(driver)
+                    return False
+                else:
+                    print(Colors.GREEN + "AMANO 타입에서 차량 정보 확인됨." + Colors.ENDC)
+                    return True
+            except TimeoutException:
+                print("ERROR: AMANO 팝업 로드 시간 초과.")
+                return False
+            except Exception as e:
+                print(f"ERROR: AMANO 처리 중 오류 발생: {e}")
+                return False
+
+        # AMANO가 아닌 경우 기존 CSS Selector 방식
         park_search_css = get_park_search_css(park_id)
+        print(f"DEBUG: park_search_css = {park_search_css}")
 
-        tr_text = driver.find_element_by_css_selector(park_search_css).text #서치된 텍스트
-        print(Colors.GREEN + tr_text + Colors.ENDC)
+        # 요소 대기
+        element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, park_search_css))
+        )
+        tr_text = element.text  # 서치된 텍스트
+        print(f"DEBUG: tr_text = {tr_text}")
+
+        # 텍스트 정제
         text = re.sub('<.+?>', '', tr_text, 0, re.I | re.S)
-
         trim_text = text.strip()
 
-        # print(trim_text)
         if trim_text.startswith("검색") or trim_text.startswith("입차") or trim_text.startswith("차량"):
             print(Colors.YELLOW + "미입차" + Colors.ENDC)
             Gs.log_out_web(driver)
@@ -102,13 +141,82 @@ def check_search(park_id, driver):
         else:
             return True
     except NoSuchElementException:
-        print(Colors.GREEN + "체크 서치" + Colors.ENDC)
-        print(Colors.GREEN + "해당 엘리멘트가 존재하지 않습니다." + Colors.ENDC)
-        return True
+        print(Colors.GREEN + "체크 서치3" + Colors.ENDC)
+        print(Colors.GREEN + "ERROR: 해당 엘리먼트가 존재하지 않습니다." + Colors.ENDC)
+        return False
+    except TimeoutException:
+        print("ERROR: 요소 로드가 시간 초과로 실패했습니다.")
+        return False
+    except Exception as e:
+        print(f"ERROR: check_search 처리 중 예기치 않은 오류 발생: {e}")
+        return False
+
 
 
 def check_same_car_num(parkId, oriCarNum, driver):
+    """
+    차량번호 비교 (앞자리 한 자리 차이도 인정)
+    - 예: '195서1916' == '95서1916' 도 True
+    """
+
     element_car_num = get_park_css(parkId)
+
+    if element_car_num == "":
+        print(Colors.YELLOW + "엘리멘트 카넘버" + Colors.ENDC)
+        print(Colors.YELLOW + "해당 엘리멘트가 존재하지 않습니다." + Colors.ENDC)
+        return False
+
+    try:
+        # ✅ 1. input hidden value로 가져오기
+        hidden_inputs = driver.find_elements_by_css_selector("input[type='hidden']")
+
+        matched_car_number = None  # 찾은 차량번호 초기화
+
+        for input_elem in hidden_inputs:
+            value = input_elem.get_attribute('value')  # ex) '195서1916|19'
+            car_number = value.split('|')[0].strip()  # 차량번호만 추출
+
+            # 비교용으로 추출
+            matched_car_number = car_number
+
+            # 비교 로직
+            ori_car_num_last7 = oriCarNum[-7:]  # '95서1916'
+            car_number_last7 = car_number[-7:]  # '95서1916' (from site)
+
+            print(f"사이트 차량번호: {car_number}, 비교 대상 차량번호: {oriCarNum}")
+
+            # 1. 정확히 일치
+            if oriCarNum == car_number:
+                print(Colors.GREEN + "차량번호 정확 일치" + Colors.ENDC)
+                return True
+
+            # 2. 7자리 비교
+            if ori_car_num_last7 == car_number_last7:
+                print(Colors.GREEN + "차량번호 7자리 일치" + Colors.ENDC)
+                return True
+
+            # 3. 앞 한자리 제외 후 비교 (예: 195서1916 vs 95서1916)
+            if ori_car_num_last7[1:] == car_number_last7[1:]:
+                print(Colors.GREEN + "앞자리 제외 일치 (예: 195서1916 == 95서1916)" + Colors.ENDC)
+                return True
+
+        # 만약 하나도 일치하지 않으면
+        print(Colors.MARGENTA + f"차량번호가 일치하지 않습니다. (마지막 확인된 번호: {matched_car_number})" + Colors.ENDC)
+        return False
+
+    except Exception as e:
+        print(Colors.RED + f"ERROR: 차량번호 가져오기 실패: {e}" + Colors.ENDC)
+        return False
+
+
+
+
+
+
+def check_same_car_num_origin(parkId, oriCarNum, driver):
+    element_car_num = get_park_css(parkId)
+
+
 
     # park_type = ParkType.get_park_type(parkId)
     #
@@ -137,6 +245,9 @@ def check_same_car_num(parkId, oriCarNum, driver):
         else:
             td_car_num = td_car_num_3[0][-7:]
 
+        # Remove whitespaces from oriCarNum
+        oriCarNum = oriCarNum.strip()
+
         print("검색된 차량번호 : " + td_car_num + " == " + "기존 차량번호 : " + oriCarNum + " / " + oriCarNum[-7:])
         # if len(oriCarNum) == 8:
         #     if oriCarNum[-8:] == td_car_num:
@@ -148,7 +259,7 @@ def check_same_car_num(parkId, oriCarNum, driver):
         if oriCarNum[-7:] == td_car_num:
                 return True
         else:
-                print(Colors.MARGENTA + "차량번호가 틀립니다.2" + Colors.ENDC)
+                print(Colors.MARGENTA + "차량번호가 틀립니다. 이건가" + Colors.ENDC)
                 return False
 
 
@@ -177,7 +288,7 @@ def check_same_day(parkId, driver):
     day_css = get_type_to_day_css(parkId)
 
     if day_css == "":
-        print(Colors.YELLOW + "해당 엘리멘트가 존재하지 않습니다." + Colors.ENDC)
+        print(Colors.YELLOW + "day_css해당 엘리멘트가 존재하지 않습니다." + Colors.ENDC)
         return False
     else:
         text_0 = driver.find_element_by_css_selector(day_css).text
@@ -196,20 +307,6 @@ def check_same_day(parkId, driver):
             print(Colors.MARGENTA + "입차날짜가 틀립니다." + Colors.ENDC)
             return False
 
-
-def check_nice_date(parkId, create_date, driver):
-    if parkId == Parks.NICE_HONG_MUN_KWAN:
-        date_xpath = "//*[@id='entryDate']"
-        text_0 = driver.find_element_by_xpath(date_xpath).text
-        text_1 = re.sub('<.+?>', '', text_0, 0, re.I | re.S)
-        date_time_in_car_time = datetime.datetime.strptime(text_1, '%Y-%m-%d %H:%M:%S')
-
-        if create_date <= date_time_in_car_time:
-            print("입차 전 결제입니다. / createDate : " + str(create_date) + " / inCarTime : " + text_1)
-            return True
-        else:
-            print("입차 후 결제입니다. / createDate : " + str(create_date) + " / inCarTime : " + text_1)
-            return False
 
 def timeCheck(nowTime, targetTime):
     now = int(nowTime[0:2])*60 + int(nowTime[2:4])

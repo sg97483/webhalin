@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
+from telnetlib import EC
+
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
 
 import Util
 import Colors
@@ -8,20 +12,9 @@ import WebInfo
 from bs4 import BeautifulSoup
 import re
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException
 
 mapIdToWebInfo = {
-    # T타워 남산트라팰리스
-    16239: ["userId", "userPwd", "//input[@type='submit']",
-            "schCarNo", "//input[@type='button']",
-            "#tblList > tbody > tr",
-            "5",  # 1일권(판매:8000 차감 : 1440 )
-            "5",  # 1일권(판매:8000 차감 : 1440 )
-            "4",  # 심야권(판매:0 차감 : 720 )
-            "javascript:document.getElementById('btnSave').click",
-            "6",  # 2일권(판매:16000 차감 : 2880 )
-            "7",  # 3일권(판매:24000 차감 : 4320 )
-            # "#article > div > div.stitle > p > a > img"
-            ],
     # 동익드미라벨
     18973: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -72,7 +65,7 @@ mapIdToWebInfo = {
     #         "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
     #         ],
     # 퍼시픽타워
-    19151: ["userId", "userPwd", "//input[@type='submit']",
+    19820: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "15",  # 평일1일권
@@ -111,15 +104,6 @@ mapIdToWebInfo = {
             "javascript:document.getElementById('discountTypeValue').click",
             "3"  # 3시간할인
             ],
-    # SK 명동
-    14618: ["userId", "userPwd", "//*[@id='btnLogin']",
-            "schCarNo", "//*[@id='sForm']/input[3]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "13",  # 8 : 일일권(16시간), 13 : 16시간권
-            "11",  # 주말1일권
-            "10",  # 야간권
-            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-            ],
     # 웨스트게이트
     18913: ["userId", "userPwd", "btnLogin",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -139,16 +123,6 @@ mapIdToWebInfo = {
             "",
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
             "22"  # 6시간권 (판매 : 8000 )
-            ],
-    # 골든타워
-    18577: ["userId", "userPwd", "//input[@type='submit']",
-            "schCarNo", "//*[@id='sForm']/input[4]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "838",  # 종일권(평일) (판매 : 8000 )
-            "839",  # 종일권(주말) (판매 : 5000 )
-            "",
-            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
-            "129",  # 완전무료
             ],
     # JS호텔 분당
     19155: ["userId", "userPwd", "//input[@type='submit']",
@@ -249,17 +223,6 @@ mapIdToWebInfo = {
             "17",  # 3시간권
             "16"  # 2시간권
             ],
-    # 홍익대학교 홍문관
-    19208: ["userId", "userPwd", "//*[@id='btnLogin']",
-            "schCarNo", "//*[@id='sForm']/input[3]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "15",  # 평일1일권
-            "17",  # 주말1일권
-            "16",  # 심야권
-            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
-            "18",  # 4시간권
-            "19"  # 8시간권
-            ],
     # 충정로청년주택
     19191: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -310,24 +273,7 @@ mapIdToWebInfo = {
             "",  #
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
-    # 광화문S타워
-    19250: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
-            "schCarNo", "//*[@id='sForm']/input[3]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "18",  # 종일권(PS)
-            "18",  # 종일권(PS)
-            "19",  # 야간권(PS)
-            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-            ],
-    # MDM타워 당산
-    19239: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
-            "schCarNo", "//*[@id='sForm']/input[3]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "8",  # 24시간유료 (판매 : 15000 )
-            "8",  # 24시간유료 (판매 : 15000 )
-            "",  #
-            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-            ],
+
     # 하나금융 투자빌딩
     19040: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -346,39 +292,13 @@ mapIdToWebInfo = {
     #         "",  #
     #         "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
     #         ],
-    # 스테이트타워남산
-    19258: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
-            "schCarNo", "//*[@id='sForm']/input[3]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "15",  # 종일권(평일)
-            "16",  # 파킹셰어 종일권(주말) (판매 : 10000 )
-            "14",  # 야간권
-            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-            ],
+
     # 서교동 나대지
     19238: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "4",  # 파킹쉐어 16시간
             "4",  # 파킹쉐어 16시간
-            "",
-            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-            ],
-    # 건대부중(건국대학교사범대학부속중학교)
-    19210: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
-            "schCarNo", "//*[@id='sForm']/input[3]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "3",  # 파킹셰어 종일권 (판매 : 10000 )
-            "5",  # 파킹셰어 종일권 (판매 : 10000 )
-            "3",  # 파킹셰어 야간권 (판매 : 5000 )
-            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-            ],
-    # 건국빌딩
-    19331: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
-            "schCarNo", "//*[@id='sForm']/input[3]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "7",  # 24시간권
-            "7",  # 24시간권
             "",
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
@@ -434,15 +354,6 @@ mapIdToWebInfo = {
             "5",  # 3시간권 (판매 : 7000 )
             "4"  # 2시간권 (판매 : 5000 )
             ],
-    # 강남파이낸스프라자
-    18945: ["userId", "userPwd", "//*[@id='loginForm']/li[3]/input",
-            "schCarNo", "//*[@id='sForm']/input[4]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "",  #
-            "812",  # 주말종일권 (판매 : 5000 )
-            "811",  # 심야권 (판매 : 7000 )
-            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-            ],
     # 그레이스타워
     45304: ["userId", "userPwd", "//*[@id='loginForm']/li[3]/input",
             "schCarNo", "//*[@id='sForm']/input[4]",
@@ -461,16 +372,6 @@ mapIdToWebInfo = {
             "8",  # 평일 심야권 (판매 : 7000 )
             "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
             "10"  # 평일 3시간권 (판매 : 10000 )
-            ],
-    # 동신교회
-    16096: ["userId", "userPwd", """//*[@id="loginForm"]/li[3]/input""",
-            "schCarNo", "//*[@id='sForm']/input[4]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "11",  # 평일당일권(파킹셰어) (판매 : 20000 )
-            "10",  # 평일 3시간권 (판매 : 10000 )
-            "",
-            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
-            ""
             ],
 
     # 유림트윈파크(하이파킹)
@@ -506,17 +407,27 @@ mapIdToWebInfo = {
             "847"  # 2시간권(파킹셰어)
             ],
 
-    # 돈암동일하이빌
-    19130: ["userId", "userPwd", "//*[@id='btnLogin']",
-            "schCarNo", "//*[@id='sForm']/input[3]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "14",  # 24시간/당일권(평일)
-            "",
-            "15",  # 심야권
-            "javascript:document.getElementById('discountTypeValue').click",
-            "11",  # 2시간권(파킹셰어)
-            "12"  # 3시간권(파킹셰어)
-            ],
+    # 효성레제스 오피스텔//*[@id="btnLogin"]///*[@id="sForm"]/input[3]
+    18934: ["userId", "userPwd", "//*[@id='btnLogin']",
+           "schCarNo", "//*[@id='sForm']/input[3]",
+           "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+           "2",  # 24시간/당일권(평일)
+           "",
+           "",
+           "javascript:document.getElementById('discountTypeValue').click"
+           ],
+
+    # 위워크선릉점
+    #19892: ["userId", "userPwd", "//*[@id='btnLogin']",
+    #       "schCarNo", "//*[@id='sForm']/input[3]",
+    #       "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+    #       "7",  # 심야권
+    #       "",
+    #       "7",  # 심야권
+    #       "javascript:document.getElementById('discountTypeValue').click",
+    #       "7",  #심야권
+    #       "7"  # 심야권
+    #       ],
 
     # 미사메디피아타워
     19407: ["userId", "userPwd", "//*[@id='btnLogin']",
@@ -525,18 +436,6 @@ mapIdToWebInfo = {
             "",  # 24시간/당일권(평일)
             "",
             "15",  # 심야권
-            "javascript:document.getElementById('discountTypeValue').click",
-            "",  # 2시간권(파킹셰어)
-            ""  # 3시간권(파킹셰어)
-            ],
-
-    # 상암DDMC
-    19391: ["userId", "userPwd", "//*[@id='btnLogin']",
-            "schCarNo", "//*[@id='sForm']/input[3]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "9",  # 24시간/당일권(평일)
-            "9",
-            "",  # 심야권
             "javascript:document.getElementById('discountTypeValue').click",
             "",  # 2시간권(파킹셰어)
             ""  # 3시간권(파킹셰어)
@@ -571,7 +470,7 @@ mapIdToWebInfo = {
             "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
             "",  #
             "14",  # 주말1일권
-            "13",  # 심야권
+            "14",  # 심야권
             "javascript:document.getElementById('discountTypeValue').click",
             "",
             ""
@@ -600,18 +499,6 @@ mapIdToWebInfo = {
             ""
             ],
 
-    # NC백화점 중앙로점
-    19335: ["userId", "userPwd", "//*[@id='btnLogin']",
-            "schCarNo", "//*[@id='sForm']/input[3]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "6",  # 평일1일권
-            "6",  # 주말1일권
-            "",
-            "javascript:document.getElementById('discountTypeValue').click",
-            "",
-            ""
-            ],
-
     # T412 빌딩(구 대치2빌딩)(선릉역)
     19064: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -624,17 +511,6 @@ mapIdToWebInfo = {
             ""
             ],
 
-        # 케이스퀘어시티
-        19444: ["userId", "userPwd", "//*[@id='btnLogin']",
-                "schCarNo", "//*[@id='sForm']/input[3]",
-                "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-                "17",#1일권
-                "17", #주말1일권
-                "17", #심야권
-                "javascript:document.getElementById('discountTypeValue').click",
-                "",
-                ""
-                ],
         # 메트로타워
         19437: ["userId", "userPwd", "//*[@id='btnLogin']",
                 "schCarNo", "//*[@id='sForm']/input[3]",
@@ -731,54 +607,120 @@ mapIdToWebInfo = {
                 "8",
                 "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
                 ],
-        # 뉴본타워
-        19489: ["userId", "userPwd", "//input[@type='submit']",
+
+        # 당산동청년주택
+        19869: ["userId", "userPwd", "//input[@type='submit']",
                 "schCarNo", "//*[@id='sForm']/input[3]",
                 "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-                "8",
-                "10",
-                "9",
+                "9",#당일권
+                "",  # 주말권 (주말권이 없는 경우 빈 값으로 유지)
+                "",  # 추가 항목 (예: 심야권, 현재 값이 없는 경우 빈 값)
                 "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
                 ],
+
+        # SK 명동
+        14618: ["userId", "userPwd", "//input[@type='submit']",
+            "schCarNo", "//*[@id='sForm']/input[3]",
+            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
+            "13",  # 8 : 일일권(16시간), 13 : 16시간권
+            "11",  # 주말1일권
+            "10",  # 야간권
+            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
+            ],
+
+
 }
 
 amano_need_log_out = [
-    Parks.GOLDEN_TOWER,
-    Parks.GANG_NAM_FINANCE,
     Parks.HAP_JEONG_STATION_YOUTH_HOUSE,
     Parks.SONGPA_BUILDING,
     Parks.ACE_TOWER,
-    19130,
+    18934,
     Parks.URIM_TWIN_PARK,
     Parks.SUN_HWA_BUILDING,
-    19391,
     18946,
-    19258,
     19438,
     19488,
-    19489,
     19437
 ]
 
 have_not_tree_time = {
-    Parks.T_TOWER,
     Parks.TWIN_TREE,
-    Parks.GOLDEN_TOWER,
     Parks.JANG_AN_SPIZON,
     Parks.HARIM_INTERNATIONAL,
-    Parks.NC_GANG_NAM,
-    Parks.NICE_HONG_MUN_KWAN,
-    19391
+    Parks.NC_GANG_NAM
 }
+def handle_popup(driver):
+    try:
+        # 팝업 루트 요소 확인
+        popup = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="modal-window"]'))
+        )
+        if popup.is_displayed():
+            print("팝업이 감지되었습니다.")
+            try:
+                dismiss_button = WebDriverWait(driver, 5).until(
+                    EC.presence_of_element_located((By.XPATH, '//*[@id="modal-window"]/div/div/div[3]/a[1]'))
+                )
+                dismiss_button.click()
+                print("'7일간 보지 않기' 버튼 클릭 완료.")
+            except NoSuchElementException:
+                print("'7일간 보지 않기' 버튼이 없습니다. 닫기 버튼을 시도합니다.")
+            try:
+                close_button = WebDriverWait(driver, 5).until(
+                    EC.presence_of_element_located((By.XPATH, '//*[@id="modal-window"]/div/div/div[3]/a[2]'))
+                )
+                close_button.click()
+                print("'닫기' 버튼 클릭 완료.")
+            except NoSuchElementException:
+                print("'닫기' 버튼도 없습니다. 팝업을 처리하지 못했습니다.")
+    except Exception as e:
+        print(f"팝업 처리 중 오류 발생: {e}")
+
+
+def handle_modal_popup(driver):
+    """
+    팝업을 감지하고 처리하는 함수.
+    팝업이 있으면 'OK' 버튼을 클릭하고, 없으면 아무 작업도 하지 않음.
+    """
+    try:
+        # 팝업 루트 요소 확인
+        modal = driver.find_element_by_class_name("modal-inner")
+        if modal.is_displayed():  # 팝업이 보이는지 확인
+            print("팝업이 감지되었습니다.")
+            try:
+                ok_button = driver.find_element_by_class_name("modal-btn")  # "OK" 버튼
+                ok_button.click()
+                print("팝업의 'OK' 버튼을 클릭했습니다.")
+                return True
+            except Exception as e:
+                print(f"'OK' 버튼을 클릭하는 중 오류 발생: {e}")
+                return False
+        else:
+            print("팝업이 감지되지 않았습니다.")
+            return False
+    except Exception:
+        print("팝업이 없습니다.")
+        return False
 
 
 def log_out_web(park_id, driver):
-    if park_id in amano_need_log_out:
-        driver.execute_script("javascript:logout();")
-        driver.implicitly_wait(3)
-        driver.find_element_by_xpath("//*[@id='modal-window']/div/div/div[3]/a[2]").click()
-        Util.sleep(3)
-        print(Colors.BLUE + "로그아웃" + Colors.ENDC)
+    try:
+        if park_id in amano_need_log_out:
+            print(f"AMANO 처리 중, park_id: {park_id}")
+            driver.execute_script("javascript:logout();")
+            driver.implicitly_wait(3)
+            # 로그아웃 버튼 처리
+            try:
+                    WebDriverWait(driver, 5).until(
+                        EC.element_to_be_clickable((By.XPATH, "//*[@id='modal-window']/div/div/div[3]/a[2]"))
+                    ).click()
+            except Exception as e:
+                print(f"로그아웃 처리 중 오류 발생: {e}")
+            Util.sleep(3)
+            print(Colors.BLUE + "로그아웃 완료" + Colors.ENDC)
+    except Exception as e:
+        print(f"로그아웃 처리 중 오류 발생: {e}")
 
 
 def get_har_in_value(park_id, ticket_name):
@@ -799,17 +741,7 @@ def get_har_in_value(park_id, ticket_name):
             else:
                 return web_info[WebInfo.weekend]
         else:
-            if park_id == Parks.T_TOWER:
-                if ticket_name == "금토일연박권" \
-                        or ticket_name == "3일권":
-                    return web_info[11]
-                elif ticket_name[-3:] == "연박권" \
-                        or ticket_name == "2일권":
-                    return web_info[10]
-                elif str(ticket_name).startswith("일주차"):
-                    return web_info[WebInfo.weekday]
-
-            elif park_id == Parks.TWIN_TREE \
+            if park_id == Parks.TWIN_TREE \
                     or park_id == Parks.JIN_YANG_BUILDING:
                 if ticket_name == "6시간권":
                     return web_info[10]
@@ -817,14 +749,6 @@ def get_har_in_value(park_id, ticket_name):
             elif park_id == Parks.JANG_AN_SPIZON:
                 if ticket_name == "4시간권":
                     return web_info[10]
-
-            elif park_id == Parks.YEOKSAM_BUILDING:
-                if str(ticket_name).startswith("주간권"):
-                    return web_info[12]
-                elif str(ticket_name).startswith("5시간권"):
-                    return web_info[11]
-                elif str(ticket_name).startswith("야간권"):
-                    return web_info[8]
 
             elif park_id == Parks.JAYANG_PALACE \
                     or park_id == Parks.OMOK_BRIDGE \
@@ -845,22 +769,13 @@ def get_har_in_value(park_id, ticket_name):
                 elif ticket_name[-3:] == "5일권":
                     return web_info[13]
 
-            elif park_id == Parks.NICE_HONG_MUN_KWAN:
-                if ticket_name == "4시간권":
-                    return web_info[10]
-                elif ticket_name == "8시간권":
-                    return web_info[11]
 
-            elif park_id == 19130:
-                if ticket_name == "2시간권":
-                    return web_info[10]
-                elif ticket_name == "3시간권":
-                    return web_info[11]
-            # elif park_id == Parks.DONGSIN_CHURCH:
-            #     if ticket_name == "평일1일권":
-            #         return web_info[]
-            #     elif ticket_name == "3시간권":
-            #         return web_info[]
+
+
+            elif park_id == 18934:
+                if ticket_name == "평일1일권":
+                    return web_info[6]
+
 
             elif park_id == 19247:  # 아마노 눈스퀘어
                 if ticket_name == "평일1일권(1호기)":
@@ -877,21 +792,6 @@ def get_har_in_value(park_id, ticket_name):
                 elif ticket_name == "5시간권":
                     return web_info[10]
 
-            elif park_id == 19444: #케이스퀘어
-                if ticket_name[-3:] == "1일권":
-                    return web_info[WebInfo.methodHarIn1]
-                elif ticket_name[-3:] == "심야권":
-                     return web_info[WebInfo.methodHarIn1]
-
-            elif park_id == 19444: #ns홈쇼핑 별관
-               if ticket_name == "평일1일권":
-                    return web_info[WebInfo.methodHarIn1]
-               elif ticket_name == "평일 심야권":
-                    return web_info[WebInfo.methodHarIn2]
-               elif ticket_name == "평일 10시간권":
-                    return web_info[WebInfo.methodHarIn3]
-               else:
-                    return web_info[web_info.methodHalIn1]
 
 
             else:
@@ -917,18 +817,12 @@ def web_har_in_login(driver, park_id):
     element_pw.clear()
     element_pw.send_keys(web_har_in_info[WebInfo.webHarInPw])
 
-    if park_id == Parks.NICE_HONG_MUN_KWAN or \
-            park_id == Parks.YEOKSAM_BUILDING:
-        driver.find_element_by_css_selector("#loginForm > li:nth-child(5) > input").click()
-    elif park_id == Parks.SEOUL_GIROKWON or park_id == Parks.WEST_GATE:
+    if park_id == Parks.SEOUL_GIROKWON or park_id == Parks.WEST_GATE:
         driver.find_element_by_id(web_info[WebInfo.btnLogin]).click()
         driver.implicitly_wait(3)
     elif park_id == Parks.NY_TOWER:
         Util.sleep(1)
         driver.find_element_by_id("btnLogin").click()
-    elif park_id == Parks.GS_GUN_GUK_BUILDING:
-        driver.find_element_by_id("btnLogin").click()
-        Util.sleep(2)
     else:
         driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
 
@@ -942,6 +836,39 @@ def web_har_in_login_seoul_girockwon(driver, park_id):
     element_id.send_keys(web_har_in_info[WebInfo.webHarInId])
 
 
+
+def is_logged_in(driver, park_id):
+    """
+    로그인 상태를 확인하는 함수.
+    특정 park_id에 따라 로그인 확인 요소를 동적으로 설정.
+    """
+    try:
+        if park_id in {19934}:  # 마제스타시티 및 새로운 ID 추가
+            # 로그인된 상태에서는 특정 요소가 존재
+            return driver.find_element_by_xpath("//*[@id='sidebar']/div/ul").is_displayed()
+        # 다른 park_id에 대한 추가 로직 확장 가능
+        else:
+            return False
+    except NoSuchElementException:
+        # 로그인되지 않은 상태
+        return False
+
+def is_login_page(driver, park_id):
+    """
+    현재 페이지가 로그인 페이지인지 확인하는 함수.
+    특정 park_id에 따라 로그인 확인 요소를 동적으로 설정.
+    """
+    try:
+        if park_id in {19934}:  # 마제스타시티 및 새로운 ID 추가
+            # 로그인 페이지에서만 존재하는 요소 확인
+            return driver.find_element_by_name("userId").is_displayed()
+        else:
+            return False
+    except NoSuchElementException:
+        # 로그인 페이지가 아님
+        return False
+
+
 def web_har_in(target, driver):
     pid = target[0]
     park_id = int(Util.all_trim(target[1]))
@@ -949,7 +876,6 @@ def web_har_in(target, driver):
     ticket_name = target[3]
     park_type = ParkType.get_park_type(park_id)
 
-    # 동익드미라벨 연박권
     if park_id == 18973 and ticket_name != "1일권":
         print("1일권이 아님")
         return False
@@ -957,112 +883,65 @@ def web_har_in(target, driver):
     trim_car_num = Util.all_trim(ori_car_num)
     search_id = trim_car_num[-4:]
 
-    print("parkId = " + str(park_id) + ", " + "searchId = " + search_id)
+    print(f"parkId = {park_id}, searchId = {search_id}")
     print(Colors.BLUE + ticket_name + Colors.ENDC)
 
-    if ParkUtil.is_park_in(park_id):
-        if park_id in mapIdToWebInfo:
-            login_url = ParkUtil.get_park_url(park_id)
-            driver.implicitly_wait(3)
-            driver.get(login_url)
-
-            web_info = mapIdToWebInfo[park_id]
-            web_har_in_info = ParkUtil.get_park_lot_option(park_id)
-            # todo 현재 URL을 가지고와서 비교 후 자동로그인
-
-            # 재접속이 아닐 때, 그러니까 처음 접속할 때
-            if ParkUtil.first_access(park_id, driver.current_url):
-                web_har_in_login(driver, park_id)
-
-            Util.close_popup(driver)
-            Util.close_modal(driver)
-
-            if park_id == 19258 or park_id == 19438 or park_id == 19488 or park_id==19489:
-                driver.find_element_by_id(web_info[WebInfo.inputSearch]).clear()
-            driver.find_element_by_id(web_info[WebInfo.inputSearch]).send_keys(search_id)
-            Util.sleep(3)
-
-            driver.find_element_by_xpath(web_info[WebInfo.btnSearch]).click()
-
-            Util.sleep(1)
-
-            # 차량번호 검색
-            if ParkUtil.check_search(park_id, driver):
-                driver.implicitly_wait(3)
-                try:
-                    driver.find_element_by_css_selector(web_info[WebInfo.btnItem]).click()
-                except NoSuchElementException:
-                    log_out_web(park_id, driver)
-                    return False
-
-                html = driver.page_source
-                soup = BeautifulSoup(html, 'html.parser')
-                # T타워 / 동익드미라벨
-                if park_id == Parks.T_TOWER or park_id == 18973:
-                    car_num = soup.find(id='tblList')
-                else:
-                    car_num = driver.find_element_by_xpath('''//*[@id="carNo"]''')
-
-                car_text = car_num.text
-                text = re.sub('<.+?>', '', car_text, 0, re.I | re.S)
-                trim_text = text.strip()
-
-                if trim_text == "검색된 데이터가 없습니다.":
-                    print(Colors.YELLOW + "검색된 데이터가 없습니다." + Colors.ENDC)
-                else:
-                    pe_id_value = trim_text[0:6]
-                    car_num_divider = 6 + len(ori_car_num)
-                    car_no_value = trim_text[6:car_num_divider]
-                    # todo 평일 1일권인지 심야권인지 판별
-                    discount_type_value = get_har_in_value(park_id, ticket_name)
-
-                    if discount_type_value != "":
-
-                        # T타워 / 동익드미라벨
-                        if park_id == Parks.T_TOWER or park_id == 18973:
-                            pe_id = driver.find_element_by_id('peId')
-                            driver.execute_script("arguments[0].value = '" + pe_id_value + "';", pe_id)
-                            car_no = driver.find_element_by_id('carNo')
-                            driver.execute_script("arguments[0].value = '" + car_no_value + "';", car_no)
-                            discount_type = driver.find_element_by_id('discountType')
-                            driver.execute_script("arguments[0].value = '" + discount_type_value + "';",
-                                                  discount_type)
-
-                        # 비고에 텍스트 입력
-                        if park_id == Parks.GOLDEN_TOWER or park_id == Parks.GANG_NAM_FINANCE:
-                            element_text_area = driver.find_element_by_id('memo')
-                            Util.sleep(1)
-                            element_text_area.send_keys("11")
-                            Util.sleep(1)
-
-                        # 홍문관
-                        if park_id == Parks.NICE_HONG_MUN_KWAN:
-                            create_date = target[4]
-                            if not ParkUtil.check_nice_date(park_id, create_date, driver):
-                                print(Colors.RED + "입차 후 결제입니다." + Colors.ENDC)
-                                return False
-                            print(Colors.RED + "입차 전 결제입니다." + Colors.ENDC)
-
-                        # 차량번호 일치하는지 확인
-                        if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
-                            har_in_script = web_info[WebInfo.methodHarInFunc].replace("discountTypeValue",
-                                                                                      discount_type_value) + "()"
-                            print(Colors.RED + har_in_script + Colors.ENDC)
-                            Util.sleep(2)
-                            driver.execute_script(har_in_script)
-                            Util.sleep(2)
-                            Util.close_modal(driver)
-                            log_out_web(park_id, driver)
-
-                            return True
-
-                log_out_web(park_id, driver)
-                return False
-
-            return False
-        else:
-            print(Colors.BLUE + "현재 웹할인 페이지 분석이 되어 있지 않는 주차장입니다." + Colors.ENDC)
-            return False
-    else:
-        print(Colors.BLUE + "웹할인 페이지가 없는 주차장 입니다." + Colors.ENDC)
+    if not ParkUtil.is_park_in(park_id):
+        print("웹할인 페이지가 없는 주차장입니다.")
         return False
+
+    if park_id not in mapIdToWebInfo:
+        print("현재 아마노웹할인 페이지 분석이 되어 있지 않는 주차장입니다.")
+        return False
+
+    login_url = ParkUtil.get_park_url(park_id)
+    driver.implicitly_wait(3)
+    driver.get(login_url)
+
+    handle_popup(driver)
+
+    web_info = mapIdToWebInfo[park_id]
+
+    if ParkUtil.first_access(park_id, driver.current_url):
+        if is_login_page(driver, park_id):
+            web_har_in_login(driver, park_id)
+        elif is_logged_in(driver, park_id):
+            print("이미 로그인된 상태입니다.")
+        else:
+            print("로그인 페이지가 아니며 로그인 상태도 확인되지 않았습니다.")
+            return False
+
+        Util.close_modal(driver)
+
+
+
+    driver.find_element_by_id(web_info[WebInfo.inputSearch]).send_keys(search_id)
+    Util.sleep(3)
+    driver.find_element_by_xpath(web_info[WebInfo.btnSearch]).click()
+    Util.sleep(1)
+
+    if not ParkUtil.check_search(park_id, driver):
+        print("차량 번호 검색에 실패했습니다.")
+        log_out_web(park_id, driver)
+        return False
+
+    discount_type_value = get_har_in_value(park_id, ticket_name)
+    if not discount_type_value:
+        print("할인 유형 값이 유효하지 않습니다.")
+        log_out_web(park_id, driver)
+        return False
+
+    # JavaScript 실행
+    try:
+        har_in_script = web_info[WebInfo.methodHarInFunc].replace("discountTypeValue", discount_type_value)
+        print(f"Executing JavaScript: {har_in_script}")
+        driver.execute_script(har_in_script)
+        Util.sleep(2)
+        Util.close_modal(driver)
+        log_out_web(park_id, driver)
+        return True
+    except Exception as e:
+        print(f"JavaScript 실행 중 오류 발생: {e}")
+        log_out_web(park_id, driver)
+        return False
+
