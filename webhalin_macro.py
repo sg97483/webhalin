@@ -100,12 +100,12 @@ def web_har_in(target):
     park_type = ParkType.get_park_type(park_id)
 
     # 아마노코리아
-    if  park_type == ParkType.NEW_AMANO:
-        exec_web_har_in(NewAmano, target, driver)
-        return True
+    #if  park_type == ParkType.NEW_AMANO:
+    #    exec_web_har_in(NewAmano, target, driver)
+    #    return True
 
     # 나이스파크
-    #if park_type == ParkType.NICE_NEW:
+    #elif park_type == ParkType.NICE_NEW:
     #   exec_web_har_in(NiceNew, target, driver)
     #   return True
 
@@ -114,10 +114,10 @@ def web_har_in(target):
     #    exec_web_har_in(HighMhpOpt, target, driver)
     #    return True
 
-    #elif park_type == ParkType.HIGH_CITY:
-    #    exec_web_har_in(HighCity, target, driver)
-    #    print(f"park_id: {park_id}, park_type: {park_type}, expected: {ParkType.HIGH_CITY}")
-    #    return True
+    if park_type == ParkType.HIGH_CITY:
+        exec_web_har_in(HighCity, target, driver)
+        print(f"park_id: {park_id}, park_type: {park_type}, expected: {ParkType.HIGH_CITY}")
+        return True
 
     #아이파킹사이트(운영업체혼합)
     #elif park_type == ParkType.I_PARKING:

@@ -2,6 +2,8 @@
 import Util
 import Colors
 from park import ParkUtil, ParkType, Parks
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import WebInfo
 
 mapIdToWebInfo = {
@@ -193,6 +195,26 @@ def get_har_in_script(park_id, ticket_name):
         else:
             return False  # ❗️트윈시티남산에서 지정된 티켓 외는 실패 처리
 
+    if park_id == 19364:
+        if ticket_name in [
+            "평일 당일권(월~화)",
+            "평일 당일권(수~목)",
+            "평일 당일권(금)",
+            "휴일 당일권(토,공휴일)",
+            "휴일 당일권(일)",
+            "휴일 연박권(토,일)"
+        ]:
+            return "javascript:applyDiscount('08', 'CP0802', '1', '01|20|24|', 'ppark', '999999999', '0');"
+
+        elif ticket_name == "평일 3시간권":
+            return "javascript:applyDiscount('25', 'CP0802', '1', '', '3시간권', '999999999', '0');"
+
+        elif ticket_name in ["평일 심야권", "휴일 심야권"]:
+            return "javascript:applyDiscount('91', 'CP0802', '1', '20|', 'ppark(야간)', '999999999', '0');"
+
+        else:
+            return False  # ❗️그 외는 실패 처리
+
     if park_id == 20863:
         if ticket_name in ["평일 당일권", "휴일 당일권"]:
             return "javascript:applyDiscount('19', '1', '05|', '파킹박');"
@@ -228,8 +250,43 @@ def get_har_in_script(park_id, ticket_name):
         return False  # ❗️최종적으로도 없으면 실패
 
 
+def check_discount_alert(driver):
+    """
+    할인 스크립트 실행 후 alert 창을 통해 성공 여부 판단
+    """
+    try:
+        WebDriverWait(driver, 5).until(EC.alert_is_present())
+        alert = driver.switch_to.alert
+        alert_text = alert.text
+        alert.accept()
+
+        print(f"할인 결과 알림창: {alert_text}")
+        if "할인 되었습니다" in alert_text or "등록되었습니다" in alert_text:
+            return True
+        else:
+            return False
+
+    except Exception as e:
+        print("할인 처리 후 알림창이 감지되지 않음:", e)
+        return False
 
 
+def check_discount_applied(park_id, driver):
+    try:
+        alert_span = driver.find_element_by_css_selector("#alert_save")
+        message = alert_span.text.strip()
+        if message:
+            print(f"할인 처리 결과 메시지: {message}")
+            if "할인 되었습니다" in message or "등록되었습니다" in message or "성공" in message:
+                return True
+            else:
+                return False
+        else:
+            print("할인 결과 메시지가 비어 있음")
+            return False
+    except Exception as e:
+        print("할인 메시지 확인 중 예외 발생:", e)
+        return False
 
 
 def web_har_in(target, driver):
@@ -279,7 +336,14 @@ def web_har_in(target, driver):
                             print("유효하지 않은 ticket_name 입니다.")  # 실패 메시지
                             return False  # 프로세스 종료 (더 진행 안 함)
                         driver.execute_script(harin_script)
-                        return True
+                        print("할인 스크립트 실행 완료")
+
+                        if check_discount_applied(park_id, driver):
+                            return True
+                        else:
+                            print("❗ 할인권 등록 실패로 판단됨")
+                            return False
+
                 return False
 
         else:
