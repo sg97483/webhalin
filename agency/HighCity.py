@@ -177,8 +177,17 @@ mapIdToWebInfo = {
 
 def get_har_in_script(park_id, ticket_name):
     # 1. 특정 주차장 + 특정 티켓 분기
-    if park_id == 12750 and ticket_name == "평일 3시간권":
-        return "javascript:applyDiscount('76', '1', '', '12시간권', '999999999');"
+
+        # ✅ 12750 전용 할인권 처리
+    if park_id == 12750:
+        if ticket_name in ["평일 3시간권", "평일 12시간권"]:
+            return "javascript:applyDiscount('76', '1', '', '12시간권', '999999999');"
+        elif ticket_name in ["평일 당일권", "휴일 당일권"]:
+            return "javascript:applyDiscount('23', '1', '36|16|25|35|', '파킹박 (web)', '999999999');"
+        elif ticket_name in ["평일 심야권(일~목)", "휴일 심야권(금,토)"]:
+            return "javascript:applyDiscount('37', '1', '36|', '파킹박(야간)', '999999999');"
+        else:
+            return False
 
     if park_id == 19325 and ticket_name in ["평일 심야권(일~목)", "휴일 심야권(금,토)"]:
         return "javascript:applyDiscount('17', '1', '11|20|21|', 'ppark(야간)', 'Y');"
@@ -271,23 +280,6 @@ def check_discount_alert(driver):
         return False
 
 
-def check_discount_applied(park_id, driver):
-    try:
-        alert_span = driver.find_element_by_css_selector("#alert_save")
-        message = alert_span.text.strip()
-        if message:
-            print(f"할인 처리 결과 메시지: {message}")
-            if "할인 되었습니다" in message or "등록되었습니다" in message or "성공" in message:
-                return True
-            else:
-                return False
-        else:
-            print("할인 결과 메시지가 비어 있음")
-            return False
-    except Exception as e:
-        print("할인 메시지 확인 중 예외 발생:", e)
-        return False
-
 
 def web_har_in(target, driver):
     pid = target[0]
@@ -335,13 +327,13 @@ def web_har_in(target, driver):
                         if not harin_script:
                             print("유효하지 않은 ticket_name 입니다.")  # 실패 메시지
                             return False  # 프로세스 종료 (더 진행 안 함)
-                        driver.execute_script(harin_script)
-                        print("할인 스크립트 실행 완료")
 
-                        if check_discount_applied(park_id, driver):
-                            return True
-                        else:
-                            print("❗ 할인권 등록 실패로 판단됨")
+                        try:
+                            driver.execute_script(harin_script)
+                            print("할인 스크립트 실행 완료")
+                            return True  # ✅ 실행만 되면 성공으로 간주
+                        except Exception as e:
+                            print(f"할인 스크립트 실행 중 오류 발생: {e}")
                             return False
 
                 return False

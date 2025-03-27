@@ -135,6 +135,13 @@ def web_har_in(target):
         exec_web_har_in(CenterSquare, target, driver)
         return True
 
+    elif park_type == ParkType.ETC:
+        exec_web_har_in(Etc, target, driver)
+        return True
+
+
+
+
     #if park_type == ParkType.IP_TIME:
     #    exec_web_har_in(Iptime, target, driver)
     #    return True
@@ -165,9 +172,7 @@ def web_har_in(target):
     #    return True
 
 
-    #elif park_type == ParkType.ETC:
-    #    exec_web_har_in(Etc, target, driver)
-    #    return True
+
 
 
     else:
