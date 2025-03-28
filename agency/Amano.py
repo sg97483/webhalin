@@ -64,16 +64,7 @@ mapIdToWebInfo = {
     #         "",
     #         "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
     #         ],
-    # 퍼시픽타워
-    19820: ["userId", "userPwd", "//*[@id='btnLogin']",
-            "schCarNo", "//*[@id='sForm']/input[3]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "15",  # 평일1일권
-            "16",  # 주말1일권
-            "",
-            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
-            "18"  # 3시간권
-            ],
+
     # 서울기록원
     19428: ["userId", "userPwd", "btnLogin",
             "schCarNo", "//*[@id='sForm']/input[3]",

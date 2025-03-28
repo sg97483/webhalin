@@ -27,7 +27,7 @@ side_nav_xpath = "/html/body/div[3]/table/tbody/tr/td[2]/button"
 
 # 대상 URL 리스트
 TARGET_URLS = ["http://kmp0000798.iptime.org/","http://kmp0000601.iptime.org/","http://kmp0000483.iptime.org/"
-    ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/"]
+    ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/"]
 
 def get_park_ids_by_urls(target_urls):
     """
@@ -56,7 +56,7 @@ dynamic_park_ids = get_park_ids_by_urls(TARGET_URLS)
 if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_URLS):
     #print("🚨 DEBUG: TARGET_URLS가 park_id 리스트로 변경됨! 원래 URL 리스트로 복구")
     TARGET_URLS = ["http://kmp0000798.iptime.org/","http://kmp0000601.iptime.org/","http://kmp0000483.iptime.org/"
-        ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/"]
+        ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["form-login-username", "form-login-password", "//*[@id='form-login']/div[3]/button", "//*[@id='visit-lpn']", "//*[@id='btn-find']"]
@@ -409,6 +409,48 @@ def handle_ticket(driver, park_id, ticket_name):
             print(f"ERROR: 19081에서 지원하지 않는 ticket_name: {ticket_name}")
             return False
         return click_discount_and_handle_popup(driver, ticket_xpath)
+
+
+    # ✅ 19457 전용 할인 처리
+    if park_id == 19457:
+        print(f"DEBUG: 19457 전용 할인 처리 시작 (ticket_name={ticket_name})")
+        if ticket_name in ["평일1일권", "주말1일권"]:
+            try:
+                rows = WebDriverWait(driver, 10).until(
+                    EC.presence_of_all_elements_located((By.CSS_SELECTOR, "tbody.gbox-body > tr.gbox-body-row"))
+                )
+                for row in rows:
+                    cells = row.find_elements(By.CLASS_NAME, "gbox-body-cell")
+                    if cells and "24시간할인" in cells[0].text:
+                        print(f"DEBUG: 24시간할인 텍스트 확인됨: {cells[0].text}")
+                        row.click()
+                        print("DEBUG: 할인권 클릭 완료")
+
+                        # 팝업 처리
+                        try:
+                            popup = WebDriverWait(driver, 5).until(
+                                EC.presence_of_element_located((By.CLASS_NAME, "modal-box"))
+                            )
+                            popup.find_element(By.XPATH, ".//a[@class='modal-btn']").click()
+                            WebDriverWait(driver, 5).until(
+                                EC.invisibility_of_element((By.CLASS_NAME, "modal-box"))
+                            )
+                            print("DEBUG: 팝업 닫기 완료")
+                        except TimeoutException:
+                            print("DEBUG: 팝업 감지되지 않음")
+
+                        return logout(driver)
+
+                print("ERROR: 19457 - '24시간할인' 할인권을 찾지 못함")
+                return False
+
+            except TimeoutException:
+                print("ERROR: 19457 - 할인권 목록 로딩 실패")
+                return False
+        else:
+            print(f"ERROR: 19457에서 지원하지 않는 ticket_name: {ticket_name}")
+            return False
+
 
 
     # ✅ 19477 전용 할인 처리
