@@ -3610,6 +3610,34 @@ def web_har_in(target, driver):
                     else:
                         return handle_invalid_ticket(driver)
 
+                elif park_id == 29143:
+                    if ticket_name == "평일3시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_ff2e31917bd441e2b0d8cad4ca4cdf3b']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name == "평일12시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_dc2e205d627843b894ac90d1350d1d7c']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name == "휴일12시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_1466adf34765486ba5b6195c9a9f704b']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name in ["휴일 심야권(토)", "휴일 심야권(일)"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_f5a7820eb5c94d89adb4f986b686334e']",
+                            btn_confirm_xpath
+                        )
+                    else:
+                        return handle_invalid_ticket(driver)
+
                 else:
                     try:
                         driver.implicitly_wait(3)

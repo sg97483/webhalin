@@ -374,17 +374,6 @@ mapIdToWebInfo = {
             "",
             "javascript:document.getElementById('discountTypeValue').click"
             ],
-    # 뉴욕프라자주차장(마두역)
-    45010: ["userId", "userPwd", "//*[@id='loginForm']/li[3]/input",
-            "schCarNo", "//*[@id='sForm']/input[4]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "848",  # 당일권(평일)
-            "",
-            "",  # 심야권
-            "javascript:document.getElementById('discountTypeValue').click",
-            "",
-            "847"  # 2시간권(파킹셰어)
-            ],
 
     # 송파빌딩
     12373: ["userId", "userPwd", "//*[@id='loginForm']/li[3]/input",
@@ -743,8 +732,7 @@ def get_har_in_value(park_id, ticket_name):
 
             elif park_id == Parks.JAYANG_PALACE \
                     or park_id == Parks.OMOK_BRIDGE \
-                    or park_id == Parks.LOTTE_CITY_HOTEL_MYEONG_DONG \
-                    or park_id == Parks.NEWYORK_PLAZA:
+                    or park_id == Parks.LOTTE_CITY_HOTEL_MYEONG_DONG:
                 if ticket_name[-4:] == "2시간권":
                     return web_info[11]
 

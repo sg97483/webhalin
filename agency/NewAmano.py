@@ -203,7 +203,7 @@ def enter_car_number(driver, car_number_last4, park_id):
         print(f"DEBUG: 차량번호 '{car_number_last4}' 입력 완료.")
 
         # park_id별 검색 버튼 처리
-        if park_id in [18938, 18577, 19906, 19258, 19239, 19331,19077,'16096']:  # 특정 park_id 전용 처리
+        if park_id in [18938, 18577, 19906, 19258, 19239, 19331,19077,16096,45010,14618]:  # 특정 park_id 전용 처리
             search_button = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.XPATH, "//input[@class='btnS1_1 btn' and @value='검색']"))
             )
@@ -368,7 +368,7 @@ def enter_password(driver, user_password, park_id):
     """
     try:
         # 19489, 18938 전용
-        if park_id in [19489, 18938, 19906,19258,19239,19331,19077,16096]:
+        if park_id in [19489, 18938, 19906,19258,19239,19331,19077,16096,45010,14618]:
             print(f"DEBUG: {park_id} 전용 비밀번호 필드 탐색")
             password_field = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.NAME, "userPwd"))
@@ -520,6 +520,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         16096: {"평일1일권": "73", "토요일 12시간권": "73", "3시간권": "372"},
         19820: {"평일1일권(월)": "15", "평일1일권(화)": "15", "평일1일권(수~금)": "15"},
         19437: {"평일1일권": "9", "주말1일권": "10", "심야권": "11"},
+        45010: {"평일1일권": "851", "심야권": "10", "2시간권": "850"},
         19453: {"휴일 당일권": "8", "평일 심야권": "12", "휴일 심야권": "12"},
         14618: {"평일 16시간권(기계식,승용)": "13", "휴일 16시간권(기계식,승용)": "13", "평일 당일권(자주식)": "19"},
         19077: {"평일1일권": "36", "주말1일권": "36", "심야권": "35", "주말 3시간권": "37"},
@@ -531,6 +532,18 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19954: {"평일 당일권": "4", "휴일 당일권": "4", "평일 6시간권": "7", "평일 심야권": "9"}
     }
 
+    # ✅ 45010 전용 메모 입력
+    if park_id == 45010:
+        try:
+            memo_field = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.ID, "memo"))
+            )
+            memo_field.clear()
+            memo_field.send_keys("파킹박")
+            print("DEBUG: 45010 메모 입력 완료")
+        except TimeoutException:
+            print("ERROR: 45010 메모 필드 찾기 실패")
+            return False
 
     # ✅ 19820 전용 처리
     if park_id == 19820:
@@ -578,8 +591,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
             print("ERROR: 18577 메모 필드 찾기 실패")
             return False
 
-    # ✅ 18938 전용 로직 (차량 검색 후 할인버튼 클릭)
-    if park_id == 18938:
+    if park_id in [18938, 45010]:
         print("DEBUG: 18938 전용 할인 로직 진행 중...")
         if not search_car_number_and_wait_discount(driver, driver.car_number_last4, button_id, park_id):
             return False
@@ -683,6 +695,42 @@ def try_force_logout_if_already_logged_in(driver, park_id):
         print("DEBUG: 사전 로그인 상태는 아닌 것으로 판단.")
         return False
 
+def close_popup_window_for_19239(driver, park_id):
+    """
+    park_id=19239 전용. 로그인 후 새로 뜨는 팝업 창에서 X 버튼 클릭하여 닫기
+    """
+    if park_id != 19239:
+        return
+
+    main_window = driver.current_window_handle
+    all_windows = driver.window_handles
+
+    # 새 창이 떴는지 확인
+    if len(all_windows) <= 1:
+        print("DEBUG: 새 창 팝업이 감지되지 않음.")
+        return
+
+    for handle in all_windows:
+        if handle != main_window:
+            print("DEBUG: 19239 팝업 창 감지됨. 전환 후 X 버튼 클릭 시도.")
+            driver.switch_to.window(handle)
+            try:
+                # 닫기 버튼 감지 및 클릭
+                close_button = WebDriverWait(driver, 5).until(
+                    EC.element_to_be_clickable((By.XPATH, "//div[@id='close_div']//label[contains(text(), 'X')]"))
+                )
+                close_button.click()
+                print("DEBUG: 팝업 X 버튼 클릭 완료.")
+            except TimeoutException:
+                print("ERROR: 팝업 X 버튼을 찾을 수 없음.")
+            except NoSuchElementException:
+                print("ERROR: 팝업 닫기 버튼 요소 없음.")
+            except Exception as e:
+                print(f"ERROR: 팝업 닫기 중 예외 발생: {e}")
+
+            # 팝업 닫혔을 것으로 간주하고 메인 창으로 복귀
+            driver.switch_to.window(main_window)
+            break
 
 def web_har_in(target, driver):
     """
@@ -740,7 +788,7 @@ def web_har_in(target, driver):
                         driver.execute_script("arguments[0].click();", login_button)
                         print("✅ 16096 로그인 JS 클릭 성공")
 
-                elif park_id in [18938, 18577, 19906, 19258, 19239, 19331, 19077]:
+                elif park_id in [18938, 18577, 19906, 19258, 19239, 19331, 19077, 45010, 14618]:
                     print(f"DEBUG: {park_id} 전용 로그인 버튼 클릭")
                     login_button = WebDriverWait(driver, 10).until(
                         EC.presence_of_element_located((By.CLASS_NAME, "login_area_btn"))
@@ -759,6 +807,9 @@ def web_har_in(target, driver):
                 print("ERROR: 로그인 버튼을 찾을 수 없음.")
 
             handle_alert(driver)
+
+            # 🔽 팝업 감지 후 X버튼 클릭 시도
+            close_popup_window_for_19239(driver, park_id)
 
             # ✅ 29118인 경우 팝업 처리 및 할인 페이지 이동
             handle_notice_popup_and_redirect(driver, park_id)
