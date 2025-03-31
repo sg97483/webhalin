@@ -508,7 +508,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         18945: {"평일 당일권": "19", "휴일 당일권": "16", "평일 심야권": "18"},
         19934: {"평일12시간권": "7", "주말당일권": "6", "심야권": "8"},  # 심야권 분기 처리
         19258: {"평일1일권": "15", "주말1일권": "15", "평일 심야권": "14"},
-        19444: {"평일 1일권": "17", "평일 6시간권": "99", "주말1일권": "17", "평일 저녁권": "42"},
+        19444: {"평일 1일권": "17", "평일 6시간권": "17", "주말1일권": "17", "평일 저녁권": "42"},
         18938: {"평일1일권": "778", "주말1일권": "778", "심야권": "780", "평일 3시간권": "781"},
         19906: {"평일3시간권": "21", "주말1일권": "22", "공휴일권": "22"},
         29122: {"3시간권": "9", "평일 심야권": "13", "주말1일권(일, 공휴일)": "12", "주말1일권(토요일)": "12"},
@@ -621,6 +621,69 @@ def logout(driver, park_id):
          return False
 
 
+def try_force_logout_if_already_logged_in(driver, park_id):
+    """
+    로그인 시 이미 로그인된 상태일 경우:
+    - 가려진 팝업 닫기
+    - 로그아웃 버튼 클릭
+    - '로그아웃하시겠습니까?' 팝업에서 Yes 클릭
+    - 로그인 페이지 복귀 확인
+    """
+    try:
+        # 로그아웃 버튼으로 로그인 상태 판단
+        logout_button = WebDriverWait(driver, 3).until(
+            EC.presence_of_element_located((By.XPATH, side_nav_xpath))
+        )
+        print("DEBUG: 이미 로그인된 상태 감지됨. 로그아웃 시도.")
+
+        # ✅ modal-window 팝업이 있을 경우 우선 닫기
+        try:
+            modal = WebDriverWait(driver, 2).until(
+                EC.presence_of_element_located((By.ID, "modal-window"))
+            )
+            print("DEBUG: modal-window 감지됨. 닫기 시도.")
+            close_btn = modal.find_element(By.CLASS_NAME, "modal-btn")
+            close_btn.click()
+            WebDriverWait(driver, 5).until(
+                EC.invisibility_of_element((By.ID, "modal-window"))
+            )
+            print("DEBUG: modal-window 닫기 완료.")
+        except TimeoutException:
+            print("DEBUG: modal-window 없음 (닫을 팝업 없음).")
+
+        # 로그아웃 버튼 클릭
+        logout_button.click()
+        print("DEBUG: 로그아웃 버튼 클릭 완료.")
+
+        # ✅ 로그아웃 확인 팝업 ('로그아웃하시겠습니까?') → Yes 버튼 클릭
+        try:
+            confirm_yes_button = WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, ".modal-box .modal-btn.btn-light-blue"))
+            )
+            confirm_yes_button.click()
+            print("DEBUG: 로그아웃 확인 팝업 'Yes' 버튼 클릭 완료.")
+        except TimeoutException:
+            print("DEBUG: 로그아웃 확인 팝업이 감지되지 않음 (정상일 수도 있음).")
+
+        # ✅ Alert 창이 있을 경우 닫기
+        try:
+            WebDriverWait(driver, 3).until(EC.alert_is_present()).accept()
+            print("DEBUG: 로그아웃 Alert 닫기 완료.")
+        except TimeoutException:
+            pass
+
+        # ✅ 로그인 페이지로 복귀했는지 확인 (ID 입력 필드 기준)
+        WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.ID, "userId"))
+        )
+        print("DEBUG: 로그아웃 후 로그인 페이지 로딩 완료.")
+        return True
+
+    except TimeoutException:
+        print("DEBUG: 사전 로그인 상태는 아닌 것으로 판단.")
+        return False
+
+
 def web_har_in(target, driver):
     """
     주차권 할인을 처리하는 메인 함수
@@ -633,6 +696,9 @@ def web_har_in(target, driver):
     if ParkUtil.is_park_in(park_id) and park_id in mapIdToWebInfo:
         login_url = ParkUtil.get_park_url(park_id)
         driver.get(login_url)
+
+        # ✅ 여기! 로그인 상태라면 강제 로그아웃 시도
+        try_force_logout_if_already_logged_in(driver, park_id)
 
         web_har_in_info = ParkUtil.get_park_lot_option(park_id)
         user_id = web_har_in_info[WebInfo.webHarInId]

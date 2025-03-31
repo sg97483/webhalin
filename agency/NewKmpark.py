@@ -27,7 +27,7 @@ side_nav_xpath = "/html/body/div[3]/table/tbody/tr/td[2]/button"
 
 # 대상 URL 리스트
 TARGET_URLS = ["http://kmp0000798.iptime.org/","http://kmp0000601.iptime.org/","http://kmp0000483.iptime.org/"
-    ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/"]
+    ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/","http://kmp0000089.iptime.org/"]
 
 def get_park_ids_by_urls(target_urls):
     """
@@ -56,7 +56,7 @@ dynamic_park_ids = get_park_ids_by_urls(TARGET_URLS)
 if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_URLS):
     #print("🚨 DEBUG: TARGET_URLS가 park_id 리스트로 변경됨! 원래 URL 리스트로 복구")
     TARGET_URLS = ["http://kmp0000798.iptime.org/","http://kmp0000601.iptime.org/","http://kmp0000483.iptime.org/"
-        ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/"]
+        ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/","http://kmp0000089.iptime.org/"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["form-login-username", "form-login-password", "//*[@id='form-login']/div[3]/button", "//*[@id='visit-lpn']", "//*[@id='btn-find']"]
@@ -397,6 +397,20 @@ def handle_ticket(driver, park_id, ticket_name):
     주차장 및 주차권에 따른 할인권 처리 (19081, 19610, 19588 포함)
     """
     print(f"DEBUG: 할인 처리 시작 (park_id={park_id}, ticket_name={ticket_name})")
+
+    if park_id == 19463:
+        print(f"DEBUG: 19463 전용 할인 처리 시작 (ticket_name={ticket_name})")
+        if ticket_name == "평일1일권":
+            try:
+                ticket_xpath = '//*[@id="page-view"]/table/tbody/tr[5]/td/button'
+                return click_discount_and_handle_popup(driver, ticket_xpath)
+            except Exception as e:
+                print(f"ERROR: 19463 - 할인 버튼 처리 중 예외 발생: {e}")
+                return False
+        else:
+            print(f"ERROR: 19463에서 지원하지 않는 ticket_name: {ticket_name}")
+            return False
+
 
     # ✅ 19081 전용 할인 처리
     if park_id == 19081:
