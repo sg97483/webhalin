@@ -548,7 +548,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
             print("ERROR: 45010 메모 필드 찾기 실패")
             return False
 
-    # ✅ 19820 전용 처리
+    # ✅ 19820 전용 처리ddddd
     if park_id == 19820:
         if ticket_name in ["평일1일권(월)", "평일1일권(화)", "평일1일권(수~금)"]:
             button_id = "15"  # 종일권(평일) 버튼의 id
@@ -601,9 +601,9 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         return wait_and_click_discount_button(driver, button_id)  # 🚨 여기서 종료!
 
     # 🚨 차량번호 입력 실패 시 즉시 중단 (들여쓰기 오류 수정)
-    if not enter_car_number(driver, driver.car_number_last4, park_id):
-        print("ERROR: 차량번호 검색 실패로 할인 중단.")
-        return False
+    #if not enter_car_number(driver, driver.car_number_last4, park_id):
+    #    print("ERROR: 차량번호 검색 실패로 할인 중단.")
+    #    return False
 
     # ✅ 일반적인 할인 버튼 클릭 및 로그아웃 처리
     return process_ticket_and_logout(driver, button_id, park_id)

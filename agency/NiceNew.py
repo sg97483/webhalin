@@ -371,14 +371,15 @@ def handle_notice_popup(driver):
     로그인 후 공지사항 팝업이 뜨는 경우 '닫기' 버튼 클릭
     """
     try:
-        popup_close_button = WebDriverWait(driver, 5).until(
-            EC.element_to_be_clickable((By.ID, "mf_wfm_body_COCD099P01_1_5_wframe_btn_close"))
+        close_button = WebDriverWait(driver, 5).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//input[@type='button' and @value='닫기' and contains(@id, '_wframe_btn_close')]")
+            )
         )
-        driver.execute_script("arguments[0].click();", popup_close_button)
+        driver.execute_script("arguments[0].click();", close_button)
         print("DEBUG: 공지사항 팝업 닫기 버튼 클릭 완료.")
     except TimeoutException:
         print("DEBUG: 공지사항 팝업이 감지되지 않음. (정상일 수 있음)")
-
 
 
 def handle_search_error_popup(driver):

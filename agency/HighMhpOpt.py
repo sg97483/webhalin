@@ -2992,7 +2992,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 11917:
-                    if ticket_name == "평일 당일권":
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화~목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_f4a6341cf9824fc1b35a25457f071464']",
