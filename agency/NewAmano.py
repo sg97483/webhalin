@@ -35,7 +35,8 @@ TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.k
     ,"https://a04088.parkingweb.kr","http://112.220.251.2","http://211.217.212.176/"
     ,"https://a15061.parkingweb.kr/discount/registration","https://a18134.pweb.kr/login"
 ,"http://175.114.59.25/discount/registration","http://211.202.87.149",
-               "http://211.244.148.17/","https://a15337.parkingweb.kr","http://121.134.61.62/login","http://a05388.parkingweb.kr"
+               "http://211.244.148.17/","https://a15337.parkingweb.kr","http://121.134.61.62/login"
+    ,"http://a05388.parkingweb.kr","http://175.195.124.15"
                ]
 
 def get_park_ids_by_urls(target_urls):
@@ -77,7 +78,7 @@ if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_
         ,"http://112.220.251.2","http://211.217.212.176/"
         ,"https://a15061.parkingweb.kr/discount/registration","https://a18134.pweb.kr/login"
                    ,"http://175.114.59.25/discount/registration","http://211.202.87.149"
-        ,"http://211.244.148.17/","https://a15337.parkingweb.kr","http://121.134.61.62/login","http://a05388.parkingweb.kr"]
+        ,"http://211.244.148.17/","https://a15337.parkingweb.kr","http://121.134.61.62/login","http://a05388.parkingweb.kr","http://175.195.124.15"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["userId", "userPwd", "//*[@id='btnLogin']", "schCarNo", "//*[@id='sForm']/input[3]"]
@@ -203,7 +204,7 @@ def enter_car_number(driver, car_number_last4, park_id):
         print(f"DEBUG: 차량번호 '{car_number_last4}' 입력 완료.")
 
         # park_id별 검색 버튼 처리
-        if park_id in [18938, 18577, 19906, 19258, 19239, 19331,19077,16096,45010,14618]:  # 특정 park_id 전용 처리
+        if park_id in [18938, 18577, 19906, 19258, 19239, 19331,19077,16096,45010,14618,19253]:  # 특정 park_id 전용 처리
             search_button = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.XPATH, "//input[@class='btnS1_1 btn' and @value='검색']"))
             )
@@ -280,6 +281,7 @@ def handle_popup_and_go_discount(driver, park_id):
     park_popup_and_discount_url = {
         19335: "http://112.216.125.10/discount/registration",
         19934: "https://a17687.pweb.kr/discount/registration",
+        19253: "https://175.195.124.15/discount/registration",
         19887: "https://a15820.parkingweb.kr/discount/registration"  # 🔥 추가
     }
 
@@ -368,7 +370,7 @@ def enter_password(driver, user_password, park_id):
     """
     try:
         # 19489, 18938 전용
-        if park_id in [19489, 18938, 19906,19258,19239,19331,19077,16096,45010,14618]:
+        if park_id in [19489, 18938, 19906,19258,19239,19331,19077,16096,45010,14618,19253]:
             print(f"DEBUG: {park_id} 전용 비밀번호 필드 탐색")
             password_field = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.NAME, "userPwd"))
@@ -517,6 +519,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19334: {"평일1일권": "8", "토요일권": "8"},
         19391: {"평일1일권": "9", "주말1일권": "9"},
         19858: {"평일1일권": "4", "주말1일권": "4"},
+        19253: {"평일1일권": "15", "주말1일권": "16", "평일 2시간권": "13", "평일 4시간권": "14", "주말 2시간권": "13"},
         16096: {"평일1일권": "73", "토요일 12시간권": "73", "3시간권": "372"},
         19820: {"평일1일권(월)": "15", "평일1일권(화)": "15", "평일1일권(수~금)": "15"},
         19437: {"평일1일권": "9", "주말1일권": "10", "심야권": "11"},
@@ -788,7 +791,7 @@ def web_har_in(target, driver):
                         driver.execute_script("arguments[0].click();", login_button)
                         print("✅ 16096 로그인 JS 클릭 성공")
 
-                elif park_id in [18938, 18577, 19906, 19258, 19239, 19331, 19077, 45010, 14618]:
+                elif park_id in [18938, 18577, 19906, 19258, 19239, 19331, 19077, 45010, 14618, 19253]:
                     print(f"DEBUG: {park_id} 전용 로그인 버튼 클릭")
                     login_button = WebDriverWait(driver, 10).until(
                         EC.presence_of_element_located((By.CLASS_NAME, "login_area_btn"))

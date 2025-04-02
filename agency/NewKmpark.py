@@ -27,7 +27,8 @@ side_nav_xpath = "/html/body/div[3]/table/tbody/tr/td[2]/button"
 
 # 대상 URL 리스트
 TARGET_URLS = ["http://kmp0000798.iptime.org/","http://kmp0000601.iptime.org/","http://kmp0000483.iptime.org/"
-    ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/","http://kmp0000089.iptime.org/"]
+    ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/"
+    ,"http://kmp0000089.iptime.org/","http://kmp0000403.iptime.org/"]
 
 def get_park_ids_by_urls(target_urls):
     """
@@ -56,7 +57,8 @@ dynamic_park_ids = get_park_ids_by_urls(TARGET_URLS)
 if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_URLS):
     #print("🚨 DEBUG: TARGET_URLS가 park_id 리스트로 변경됨! 원래 URL 리스트로 복구")
     TARGET_URLS = ["http://kmp0000798.iptime.org/","http://kmp0000601.iptime.org/","http://kmp0000483.iptime.org/"
-        ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/","http://kmp0000089.iptime.org/"]
+        ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/"
+        ,"http://kmp0000089.iptime.org/","http://kmp0000403.iptime.org/"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["form-login-username", "form-login-password", "//*[@id='form-login']/div[3]/button", "//*[@id='visit-lpn']", "//*[@id='btn-find']"]
@@ -409,6 +411,7 @@ def handle_ticket(driver, park_id, ticket_name):
                 return False
         else:
             print(f"ERROR: 19463에서 지원하지 않는 ticket_name: {ticket_name}")
+            logout(driver)
             return False
 
 
@@ -421,8 +424,22 @@ def handle_ticket(driver, park_id, ticket_name):
             ticket_xpath = "//button[contains(text(), '12시간(무료)지하')]"
         else:
             print(f"ERROR: 19081에서 지원하지 않는 ticket_name: {ticket_name}")
+            logout(driver)
             return False
         return click_discount_and_handle_popup(driver, ticket_xpath)
+
+        # ✅ 19616 전용 할인 처리
+        if park_id == 19616:
+            print(f"DEBUG: 19616 전용 할인 처리 시작 (ticket_name={ticket_name})")
+            if ticket_name in ["평일 1일권"]:
+                ticket_xpath = "//button[contains(text(), '24시간(무료) [무제한]')]"
+            elif ticket_name == "평일 3시간권":
+                ticket_xpath = "//button[contains(text(), '3시간(무료) [무제한]')]"
+            else:
+                print(f"ERROR: 19616에서 지원하지 않는 ticket_name: {ticket_name}")
+                logout(driver)
+                return False
+            return click_discount_and_handle_popup(driver, ticket_xpath)
 
 
     # ✅ 19457 전용 할인 처리
@@ -456,6 +473,7 @@ def handle_ticket(driver, park_id, ticket_name):
                         return logout(driver)
 
                 print("ERROR: 19457 - '24시간할인' 할인권을 찾지 못함")
+                logout(driver)
                 return False
 
             except TimeoutException:
@@ -498,7 +516,11 @@ def handle_ticket(driver, park_id, ticket_name):
                         return logout(driver)
 
                 print("ERROR: 19477 - '24시간(무료)' 할인권을 찾지 못함")
+
+                logout(driver)
+
                 return False
+
 
             except TimeoutException:
                 print("ERROR: 19477 - 할인권 목록 로딩 실패")
@@ -544,6 +566,9 @@ def handle_ticket(driver, park_id, ticket_name):
                     except Exception as e:
                         print(f"ERROR: 버튼 내부 처리 중 예외 발생: {e}")
                 print("ERROR: 19582 - 24시간(무료) [무제한] 버튼을 찾지 못함.")
+
+                logout(driver)
+
                 return False
             except TimeoutException:
                 print("ERROR: 19582 - 할인 버튼 목록 로딩 실패")
@@ -561,6 +586,7 @@ def handle_ticket(driver, park_id, ticket_name):
             ticket_xpath = '//*[@id="page-view"]/table/tbody/tr[5]/td/button'
         else:
             print(f"ERROR: 19610에서 지원하지 않는 ticket_name: {ticket_name}")
+            logout(driver)
             return False
         return click_discount_and_handle_popup(driver, ticket_xpath)
 
@@ -601,6 +627,7 @@ def handle_ticket(driver, park_id, ticket_name):
                         else:
                             print("WARNING: 버튼 비활성화 상태입니다")
                 print("ERROR: 원하는 할인권 버튼을 찾지 못함")
+                logout(driver)
                 return False
 
             except TimeoutException:

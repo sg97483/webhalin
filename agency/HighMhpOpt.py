@@ -1533,7 +1533,7 @@ def web_har_in(target, driver):
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "평일 저녁권":
+                    elif ticket_name == "평일 야간권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_8c5cc933733642199c59e0dd9b5a6ef4']",
@@ -1545,7 +1545,7 @@ def web_har_in(target, driver):
                             "//*[@id='discountItemsDataRadio_3c01c454ed874e229f2c202422735325']",
                             btn_confirm_xpath
                         )
-                    elif ticket_name == "주말 3시간권":
+                    elif ticket_name == "휴일 3시간권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_d2aa54e76b174a40a0ec29118966cca5']",

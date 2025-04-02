@@ -240,13 +240,14 @@ TARGET_URLS_NEW_AMANO = [
     "https://a04088.parkingweb.kr","http://112.220.251.2","http://211.217.212.176/"
     ,"https://a15061.parkingweb.kr/discount/registration","https://a18134.pweb.kr/login"
 ,"http://175.114.59.25/discount/registration","http://211.202.87.149"
-    ,"http://211.244.148.17/","https://a15337.parkingweb.kr","http://121.134.61.62/login","http://a05388.parkingweb.kr"]
+    ,"http://211.244.148.17/","https://a15337.parkingweb.kr","http://121.134.61.62/login","http://a05388.parkingweb.kr","http://175.195.124.15"]
 
 
 # 대상 URL 리스트
 TARGET_URLS_NEW_KMPARK = [
     "http://kmp0000798.iptime.org/","http://kmp0000601.iptime.org/","http://kmp0000483.iptime.org/"
-    ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/","http://kmp0000089.iptime.org/"]
+    ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/"
+    ,"http://kmp0000089.iptime.org/","http://kmp0000403.iptime.org/"]
 
 # DB에서 park_id 동적 조회
 dynamic_park_ids = get_park_ids_by_urls(TARGET_URLS)
