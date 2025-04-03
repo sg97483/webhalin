@@ -81,7 +81,7 @@ def exec_web_har_in(park_type, target, chrome_driver, lotName=None):
             in_car_check_db(pid, park_id)
             push_fcm_in_car_check(pid)
     elif park_type == CenterSquare :
-        if park_type.web_har_in(target):
+        if park_type.web_har_in(target,chrome_driver):
             in_car_check_db(pid, park_id)
             push_fcm_in_car_check(pid)
             print("센터스퀘어 입차처리성공")
@@ -130,7 +130,6 @@ def web_har_in(target):
         exec_web_har_in(NewKmpark, target, driver)
         return True
 
-
     elif park_type == ParkType.CENTER_SQUARE:
         exec_web_har_in(CenterSquare, target, driver)
         return True
@@ -139,12 +138,9 @@ def web_har_in(target):
         exec_web_har_in(Etc, target, driver)
         return True
 
-
-
-
-    #if park_type == ParkType.IP_TIME:
-    #    exec_web_har_in(Iptime, target, driver)
-    #    return True
+    elif park_type == ParkType.IP_TIME:
+        exec_web_har_in(Iptime, target, driver)
+        return True
 
 
     #if park_type == ParkType.GS:

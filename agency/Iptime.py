@@ -62,66 +62,99 @@ def web_har_in(target, driver):
     park_type = ParkType.get_park_type(park_id)
 
     trim_car_num = Util.all_trim(ori_car_num)
-    search_id = trim_car_num[-4:]  # 차량번호 마지막 4자리 사용
+    search_id = trim_car_num[-4:]  # 차량번호 마지막 4자리
 
     print(f"parkId = {park_id}, searchId = {search_id}")
     print(Colors.BLUE + ticket_name + Colors.ENDC)
 
     if ParkUtil.is_park_in(park_id):
-        if park_id == 19919:  # 삼성화재서초타워(하이파킹)
+        if park_id == 19919:  # 삼성화재서초타워
             login_url = ParkUtil.get_park_url(park_id)
             driver.get(login_url)
             driver.implicitly_wait(5)
 
             try:
-                # 1. 로그인 수행
-                driver.find_element(By.ID, "login_id").send_keys(ParkUtil.get_park_lot_option(park_id)["webHarInId"])
-                driver.find_element(By.ID, "login_pw").send_keys(ParkUtil.get_park_lot_option(park_id)["webHarInPw"])
-                driver.find_element(By.XPATH, "//input[@value='로그인']").click()
-                WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "searchCarNo")))
+                # 로그인
+                login_info = ParkUtil.get_park_lot_option(park_id)
+                print("DEBUG login_info:", login_info)
+                print("DEBUG type:", type(login_info))
 
-                # 2. 차량 번호 입력 및 확인 버튼 클릭
+                user_id = login_info[1]
+                user_pw = login_info[2]
+
+                driver.find_element(By.ID, "login_id").send_keys(user_id)
+                driver.find_element(By.ID, "login_pw").send_keys(user_pw)
+                driver.find_element(By.XPATH, "//input[@value='로그인']").click()
+
+                WebDriverWait(driver, 5).until(
+                    EC.presence_of_element_located((By.ID, "searchCarNo"))
+                )
+
+                # 차량번호 입력 및 확인
                 driver.find_element(By.ID, "searchCarNo").send_keys(search_id)
                 driver.find_element(By.ID, "btnSearch").click()
-                WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "divAjaxCarList")))
 
-                # 3. 검색된 차량 클릭
-                try:
-                    car_xpath = f"//td/a[contains(text(), '{ori_car_num}')]"
-                    car_element = driver.find_element(By.XPATH, car_xpath)
-                    car_element.click()
-                    WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "divAjaxFreeDiscount")))
-                except NoSuchElementException:
-                    print(Colors.RED + "검색된 차량이 없습니다." + Colors.ENDC)
+                WebDriverWait(driver, 5).until(
+                    EC.presence_of_element_located((By.ID, "divAjaxCarList"))
+                )
+
+                # 차량번호 링크 찾기
+                car_list_xpath = '//*[@id="divAjaxCarList"]//a'
+                all_links = driver.find_elements(By.XPATH, car_list_xpath)
+                matched = False
+                for link in all_links:
+                    car_text = link.text.strip()
+                    if ori_car_num in car_text:
+                        print("DEBUG: 차량번호 매칭됨:", car_text)
+                        driver.execute_script("arguments[0].click();", link)
+                        matched = True
+                        break
+
+                if not matched:
+                    print(Colors.RED + "차량번호가 포함된 링크를 찾을 수 없음." + Colors.ENDC)
                     return False
 
-                # 4. 티켓명에 따라 적절한 할인 버튼 클릭
-                discount_button_xpath = None
+                WebDriverWait(driver, 5).until(
+                    EC.presence_of_element_located((By.ID, "divAjaxFreeDiscount"))
+                )
 
+                # 할인권 버튼 XPath 선택
                 if ticket_name == "평일 12시간권(지하 6층 전용)":
-                    discount_button_xpath = "//button[contains(text(), '평일12시간권(공유서비스)')]"
+                    discount_button_xpath = '//*[@id="divAjaxFreeDiscount"]/div/div/button[1]'
                 elif ticket_name == "휴일 당일권(지하 6층 전용)":
-                    discount_button_xpath = "//button[contains(text(), '휴일당일권(공유서비스)')]"
+                    discount_button_xpath = '//*[@id="divAjaxFreeDiscount"]/div/div/button[2]'
                 elif ticket_name in ["평일 야간권(지하 6층 전용,금~토)", "평일 야간권(지하 6층 전용,일~목)"]:
-                    discount_button_xpath = "//button[contains(text(), '야간권(공유서비스)')]"
-
-                if discount_button_xpath:
-                    try:
-                        driver.find_element(By.XPATH, discount_button_xpath).click()
-                        WebDriverWait(driver, 3).until(EC.alert_is_present())
-                        driver.switch_to.alert.accept()  # 할인 적용 후 알림창 확인
-                        print(Colors.GREEN + f"{ticket_name} 할인 적용 완료!" + Colors.ENDC)
-                    except NoSuchElementException:
-                        print(Colors.RED + f"해당 할인권 버튼을 찾을 수 없습니다: {ticket_name}" + Colors.ENDC)
-                        return False
+                    discount_button_xpath = '//*[@id="divAjaxFreeDiscount"]/div/div/button[3]'
                 else:
                     print(Colors.RED + f"지원되지 않는 할인권: {ticket_name}" + Colors.ENDC)
                     return False
 
-                # 5. 로그아웃
-                driver.find_element(By.XPATH, "//input[@value='로그아웃']").click()
-                WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "login_id")))
-                print(Colors.GREEN + "로그아웃 완료, 다음 차량 진행!" + Colors.ENDC)
+                # 할인 버튼 클릭
+                try:
+                    discount_button = WebDriverWait(driver, 5).until(
+                        EC.element_to_be_clickable((By.XPATH, discount_button_xpath))
+                    )
+                    discount_button.click()
+                    try:
+                        WebDriverWait(driver, 3).until(EC.alert_is_present())
+                        driver.switch_to.alert.accept()
+                    except TimeoutException:
+                        print("DEBUG: 할인 적용 후 알림창 없음.")
+                    print(Colors.GREEN + f"{ticket_name} 할인 적용 완료!" + Colors.ENDC)
+                except Exception as e:
+                    print(Colors.RED + f"할인 버튼 클릭 실패: {e}" + Colors.ENDC)
+                    return False
+
+                # 로그아웃
+                try:
+                    logout_button = WebDriverWait(driver, 5).until(
+                        EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), '로그아웃')]"))
+                    )
+                    logout_button.click()
+                    WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "login_id")))
+                    print(Colors.GREEN + "로그아웃 완료, 다음 차량 진행!" + Colors.ENDC)
+                except Exception as e:
+                    print(Colors.RED + f"로그아웃 실패: {e}" + Colors.ENDC)
 
                 return True
 
@@ -138,3 +171,6 @@ def web_har_in(target, driver):
     else:
         print(Colors.BLUE + "웹할인 페이지가 없는 주차장 입니다." + Colors.ENDC)
         return False
+
+
+

@@ -240,7 +240,8 @@ TARGET_URLS_NEW_AMANO = [
     "https://a04088.parkingweb.kr","http://112.220.251.2","http://211.217.212.176/"
     ,"https://a15061.parkingweb.kr/discount/registration","https://a18134.pweb.kr/login"
 ,"http://175.114.59.25/discount/registration","http://211.202.87.149"
-    ,"http://211.244.148.17/","https://a15337.parkingweb.kr","http://121.134.61.62/login","http://a05388.parkingweb.kr","http://175.195.124.15"]
+    ,"http://211.244.148.17/","https://a15337.parkingweb.kr","http://121.134.61.62/login"
+    ,"http://a05388.parkingweb.kr","http://175.195.124.15","https://a14705.parkingweb.kr/login","https://a13687.parkingweb.kr/login"]
 
 
 # 대상 URL 리스트
@@ -466,7 +467,7 @@ parkTypeNoRequestMain = [
     Parks.PODO_MALL,
     Parks.NC_GANG_NAM,
     Parks.FINE_AVENUE,
-    19376,19333,19869
+    19376,19333
 ]
 
 type_to_search_css = {

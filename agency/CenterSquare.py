@@ -12,7 +12,7 @@ driver = webdriver.Chrome('chromedriver')
 driver.implicitly_wait(5)
 
 
-def web_har_in(target):
+def web_har_in(target, driver):
     park_id = int(Util.all_trim(target[1]))
     ori_car_num = Util.all_trim(target[2])
     ticket_name = target[3]
@@ -117,80 +117,34 @@ def web_har_in(target):
             print("24시간권 : 1019처리")
 
 
+    if ticket_name == '48시간권':
 
-
-
-    elif ticket_name == '48시간권':
-
-        try:
-
-            for i in range(2):  # 24시간권을 2번 적용
-
-                print(f"24시간권 {i + 1}번째 적용 중...")
-
-                # 24시간권 선택 대기 후 클릭
-
-                WebDriverWait(driver, 5).until(
-
-                    EC.element_to_be_clickable((By.XPATH, '//*[@id="boundlist-1021-listEl"]/ul/li[4]'))
-
-                ).click()
-
-                print(f"24시간권 {i + 1}번째 적용 완료!")
-
-                # 할인 적용 버튼 클릭
-
-                driver.find_element(By.XPATH, '// *[@id="btn_save-btnEl"]').click()
-
-                # 적용 완료 후 UI 갱신 기다리기
-
-                WebDriverWait(driver, 5).until(
-
-                    EC.presence_of_element_located((By.ID, "c_tiket-inputEl"))
-
-                )
-
-                # 다시 할인권 선택 UI 열기
-
-                driver.find_element(By.ID, "c_tiket-inputEl").click()
-
-                time.sleep(1)
-
-            print("✅ 48시간권: 24시간권 2번 적용 완료!")
-
-            return True  # 성공 시 True 반환
-
-
-        except Exception as e:
-
-            print(f"⚠️ 오류 발생: {e}")
-
-            return False  # 오류 발생 시 False 반환
-
+        repeat_count = 2
 
     elif ticket_name == '72시간권':
 
+        repeat_count = 3
+
+    else:
+
+        repeat_count = 0
+
+    if repeat_count > 0:
+
         try:
 
-            for i in range(3):  # 24시간권을 3번 적용
-
+            for i in range(repeat_count):
                 print(f"24시간권 {i + 1}번째 적용 중...")
-
-                # 24시간권 선택 대기 후 클릭
 
                 WebDriverWait(driver, 5).until(
 
-                    EC.element_to_be_clickable((By.XPATH, '//*[@id="boundlist-1021-listEl"]/ul/li[4]'))
+                    EC.element_to_be_clickable((By.XPATH, '//*[@id="boundlist-1019-listEl"]/ul/li[4]'))
 
                 ).click()
 
                 print(f"24시간권 {i + 1}번째 적용 완료!")
 
-                # 할인 적용 버튼 클릭
-
-                driver.find_element(By.XPATH, '// *[@id="btn_save-btnEl"]').click()
-
-                # 적용 완료 후 UI 갱신 기다리기
+                driver.find_element(By.ID, "btn_save-btnEl").click()
 
                 WebDriverWait(driver, 5).until(
 
@@ -198,22 +152,20 @@ def web_har_in(target):
 
                 )
 
-                # 다시 할인권 선택 UI 열기
-
                 driver.find_element(By.ID, "c_tiket-inputEl").click()
 
                 time.sleep(1)
 
-            print("✅ 72시간권: 24시간권 3번 적용 완료!")
+            print(f"✅ {ticket_name}: 24시간권 {repeat_count}번 적용 완료!")
 
-            return True  # 성공 시 True 반환
+            return True
 
 
         except Exception as e:
 
-            print(f"⚠️ 오류 발생: {e}")
+            print(f"⚠️ {ticket_name} 처리 중 오류 발생: {e}")
 
-            return False  # 오류 발생 시 False 반환
+            return False
 
     driver.find_element_by_xpath('// *[ @ id = "btn_save-btnEl"]').click()
     time.sleep(1)

@@ -588,16 +588,6 @@ mapIdToWebInfo = {
                 "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
                 ],
 
-        # 당산동청년주택
-        19869: ["userId", "userPwd", "//input[@type='submit']",
-                "schCarNo", "//*[@id='sForm']/input[3]",
-                "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-                "9",#당일권
-                "",  # 주말권 (주말권이 없는 경우 빈 값으로 유지)
-                "",  # 추가 항목 (예: 심야권, 현재 값이 없는 경우 빈 값)
-                "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-                ],
-
         # SK 명동
         14618: ["userId", "userPwd", "//input[@type='submit']",
             "schCarNo", "//*[@id='sForm']/input[3]",
