@@ -443,18 +443,6 @@ mapIdToWebInfo = {
     #         "",  # 2시간권
     #         ""
     #         ],
-
-    # 상암 전자회관
-    19376: ["userId", "userPwd", "//*[@id='btnLogin']",
-            "schCarNo", "//*[@id='sForm']/input[3]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "",  #
-            "14",  # 주말1일권
-            "14",  # 심야권
-            "javascript:document.getElementById('discountTypeValue').click",
-            "",
-            ""
-            ],
     # NC백화점 강서점
     19333: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",

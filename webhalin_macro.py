@@ -143,15 +143,11 @@ def web_har_in(target):
         return True
 
 
+
     #if park_type == ParkType.GS:
     #    exec_web_har_in(Gs, target, driver)
     #    print(f"park_id: {park_id}, park_type: {park_type}, expected: {ParkType.GS}")
     #    return True
-
-
-
-
-
 
 
     #elif park_type == ParkType.GS2:

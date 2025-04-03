@@ -4,6 +4,8 @@ import Colors
 from park import ParkUtil, ParkType, Parks
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import UnexpectedAlertPresentException, NoAlertPresentException
+from selenium.webdriver.common.alert import Alert
 import WebInfo
 
 mapIdToWebInfo = {
@@ -155,6 +157,16 @@ mapIdToWebInfo = {
             "javascript:applyDiscount('28', '', '1', '', 'ppark(연박5일)', '1', '0');",  # 연박5일권"",
             ],
 
+    # TURU 을지트윈타워 (할인 버튼을 직접 클릭하므로 스크립트는 불필요)
+    19174: [
+        "name_form",  # 0: ID 입력 필드
+        "pwd_form",  # 1: PW 입력 필드
+        "//*[@id='login']/table[1]/tbody/tr[3]/td[2]/input",  # 2: 로그인 버튼
+        "carNumber",  # 3: 차량번호 입력
+        "/html/body/table[2]/tbody/tr[5]/td/input",  # 4: 검색 버튼
+        "BTN_공유서비스 종일"  # 5: 할인 버튼 ID (예시)
+    ],
+
     # 오라카이 청계산
     19185: ["user_id", "password", "//input[@type='button']",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
@@ -165,8 +177,8 @@ mapIdToWebInfo = {
             ],
 
     # GS타임즈 반포2동공영(티바디쪽 뭐 안됨)
-    19492: ["user_id", "password", "//input[@type='button']",
-            "license_plate_number", "//*[@id=""search_form""]/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+    19492: ["user_id", "user_pw", "//*[@id='btnLogin']",
+            "txtCarno", "//*[@id='btnFind']",
             "chk",
             "javascript:applyDiscount('09', 'CP0802', '1', '', '24시간(유료)', '0', '0') ",  # 평일1일권
             "javascript:applyDiscount('16', 'CP0802', '1', '', '휴일 당일권', '0', '0')  ",  # 주말
@@ -248,6 +260,22 @@ def get_har_in_script(park_id, ticket_name):
             return "javascript:applyDiscount('80', '1', '25|29|', '2일권', '1', '0');"
         else:
             return False  # ❗️트윈시티남산에서 지정된 티켓 외는 실패 처리
+
+
+    if park_id == 19174:
+        if ticket_name in ["평일 당일권(월)", "평일 당일권(화~금)"]:
+            return "BTN_공유서비스 종일"
+        elif ticket_name in ["휴일 24시간권(토)", "휴일 24시간권(일)"]:
+            return "BTN_공유서비스 주말"
+        elif ticket_name == "평일 12시간권(화~금)":
+            return "BTN_12시간권_O2O"
+        elif ticket_name in ["평일 심야권", "휴일 심야권"]:
+            return "BTN_공유서비스 야간"
+        elif ticket_name == "평일 3시간권":
+            return "BTN_공유서비스 (3시간)"
+        else:
+            return False
+
 
     if park_id == 19364:
         if ticket_name in [
@@ -374,9 +402,28 @@ def web_har_in(target, driver):
                             return False  # 프로세스 종료 (더 진행 안 함)
 
                         try:
-                            driver.execute_script(harin_script)
+                            if harin_script.startswith("BTN_"):
+                                driver.find_element_by_id(harin_script).click()
+
+                                # ✅ 버튼 클릭 후 confirm 팝업 자동 처리
+                                WebDriverWait(driver, 5).until(EC.alert_is_present())
+                                alert = driver.switch_to.alert
+                                print(f"Alert Text: {alert.text}")  # 팝업 메시지 로그 출력
+                                alert.accept()  # 팝업 '확인' 클릭
+
+                            else:
+                                driver.execute_script(harin_script)
+
                             print("할인 스크립트 실행 완료")
-                            return True  # ✅ 실행만 되면 성공으로 간주
+                            return True
+                        except UnexpectedAlertPresentException:
+                            try:
+                                alert = driver.switch_to.alert
+                                print(f"[ERROR 처리 중 Alert 발생] Alert Text: {alert.text}")
+                                alert.accept()
+                            except NoAlertPresentException:
+                                pass
+                            return False
                         except Exception as e:
                             print(f"할인 스크립트 실행 중 오류 발생: {e}")
                             return False

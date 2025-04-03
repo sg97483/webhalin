@@ -50,6 +50,7 @@ parkTypeHighCity = [
     Parks.GRAND_CENTRAL,
     Parks.HAEUNDAE_IPARK,
     20864,
+    19174,
     19185,
     19492,#반포2동공영
 
@@ -231,7 +232,7 @@ TARGET_URLS_NICE = [
 
 # 대상 URL 리스트
 TARGET_URLS_NEW_AMANO = [
-    "https://a14926.parkingweb.kr/login","https://a05203.parkingweb.kr","http://112.216.125.10",
+    "https://a14926.parkingweb.kr/login","https://a05203.parkingweb.kr","http://112.216.125.10/login",
     "https://a18822.pweb.kr","https://a14041.parkingweb.kr/","https://a18147.pweb.kr/",
     "https://a12647.parkingweb.kr/","https://www.amanopark.co.kr/",
     "https://a093.parkingweb.kr/","https://a17687.pweb.kr/","http://112.217.102.42/","http://a15820.parkingweb.kr/",
@@ -241,7 +242,9 @@ TARGET_URLS_NEW_AMANO = [
     ,"https://a15061.parkingweb.kr/discount/registration","https://a18134.pweb.kr/login"
 ,"http://175.114.59.25/discount/registration","http://211.202.87.149"
     ,"http://211.244.148.17/","https://a15337.parkingweb.kr","http://121.134.61.62/login"
-    ,"http://a05388.parkingweb.kr","http://175.195.124.15","https://a14705.parkingweb.kr/login","https://a13687.parkingweb.kr/login"]
+    ,"http://a05388.parkingweb.kr","http://175.195.124.15","https://a14705.parkingweb.kr/login"
+    ,"https://a13687.parkingweb.kr/login","https://s1148.parkingweb.kr/login"
+    ,"https://s1151.parkingweb.kr:6650/login","https://a14417.parkingweb.kr/login"]
 
 
 # 대상 URL 리스트
@@ -466,8 +469,7 @@ parkTypeNoRequestMain = [
     Parks.SUN_HWA_BUILDING,
     Parks.PODO_MALL,
     Parks.NC_GANG_NAM,
-    Parks.FINE_AVENUE,
-    19376,19333
+    Parks.FINE_AVENUE,19333
 ]
 
 type_to_search_css = {

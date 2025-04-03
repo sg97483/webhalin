@@ -26,7 +26,7 @@ btn_confirm_xpath = "/html/body/mhp-console/div/div[2]/div/div/main/div[2]/div[1
 side_nav_xpath = "/html/body/div[3]/table/tbody/tr/td[2]/button"
 
 # 대상 URL 리스트
-TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.kr","http://112.216.125.10"
+TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.kr","http://112.216.125.10/login"
     ,"https://a18822.pweb.kr","https://a14041.parkingweb.kr/","https://a18147.pweb.kr/",
                "https://a12647.parkingweb.kr/","https://www.amanopark.co.kr/"
     ,"https://a093.parkingweb.kr/","https://a17687.pweb.kr/","http://112.217.102.42/"
@@ -36,7 +36,9 @@ TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.k
     ,"https://a15061.parkingweb.kr/discount/registration","https://a18134.pweb.kr/login"
 ,"http://175.114.59.25/discount/registration","http://211.202.87.149",
                "http://211.244.148.17/","https://a15337.parkingweb.kr","http://121.134.61.62/login"
-    ,"http://a05388.parkingweb.kr","http://175.195.124.15","https://a14705.parkingweb.kr/login","https://a13687.parkingweb.kr/login"
+    ,"http://a05388.parkingweb.kr","http://175.195.124.15","https://a14705.parkingweb.kr/login"
+    ,"https://a13687.parkingweb.kr/login","https://s1148.parkingweb.kr/login"
+    ,"https://s1151.parkingweb.kr:6650/login","https://a14417.parkingweb.kr/login"
                ]
 
 def get_park_ids_by_urls(target_urls):
@@ -68,7 +70,7 @@ dynamic_park_ids = get_park_ids_by_urls(TARGET_URLS)
 if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_URLS):
     #print("🚨 DEBUG: TARGET_URLS가 park_id 리스트로 변경됨! 원래 URL 리스트로 복구")
     TARGET_URLS = ["https://a14926.parkingweb.kr/login", "https://a05203.parkingweb.kr",
-                   "http://112.216.125.10","https://a18822.pweb.kr",
+                   "http://112.216.125.10/login","https://a18822.pweb.kr",
                    "https://a14041.parkingweb.kr/","https://a18147.pweb.kr/","https://a12647.parkingweb.kr/"
         ,"https://www.amanopark.co.kr/","https://a093.parkingweb.kr/"
         ,"https://a17687.pweb.kr/","http://112.217.102.42/"
@@ -79,7 +81,9 @@ if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_
         ,"https://a15061.parkingweb.kr/discount/registration","https://a18134.pweb.kr/login"
                    ,"http://175.114.59.25/discount/registration","http://211.202.87.149"
         ,"http://211.244.148.17/","https://a15337.parkingweb.kr","http://121.134.61.62/login"
-        ,"http://a05388.parkingweb.kr","http://175.195.124.15","https://a14705.parkingweb.kr/login","https://a13687.parkingweb.kr/login"]
+        ,"http://a05388.parkingweb.kr","http://175.195.124.15","https://a14705.parkingweb.kr/login"
+        ,"https://a13687.parkingweb.kr/login","https://s1148.parkingweb.kr/login"
+        ,"https://s1151.parkingweb.kr:6650/login","https://a14417.parkingweb.kr/login"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["userId", "userPwd", "//*[@id='btnLogin']", "schCarNo", "//*[@id='sForm']/input[3]"]
@@ -283,7 +287,8 @@ def handle_popup_and_go_discount(driver, park_id):
         19335: "http://112.216.125.10/discount/registration",
         19934: "https://a17687.pweb.kr/discount/registration",
         19253: "https://175.195.124.15/discount/registration",
-        19887: "https://a15820.parkingweb.kr/discount/registration"  # 🔥 추가
+        19887: "https://a15820.parkingweb.kr/discount/registration",
+        19842: "https://a14417.parkingweb.kr/discount/registration"
     }
 
     if park_id not in park_popup_and_discount_url:
@@ -521,11 +526,14 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19391: {"평일1일권": "9", "주말1일권": "9"},
         19858: {"평일1일권": "4", "주말1일권": "4"},
         19869: {"평일1일권": "9", "주말1일권": "9"},
+        19842: {"평일 2시간권": "13", "평일 4시간권": "18", "평일 6시간권": "19", "심야권": "20", "평일 당일권": "12", "주말 당일권": "14"},
+        19903: {"평일4시간권": "9", "평일 당일권": "10", "주말1일권": "11"},
         19253: {"평일1일권": "15", "주말1일권": "16", "평일 2시간권": "13", "평일 4시간권": "14", "주말 2시간권": "13"},
         16096: {"평일1일권": "73", "토요일 12시간권": "73", "3시간권": "372"},
         19820: {"평일1일권(월)": "15", "평일1일권(화)": "15", "평일1일권(수~금)": "15"},
         19437: {"평일1일권": "9", "주말1일권": "10", "심야권": "11"},
         19935: {"평일 2시간권": "5", "평일 4시간권": "6"},
+        19904: {"평일4시간권": "5", "주말 당일권": "6"},
         45010: {"평일1일권": "851", "심야권": "10", "2시간권": "850"},
         19453: {"휴일 당일권": "8", "평일 심야권": "12", "휴일 심야권": "12"},
         14618: {"평일 16시간권(기계식,승용)": "13", "휴일 16시간권(기계식,승용)": "13", "평일 당일권(자주식)": "19"},
@@ -748,8 +756,12 @@ def web_har_in(target, driver):
     ticket_name = target[3]
 
     if ParkUtil.is_park_in(park_id) and park_id in mapIdToWebInfo:
-        login_url = ParkUtil.get_park_url(park_id)
-        driver.get(login_url)
+
+        if park_id == 19335:  # 예: 문제 발생하는 park_id
+            driver.get("http://112.216.125.10/discount/registration")
+        else:
+            login_url = ParkUtil.get_park_url(park_id)
+            driver.get(login_url)
 
         # ✅ 여기! 로그인 상태라면 강제 로그아웃 시도
         try_force_logout_if_already_logged_in(driver, park_id)
