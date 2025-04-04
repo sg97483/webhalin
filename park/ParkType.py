@@ -86,6 +86,7 @@ parkTypeIparking = [
     19462,#화광빌딩
     19476, #이마트TR송림점
     19921, #하이파킹 성수무신사캠퍼스N1
+    29220, #하이파킹 종로5가역하이뷰더광장
     19579, #카카오 T 이마트구로점
     19508,
     19509,
@@ -244,7 +245,7 @@ TARGET_URLS_NEW_AMANO = [
     ,"http://211.244.148.17/","https://a15337.parkingweb.kr","http://121.134.61.62/login"
     ,"http://a05388.parkingweb.kr","http://175.195.124.15","https://a14705.parkingweb.kr/login"
     ,"https://a13687.parkingweb.kr/login","https://s1148.parkingweb.kr/login"
-    ,"https://s1151.parkingweb.kr:6650/login","https://a14417.parkingweb.kr/login"]
+    ,"https://s1151.parkingweb.kr:6650/login","https://a14417.parkingweb.kr/login","http://123.214.186.154","https://a17902.pweb.kr"]
 
 
 # 대상 URL 리스트

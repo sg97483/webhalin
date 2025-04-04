@@ -38,7 +38,8 @@ TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.k
                "http://211.244.148.17/","https://a15337.parkingweb.kr","http://121.134.61.62/login"
     ,"http://a05388.parkingweb.kr","http://175.195.124.15","https://a14705.parkingweb.kr/login"
     ,"https://a13687.parkingweb.kr/login","https://s1148.parkingweb.kr/login"
-    ,"https://s1151.parkingweb.kr:6650/login","https://a14417.parkingweb.kr/login"
+    ,"https://s1151.parkingweb.kr:6650/login","https://a14417.parkingweb.kr/login","http://123.214.186.154"
+,"https://a17902.pweb.kr"
                ]
 
 def get_park_ids_by_urls(target_urls):
@@ -83,7 +84,7 @@ if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_
         ,"http://211.244.148.17/","https://a15337.parkingweb.kr","http://121.134.61.62/login"
         ,"http://a05388.parkingweb.kr","http://175.195.124.15","https://a14705.parkingweb.kr/login"
         ,"https://a13687.parkingweb.kr/login","https://s1148.parkingweb.kr/login"
-        ,"https://s1151.parkingweb.kr:6650/login","https://a14417.parkingweb.kr/login"]
+        ,"https://s1151.parkingweb.kr:6650/login","https://a14417.parkingweb.kr/login","http://123.214.186.154","https://a17902.pweb.kr"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["userId", "userPwd", "//*[@id='btnLogin']", "schCarNo", "//*[@id='sForm']/input[3]"]
@@ -288,7 +289,9 @@ def handle_popup_and_go_discount(driver, park_id):
         19934: "https://a17687.pweb.kr/discount/registration",
         19253: "https://175.195.124.15/discount/registration",
         19887: "https://a15820.parkingweb.kr/discount/registration",
-        19842: "https://a14417.parkingweb.kr/discount/registration"
+        19842: "https://a14417.parkingweb.kr/discount/registration",
+        19941: "https://a17902.pweb.kr/discount/registration"
+
     }
 
     if park_id not in park_popup_and_discount_url:
@@ -526,14 +529,16 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19391: {"평일1일권": "9", "주말1일권": "9"},
         19858: {"평일1일권": "4", "주말1일권": "4"},
         19869: {"평일1일권": "9", "주말1일권": "9"},
+        19941: {"평일당일권": "15", "휴일당일권": "15", "심야권": "18", "3시간권": "16"},
         19842: {"평일 2시간권": "13", "평일 4시간권": "18", "평일 6시간권": "19", "심야권": "20", "평일 당일권": "12", "주말 당일권": "14"},
         19903: {"평일4시간권": "9", "평일 당일권": "10", "주말1일권": "11"},
         19253: {"평일1일권": "15", "주말1일권": "16", "평일 2시간권": "13", "평일 4시간권": "14", "주말 2시간권": "13"},
-        16096: {"평일1일권": "73", "토요일 12시간권": "73", "3시간권": "372"},
+        16096: {"평일1일권": "734", "토요일 12시간권": "73", "3시간권": "372"},
         19820: {"평일1일권(월)": "15", "평일1일권(화)": "15", "평일1일권(수~금)": "15"},
         19437: {"평일1일권": "9", "주말1일권": "10", "심야권": "11"},
         19935: {"평일 2시간권": "5", "평일 4시간권": "6"},
         19904: {"평일4시간권": "5", "주말 당일권": "6"},
+        19376: {"주말1일권": "20", "심야권": "13"},
         45010: {"평일1일권": "851", "심야권": "10", "2시간권": "850"},
         19453: {"휴일 당일권": "8", "평일 심야권": "12", "휴일 심야권": "12"},
         14618: {"평일 16시간권(기계식,승용)": "13", "휴일 16시간권(기계식,승용)": "13", "평일 당일권(자주식)": "19"},
@@ -623,28 +628,41 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
 
 
 def logout(driver, park_id):
-     """
-     주차장 ID에 따른 로그아웃 처리 함수
-     """
-     try:
-         if park_id == 18577:
-             print("DEBUG: 18577 전용 로그아웃 버튼 찾기")
-             logout_button = WebDriverWait(driver, 10).until(
-                 EC.presence_of_element_located((By.XPATH, "//button[@class='btnDelete btn' and @onclick='logout()']"))
-             )
-         else:
-             print("DEBUG: 일반 주차장 로그아웃 버튼 찾기")
-             logout_button = WebDriverWait(driver, 10).until(
-                 EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/table/tbody/tr/td[2]/button"))
-             )
+    """
+    주차장 ID에 따른 로그아웃 처리 함수
+    """
+    try:
+        if park_id == 18577:
+            print("DEBUG: 18577 전용 로그아웃 버튼 찾기")
+            logout_button = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, "//button[@class='btnDelete btn' and @onclick='logout()']"))
+            )
 
-         logout_button.click()
-         print("DEBUG: 로그아웃 버튼 클릭 완료.")
-         return True
+        elif park_id == 16096:
+            print("DEBUG: 16096 전용 로그아웃 버튼 XPath로 탐색")
+            try:
+                logout_button = WebDriverWait(driver, 5).until(
+                    EC.element_to_be_clickable((By.XPATH, "//button[@onclick='logout()']"))
+                )
+            except TimeoutException:
+                logout_button = WebDriverWait(driver, 5).until(
+                    EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'LOGOUT')]"))
+                )
 
-     except TimeoutException:
-         print("ERROR: 로그아웃 버튼을 찾을 수 없음.")
-         return False
+        else:
+            print("DEBUG: 일반 주차장 로그아웃 버튼 찾기")
+            logout_button = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/table/tbody/tr/td[2]/button"))
+            )
+
+        logout_button.click()
+        print("DEBUG: 로그아웃 버튼 클릭 완료.")
+        return True
+
+    except TimeoutException:
+        print("ERROR: 로그아웃 버튼을 찾을 수 없음.")
+        return False
+
 
 
 def try_force_logout_if_already_logged_in(driver, park_id):

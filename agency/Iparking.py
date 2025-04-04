@@ -76,6 +76,12 @@ mapIdToWebInfo = {
             "#carList > tr",
             "2"
             ],
+    # 하이파킹 종로5가역하이뷰더광장
+    29220: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
     # 카카오 T 이마트구로점
     19579: ["id", "password", "//*[@id='login']",
             "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
@@ -340,6 +346,35 @@ def web_har_in(target, driver):
         if park_id == 19446:
             print(Colors.YELLOW + "분당" + Colors.ENDC)
             driver.find_element(By.XPATH, "//*[@id='productList']/tr[3]/td[3]/button").click()
+
+        # ✅ 하이파킹 종로5가역하이뷰더광장 예외 처리
+        elif park_id == 29220:
+            product_list = driver.find_elements(By.CSS_SELECTOR, "#productList > tr")
+            found = False
+
+            for row in product_list:
+                try:
+                    label = row.find_element(By.TAG_NAME, "td").text.strip()
+                    apply_button = row.find_element(By.CSS_SELECTOR, "button.btn-apply")
+
+                    if ticket_name in ["평일 당일권(기계식)", "휴일 당일권(기계식)"] and "기계식종일권(공유서비스)" in label:
+                        driver.execute_script("arguments[0].click();", apply_button)
+                        print(Colors.BLUE + "✅ 기계식종일권(공유서비스) 할인 적용 완료." + Colors.ENDC)
+                        found = True
+                        break
+
+                    elif ticket_name == "평일 3시간권(기계식)" and "기계식3시간권공유서비스" in label:
+                        driver.execute_script("arguments[0].click();", apply_button)
+                        print(Colors.BLUE + "✅ 기계식3시간권공유서비스 할인 적용 완료." + Colors.ENDC)
+                        found = True
+                        break
+
+                except Exception as ex:
+                    print(Colors.RED + f"❌ 할인 버튼 처리 중 오류: {ex}" + Colors.ENDC)
+
+            if not found:
+                print(Colors.YELLOW + f"⚠️ '{ticket_name}'에 해당하는 할인권을 찾지 못했습니다." + Colors.ENDC)
+                return False
 
         # ✅ 성수무신사 N1 예외 처리 (24시간 무료)
         elif park_id == 19921:
