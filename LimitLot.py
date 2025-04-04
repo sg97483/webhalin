@@ -19,6 +19,10 @@ def do_limit_lot(driver):
     try:
         driver.get(main_url)
 
+        # ✅ 로그인 필드가 로딩될 때까지 최대 10초 대기
+        WebDriverWait(driver, 8).until(EC.presence_of_element_located((By.ID, "ol_id")))
+        WebDriverWait(driver, 8).until(EC.presence_of_element_located((By.ID, "ol_pw")))
+
         # 로그인 입력
         driver.find_element(By.ID, "ol_id").send_keys("admin")
         driver.find_element(By.ID, "ol_pw").send_keys("!@#park0413")

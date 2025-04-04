@@ -265,6 +265,6 @@ while True:
             except Exception as e:
                 print(Colors.RED + f"드라이버 재생성 실패: {e}" + Colors.ENDC)
 
-    time.sleep(600)
+    time.sleep(500)
 
     print("메크로 재시작")

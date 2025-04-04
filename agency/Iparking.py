@@ -82,6 +82,12 @@ mapIdToWebInfo = {
             "#carList > tr",
             "2"
             ],
+    # 하이파킹 SK-C타워(구, 충무로15빌딩)
+    29175: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
     # 카카오 T 이마트구로점
     19579: ["id", "password", "//*[@id='login']",
             "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
@@ -375,6 +381,45 @@ def web_har_in(target, driver):
             if not found:
                 print(Colors.YELLOW + f"⚠️ '{ticket_name}'에 해당하는 할인권을 찾지 못했습니다." + Colors.ENDC)
                 return False
+
+        elif park_id == 29175:
+            print(Colors.YELLOW + "하이파킹 SK-C타워 할인 처리" + Colors.ENDC)
+            product_list = driver.find_elements(By.CSS_SELECTOR, "#productList > tr")
+            found = False
+
+            normalized_ticket_name = ticket_name.replace(" ", "")  # 공백 제거
+
+            for row in product_list:
+                try:
+                    label = row.find_element(By.TAG_NAME, "td").text.strip()
+                    apply_button = row.find_element(By.CSS_SELECTOR, "button.btn-apply")
+
+                    if normalized_ticket_name in ["평일당일권", "휴일당일권"] and "종일권" in label:
+                        driver.execute_script("arguments[0].click();", apply_button)
+                        print(Colors.BLUE + "✅ 종일권 할인 적용 완료." + Colors.ENDC)
+                        found = True
+                        break
+
+                    elif normalized_ticket_name == "평일6시간권" and "평일6시간권(공유서비스)" in label:
+                        driver.execute_script("arguments[0].click();", apply_button)
+                        print(Colors.BLUE + "✅ 평일6시간권(공유서비스) 할인 적용 완료." + Colors.ENDC)
+                        found = True
+                        break
+
+                    elif normalized_ticket_name == "야간8시간권" and "야간8시간권(공유서비스)" in label:
+                        driver.execute_script("arguments[0].click();", apply_button)
+                        print(Colors.BLUE + "✅ 야간8시간권(공유서비스) 할인 적용 완료." + Colors.ENDC)
+                        found = True
+                        break
+
+                except Exception as ex:
+                    print(Colors.RED + f"❌ 할인 버튼 처리 중 오류: {ex}" + Colors.ENDC)
+
+            if not found:
+                print(Colors.YELLOW + f"⚠️ '{ticket_name}'에 해당하는 할인권을 찾지 못했습니다." + Colors.ENDC)
+                return False
+
+
 
         # ✅ 성수무신사 N1 예외 처리 (24시간 무료)
         elif park_id == 19921:
