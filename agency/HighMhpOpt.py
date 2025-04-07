@@ -272,7 +272,7 @@ def web_har_in(target, driver):
                         return handle_invalid_ticket(driver)
 
                 elif park_id == 19056:
-                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화~목)","평일 당일권(금)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_70b125d06c80438ea71eb0e16ac97453']",
@@ -312,7 +312,7 @@ def web_har_in(target, driver):
                             "//*[@id='discountItemsDataRadio_2a4dc029f46c4f6db129d0414e8f239e']",
                             btn_confirm_xpath
                         )
-                    elif ticket_name == "평일 당일권":
+                    elif ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_c987154216e04efeb3fb9489ee26eec0']",
@@ -324,7 +324,7 @@ def web_har_in(target, driver):
                             "//*[@id='discountItemsDataRadio_05b8a7fddc7a4cd8bbc182de742a0d4d']",
                             btn_confirm_xpath
                         )
-                    elif ticket_name in ["휴일 당일권(일,휴일)", "휴일 당일권(토)"]:
+                    elif ticket_name in ["휴일 당일권(일)", "휴일 당일권(토)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_7ae6d01495844d348abb36445126085c']",
@@ -341,13 +341,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19195:
-                    if ticket_name == "평일 당일권(월,화)":
-                        return select_discount_and_confirm(
-                            driver,
-                            "//*[@id='discountItemsDataRadio_44399cdcbf0f4441aab566bae1d011aa']",
-                            btn_confirm_xpath
-                        )
-                    elif ticket_name == "평일 당일권(수,목,금)":
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_44399cdcbf0f4441aab566bae1d011aa']",
@@ -359,7 +353,7 @@ def web_har_in(target, driver):
                             "//*[@id='discountItemsDataRadio_44399cdcbf0f4441aab566bae1d011aa']",
                             btn_confirm_xpath
                         )
-                    elif ticket_name == "심야권":
+                    elif ticket_name == "평일 심야권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_6652d51c020a4563b76bcaa5ce01b01c']",
@@ -442,7 +436,7 @@ def web_har_in(target, driver):
                         return handle_invalid_ticket(driver)
 
                 elif park_id == 19410:
-                    if ticket_name in ["평일 당일권","평일 당일권(월)", "평일 당일권(화~목)", "평일 당일권(금)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_cd47c75107254ed29bd5d1d9f16484bc']",
@@ -486,7 +480,7 @@ def web_har_in(target, driver):
                         return handle_invalid_ticket(driver)
 
                 elif park_id == 19452:
-                    if ticket_name in ["평일 당일권(월)", "평일 당일권", "평일 당일권(화~목)", "평일 당일권(금)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_5f1421c404084c46a9b637e1d9677cee']",
@@ -515,7 +509,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19429:
-                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화~목)", "평일 당일권(금)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_042528b5d3ab49649ee9b5b778066f04']",
@@ -638,7 +632,7 @@ def web_har_in(target, driver):
                         return handle_invalid_ticket(driver)
 
                 elif park_id == 19736:
-                    if ticket_name == "평일 당일권":
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_74fb60bc858a4f11bb7ef1037dd7f99e']",
@@ -660,19 +654,19 @@ def web_har_in(target, driver):
                         return handle_invalid_ticket(driver)
 
                 elif park_id == 19884:
-                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화~목)", "평일 당일권(금)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_300ea3bbf5a34f958f0775540914bbc8']",
                             btn_confirm_xpath
                         )
-                    elif ticket_name == "평일3시간권":
+                    elif ticket_name == "평일 3시간권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_87112a42195f4b2bb74d361c9df526e5']",
                             btn_confirm_xpath
                         )
-                    elif ticket_name == "주말 당일권":
+                    elif ticket_name == "휴일 당일권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_e1b16345f40241838a4c3d9030e31a8f']",
@@ -688,7 +682,7 @@ def web_har_in(target, driver):
                         return handle_invalid_ticket(driver)
 
                 elif park_id == 19431:
-                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화~목)", "평일 당일권(금)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_ae05ad12967e45f3a69f4a580911f302']",
@@ -732,7 +726,7 @@ def web_har_in(target, driver):
                         return handle_invalid_ticket(driver)
 
                 elif park_id == 19623:
-                    if ticket_name in ["평일 당일권(월~화)", "평일 당일권(수~금)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_4f99601465fe4e73b7c3d191314bb99f']",
@@ -797,7 +791,7 @@ def web_har_in(target, driver):
                             "//*[@id='discountItemsDataRadio_56ebbfff25f0468b9c6e4173993c4371']",
                             btn_confirm_xpath
                         )
-                    elif ticket_name == "평일 당일권":
+                    elif ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_304b0e27e797440aa566c76c5a3d1e84']",
@@ -809,7 +803,7 @@ def web_har_in(target, driver):
                             "//*[@id='discountItemsDataRadio_56ebbfff25f0468b9c6e4173993c4371']",
                             btn_confirm_xpath
                         )
-                    elif ticket_name == "휴일 당일권":
+                    elif ticket_name in ["휴일 당일권(토)", "휴일 당일권(일)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_23e7f199652040b484a54e50c01bcecf']",
@@ -870,7 +864,7 @@ def web_har_in(target, driver):
                             "//*[@id='discountItemsDataRadio_dff6c473af654c879e5f66684c95a8dc']",
                             btn_confirm_xpath
                         )
-                    elif ticket_name in ["평일 당일권","평일 당일권(월)", "평일 당일권(화~목)", "평일 당일권(금)"]:
+                    elif ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_9743cbe2680b4b2781df83d1e249b5c1']",
@@ -956,7 +950,7 @@ def web_har_in(target, driver):
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name in ["평일 당일권(월)", "평일 당일권(화~목)", "평일 당일권(금)"]:
+                    elif ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_52c14814da124f42a328b6c3f112a5d1']",
@@ -985,7 +979,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 16360:
-                    if ticket_name in ["평일 당일권(금)", "평일 당일권(월~목)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_17ae285ede5a48b3b08d7d978c697100']",
@@ -1036,7 +1030,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19854:
-                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화~목)", "평일 당일권(금)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_a4a8203e4d0849f2b04eab78db8f296a']",
@@ -1061,7 +1055,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19084:
-                    if ticket_name == "평일 당일권(화~금)":
+                    if ticket_name in ["평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_d6d051e84b6b46c7a15f3c6585ffa5d3']",
@@ -1086,7 +1080,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19087:
-                    if ticket_name in ["평일 당일권","평일 당일권(월)", "평일 당일권(화~금)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_1ae2a8de4ee3443fa642029664129fe2']",
@@ -1218,7 +1212,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19180:
-                    if ticket_name in ["평일 당일권","평일 당일권(월)", "평일 당일권(화~금)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_7dfb8b113abe4a7497d8507356508631']",
@@ -1250,7 +1244,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19464:
-                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화~목)", "평일 당일권(금)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_75705c0ae7c14149abb48f2b1607ea61']",
@@ -1305,13 +1299,13 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 18959:
-                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화~목)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_98cfa3a5c9ab49c5b2c714c5d3aa8c71']",
                             btn_confirm_xpath
                         )
-                    elif ticket_name == "휴일 당일권(금,토,일)":
+                    elif ticket_name == "휴일 당일권(토,일)":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_1d22c084b03d4343b00d5c793437e1b4']",
@@ -1399,7 +1393,7 @@ def web_har_in(target, driver):
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name in ["평일 당일권","평일 당일권(월)", "평일 당일권(화~목)", "평일 당일권(금)"]:
+                    elif ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_a03b0f1d646544aba442bda631eb9004']",
@@ -1424,7 +1418,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 13044:
-                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화~목)", "평일 당일권(금)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_4bd97cbea0264eae8cca7b4c843cc2a5']",
@@ -1506,7 +1500,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 16184:
-                    if ticket_name == "평일 당일권":
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_05ee060b94104543a0355f149bed5850']",
@@ -1726,7 +1720,7 @@ def web_har_in(target, driver):
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name in ["평일 당일권(월)", "평일 당일권(화~목)", "평일 당일권(금)"]:
+                    elif ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_94d415f534874270a74d3526b2803970']",
@@ -1740,7 +1734,7 @@ def web_har_in(target, driver):
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "주말 당일권":
+                    elif ticket_name == "휴일 당일권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_609b9ed03f2b421e9614104fdd3d3bef']",
@@ -1776,7 +1770,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 29106:
-                    if ticket_name == "평일 당일권":
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_7990ebda29534c6a90548adf1860cf94']",
@@ -1998,7 +1992,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19631:
-                    if ticket_name == "평일 당일권":
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_fa86ec6632fa4ab68647d1552132cd47']",
@@ -2029,21 +2023,21 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19896:
-                    if ticket_name == "평일 당일권":
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_9c26a426d9864fec8b520b9ac80faf4f']",
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "야간권":
+                    elif ticket_name in ["평일 야간권", "휴일 야간권"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_880656fce3af442c90a945576827d60f']",
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "심야권":
+                    elif ticket_name in ["평일 심야권", "휴일 심야권"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_0e7d3a8c6bf741578fc69f1b42f84b8b']",
@@ -2061,7 +2055,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 29144:
-                    if ticket_name == "평일당일권":
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_c42ecec063434e199f9e72d4df3015a9']",
@@ -2201,7 +2195,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19952:
-                    if ticket_name in ["평일 당일권", "평일 당일권(월)", "평일 당일권(화~목)", "평일 당일권(금)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_58bc8859e93a48aaa26193dcaf2a9c80']",
@@ -2330,7 +2324,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 15437:
-                    if ticket_name == "평일 당일권":
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_67776a96054f4011a1e8b49f1b3b3f7d']",
@@ -2355,7 +2349,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19466:
-                    if ticket_name == "평일 당일권":
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_3c8837ff5b01456293fca3571a787ff0']",
@@ -2425,7 +2419,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19143:
-                    if ticket_name in ["평일 당일권(월,금)", "평일 당일권(화)", "평일 당일권(수,목)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_7a8e137287674f0f8a8b5de984711843']",
@@ -2502,7 +2496,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 12766:
-                    if ticket_name == "평일 당일권(월~목)":
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_982b5eea171942a98fee24d34d2b002e']",
@@ -2551,42 +2545,42 @@ def web_har_in(target, driver):
 
                 elif park_id == 19159:
 
-                    if ticket_name == "평일 시간권(3시간)":
+                    if ticket_name == "평일 3시간권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_e785342f8f8c41e0803ad956c02afde9']",
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "평일 당일권":
+                    elif ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_751fb62b69b3421ca6ef1481a67e9bd6']",
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "휴일 심야권":
+                    elif ticket_name in ["평일 심야권(월~금)", "휴일 심야권(토~일)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_ebf251aaae8a453b9579d6d1b5ae3beb']",
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "휴일 시간권(3시간)":
+                    elif ticket_name == "휴일 3시간권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_83241f5178274b37846760913c18656b']",
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "휴일 시간권(5시간)":
+                    elif ticket_name == "휴일 5시간권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_99908b21a36c4b1b8ce765e8639e3c6c']",
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "주말 당일권":
+                    elif ticket_name == "휴일 당일권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_43e3f5f9811c43958e51b35f3daa23ba']",
@@ -2654,7 +2648,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19614:
-                    if ticket_name == "평일 당일권":
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_3ba2ee7fad8f401b8759bf4ab983424a']",
@@ -2662,7 +2656,7 @@ def web_har_in(target, driver):
                         )
 
 
-                    elif ticket_name == "평일 12시간권":
+                    elif ticket_name in ["평일 12시간권(월,화)", "평일 12시간권(수~금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_78cd981b00f149caa968aa397ed3da87']",
@@ -2756,7 +2750,7 @@ def web_har_in(target, driver):
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "평일 당일권":
+                    elif ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_68669f476a744137b45f47658bf4abaf']",
@@ -2780,7 +2774,7 @@ def web_har_in(target, driver):
                             "//*[@id='discountItemsDataRadio_ec5c80560578496d878daaab76bdce0e']",
                             btn_confirm_xpath
                         )
-                    elif ticket_name == "평일 오후6시간권":
+                    elif ticket_name == "평일 오후 6시간권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_1a23ebe833d14502ae98c18b2529ebdc']",
@@ -2792,21 +2786,21 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19881:
-                    if ticket_name == "평일 당일권":
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_b63949b0f0a24f89a2c3bf54697dcfb1']",
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "심야권":
+                    elif ticket_name in ["휴일 심야권", "평일 심야권"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_b6bc44edee904d0f8c41cf1c1e5e47e8']",
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "주말 당일권":
+                    elif ticket_name == "휴일 당일권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_d11a6e98b91e41fab7bafb100bbe2e6a']",
@@ -2852,7 +2846,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 12997:
-                    if ticket_name in ["평일 당일권","평일 당일권(월)", "평일 당일권(화~금)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_0f37a084c6f84269875140ad891345e4']",
@@ -2880,14 +2874,14 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 29134:
-                    if ticket_name in ["평일 심야권(일~목)", "휴일 심야권(금,토)"]:
+                    if ticket_name in ["심야권(일~목)", "심야권(금,토)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_eb99712ae3f44aa8bedcf913503beb1d']",
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name in ["평일 당일권","평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수~금)"]:
+                    elif ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_992c024ddf004b0688668d13c9e41fda']",
@@ -2913,14 +2907,14 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 29137:
-                    if ticket_name == "평일 당일권":
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_882642f3956545fe91e74eee811b6eb5']",
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "평일 오후5시간권":
+                    elif ticket_name == "평일 오후 5시간권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_eb61d16906f340fdb50fc9a19c2adff3']",
@@ -2998,7 +2992,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 11917:
-                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화~목)", "평일 당일권(금)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_f4a6341cf9824fc1b35a25457f071464']",
@@ -3087,7 +3081,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19874:
-                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화~목)", "평일 당일권(금)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_a4b8a6426bb24b72a179ddad68751dfb']",
@@ -3118,7 +3112,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19491:
-                    if ticket_name == "평일 당일권":
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_ef01393155a14a0c915b2326253ecb8b']",
@@ -3161,7 +3155,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19601:
-                    if ticket_name in ["평일 당일권(월,수,목)", "평일 당일권(화)", "평일 당일권(금)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_e97f864e960646ac9eaad63cd0836661']",
@@ -3199,7 +3193,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 29183:
-                    if ticket_name == "평일 당일권":
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_db7f14826c8f40499080f048fe81276f']",
@@ -3639,6 +3633,24 @@ def web_har_in(target, driver):
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_f5a7820eb5c94d89adb4f986b686334e']",
+                            btn_confirm_xpath
+                        )
+                    else:
+                        return handle_invalid_ticket(driver)
+
+
+
+                elif park_id == 19809:
+                    if ticket_name in ["평일 3시간권(월,화,수,목)", "평일 3시간권(금)"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_144d95693c20477cb227ffb818dd15cf']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name == "평일 당일권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_cba9c81e96364369866a96925135a194']",
                             btn_confirm_xpath
                         )
                     else:

@@ -62,6 +62,10 @@ def first_access(park_id, current_url):
 
 
 def get_park_search_css(park_id):
+
+    if park_id == 19492:
+        return "#tbData > tbody > tr"
+
     park_type = ParkType.get_park_type(park_id)
 
 
@@ -131,6 +135,22 @@ def check_search(park_id, driver):
                 return False
             except Exception as e:
                 print(f"ERROR: AMANO 처리 중 오류 발생: {e}")
+                return False
+
+        # check_search() 내에 추가
+        if park_id == 16159:
+            try:
+                element = WebDriverWait(driver, 5).until(
+                    EC.presence_of_element_located((By.XPATH, "//td[h3[contains(text(), '차량 정보')]]"))
+                )
+                if "차량번호:" in element.text:
+                    print(Colors.GREEN + "✅ 차량 검색 성공 (16159)" + Colors.ENDC)
+                    return True
+                else:
+                    print(Colors.YELLOW + "❌ 차량 정보 없음 (16159)" + Colors.ENDC)
+                    return False
+            except TimeoutException:
+                print("ERROR: 16159 차량 정보 영역 로딩 시간 초과")
                 return False
 
         # 기본 CSS Selector 기반 검색
@@ -207,6 +227,70 @@ def check_same_car_num(parkId, oriCarNum, driver):
 
         except Exception as e:
             print(Colors.RED + f"ERROR: 차량번호 확인 중 오류 발생 (19174): {e}" + Colors.ENDC)
+            return False
+
+
+    elif parkId == 19492:
+        try:
+            td = driver.find_element(By.CSS_SELECTOR, "#tbData > tbody > tr > td:nth-child(3)")
+            full_text = td.get_attribute("innerText").strip()
+            car_num_line = full_text.split("\n")[0].strip()  # "35가7062"만 추출
+            print(f"DEBUG: 추출된 차량번호: {car_num_line}")
+
+            ori_last7 = oriCarNum[-7:]
+            site_last7 = car_num_line[-7:]
+
+            if oriCarNum == car_num_line:
+                print(Colors.GREEN + "차량번호 정확 일치 (19492)" + Colors.ENDC)
+                return True
+            if ori_last7 == site_last7:
+                print(Colors.GREEN + "차량번호 7자리 일치 (19492)" + Colors.ENDC)
+                return True
+            if ori_last7[1:] == site_last7[1:]:
+                print(Colors.GREEN + "앞자리 제외 일치 (19492)" + Colors.ENDC)
+                return True
+
+            print(Colors.MARGENTA + f"차량번호 불일치 (사이트: {car_num_line})" + Colors.ENDC)
+            return False
+        except Exception as e:
+            print(Colors.RED + f"ERROR: 차량번호 추출 실패 (19492): {e}" + Colors.ENDC)
+            return False
+
+
+    elif parkId == 16159:
+        try:
+            info_td = WebDriverWait(driver, 5).until(
+                EC.presence_of_element_located((By.XPATH, "//td[h3[contains(text(), '차량 정보')]]"))
+            )
+            text = info_td.text.strip()
+            print(f"DEBUG: 차량 정보 영역 텍스트:\n{text}")
+
+            for line in text.splitlines():
+                if "차량번호:" in line:
+                    site_car_num = line.split("차량번호:")[1].strip()
+                    print(f"DEBUG: 사이트 표시 차량번호: {site_car_num}")
+
+                    ori_last7 = oriCarNum[-7:]
+                    site_last7 = site_car_num[-7:]
+
+                    if oriCarNum == site_car_num:
+                        print(Colors.GREEN + "차량번호 정확 일치 (16159)" + Colors.ENDC)
+                        return True
+                    if ori_last7 == site_last7:
+                        print(Colors.GREEN + "차량번호 7자리 일치 (16159)" + Colors.ENDC)
+                        return True
+                    if ori_last7[1:] == site_last7[1:]:
+                        print(Colors.GREEN + "앞자리 제외 일치 (16159)" + Colors.ENDC)
+                        return True
+
+                    print(Colors.MARGENTA + f"차량번호 불일치 (16159, 찾은 번호: {site_car_num})" + Colors.ENDC)
+                    return False
+
+            print(Colors.RED + "차량번호 줄을 찾을 수 없습니다. (16159)" + Colors.ENDC)
+            return False
+
+        except Exception as e:
+            print(Colors.RED + f"ERROR: 차량번호 확인 중 오류 발생 (16159): {e}" + Colors.ENDC)
             return False
 
     # ✅ 일반 케이스 (기존 로직)
