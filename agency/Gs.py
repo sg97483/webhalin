@@ -105,50 +105,43 @@ import re
 import re
 
 def click_matching_car_number(driver, ori_car_num):
-    """
-    🔍 차량 검색 결과에서 ori_car_num과 '마지막 6자리'가 일치하는 차량을 찾아 클릭
-    - ✅ 87조5953 허용
-    - ❌ 5953 불허
-    - ✅ 여러 개의 검색 결과가 있을 경우, 정확한 차량 선택
-    """
     try:
         car_rows = driver.find_elements(By.CSS_SELECTOR, "#divAjaxCarList > tbody > tr")
 
-        print(f"DEBUG: 검색된 차량 개수 = {len(car_rows)}")  # 🚀 검색된 차량 개수 출력
-
-        target_car_link = None  # 클릭할 차량 저장 변수
+        print(f"DEBUG: 검색된 차량 개수 = {len(car_rows)}")
 
         for row in car_rows:
             try:
                 car_link = row.find_element(By.TAG_NAME, "a")
                 car_number = car_link.text.strip()
 
-                print(f"DEBUG: 검색된 차량번호 = {car_number}")  # 🚀 검색된 모든 차량번호 출력
+                print(f"DEBUG: 검색된 차량번호 = {car_number}")
 
-                # 🔄 숫자 + 한글만 남기기 (공백, 특수문자 제거)
                 clean_car_number = re.sub(r'[^가-힣0-9]', '', car_number)
                 clean_ori_number = re.sub(r'[^가-힣0-9]', '', ori_car_num)
 
-                # ✅ "87조5953"과 마지막 6자리가 일치하는 경우만 허용
                 if clean_car_number.endswith(clean_ori_number[-6:]):
                     print(Colors.BLUE + f"✅ 클릭 대상 차량번호 발견: {car_number}" + Colors.ENDC)
-                    target_car_link = car_link  # 해당 차량 선택
+
+                    # 🔍 onclick 속성 추출 및 실행
+                    onclick_script = car_link.get_attribute("onclick")
+                    if onclick_script:
+                        driver.execute_script(onclick_script)
+                        print(Colors.BLUE + "🚗 차량 선택 스크립트 실행 완료!" + Colors.ENDC)
+                        return True
+                    else:
+                        print(Colors.RED + "❌ onclick 스크립트를 찾을 수 없음." + Colors.ENDC)
 
             except Exception as e:
-                print(f"DEBUG: 차량번호 찾기 오류 - {e}")
+                print(f"DEBUG: 차량번호 파싱 오류 - {e}")
 
-        # ✅ 찾은 차량번호가 있으면 클릭!
-        if target_car_link:
-            print(Colors.BLUE + "🚗 차량 클릭 시도!" + Colors.ENDC)
-            driver.execute_script("arguments[0].click();", target_car_link)
-            return True
-
-        print(Colors.RED + "❌ 차량번호를 찾을 수 없음." + Colors.ENDC)
+        print(Colors.RED + "❌ 일치하는 차량번호를 찾을 수 없음." + Colors.ENDC)
         return False
 
     except Exception as e:
-        print(Colors.RED + f"❌ 차량번호 선택 중 오류 발생: {e}" + Colors.ENDC)
+        print(Colors.RED + f"❌ 차량번호 선택 중 예외 발생: {e}" + Colors.ENDC)
         return False
+
 
 
 

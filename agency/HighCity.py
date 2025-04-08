@@ -8,16 +8,22 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import UnexpectedAlertPresentException, NoAlertPresentException
 from selenium.webdriver.common.alert import Alert
+from selenium.webdriver.support.ui import Select
 import WebInfo
 
 mapIdToWebInfo = {
     # HighCity 동일타워
-    15313: ["user_id", "password", "//input[@type='button']",
-            "license_plate_number", "//input[@type='button']",
-            "chk",
-            "javascript:applyDiscount('09', '', '1', '', '어플주말당일권(웹할인)', '1', '0');",
-            "javascript:applyDiscount('10', '', '1', '', '어플평일당일권(웹할인)', '1', '0');",
-            "javascript:applyDiscount('14', '', '1', '', '어플공휴일당일권(웹할인)', '1', '0');"],
+    15313: [
+        "user_id",  # ID 입력 필드 ID
+        "user_pw",  # PW 입력 필드 ID
+        "//*[@id='btnLogin']",  # 로그인 버튼 XPath
+        "txtCarno",  # 차량번호 입력 필드 ID (← 실제는 이거임)
+        "//*[@id='btnFind']",  # 차량 검색 버튼 XPath
+        "",  # radio 버튼 없음
+        "-",  # weekday 스크립트 사용 안함
+        "-",  # weekend 스크립트 사용 안함
+        "-",  # night 스크립트 사용 안함
+    ],
     # 남산스퀘어
     13007: ["user_id", "password", "//input[@type='button']",
             "license_plate_number", "//input[@type='button']",
@@ -192,6 +198,27 @@ mapIdToWebInfo = {
     # 하이파킹 충무로흥국빌딩
     16159: ["name", "pwd", "//*[@id='login']/table[1]/tbody/tr[3]/td[2]/input",
             "carNumber", "/html/body/table[2]/tbody/tr[5]/td/input",
+            "",  # radio 버튼 처리 안함
+            "-",  # btnItem 없음
+            "-",  # weekday 스크립트 제거
+            "-",  # weekend 스크립트 제거
+            "-",  # night 스크립트 제거
+            ],
+
+    # 하이파킹 천안G스퀘어
+    19323: ["login_id", "login_pw", "//*[@id='bodyCSS']/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # radio 버튼 처리 안함
+            "-",  # btnItem 없음
+            "-",  # weekday 스크립트 제거
+            "-",  # weekend 스크립트 제거
+            "-",  # night 스크립트 제거
+            ],
+
+    # 	DWI 마곡595빌딩 주차장
+    29248: ["txtID", "txtPassword",
+            "//*[@id='lbtnLogin']",
+            "ContentPlaceHolder_txtVehicleNo", "//*[@id='ContentPlaceHolder_lbtnSearch']",
             "",  # radio 버튼 처리 안함
             "-",  # btnItem 없음
             "-",  # weekday 스크립트 제거
@@ -449,6 +476,159 @@ def web_har_in(target, driver):
 
                             except Exception as e:
                                 print(Colors.RED + f"❌ 19492 할인 처리 실패: {e}" + Colors.ENDC)
+                                return False
+
+                        if park_id == 29248:
+                            try:
+                                # <a class="sale-popup-open"> 요소 클릭 (차량 선택)
+                                a_tag = WebDriverWait(driver, 5).until(
+                                    EC.element_to_be_clickable((By.CSS_SELECTOR, "a.sale-popup-open"))
+                                )
+                                driver.execute_script("arguments[0].click();", a_tag)
+                                print(Colors.GREEN + "✅ 29248 차량 클릭 성공" + Colors.ENDC)
+
+                                Util.sleep(1.5)  # 팝업 또는 화면 전환 대기
+
+                                # ticket_name에 따라 할인권 선택
+                                if ticket_name in ["평일1일권", "주말1일권"]:
+                                    select_element = WebDriverWait(driver, 5).until(
+                                        EC.presence_of_element_located((By.ID, "ContentPlaceHolder_ddlDiscountName"))
+                                    )
+                                    select = Select(select_element)
+                                    select.select_by_visible_text("일일권")
+                                    print(Colors.GREEN + "✅ '일일권' 선택 성공" + Colors.ENDC)
+
+                                    # 적용 버튼 클릭
+                                    apply_button = WebDriverWait(driver, 5).until(
+                                        EC.element_to_be_clickable((By.ID, "ContentPlaceHolder_lbtnDiscountApply"))
+                                    )
+                                    apply_button.click()
+                                    print(Colors.GREEN + "✅ 할인 적용 버튼 클릭 완료" + Colors.ENDC)
+
+                                    # 알림창 처리
+                                    WebDriverWait(driver, 3).until(EC.alert_is_present())
+                                    alert = driver.switch_to.alert
+                                    print(f"알림창 텍스트: {alert.text}")
+                                    alert.accept()
+                                    print(Colors.GREEN + "✅ 알림창 확인 완료" + Colors.ENDC)
+
+                                    return True
+                                else:
+                                    print(Colors.RED + f"❌ 정의되지 않은 ticket_name: {ticket_name}" + Colors.ENDC)
+                                    return False
+
+                            except Exception as e:
+                                print(Colors.RED + f"❌ 29248 처리 중 오류: {e}" + Colors.ENDC)
+                                return False
+
+                        if park_id == 19323:
+                            try:
+                                # 차량번호 비교 성공 후: <a onclick="fnCarInfoTotal(...)"> 클릭 처리
+                                car_link = WebDriverWait(driver, 5).until(
+                                    EC.presence_of_element_located((By.CSS_SELECTOR, "#divAjaxCarList a"))
+                                )
+                                onclick_script = car_link.get_attribute("onclick")
+                                if onclick_script:
+                                    driver.execute_script(onclick_script)
+                                    print(Colors.GREEN + "✅ 차량 클릭 스크립트 실행 완료 (19323)" + Colors.ENDC)
+                                else:
+                                    print(Colors.RED + "❌ 차량 클릭 스크립트 없음 (19323)" + Colors.ENDC)
+                                    return False
+
+                                Util.sleep(1.5)  # 팝업 로딩 대기
+
+                                # ticket_name → 버튼 텍스트 매핑
+                                ticket_button_map = {
+                                    "평일 12시간권": "12시간(공유서비스)",
+                                    "휴일 12시간권": "12시간(공유서비스)",
+                                    "평일 24시간권": "24시간(공유서비스)",
+                                    "휴일 24시간권": "24시간(공유서비스)",
+                                    "평일 48시간권": "48시간(공유서비스)",
+                                    "휴일 48시간권": "48시간(공유서비스)",
+                                    "평일 60시간권": "60시간(공유서비스)",
+                                    "휴일 60시간권": "60시간(공유서비스)",
+                                }
+
+                                if ticket_name not in ticket_button_map:
+                                    print(Colors.RED + f"❌ 정의되지 않은 ticket_name: {ticket_name}" + Colors.ENDC)
+                                    return False
+
+                                button_text = ticket_button_map[ticket_name]
+
+                                # 팝업 내 버튼 XPath 클릭
+                                button_xpath = f"//div[@id='divAjaxFreeDiscount']//button[contains(text(), '{button_text}')]"
+                                btn = WebDriverWait(driver, 5).until(
+                                    EC.element_to_be_clickable((By.XPATH, button_xpath))
+                                )
+                                driver.execute_script("arguments[0].click();", btn)
+                                print(Colors.GREEN + f"✅ 할인 버튼 클릭 성공 (19323): {button_text}" + Colors.ENDC)
+
+                                # Alert 처리
+                                try:
+                                    WebDriverWait(driver, 3).until(EC.alert_is_present())
+                                    alert = driver.switch_to.alert
+                                    print(Colors.BLUE + f"할인 알림창 텍스트: {alert.text}" + Colors.ENDC)
+                                    alert.accept()
+                                    print(Colors.GREEN + "✅ 알림창 확인 완료 (19323)" + Colors.ENDC)
+                                except Exception as e:
+                                    print(Colors.YELLOW + f"⚠️ 알림창 없음 또는 확인 실패: {e}" + Colors.ENDC)
+
+                                return True
+
+                            except Exception as e:
+                                print(Colors.RED + f"❌ 19323 처리 중 오류: {e}" + Colors.ENDC)
+                                return False
+
+                        if park_id == 15313:
+                            try:
+                                # 차량번호 입력
+                                driver.find_element(By.ID, web_info[WebInfo.inputSearch]).clear()
+                                driver.find_element(By.ID, web_info[WebInfo.inputSearch]).send_keys(search_id)
+                                Util.sleep(1.5)  # 자동 검색 대기
+
+                                # ✅ <tr> 직접 클릭해서 팝업 띄우기
+                                tr_element = WebDriverWait(driver, 5).until(
+                                    EC.element_to_be_clickable(
+                                        (By.CSS_SELECTOR, "#tbData > tbody > tr[data-toggle='modal']"))
+                                )
+                                driver.execute_script("arguments[0].click();", tr_element)
+                                print(Colors.GREEN + "✅ 차량 행(<tr>) 클릭 성공, 팝업 호출됨 (15313)" + Colors.ENDC)
+
+                                Util.sleep(1.5)
+
+                                # 할인 버튼 텍스트 매핑
+                                if ticket_name == "주말1일권":
+                                    button_text = "어플주말당일권(웹할인)"
+                                elif ticket_name == "평일1일권":
+                                    button_text = "어플평일당일권1(웹할인)"
+                                elif ticket_name == "평일 저녁권":
+                                    button_text = "어플평일야간권(웹할인)"
+                                else:
+                                    print(Colors.RED + f"❌ 정의되지 않은 ticket_name: {ticket_name}" + Colors.ENDC)
+                                    return False
+
+                                # 팝업 내 할인 버튼 클릭
+                                discount_btn = WebDriverWait(driver, 5).until(
+                                    EC.element_to_be_clickable(
+                                        (By.XPATH, f"//button[@name='btnDckey' and contains(text(), '{button_text}')]"))
+                                )
+                                driver.execute_script("arguments[0].click();", discount_btn)
+                                print(Colors.GREEN + f"✅ 할인 버튼 클릭 성공: {button_text}" + Colors.ENDC)
+
+                                # Alert 처리
+                                try:
+                                    WebDriverWait(driver, 3).until(EC.alert_is_present())
+                                    alert = driver.switch_to.alert
+                                    print(f"할인 알림창 텍스트: {alert.text}")
+                                    alert.accept()
+                                    print(Colors.GREEN + "✅ 알림창 확인 완료" + Colors.ENDC)
+                                except Exception as e:
+                                    print(Colors.YELLOW + f"⚠️ 알림창 없음 또는 확인 실패: {e}" + Colors.ENDC)
+
+                                return True
+
+                            except Exception as e:
+                                print(Colors.RED + f"❌ 15313 처리 중 오류: {e}" + Colors.ENDC)
                                 return False
 
                         if park_id == 16159:

@@ -950,6 +950,13 @@ def web_har_in(target, driver):
                             btn_confirm_xpath
                         )
 
+                    elif ticket_name == "야간8시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_e630107729a748be89d0909fbd7e7d17']",
+                            btn_confirm_xpath
+                        )
+
                     elif ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
