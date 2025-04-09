@@ -13,6 +13,10 @@ def get(max_retry=3):
 
             options = webdriver.ChromeOptions()
             options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36")
+            options.add_argument(
+                "--disable-features=PasswordManagerEnabled,AutofillServerCommunication,AutofillEnableAccountWalletStorage,AutofillEnablePaymentsIntegration,PasswordCheck")
+
+            options.add_argument("--password-store=basic")
             options.add_argument("--ignore-certificate-errors")
             options.add_argument("--allow-insecure-localhost")
             options.add_argument("--disable-web-security")
@@ -26,6 +30,12 @@ def get(max_retry=3):
             # ✅ 403 우회 추가 설정
             options.add_experimental_option("excludeSwitches", ["enable-automation"])
             options.add_experimental_option('useAutomationExtension', False)
+
+            prefs = {
+                "credentials_enable_service": False,
+                "profile.password_manager_enabled": False
+            }
+            options.add_experimental_option("prefs", prefs)
 
             # 기존 프로세스 종료
             os.system("taskkill /f /im chromedriver.exe >nul 2>&1")
