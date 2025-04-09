@@ -20,6 +20,8 @@ def get(max_retry=3):
             options.add_argument("--ignore-certificate-errors")
             options.add_argument("--allow-insecure-localhost")
             options.add_argument("--disable-web-security")
+            options.add_argument("--disable-save-password-bubble")
+            options.add_argument("--guest")  # 크롬 게스트 모드로 실행 (비로그인 상태)
             options.add_argument("--disable-site-isolation-trials")
             options.add_argument("--no-sandbox")
             options.add_argument("--disable-dev-shm-usage")

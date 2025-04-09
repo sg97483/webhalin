@@ -104,17 +104,16 @@ import re
 
 import re
 
-def click_matching_car_number(driver, ori_car_num):
+def click_matching_car_number(driver, ori_car_num, search_id=None):
     try:
         car_rows = driver.find_elements(By.CSS_SELECTOR, "#divAjaxCarList > tbody > tr")
-
         print(f"DEBUG: 검색된 차량 개수 = {len(car_rows)}")
 
         for row in car_rows:
             try:
-                car_link = row.find_element(By.TAG_NAME, "a")
-                car_number = car_link.text.strip()
-
+                # ✅ <a> 안의 <font> 태그에서 차량번호 추출
+                font_tag = row.find_element(By.CSS_SELECTOR, "a font")
+                car_number = font_tag.text.strip()
                 print(f"DEBUG: 검색된 차량번호 = {car_number}")
 
                 clean_car_number = re.sub(r'[^가-힣0-9]', '', car_number)
@@ -124,6 +123,7 @@ def click_matching_car_number(driver, ori_car_num):
                     print(Colors.BLUE + f"✅ 클릭 대상 차량번호 발견: {car_number}" + Colors.ENDC)
 
                     # 🔍 onclick 속성 추출 및 실행
+                    car_link = row.find_element(By.TAG_NAME, "a")
                     onclick_script = car_link.get_attribute("onclick")
                     if onclick_script:
                         driver.execute_script(onclick_script)
@@ -141,6 +141,7 @@ def click_matching_car_number(driver, ori_car_num):
     except Exception as e:
         print(Colors.RED + f"❌ 차량번호 선택 중 예외 발생: {e}" + Colors.ENDC)
         return False
+
 
 
 

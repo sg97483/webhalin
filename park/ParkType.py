@@ -54,6 +54,7 @@ parkTypeHighCity = [
     19492,#반포2동공영
     19323,#하이파킹 천안G스퀘어
     29248,#DWI 마곡595빌딩 주차장
+    35529,#하이파킹 아이콘삼성
     19740,#하이파킹 평촌역점
     29218,# 하이파킹 판교알파리움타워(2동)
     18996,# 하이파킹 판교알파리움타워(1동)
@@ -251,7 +252,8 @@ TARGET_URLS_NEW_AMANO = [
     ,"http://211.244.148.17/","https://a15337.parkingweb.kr","http://121.134.61.62/login"
     ,"http://a05388.parkingweb.kr","http://175.195.124.15","https://a14705.parkingweb.kr/login"
     ,"https://a13687.parkingweb.kr/login","https://s1148.parkingweb.kr/login"
-    ,"https://s1151.parkingweb.kr:6650/login","https://a14417.parkingweb.kr/login","http://123.214.186.154","https://a17902.pweb.kr"]
+    ,"https://s1151.parkingweb.kr:6650/login","https://a14417.parkingweb.kr/login"
+    ,"http://123.214.186.154","https://a17902.pweb.kr","https://a15891.parkingweb.kr"]
 
 
 # 대상 URL 리스트
