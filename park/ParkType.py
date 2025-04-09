@@ -39,7 +39,6 @@ parkTypeHighCity = [
     Parks.TWIN_CITY,
     Parks.FAST_FIVE_TOWER,
     Parks.RIVER_TOWER,
-    Parks.PAN_GYO_ALPHARIUM_TOWER,
     Parks.EG_BUILDING,
     #Parks.MUNJUNG_PLAZA,
     Parks.KOREANA_HOTEL,
@@ -55,6 +54,9 @@ parkTypeHighCity = [
     19492,#반포2동공영
     19323,#하이파킹 천안G스퀘어
     29248,#DWI 마곡595빌딩 주차장
+    19740,#하이파킹 평촌역점
+    29218,# 하이파킹 판교알파리움타워(2동)
+    18996,# 하이파킹 판교알파리움타워(1동)
     16159
 
 ]
@@ -308,35 +310,9 @@ parkType_center_square_new = [Parks.CENTER_SQUARE_NEW]
 parkType_center_square = [Parks.CENTER_SQUARE]
 
 park_type_aj_park = [
-    Parks.AJ_JONGRO,
-    Parks.AJ_T_MARK,
-    Parks.AJ_JNS,
-    Parks.AJ_MYUNG_DONG,
-    Parks.AJ_GONG_DUK,
-    Parks.AJ_MUGYO,
-    Parks.AJ_SEOUL_GARDEN,
-    Parks.AJ_USIN,
     Parks.AJ_NON_HYEN,
-    Parks.AJ_HAB_JONG,
-    Parks.AJ_DONG_MYO,
-    Parks.AJ_GANG_NAM,
-    Parks.AJ_SINDUK,
-    Parks.NONHYEON_WELLSTONE,
-    Parks.AJ_BANGBE,
-    Parks.AJ_GUWOL_CENTRAL,
-    Parks.AJ_AMSA,
-    19464,
-    19465,
-    19467,
-    19468,
-    19490,#운현프라자
-    19491, #공덕역점
-    19500,  #금촌
-    19502, #  금강주차빌딩점
-    19511, #신촌e편한세상4단지
-    19516, # 신사 ICT 55까지
-19521,19522,19524,19525,19533,19534,19535,19536,19537,19538,19540,19541,19542,19543,19545,19546,19547,19548,19549,19550
-,19551,19552,19553,19554,19555
+    19600,
+    19004
 ]
 
 park_type_old_aj = [
@@ -409,7 +385,6 @@ haveOneKey = [
     Parks.FAST_FIVE_TOWER,
     Parks.RIVER_TOWER,
     Parks.GMG_TOWER,
-    Parks.PAN_GYO_ALPHARIUM_TOWER,
     Parks.SINRA_STAY_G_TOWER,
     Parks.MILLENNIUM_SEOUL_HILTON,
     Parks.SEOUL_SQAURE,

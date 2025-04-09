@@ -4,7 +4,12 @@ import smtplib
 import time
 from email.mime.text import MIMEText
 
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 import Colors
 import Util
@@ -12,39 +17,7 @@ import WebInfo
 from park import ParkUtil, ParkType
 
 mapIdToWebInfo = {
-    # AJ파크 공덕효성해링턴스퀘어점
-    19146: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            2,  # 평일종일권
-            0,  # 주말종일권
-            1  # 야간권
-            ],
-    # AJ파크 무교동점
-    19147: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            2,  # 평일종일권
-            0,  # 주말종일권
-            1  # 야간권
-            ],
-    # AJ파크 교원명동빌딩점
-    19145: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            25002,  # 야간권
-            25001,  # 주말종일권
-            139775,  # 4시간권
-            42412  # 평일종일권
-            ],
-    # 합정역점(AJ파크)
-    19157: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일종일권
-            0,  # 주말종일권
-            2  # 야간권
-            ],
+
     # 논현점(AJ파크)
     19156: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
@@ -54,381 +27,17 @@ mapIdToWebInfo = {
             1  # 야간권
             ],
 
-    # 강남역점(AJ파크)
-    19162: ["email", "password", "//*[@id='login']",
+    # 하이파킹 딜라이트스퀘어2차상가점
+    19600: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
-            1,  # 평일종일권
-            1,  # 주말종일권
-            0  # 야간권
-            ],
-    # 종로관훈점
-    19140: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일종일권
-            2,  # 주말종일권
-            1  # 야간권
-            ],
-    # 	AJ파크 티마크그랜드호텔점
-    19141: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            2,  # 평일종일권
-            0,  # 주말종일권
-            1  # 야간권
-            ],
-    # 	AJ파크 신덕빌딩
-    19230: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일심야권
-            0,  # 평일심야권
-            0  # 평일심야권
-            ],
-    # 	AJ파크 논현웰스톤
-    19215: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일1일권
-            0,  # 주말1일권
-            1  # 야간권
-            ],
-    # 	AJ방배점
-    19219: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일1일권
-            0,  # 주말1일권 안팜
-            1  # 야간권
-            ],
-    # AJ파크 서울가든호텔점
-    19148: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            2,  # 평일종일권
-            0,  # 주말종일권
-            1  # 야간권
-            ],
-    # AJ파크 영등포 JNS 빌딩점
-    19142: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            2,  # 평일종일권
-            0,  # 주말종일권
-            1  # 야간권
-            ],
-    # AJ파크 구월중앙점
-    16434: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일종일권
-            0,  # 주말종일권
-            2  # 야간권
-            ],
-    # AJ파크 암사점
-    19221: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일종일권
-            2,  # 주말종일권
-            0  # 야간권
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
             ],
 
-    #정곡빌딩,
-    19464: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            2,  # 평일3시간권
-            1,  # 주말권
-            0  # 야간권
-            ],
-    #하이센스빌,
-    19465: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일권
-            0,  # 평일권
-            0  # 평일권
-            ],
-    #영통동아점,
-    19467: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 종일권
-            0,  # 종일권
-            0  # 종일권
-            ],
-    # 상봉점,
-    19468: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일
-            0,  # 주말
-            1  #
-            ],
-
-    #운현프라자(하이그린)
-    19490: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 주말당일
-            0,  # 주말당일
-            0  # 주말당일
-            ],
-
-    # 공덕역점
-    19491: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 주말당일
-            0,  # 주말당일
-            0  # 주말당일
-            ],
-    #금촌
-    19500: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일
-            0,  # 주말당일
-            0  # 주말당일
-            ],
-
-    #  금강주차빌딩점
-    19502: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일
-            1,  # 주말당일
-            2  # 야간권
-            ],
-    #  노원하계점
-    19506: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일
-            1,  # 주말당일
-            2  # 야간권
-            ],
-    # 신촌e편한세상4단지
-    19511: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 야간권
-            0,  # 야간권
-            0  # 야간권
-            ],
-    # 신사 ICT
-    19516: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일권
-            0,  # 평일권
-            0  # 평일권
-            ],
-    # 리더스퀘어마곡점
-    19521: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일권
-            1,  # 주말
-            0  # 야간
-            ],
-    # 매그넘797점
-    19522: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일권
-            3,  # 평일권
-            2  # 평일권
-            ],
-    # M시그니처점
-    19524: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일권
-            2,  # 평일권
-            1  # 평일권
-            ],
-    #스페이스k 서울미술관점
-    19525: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일권
-            0,  # 평일권
-            2  # 평일권
-            ],
-    ##
-    # AJ파크 속초점
-    19533: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일권
-            1,  # 주말
-            0  # 야간
-            ],
-    # 원주 서영 에비뉴파크 1차점
-    19534: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일권
-            1,  # 주말
-            2  # 야간
-            ],
-    # 롯데슈퍼 오남2점
-    19535: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일권
-            1,  # 주말
-            0  # 야간
-            ],
-    # 안산한미타워점
-    19536: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일권
-            0,  # 주말
-            2  # 야간
-            ],
-    # 신영프라자점
-    19537: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일권
-            0,  # 주말
-            0  # 야간
-            ],
-    #의왕월드비젼점
-    19538: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일권
-            0,  # 주말
-            0  # 야간
-            ],
-    # 대전둔산점
-    19540: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일권
-            0,  # 주말
-            0  # 야간
-            ],
-    # 건양타워점
-    19541: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일권
-            0,  # 주말
-            0  # 야간
-            ],
-    # 대전지족점
-    19542: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일권
-            0,  # 주말
-            0  # 야간
-            ],
-    # 옥타브상가점
-    19543: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일권
-            1,  # 주말
-            0  # 야간
-            ],
-    # 옥타브상가B동점
-    19544: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일권
-            0,  # 주말
-            0  # 야간
-            ],
-    # 다정센타프라자2점
-    19545: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일권
-            0,  # 주말
-            0  # 야간
-            ],
-    # 스마트큐브1차점
-    19546: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일권
-            0,  # 주말
-            0  # 야간
-            ],
-    # 메가타워1점
-    19547: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일권
-            0,  # 주말
-            0  # 야간
-            ],
-    # 고운드림빌딩점
-    19548: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일권
-            0,  # 주말
-            0  # 야간
-            ],
-    # 금남프라자점
-    19549: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일권
-            1,  # 주말
-            0  # 야간
-            ],
-    # 지엘플렉스1점
-    19550: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일권
-            0,  # 주말
-            0  # 야간
-            ],
-    # 지엘플렉스2점
-    19551: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일권
-            0,  # 주말
-            0  # 야간
-            ],
-    #  영토프라자점
-    19552: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일권
-            0,  # 주말
-            0  # 야간
-            ],
-    # 펜타포트 1블럭 상가점
-    19553: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            1,  # 평일권
-            0,  # 주말
-            0  # 야간
-            ],
-    # 에스엘주차타워점
-    19554: ["email", "password", "//*[@id='login']",
-            "carNo", "searchSubmitByDate",
-            "",
-            0,  # 평일권
-            1,  # 주말
-            0  # 야간
-            ],
-    # 청주용암점
-    19555: ["email", "password", "//*[@id='login']",
+    # 하이파킹 L7호텔강남
+    19004: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
             1,  # 평일권
@@ -454,6 +63,126 @@ AJ_PARK_ID = "parkingpark@wisemobile.co.kr"
 AJ_PARK_PW = "@wise0413"
 
 
+def handle_ticket(driver, park_id, ticket_name):
+    """
+    주차장 및 주차권에 따른 할인권 처리 (19004, 19600 포함)
+    """
+    print(f"DEBUG: 할인 처리 시작 (park_id={park_id}, ticket_name={ticket_name})")
+
+    # ✅ 19004 전용 할인 처리
+    if park_id == 19004:
+        ticket_map = {
+            "평일 당일권(월)": "평일당일권(공유서비스)",
+            "평일 당일권(화)": "평일당일권(공유서비스)",
+            "평일 당일권(수)": "평일당일권(공유서비스)",
+            "평일 당일권(목)": "평일당일권(공유서비스)",
+            "평일 당일권(금)": "평일당일권(공유서비스)",
+            "휴일 당일권": "휴일당일권(공유서비스)",
+            "평일 심야권": "야간권(공유서비스)",
+            "휴일 심야권": "야간권(공유서비스)",
+        }
+
+        if ticket_name not in ticket_map:
+            print(f"ERROR: 19004에서 지원하지 않는 ticket_name: {ticket_name}")
+            return False
+
+        target_text = ticket_map[ticket_name]
+
+        try:
+            select_element = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.ID, "selectDiscount"))
+            )
+            options = select_element.find_elements(By.TAG_NAME, "option")
+            matched = False
+            for option in options:
+                if target_text in option.text:
+                    option.click()
+                    print(f"DEBUG: '{option.text}' 옵션 선택 완료.")
+                    matched = True
+                    break
+
+            if not matched:
+                print(f"ERROR: '{target_text}' 텍스트가 포함된 옵션을 찾을 수 없습니다.")
+                return False
+
+            WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.ID, "discountSubmit"))
+            ).click()
+            print("DEBUG: 할인 적용 버튼 클릭 완료.")
+
+            try:
+                WebDriverWait(driver, 3).until(EC.alert_is_present()).accept()
+                print("DEBUG: 알림창 확인 완료.")
+            except TimeoutException:
+                print("DEBUG: 알림창 없음.")
+
+            return True
+
+        except Exception as e:
+            print(f"ERROR: 19004 처리 중 예외 발생: {e}")
+            return False
+
+    # ✅ 19600 전용 할인 처리
+    if park_id == 19600:
+        ticket_map = {
+            "평일 당일권(월)": "평일당일권(공유서비스)",
+            "평일 당일권(화)": "평일당일권(공유서비스)",
+            "평일 당일권(수)": "평일당일권(공유서비스)",
+            "평일 당일권(목)": "평일당일권(공유서비스)",
+            "평일 당일권(금)": "평일당일권(공유서비스)",
+            "평일 3시간권": "평일3시간권(공유서비스)",
+            "평일 5시간권": "평일5시간권(공유서비스)",
+            "평일 12시간권": "평일12시간권(공유서비스)",
+            "휴일 3시간권": "휴일3시간권(공유서비스)",
+            "휴일 12시간권": "휴일12시간권(공유서비스)",
+            "평일 심야권": "평일심야권(공유서비스)",
+        }
+
+        if ticket_name not in ticket_map:
+            print(f"ERROR: 19600에서 지원하지 않는 ticket_name: {ticket_name}")
+            return False
+
+        target_text = ticket_map[ticket_name]
+
+        try:
+            select_element = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.ID, "selectDiscount"))
+            )
+            options = select_element.find_elements(By.TAG_NAME, "option")
+            matched = False
+            for option in options:
+                if target_text in option.text:
+                    option.click()
+                    print(f"DEBUG: '{option.text}' 옵션 선택 완료.")
+                    matched = True
+                    break
+
+            if not matched:
+                print(f"ERROR: '{target_text}' 텍스트가 포함된 옵션을 찾을 수 없습니다.")
+                return False
+
+            WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.ID, "discountSubmit"))
+            ).click()
+            print("DEBUG: 할인 적용 버튼 클릭 완료.")
+
+            try:
+                WebDriverWait(driver, 3).until(EC.alert_is_present()).accept()
+                print("DEBUG: 알림창 확인 완료.")
+            except TimeoutException:
+                print("DEBUG: 알림창 없음.")
+
+            return True
+
+        except Exception as e:
+            print(f"ERROR: 19600 처리 중 예외 발생: {e}")
+            return False
+
+    print(f"ERROR: handle_ticket에서 처리되지 않은 park_id: {park_id}")
+    return False
+
+
+
 def web_har_in(target, driver, lotName):
     pid = target[0]
     park_id = int(Util.all_trim(target[1]))
@@ -466,12 +195,7 @@ def web_har_in(target, driver, lotName):
 
     print("parkId = " + str(park_id) + ", " + "searchId = " + search_id)
     print(Colors.BLUE + ticket_name + Colors.ENDC)
-    # if str(ticket_name).endswith('연박권') or str(ticket_name).endswith('2일권'):
-    #     print("AJ파크 연박권")
-    #     return False
-    if park_id == 19141 and ori_car_num =='108가5701' :
-        print(Colors.BLUE + "108가5701 웹할인 확인이 필요한 차량입니다" + Colors.ENDC)
-        return False
+
     if ParkUtil.is_park_in(park_id):
         if park_id in mapIdToWebInfo:
             login_url = ParkUtil.get_park_url(park_id)
@@ -487,26 +211,20 @@ def web_har_in(target, driver, lotName):
 
             if ParkUtil.first_access(park_id, driver.current_url):
 
-                #Util.close_popup(driver)
-                #print(Colors.BLUE + "팝업테스트" + Colors.ENDC)
-                #driver.find_element_by_id('expiresChk').click()
-                print(Colors.BLUE + "팝업테스트" + Colors.ENDC)
-
-                driver.find_element_by_id(web_info[WebInfo.inputId]).send_keys(AJ_PARK_ID)
+                driver.find_element(By.ID, web_info[WebInfo.inputId]).send_keys(AJ_PARK_ID)
                 driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(AJ_PARK_PW)
-
-
                 driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
                 print("로그인버튼  ")
 
-            driver.find_element_by_id('webdiscount').click()
-
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.ID, "webdiscount"))
+            ).click()
             driver.find_element_by_id(web_info[WebInfo.inputSearch]).send_keys(search_id)
             driver.find_element_by_id('searchSubmitByDate').click()
 
             driver.implicitly_wait(3)
 
-            count = len(driver.find_elements_by_xpath("/html/body/div[1]/section/div/section/div"))
+            count = len(driver.find_elements(By.XPATH, "/html/body/div[1]/section/div/section/div"))
             for index in range(1, count + 1):
                 sale_table = driver.find_element_by_xpath("/html/body/div[1]/section/div/section/div[" + str(index) + "]")
                 searched_car_number = driver.find_element_by_xpath(
@@ -525,7 +243,11 @@ def web_har_in(target, driver, lotName):
                 print("검색된 차량번호 : " + td_car_num + " == " + "기존 차량번호 : " + ori_car_num + " / " + ori_car_num[-7:])
 
                 if ori_car_num[-7:] == td_car_num or ori_car_num == td_car_num:
-                    driver.find_element_by_xpath("/html/body/div[1]/section/div/section/div["+str(index)+"]").find_element_by_class_name("selectCarInfo").click()
+                    driver.find_element(By.XPATH, f"/html/body/div[1]/section/div/section/div[{index}]").find_element(By.CLASS_NAME, "selectCarInfo").click()
+
+                    # ✅ 19004, 19600은 handle_ticket() 함수로 별도 처리
+                    if park_id in [19004, 19600]:
+                        return handle_ticket(driver, park_id, ticket_name)
 
                     select = Select(driver.find_element_by_id('selectDiscount'))
                     select.select_by_index(get_har_in_script(park_id, ticket_name))

@@ -73,13 +73,6 @@ mapIdToWebInfo = {
             "javascript:applyDiscount('19', '1', '20|', '파킹박');",
             "javascript:applyDiscount('19', '1', '20|', '파킹박');"
             ],
-    # (하이파킹) 판교알파리움타워(1동)
-    18996: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
-            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
-            "chk",
-            "javascript:applyDiscount('13', '1', '14|16|17|', '파킹박', '999999999', '0');",
-            "javascript:applyDiscount('13', '1', '14|16|17|', '파킹박', '999999999', '0');"
-            ],
     # EG빌딩
     19194: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
@@ -197,6 +190,37 @@ mapIdToWebInfo = {
 
     # 하이파킹 충무로흥국빌딩
     16159: ["name", "pwd", "//*[@id='login']/table[1]/tbody/tr[3]/td[2]/input",
+            "carNumber", "/html/body/table[2]/tbody/tr[5]/td/input",
+            "",  # radio 버튼 처리 안함
+            "-",  # btnItem 없음
+            "-",  # weekday 스크립트 제거
+            "-",  # weekend 스크립트 제거
+            "-",  # night 스크립트 제거
+            ],
+
+    # 하이파킹 판교알파리움타워(2동)
+    29218: ["name", "pwd", "//*[@id='login']/table[1]/tbody/tr[3]/td[2]/input",
+            "carNumber", "/html/body/table[2]/tbody/tr[5]/td/input",
+            "",  # radio 버튼 처리 안함
+            "-",  # btnItem 없음
+            "-",  # weekday 스크립트 제거
+            "-",  # weekend 스크립트 제거
+            "-",  # night 스크립트 제거
+            ],
+
+    # 하이파킹 판교알파리움타워(1동)
+    18996: ["name", "pwd", "//*[@id='login']/table[1]/tbody/tr[3]/td[2]/input",
+            "carNumber", "/html/body/table[2]/tbody/tr[5]/td/input",
+            "",  # radio 버튼 처리 안함
+            "-",  # btnItem 없음
+            "-",  # weekday 스크립트 제거
+            "-",  # weekend 스크립트 제거
+            "-",  # night 스크립트 제거
+            ],
+
+
+    # 하이파킹 평촌역점
+    19740: ["name", "pwd", "/html/body/table/tbody/tr[3]/td[2]/input",
             "carNumber", "/html/body/table[2]/tbody/tr[5]/td/input",
             "",  # radio 버튼 처리 안함
             "-",  # btnItem 없음
@@ -629,6 +653,132 @@ def web_har_in(target, driver):
 
                             except Exception as e:
                                 print(Colors.RED + f"❌ 15313 처리 중 오류: {e}" + Colors.ENDC)
+                                return False
+
+                        if park_id == 19740:
+                            try:
+                                ori_car_num = ori_car_num.replace(" ", "")  # 차량번호 공백 제거
+
+                                # 차량 정보 영역이 나타날 때까지 대기
+                                car_info_td = WebDriverWait(driver, 5).until(
+                                    EC.presence_of_element_located((By.XPATH, "//td[h3[contains(text(), '차량 정보')]]"))
+                                )
+                                text = car_info_td.text.strip()
+
+                                # 차량번호 줄에서 실제 번호 추출
+                                site_car_num = None
+                                for line in text.splitlines():
+                                    if "차량번호:" in line:
+                                        site_car_num = line.split("차량번호:")[1].strip()
+                                        print(f"DEBUG: 사이트 표시 차량번호: {site_car_num}")
+                                        break
+
+                                if not site_car_num:
+                                    print(Colors.RED + "❌ 차량번호 정보를 찾을 수 없습니다 (19740)" + Colors.ENDC)
+                                    return False
+
+                                if ori_car_num == site_car_num or ori_car_num[-7:] == site_car_num[-7:] or ori_car_num[
+                                                                                                           -6:] == site_car_num[
+                                                                                                                   -6:]:
+                                    print(Colors.GREEN + "차량번호 정확 또는 유사 일치 (19740)" + Colors.ENDC)
+                                else:
+                                    print(
+                                        Colors.MARGENTA + f"차량번호 불일치 (입력: {ori_car_num}, 사이트: {site_car_num})" + Colors.ENDC)
+                                    return False
+
+                                # ticket_name에 따라 버튼 텍스트 매칭
+                                if ticket_name == "평일 당일권":
+                                    btn = WebDriverWait(driver, 5).until(
+                                        EC.element_to_be_clickable(
+                                            (By.XPATH, "//input[@type='button' and contains(@value, '평일당일권 (공유)')]")
+                                        )
+                                    )
+                                    driver.execute_script("arguments[0].click();", btn)
+                                    print(Colors.GREEN + "✅ 평일당일권 (공유) 버튼 클릭 성공 (19740)" + Colors.ENDC)
+
+                                    # Alert 처리
+                                    try:
+                                        WebDriverWait(driver, 3).until(EC.alert_is_present())
+                                        alert = driver.switch_to.alert
+                                        print(Colors.BLUE + f"알림창 텍스트: {alert.text}" + Colors.ENDC)
+                                        alert.accept()
+                                        print(Colors.GREEN + "✅ 알림창 확인 완료" + Colors.ENDC)
+                                    except Exception as e:
+                                        print(Colors.YELLOW + f"⚠️ 알림창 처리 실패 또는 없음: {e}" + Colors.ENDC)
+
+                                    return True
+                                else:
+                                    print(Colors.RED + f"❌ 정의되지 않은 ticket_name: {ticket_name}" + Colors.ENDC)
+                                    return False
+
+                            except Exception as e:
+                                print(Colors.RED + f"❌ 19740 할인 처리 실패: {e}" + Colors.ENDC)
+                                return False
+
+                        if park_id in [29218, 18996]:
+                            try:
+                                ori_car_num = ori_car_num.replace(" ", "")  # 차량번호 공백 제거
+
+                                # 차량 정보 영역 확인
+                                info_td = WebDriverWait(driver, 5).until(
+                                    EC.presence_of_element_located((By.XPATH, "//td[h3[contains(text(), '차량 정보')]]"))
+                                )
+                                text = info_td.text.strip()
+
+                                # 차량번호 추출
+                                site_car_num = None
+                                for line in text.splitlines():
+                                    if "차량번호:" in line:
+                                        site_car_num = line.split("차량번호:")[1].strip()
+                                        print(f"DEBUG: 사이트 표시 차량번호: {site_car_num}")
+                                        break
+
+                                if not site_car_num:
+                                    print(Colors.RED + "❌ 차량번호 정보 찾기 실패 (29218/18996)" + Colors.ENDC)
+                                    return False
+
+                                # 유사 매칭
+                                if ori_car_num == site_car_num or ori_car_num[-7:] == site_car_num[-7:] or ori_car_num[
+                                                                                                           -6:] == site_car_num[
+                                                                                                                   -6:]:
+                                    print(Colors.GREEN + "차량번호 일치 확인 완료 (29218/18996)" + Colors.ENDC)
+                                else:
+                                    print(
+                                        Colors.MARGENTA + f"차량번호 불일치 (입력: {ori_car_num}, 사이트: {site_car_num})" + Colors.ENDC)
+                                    return False
+
+                                # ticket_name → 버튼 ID 매핑
+                                if ticket_name == "평일 당일권":
+                                    btn_id = "BTN_종일권 (공유서비스)"
+                                elif ticket_name == "휴일 당일권":
+                                    btn_id = "BTN_주말권 (공유서비스)"
+                                elif ticket_name in ["평일 3시간권", "휴일 3시간권"]:
+                                    btn_id = "BTN_3시간권 (공유서비스)"
+                                else:
+                                    print(Colors.RED + f"❌ 정의되지 않은 ticket_name: {ticket_name}" + Colors.ENDC)
+                                    return False
+
+                                # 버튼 클릭
+                                print(Colors.BLUE + f"버튼 ID: {btn_id}" + Colors.ENDC)
+                                btn = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, btn_id)))
+                                driver.execute_script("arguments[0].scrollIntoView(true);", btn)
+                                driver.execute_script("arguments[0].click();", btn)
+                                print(Colors.GREEN + f"✅ 할인 버튼 클릭 성공: {btn_id}" + Colors.ENDC)
+
+                                # Alert 처리
+                                try:
+                                    WebDriverWait(driver, 3).until(EC.alert_is_present())
+                                    alert = driver.switch_to.alert
+                                    print(Colors.BLUE + f"알림창 텍스트: {alert.text}" + Colors.ENDC)
+                                    alert.accept()
+                                    print(Colors.GREEN + "✅ 알림창 확인 완료" + Colors.ENDC)
+                                except Exception as e:
+                                    print(Colors.YELLOW + f"⚠️ 알림창 처리 실패 또는 없음: {e}" + Colors.ENDC)
+
+                                return True
+
+                            except Exception as e:
+                                print(Colors.RED + f"❌ 29218/18996 처리 중 오류: {e}" + Colors.ENDC)
                                 return False
 
                         if park_id == 16159:
