@@ -47,7 +47,14 @@ def get_sql(now_date, logger, is_park_test, testPark):
 
         # 💡 현재 시간이 오후 1시 이전이면, reservedStDtm이 현재 시간 이하인 데이터만 조회
         if current_hour < 13:
-            sql += " AND SUBSTRING(reservedStDtm, 9, 4) <= '{current_time}' ".format(current_time=current_time)
+            #sql += " AND SUBSTRING(reservedStDtm, 9, 4) <= '{current_time}' ".format(current_time=current_time)
+            sql += " AND SUBSTRING(reservedStDtm, 9, 4) <= '1159' "
+
+        # ✅ 심야/야간 제외 조건 (08:00~15:59 사이만)
+        if 8 <= current_hour < 16:
+            logger.info("현재 시간은 08~16시 사이입니다. 심야/야간권 제외 필터 적용됨.")
+            sql += " AND TotalTicketType NOT LIKE '%심야%' "
+            sql += " AND TotalTicketType NOT LIKE '%야간%' "
 
     # 테스트 주차장 필터
     if is_park_test:

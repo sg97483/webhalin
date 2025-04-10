@@ -478,9 +478,11 @@ def handle_ticket(driver, park_id, ticket_name):
 
             except TimeoutException:
                 print("ERROR: 19457 - 할인권 목록 로딩 실패")
+                logout(driver)
                 return False
         else:
             print(f"ERROR: 19457에서 지원하지 않는 ticket_name: {ticket_name}")
+            logout(driver)
             return False
 
 
@@ -493,6 +495,7 @@ def handle_ticket(driver, park_id, ticket_name):
                 rows = WebDriverWait(driver, 10).until(
                     EC.presence_of_all_elements_located((By.CSS_SELECTOR, "tbody.gbox-body > tr.gbox-body-row"))
                 )
+                success = False  # ✅ 클릭 성공 여부 추적
                 for row in rows:
                     cells = row.find_elements(By.CLASS_NAME, "gbox-body-cell")
                     if cells and "24시간(무료)" in cells[0].text:
@@ -513,21 +516,22 @@ def handle_ticket(driver, park_id, ticket_name):
                         except TimeoutException:
                             print("DEBUG: 팝업 감지되지 않음")
 
-                        return logout(driver)
-
-                print("ERROR: 19477 - '24시간(무료)' 할인권을 찾지 못함")
+                        success = True
+                        break  # ✅ 할인권 클릭 성공했으므로 루프 종료
 
                 logout(driver)
 
-                return False
-
+                if success:
+                    return True
+                else:
+                    print("ERROR: 19477 - '24시간(무료)' 할인권을 찾지 못함")
+                    logout(driver)
+                    return False
 
             except TimeoutException:
                 print("ERROR: 19477 - 할인권 목록 로딩 실패")
+                logout(driver)
                 return False
-        else:
-            print(f"ERROR: 19477에서 지원하지 않는 ticket_name: {ticket_name}")
-            return False
 
 
     # ✅ 19582 전용 할인 처리
@@ -572,9 +576,11 @@ def handle_ticket(driver, park_id, ticket_name):
                 return False
             except TimeoutException:
                 print("ERROR: 19582 - 할인 버튼 목록 로딩 실패")
+                logout(driver)
                 return False
         else:
             print(f"ERROR: 19582에서 지원하지 않는 ticket_name: {ticket_name}")
+            logout(driver)
             return False
 
     # ✅ 19610 전용 할인 처리
@@ -632,9 +638,11 @@ def handle_ticket(driver, park_id, ticket_name):
 
             except TimeoutException:
                 print("ERROR: 할인 버튼 로딩 실패")
+                logout(driver)  # ✅ 로그아웃 추가
                 return False
         else:
             print(f"ERROR: ticket_name '{cleaned_ticket_name}' 은 19588에서 지원되지 않음")
+            logout(driver)  # ✅ 로그아웃 추가
             return False
 
 
@@ -740,23 +748,24 @@ def web_har_in(target, driver):
         user_password = web_har_in_info[WebInfo.webHarInPw]
 
         try:
-            enter_user_id(driver, user_id)
+            # ✅ 사전 로그인 상태 확인
+            current_url = driver.current_url
+            if ParkUtil.first_access(park_id, current_url):
+                enter_user_id(driver, user_id)
+                enter_password_standard(driver, user_password)
 
-            # ✅ 비밀번호 입력 (새로 추가)
-            enter_password_standard(driver, user_password)
+                print("로그인 버튼 클릭 전 3초 대기...")
+                time.sleep(3)
 
-            print("로그인 버튼 클릭 전 3초 대기...")
-            time.sleep(3)
+                login_button = WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located((By.XPATH, "//*[@id='form-login']/div[3]/button"))
+                )
+                login_button.click()
+                print("로그인 버튼 클릭 완료!")
 
-            # 로그인 버튼 클릭
-            login_button = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, "//*[@id='form-login']/div[3]/button"))
-            )
-            login_button.click()
-            print("로그인 버튼 클릭 완료!")
-
-
-            handle_alert(driver)
+                handle_alert(driver)
+            else:
+                print("DEBUG: 이미 로그인된 상태로 판단됨 → 로그인 생략")
 
             # ✅ 29118인 경우 팝업 처리 및 할인 페이지 이동
             handle_notice_popup_and_redirect(driver, park_id)
@@ -765,11 +774,28 @@ def web_har_in(target, driver):
 
             driver.car_number_last4 = ori_car_num[-4:]
 
-            enter_car_number(driver, ori_car_num[-4:], park_id)
+            # ✅ 차량번호 검색 수행 후 실패 시 로그아웃 처리
+            car_number_result = enter_car_number(driver, ori_car_num[-4:], park_id)
 
-            # 할인권 처리
+            if not car_number_result:
+                print("DEBUG: 차량번호 검색 실패 또는 검색 결과 없음 → 로그아웃 후 종료")
+                try:
+                    logout_success = logout(driver)
+                    if not logout_success:
+                        # 로그아웃 실패했을 경우 강제로 로그인 페이지 재접근 시도
+                        driver.get(ParkUtil.get_park_url(park_id))
+                        print("DEBUG: 로그아웃 실패 시 강제로 로그인 페이지 재접근 시도")
+                except Exception as e:
+                    print(f"WARNING: 로그아웃 처리 중 예외 발생: {e}")
+                    try:
+                        driver.get(ParkUtil.get_park_url(park_id))
+                        print("DEBUG: 예외 발생 시 강제로 로그인 페이지 재접근 시도")
+                    except:
+                        pass
+                return False
+
+            # 검색 성공 시 할인권 처리
             return handle_ticket(driver, park_id, ticket_name)
-
 
         except NoSuchElementException as ex:
             print(f"할인 처리 중 오류 발생: {ex}")

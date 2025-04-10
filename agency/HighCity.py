@@ -25,13 +25,17 @@ mapIdToWebInfo = {
         "-",  # night 스크립트 사용 안함
     ],
     # 남산스퀘어
-    13007: ["user_id", "password", "//input[@type='button']",
-            "license_plate_number", "//input[@type='button']",
-            "chk",
-            "javascript:applyDiscount('62', '1', '', '파킹박', '1')",
-            "javascript:applyDiscount('62', '1', '', '파킹박', '1')",
-            "javascript:applyDiscount('66', '1', '', '파킹박(야간)', '1') ",
-            ],
+    13007: [
+        "user_id",  # ID 입력 필드 ID
+        "password",  # PW 입력 필드 ID
+        "//input[@type='button']",  # 로그인 버튼 XPath
+        "license_plate_number",  # 차량번호 입력 필드 ID
+        "//input[@type='button']",  # 차량 검색 버튼 XPath
+        "chk",  # ✅ 차량 선택용 radio 버튼 ID
+        "-",  # 평일1일권 등 스크립트는 분기문으로 처리
+        "-",  # 주말권 스크립트
+        "-",  # 야간권 스크립트
+    ],
 
     # AIA 타워
     18958: ["user_id", "password", "//input[@type='button']",
@@ -467,6 +471,20 @@ def web_har_in(target, driver):
 
                     if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
 
+                        # ✅ 여기에 radio 체크 처리 삽입
+                        btn_item = web_info[WebInfo.btnItem]
+
+                        if park_id != 19492 and btn_item and btn_item != "-":
+                            try:
+                                radio = WebDriverWait(driver, 3).until(
+                                    EC.presence_of_element_located((By.ID, btn_item)))
+                                driver.execute_script("arguments[0].click();", radio)
+                                print(Colors.GREEN + f"✅ 차량 라디오 버튼 클릭 완료 ({btn_item})" + Colors.ENDC)
+                                Util.sleep(1)
+                            except Exception as e:
+                                print(Colors.RED + f"❌ 차량 라디오 버튼 클릭 실패: {e}" + Colors.ENDC)
+                                return False
+
                         if park_id == 19492:
                             try:
                                 # <tr> 클릭해서 팝업 띄우기
@@ -718,6 +736,54 @@ def web_har_in(target, driver):
 
                             except Exception as e:
                                 print(Colors.RED + f"❌ 15313 처리 중 오류: {e}" + Colors.ENDC)
+                                return False
+
+                        if park_id == 13007:
+                            print(f"DEBUG: 13007 전용 할인 처리 시작 (ticket_name={ticket_name})")
+
+                            ticket_button_map = {
+                                "평일 당일권(월)": "파킹박",
+                                "평일 당일권(화)": "파킹박",
+                                "평일 당일권(수)": "파킹박",
+                                "평일 당일권(목)": "파킹박",
+                                "평일 당일권(금)": "파킹박",
+                                "휴일 당일권": "파킹박",
+                                "평일 3시간권": "평일3시간권(공유서비스)",
+                                "평일 6시간권": "6시간권",
+                                "휴일 6시간권": "6시간권",
+                                "야간8시간권": "야간8시간권(공유서비스)",
+                                "휴일 24시간권": "휴일24시간(공유서비스)"
+                            }
+
+                            button_text = ticket_button_map.get(ticket_name)
+                            if not button_text:
+                                print(f"ERROR: 13007에서 처리할 수 없는 ticket_name: {ticket_name}")
+                                return False
+
+                            try:
+                                # 해당 텍스트를 가진 버튼 찾기
+                                button = WebDriverWait(driver, 5).until(
+                                    EC.element_to_be_clickable(
+                                        (By.XPATH, f"//input[@type='button' and @value='{button_text}']"))
+                                )
+                                driver.execute_script("arguments[0].click();", button)
+                                print(f"DEBUG: 버튼 클릭 완료 (텍스트: {button_text})")
+
+                                # Alert 처리
+                                try:
+                                    WebDriverWait(driver, 3).until(EC.alert_is_present())
+                                    alert = driver.switch_to.alert
+                                    print(f"DEBUG: 알림창 텍스트: {alert.text}")
+                                    alert.accept()
+                                    print("DEBUG: 알림창 확인 완료")
+                                except Exception as e:
+                                    print(f"WARNING: 알림창 확인 실패 또는 없음: {e}")
+
+                                return True
+
+                            except Exception as e:
+                                print(
+                                    Colors.RED + f"❌ 할인 버튼 클릭 실패: {ticket_name} ({button_text}) / 예외: {e}" + Colors.ENDC)
                                 return False
 
                         if park_id == 19740:

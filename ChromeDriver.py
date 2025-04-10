@@ -16,12 +16,20 @@ def get(max_retry=3):
             options.add_argument(
                 "--disable-features=PasswordManagerEnabled,AutofillServerCommunication,AutofillEnableAccountWalletStorage,AutofillEnablePaymentsIntegration,PasswordCheck")
 
+
             options.add_argument("--password-store=basic")
             options.add_argument("--ignore-certificate-errors")
             options.add_argument("--allow-insecure-localhost")
+            options.add_argument('--allow-running-insecure-content')
+
+            # 사용자 프로필 공유 (수동 크롬처럼 만들기)
+            user_profile_path = os.path.expanduser("~\\AppData\\Local\\Google\\Chrome\\User Data")
+            options.add_argument(f"user-data-dir={user_profile_path}")
+            options.add_argument("profile-directory=Default")  # 또는 "Profile 1" 등
+
             options.add_argument("--disable-web-security")
             options.add_argument("--disable-save-password-bubble")
-            options.add_argument("--guest")  # 크롬 게스트 모드로 실행 (비로그인 상태)
+            #options.add_argument("--guest")  # 크롬 게스트 모드로 실행 (비로그인 상태)
             options.add_argument("--disable-site-isolation-trials")
             options.add_argument("--no-sandbox")
             options.add_argument("--disable-dev-shm-usage")

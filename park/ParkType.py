@@ -240,7 +240,7 @@ TARGET_URLS_NICE = [
 
 # 대상 URL 리스트
 TARGET_URLS_NEW_AMANO = [
-    "https://a14926.parkingweb.kr/login","https://a05203.parkingweb.kr","http://112.216.125.10/login",
+    "https://a14926.parkingweb.kr/login","https://a05203.parkingweb.kr","http://112.216.125.10/discount/registration",
     "https://a18822.pweb.kr","https://a14041.parkingweb.kr/","https://a18147.pweb.kr/",
     "https://a12647.parkingweb.kr/","https://www.amanopark.co.kr/",
     "https://a093.parkingweb.kr/","https://a17687.pweb.kr/","http://112.217.102.42/","http://a15820.parkingweb.kr/",
@@ -314,7 +314,8 @@ parkType_center_square = [Parks.CENTER_SQUARE]
 park_type_aj_park = [
     Parks.AJ_NON_HYEN,
     19600,
-    19004
+    19004,
+    19860
 ]
 
 park_type_old_aj = [
