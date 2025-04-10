@@ -133,12 +133,12 @@ def set_input_value_with_events(driver, element, value):
     """, element, value)
 
 
-def handle_password_reset_popup(driver):
+def handle_password_reset_popup(driver, timeout=3):
     """
-    비밀번호 초기화 팝업 발생 시 '아니오' 클릭 처리
+    비밀번호 초기화 팝업 발생 시 '아니오' 클릭 처리 (timeout 초 이내 대기)
     """
     try:
-        popup = WebDriverWait(driver, 5).until(
+        popup = WebDriverWait(driver, timeout).until(
             EC.presence_of_element_located((By.ID, "mf_wfm_body_ui_initPwdPop_contents"))
         )
         print("DEBUG: 비밀번호 초기화 팝업 감지됨.")
@@ -147,7 +147,7 @@ def handle_password_reset_popup(driver):
         driver.execute_script("arguments[0].click();", cancel_button)
         print("DEBUG: 비밀번호 초기화 팝업 '아니오' 버튼 클릭 완료.")
 
-        WebDriverWait(driver, 5).until(
+        WebDriverWait(driver, timeout).until(
             EC.invisibility_of_element_located((By.ID, "mf_wfm_body_ui_initPwdPop_contents"))
         )
         print("DEBUG: 비밀번호 초기화 팝업 닫힘 확인 완료.")
@@ -194,61 +194,52 @@ def handle_popup(driver):
         print("팝업이 나타나지 않았거나 처리 중 오류가 발생했습니다.")
 
 
-def handle_init_password_popup(driver):
-    """
-    로그인 후 '비밀번호 초기화' 또는 '알림' 팝업이 뜰 경우 '확인' 버튼 클릭
-    """
+def handle_init_password_popup(driver, timeout=3):
     try:
-        popup = WebDriverWait(driver, 10).until(
+        popup = WebDriverWait(driver, timeout).until(
             EC.presence_of_element_located((By.CLASS_NAME, "w2popup_window"))
         )
         print("DEBUG: 알림 또는 비밀번호 초기화 팝업 감지됨.")
 
-        # 내부에서 확인 버튼 탐색 시도
         try:
             confirm_button = popup.find_element(By.XPATH, ".//input[@value='확인']")
             driver.execute_script("arguments[0].click();", confirm_button)
             print("DEBUG: 팝업 '확인' 버튼 JS로 강제 클릭 완료.")
 
-            WebDriverWait(driver, 10).until(
+            WebDriverWait(driver, timeout).until(
                 EC.invisibility_of_element_located((By.CLASS_NAME, "w2popup_window"))
             )
             print("DEBUG: 팝업 닫힘 완료.")
         except NoSuchElementException:
             print("DEBUG: 팝업에는 '확인' 버튼이 없음 (무시하고 진행).")
-
     except TimeoutException:
         print("DEBUG: '알림/비밀번호 초기화' 팝업이 감지되지 않음 (정상일 수 있음).")
 
 
 
 
-def handle_password_change_popup(driver):
-    """
-    '비밀번호 변경' 팝업에서 '나중에 변경하기' 버튼 클릭
-    """
+
+def handle_password_change_popup(driver, timeout=3):
     try:
-        # 비밀번호 변경 팝업 감지
-        popup = WebDriverWait(driver, 5).until(
+        popup = WebDriverWait(driver, timeout).until(
             EC.presence_of_element_located((By.ID, "mf_wfm_body_DCWD009P01"))
         )
         print("DEBUG: '비밀번호 변경' 팝업 감지됨.")
 
-        # '나중에 변경하기' 버튼 클릭 대기 및 클릭
-        later_button = WebDriverWait(driver, 5).until(
+        later_button = WebDriverWait(driver, timeout).until(
             EC.element_to_be_clickable((By.ID, "mf_wfm_body_DCWD009P01_wframe_btn_cancelChg"))
         )
         later_button.click()
         print("DEBUG: '비밀번호 변경' 팝업 '나중에 변경하기' 클릭 완료.")
 
-        # 팝업 닫힐 때까지 대기
-        WebDriverWait(driver, 5).until(
+        WebDriverWait(driver, timeout).until(
             EC.invisibility_of_element_located((By.ID, "mf_wfm_body_DCWD009P01"))
         )
         print("DEBUG: '비밀번호 변경' 팝업 닫힘 확인 완료.")
-
     except TimeoutException:
         print("DEBUG: '비밀번호 변경' 팝업이 감지되지 않음 (정상일 수 있음).")
+
+
 
 
 def select_discount_and_confirm(driver, radio_xpath):
@@ -366,12 +357,9 @@ def handle_login_alert_popup(driver):
         print("DEBUG: 로그인 알림 팝업이 감지되지 않음. (정상일 수도 있음)")
 
 
-def handle_notice_popup(driver):
-    """
-    로그인 후 공지사항 팝업이 뜨는 경우 '닫기' 버튼 클릭
-    """
+def handle_notice_popup(driver, timeout=3):
     try:
-        close_button = WebDriverWait(driver, 5).until(
+        close_button = WebDriverWait(driver, timeout).until(
             EC.element_to_be_clickable(
                 (By.XPATH, "//input[@type='button' and @value='닫기' and contains(@id, '_wframe_btn_close')]")
             )
@@ -380,6 +368,7 @@ def handle_notice_popup(driver):
         print("DEBUG: 공지사항 팝업 닫기 버튼 클릭 완료.")
     except TimeoutException:
         print("DEBUG: 공지사항 팝업이 감지되지 않음. (정상일 수 있음)")
+
 
 
 def handle_search_error_popup(driver):
@@ -426,6 +415,27 @@ def handle_search_error_popup(driver):
         return False
 
 
+def handle_all_optional_popups(driver, park_id):
+    """
+    주차장에 따라 필요한 팝업만 선택적으로 처리하며, 각 팝업 대기 시간을 최소화함.
+    """
+    try:
+        if park_id in [19768, 19398, 19208, 19973]:  # 실제로 비밀번호 초기화 팝업 뜨는 park_id
+            handle_password_reset_popup(driver, timeout=2)
+            handle_init_password_popup(driver, timeout=2)
+            handle_password_change_popup(driver, timeout=2)
+
+        if park_id in [19768, 19796, 19399]:  # 공지사항 팝업 뜨는 park_id
+            handle_notice_popup(driver, timeout=2)
+
+        # 공통 처리 (팝업 없을 가능성 높음)
+        handle_popup(driver, timeout=2)
+
+    except Exception as e:
+        print(f"DEBUG: 선택 팝업 처리 중 예외 발생: {e}")
+
+
+
 def web_har_in(target, driver):
     pid = target[0]
     park_id = int(Util.all_trim(target[1]))
@@ -453,6 +463,9 @@ def web_har_in(target, driver):
             login_button.click()
 
             print("로그인 성공!")
+
+            # 최적화된 팝업 처리
+            handle_all_optional_popups(driver, park_id)
 
             # 비밀번호 초기화 팝업 감지 시 '아니오' 처리
             handle_password_reset_popup(driver)
