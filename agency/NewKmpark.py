@@ -394,7 +394,46 @@ def enter_memo_for_18577(driver):
         return False
 
 
-def handle_ticket(driver, park_id, ticket_name):
+def select_car_in_table(driver, ori_car_num):
+    """
+    차량번호가 복수 검색되었을 때 <div id="page-view"> 안의 <tr>에서 전체 차량번호와 일치하는 항목을 클릭
+    이후 할인권 목록 로딩까지 대기
+    """
+    try:
+        rows = WebDriverWait(driver, 5).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#page-view tbody.gbox-body tr.gbox-body-row"))
+        )
+
+        for row in rows:
+            cells = row.find_elements(By.CSS_SELECTOR, "td.gbox-body-cell")
+            if cells:
+                found_car_num = cells[0].text.strip().replace(" ", "")
+                print(f"DEBUG: 감지된 차량번호 → '{found_car_num}'")
+                if found_car_num == ori_car_num.replace(" ", ""):
+                    print(f"✅ 정확히 일치하는 차량번호 '{found_car_num}' 클릭 시도")
+                    row.click()
+
+                    # 🚨 클릭 후 할인권 로딩까지 잠시 대기
+                    try:
+                        WebDriverWait(driver, 5).until(
+                            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "tbody.gbox-body > tr.gbox-body-row"))
+                        )
+                        print("DEBUG: 할인권 리스트 로딩 확인 완료")
+                    except TimeoutException:
+                        print("WARNING: 차량 선택 후 할인권 리스트가 나타나지 않음")
+
+                    return True
+
+        print("❌ 일치하는 차량번호를 찾지 못했습니다.")
+        return False
+
+    except TimeoutException:
+        print("❌ 차량 목록을 찾을 수 없습니다.")
+        return False
+
+
+
+def handle_ticket(driver, park_id, ticket_name, ori_car_num):
     """
     주차장 및 주차권에 따른 할인권 처리 (19081, 19610, 19588 포함)
     """
@@ -505,38 +544,69 @@ def handle_ticket(driver, park_id, ticket_name):
 
     # ✅ 19477 전용 할인 처리
     if park_id == 19477:
+        try:
+            # 차량 검색 결과가 복수인 경우 → 차량 선택 필요
+            rows = WebDriverWait(driver, 3).until(
+                EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#page-view tbody.gbox-body tr.gbox-body-row"))
+            )
+            print(f"DEBUG: 차량 목록 {len(rows)}건 발견됨 → 차량 선택 시도")
+
+            if not select_car_in_table(driver, ori_car_num):
+                print("❌ 19477 - 차량 선택 실패, 로그아웃 후 종료")
+                logout(driver)
+                return False
+
+            # 차량 클릭 후 할인권 페이지 로딩 대기
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.CLASS_NAME, "btn-visit-coupon"))
+            )
+            print("DEBUG: 차량 선택 후 할인권 페이지 로딩 완료")
+
+        except TimeoutException:
+            # 차량 검색 결과가 1건이라 차량 선택이 생략되는 경우
+            print("DEBUG: 차량 검색 결과가 1건 → 차량 선택 생략하고 바로 할인 처리 진입")
+
         print(f"DEBUG: 19477 전용 할인 처리 시작 (ticket_name={ticket_name})")
+
         if ticket_name == "평일1일권":
             try:
                 rows = WebDriverWait(driver, 10).until(
                     EC.presence_of_all_elements_located((By.CSS_SELECTOR, "tbody.gbox-body > tr.gbox-body-row"))
                 )
-                success = False  # ✅ 클릭 성공 여부 추적
+                print("DEBUG: 할인권 리스트 로딩 확인 완료")
 
+                success = False
                 for row in rows:
-                    cells = row.find_elements(By.CLASS_NAME, "gbox-body-cell")
-                    if cells and "24시간(무료)" in cells[0].text:
-                        print(f"DEBUG: 타겟 할인권 텍스트 확인됨: {cells[0].text}")
-                        row.click()
-                        print("DEBUG: 할인권 클릭 완료")
+                    try:
+                        cell = row.find_element(By.CLASS_NAME, "gbox-body-cell")
+                        button = cell.find_element(By.TAG_NAME, "button")
+                        raw_text = button.text.strip()
+                        print(f"DEBUG: 버튼 내부 텍스트: '{raw_text}'")
 
-                        # 팝업 처리
-                        try:
-                            popup = WebDriverWait(driver, 5).until(
-                                EC.presence_of_element_located((By.CLASS_NAME, "modal-box"))
-                            )
-                            popup.find_element(By.XPATH, ".//a[@class='modal-btn']").click()
-                            WebDriverWait(driver, 5).until(
-                                EC.invisibility_of_element((By.CLASS_NAME, "modal-box"))
-                            )
-                            print("DEBUG: 팝업 닫기 완료")
-                        except TimeoutException:
-                            print("DEBUG: 팝업 감지되지 않음")
+                        if "24시간(무료)" in raw_text:
+                            button.click()
+                            print("DEBUG: 할인 버튼 클릭 완료")
 
-                        success = True
-                        break  # ✅ 할인권 클릭 성공했으므로 루프 종료
+                            # 팝업 처리
+                            try:
+                                popup = WebDriverWait(driver, 5).until(
+                                    EC.presence_of_element_located((By.CLASS_NAME, "modal-box"))
+                                )
+                                popup.find_element(By.XPATH, ".//a[@class='modal-btn']").click()
+                                WebDriverWait(driver, 5).until(
+                                    EC.invisibility_of_element((By.CLASS_NAME, "modal-box"))
+                                )
+                                print("DEBUG: 팝업 닫기 완료")
+                            except TimeoutException:
+                                print("DEBUG: 팝업 감지되지 않음")
 
-                logout(driver)  # 성공 여부와 무관하게 로그아웃은 1회만 수행
+                            success = True
+                            break
+
+                    except Exception as e:
+                        print(f"WARNING: <td> 또는 <button> 처리 중 예외 발생: {e}")
+
+                logout(driver)
 
                 if success:
                     return True
@@ -548,10 +618,12 @@ def handle_ticket(driver, park_id, ticket_name):
                 print("ERROR: 19477 - 할인권 목록 로딩 실패")
                 logout(driver)
                 return False
+
         else:
             print(f"ERROR: 19477에서 지원하지 않는 ticket_name: {ticket_name}")
             logout(driver)
             return False
+
 
     # ✅ 19582 전용 할인 처리
     if park_id == 19582:
@@ -814,7 +886,7 @@ def web_har_in(target, driver):
                 return False
 
             # 검색 성공 시 할인권 처리
-            return handle_ticket(driver, park_id, ticket_name)
+            return handle_ticket(driver, park_id, ticket_name, ori_car_num)
 
         except NoSuchElementException as ex:
             print(f"할인 처리 중 오류 발생: {ex}")

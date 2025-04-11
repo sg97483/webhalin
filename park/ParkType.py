@@ -254,7 +254,7 @@ TARGET_URLS_NEW_AMANO = [
     ,"https://a13687.parkingweb.kr/login","https://s1148.parkingweb.kr/login"
     ,"https://s1151.parkingweb.kr:6650/login","https://a14417.parkingweb.kr/login"
     ,"http://123.214.186.154","https://a17902.pweb.kr","https://a15891.parkingweb.kr"
-    ,"https://a15521.parkingweb.kr/login","https://a20628.pweb.kr/"]
+    ,"https://a15521.parkingweb.kr/login","https://a20628.pweb.kr/","https://a15531.parkingweb.kr/"]
 
 
 # 대상 URL 리스트
