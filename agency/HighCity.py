@@ -407,10 +407,31 @@ def get_har_in_script(park_id, ticket_name):
         return False  # ❗️최종적으로도 없으면 실패
 
 
+
+# ✅ 공통 함수 정의 (할인 스크립트 실행 + 알림창 확인)
+def execute_discount_script(driver, harin_script, park_id=None):
+    try:
+        if harin_script.startswith("BTN_"):
+            btn = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.ID, harin_script)))
+            driver.execute_script("arguments[0].click();", btn)
+        else:
+            driver.execute_script(harin_script)
+
+        print(f"\u2705 [{park_id}] 할인 스크립트 실행 완료: {harin_script}")
+
+        # ✅ 성공 여부 확인
+        if check_discount_alert(driver):
+            return True
+        else:
+            print(Colors.RED + f"\u274c [{park_id}] 할인 알림창 기준 실패 처리" + Colors.ENDC)
+            return False
+
+    except Exception as e:
+        print(Colors.RED + f"\u274c [{park_id}] 할인 스크립트 실행 중 오류 발생: {e}" + Colors.ENDC)
+        return False
+
+
 def check_discount_alert(driver):
-    """
-    할인 스크립트 실행 후 alert 창을 통해 성공 여부 판단
-    """
     try:
         WebDriverWait(driver, 5).until(EC.alert_is_present())
         alert = driver.switch_to.alert
@@ -426,7 +447,6 @@ def check_discount_alert(driver):
     except Exception as e:
         print("할인 처리 후 알림창이 감지되지 않음:", e)
         return False
-
 
 
 def web_har_in(target, driver):
@@ -470,6 +490,19 @@ def web_har_in(target, driver):
                 if ParkUtil.check_search(park_id, driver):
 
                     if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
+
+                        # ✅ 적용 위치: web_har_in 내 해당 주차장 처리 부분 (예: 18958)
+                        if park_id in [
+                            18958, 16003, 19181, 19022, 19325,
+                            19364, 20864, 20863, 16170, 19248,
+                            19194, 19272, 19276
+                        ]:
+                            harin_script = get_har_in_script(park_id, ticket_name)
+                            if not harin_script:
+                                print(Colors.RED + f"\u274c 정의되지 않은 ticket_name 또는 스크립트 없음 ({park_id})" + Colors.ENDC)
+                                return False
+
+                            return execute_discount_script(driver, harin_script, park_id)
 
                         # ✅ 여기에 radio 체크 처리 삽입
                         btn_item = web_info[WebInfo.btnItem]
@@ -583,6 +616,29 @@ def web_har_in(target, driver):
 
                             except Exception as e:
                                 print(Colors.RED + f"❌ 35529 할인 처리 실패: {e}" + Colors.ENDC)
+                                return False
+
+                        if park_id == 12750:
+                            try:
+                                # 할인 스크립트 획득
+                                harin_script = get_har_in_script(park_id, ticket_name)
+                                if not harin_script:
+                                    print(
+                                        Colors.RED + f"❌ ticket_name에 대한 스크립트 정의 없음 (12750): {ticket_name}" + Colors.ENDC)
+                                    return False
+
+                                print(Colors.BLUE + f"할인 스크립트 실행: {harin_script}" + Colors.ENDC)
+                                driver.execute_script(harin_script)
+
+                                # ✅ 실제 성공 여부 확인
+                                if check_discount_alert(driver):
+                                    return True
+                                else:
+                                    print(Colors.RED + f"❌ 할인 알림창 기준 실패 처리 (12750)" + Colors.ENDC)
+                                    return False
+
+                            except Exception as e:
+                                print(Colors.RED + f"❌ 12750 할인 스크립트 실행 중 오류 발생: {e}" + Colors.ENDC)
                                 return False
 
                         if park_id == 29248:
