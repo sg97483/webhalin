@@ -38,8 +38,8 @@ TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.k
                "http://211.244.148.17/","https://a15337.parkingweb.kr","http://121.134.61.62/login"
     ,"http://a05388.parkingweb.kr","http://175.195.124.15","https://a14705.parkingweb.kr/login"
     ,"https://a13687.parkingweb.kr/login","https://s1148.parkingweb.kr/login"
-    ,"https://s1151.parkingweb.kr:6650/login","https://a14417.parkingweb.kr/login","http://123.214.186.154"
-,"https://a17902.pweb.kr","https://a15891.parkingweb.kr"
+    ,"https://s1151.parkingweb.kr:6650/login","https://a14417.parkingweb.kr/login","http://123.214.186.154","https://a15521.parkingweb.kr/login"
+,"https://a17902.pweb.kr","https://a15891.parkingweb.kr","https://a20628.pweb.kr/"
                ]
 
 def get_park_ids_by_urls(target_urls):
@@ -85,7 +85,8 @@ if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_
         ,"http://a05388.parkingweb.kr","http://175.195.124.15","https://a14705.parkingweb.kr/login"
         ,"https://a13687.parkingweb.kr/login","https://s1148.parkingweb.kr/login"
         ,"https://s1151.parkingweb.kr:6650/login","https://a14417.parkingweb.kr/login"
-        ,"http://123.214.186.154","https://a17902.pweb.kr","https://a15891.parkingweb.kr"]
+        ,"http://123.214.186.154","https://a17902.pweb.kr","https://a15891.parkingweb.kr"
+        ,"https://a15521.parkingweb.kr/login","https://a20628.pweb.kr/"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["userId", "userPwd", "//*[@id='btnLogin']", "schCarNo", "//*[@id='sForm']/input[3]"]
@@ -292,6 +293,9 @@ def handle_popup_and_go_discount(driver, park_id):
         19887: "https://a15820.parkingweb.kr/discount/registration",
         19842: "https://a14417.parkingweb.kr/discount/registration",
         19903: "https://s1151.parkingweb.kr:6650/discount/registration",
+        19870: "https://a15521.parkingweb.kr/discount/registration",
+        29105: "https://a18134.pweb.kr/discount/registration",
+        29230: "https://a20628.pweb.kr/discount/registration",
         19941: "https://a17902.pweb.kr/discount/registration"
 
     }
@@ -541,6 +545,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19935: {"평일 2시간권": "5", "평일 4시간권": "6"},
         19904: {"평일4시간권": "5", "주말 당일권": "6"},
         19376: {"주말1일권": "20", "심야권": "13"},
+        19870: {"평일1일권": "3", "주말1일권": "3"},
         45010: {"평일1일권": "851", "심야권": "10", "2시간권": "850"},
         19899: {"평일 3시간권": "7", "평일 당일권": "8", "토요일 2시간권": "17"},
         19453: {"휴일 당일권": "8", "평일 심야권": "12", "휴일 심야권": "12"},
@@ -549,6 +554,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         29105: {"평일 2시간권": "7", "평일 3시간권": "8", "평일 당일권": "9", "평일 심야권": "13", "주말 당일권": "9"},
         19250: {"평일 6시간권": "18", "평일 당일권(월,화)": "18", "평일 당일권(수~금)": "18", "금토 2일연박권": "44", "주말 당일권(일요일)": "18", "주말 당일권(토요일)": "18", "평일 심야권": "19"},
         19852: {"평일 당일권": "14"},
+        29230: {"4시간권": "3", "12시간권": "4", "평일 당일권": "5", "휴일 당일권": "6"},
         19920: {"평일 당일권": "6"},
         29118: {"평일 1일권": "11", "주말 1일권(토요일)": "11", "3시간권": "6", "평일 오후권": "19", "평일 심야권(월~목)": "17"},
         19954: {"평일 당일권": "4", "휴일 당일권": "4", "평일 6시간권": "7", "평일 심야권": "9"}
