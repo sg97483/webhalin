@@ -847,11 +847,22 @@ def web_har_in(target, driver):
 
             close_vehicle_number_popup(driver)
 
-            # ✅ 차량번호 입력 후 실패 여부 확인
-            driver.car_number_last4 = ori_car_num[-4:]
-            if not enter_car_number(driver, ori_car_num[-4:], park_id):
-                print("ERROR: 차량번호 입력 실패로 할인 중단.")
-                return False  # 🚨 차량번호 입력 실패 시 즉시 중단
+            # ✅ 차량번호 입력 전, 이미 선택된 상태인지 확인
+            try:
+                selected_car_text = driver.find_element(By.CSS_SELECTOR, "#carInfoArea").text
+                if ori_car_num[-4:] in selected_car_text:
+                    print("DEBUG: 차량번호가 이미 선택된 상태로 감지됨. 재검색 생략.")
+                else:
+                    driver.car_number_last4 = ori_car_num[-4:]
+                    if not enter_car_number(driver, driver.car_number_last4, park_id):
+                        print("ERROR: 차량번호 입력 실패로 할인 중단.")
+                        return False
+            except Exception:
+                # 예외 발생 시 검색은 수행
+                driver.car_number_last4 = ori_car_num[-4:]
+                if not enter_car_number(driver, driver.car_number_last4, park_id):
+                    print("ERROR: 차량번호 입력 실패로 할인 중단.")
+                    return False
 
             # ✅ 할인권 처리
             entry_day_of_week = target[4].strftime('%a')
