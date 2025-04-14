@@ -321,8 +321,21 @@ def get_har_in_script(park_id, ticket_name):
         else:
             return False
 
-    if park_id == 19325 and ticket_name in ["평일 심야권(일~목)", "휴일 심야권(금,토)"]:
-        return "javascript:applyDiscount('17', '1', '11|20|21|', 'ppark(야간)', 'Y');"
+    if park_id == 19325:
+        if ticket_name in [
+            "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"
+        ]:
+            return "javascript:applyDiscount('14', '1', '11|20|21|', 'ppark', 'Y');"
+        elif ticket_name in [
+            "평일 12시간권(월)", "평일 12시간권(화~금)"
+        ]:
+            return "javascript:applyDiscount('75', '1', '', '12시간', '');"
+        elif ticket_name == "휴일 당일권":
+            return "javascript:applyDiscount('83', '1', '20|21|', 'ppark(주말24시간)', 'Y');"
+        elif ticket_name in ["평일 심야권(일~목)", "심야권(금,토)"]:
+            return "javascript:applyDiscount('17', '1', '11|20|21|', 'ppark(야간)', 'Y');"
+        else:
+            return False
 
     if park_id == 16003:
         if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)", "휴일 당일권"]:
@@ -351,26 +364,26 @@ def get_har_in_script(park_id, ticket_name):
         else:
             return False
 
-
     if park_id == 19364:
         if ticket_name in [
             "평일 당일권(월~화)",
             "평일 당일권(수~목)",
-            "평일 당일권(금)",
-            "휴일 당일권(토,공휴일)",
-            "휴일 당일권(일)",
-            "휴일 연박권(토,일)"
+            "평일 당일권(금)"
         ]:
-            return "javascript:applyDiscount('08', 'CP0802', '1', '01|20|24|', 'ppark', '999999999', '0');"
-
+            return "javascript:applyDiscount('07', 'CP0802', '1', '01|20|24|', '평일당일권(공유서비스)', '999999999', '0');"
+        elif ticket_name in [
+            "휴일 당일권(토,공휴일)",
+            "휴일 당일권(일)"
+        ]:
+            return "javascript:applyDiscount('08', 'CP0802', '1', '01|20|24|', '휴일당일권(공유서비스)', '999999999', '0');"
+        elif ticket_name == "휴일 연박권(토,일)":
+            return "javascript:applyDiscount('70', 'CP0802', '1', '20|24|', '2일권', '999999999', '0');"
         elif ticket_name == "평일 3시간권":
             return "javascript:applyDiscount('25', 'CP0802', '1', '', '3시간권', '999999999', '0');"
-
         elif ticket_name in ["평일 심야권", "휴일 심야권"]:
-            return "javascript:applyDiscount('91', 'CP0802', '1', '20|', 'ppark(야간)', '999999999', '0');"
-
+            return "javascript:applyDiscount('90', 'CP0802', '1', '20|', '심야권(공유서비스)', '999999999', '0');"
         else:
-            return False  # ❗️그 외는 실패 처리
+            return False
 
     if park_id == 20863:
         if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)", "휴일 당일권"]:
@@ -407,10 +420,15 @@ def get_har_in_script(park_id, ticket_name):
         return False  # ❗️최종적으로도 없으면 실패
 
 
-def check_discount_alert(driver):
+def check_discount_alert(driver, park_id=None):
     """
     할인 스크립트 실행 후 alert 창을 통해 성공 여부 판단
+    단, 특정 주차장은 alert이 존재하지 않음 (예: 20863) → 예외 처리
     """
+    if park_id in [20863, 19364, 19325]:
+        print("✅ 할인 결과 알림창 없음 → 예외 없이 성공 처리 (예상된 구조)")
+        return True
+
     try:
         WebDriverWait(driver, 5).until(EC.alert_is_present())
         alert = driver.switch_to.alert
@@ -424,63 +442,9 @@ def check_discount_alert(driver):
             return False
 
     except Exception as e:
-        print("할인 처리 후 알림창이 감지되지 않음:", e)
+        print("❌ 할인 처리 후 알림창이 감지되지 않음:", e)
         return False
 
-
-
-def handle_discount_12750(driver, ticket_name):
-    """
-    park_id=12750 전용 할인권 처리 함수 (alert_save가 비어있는 경우 대비)
-    """
-    try:
-        radio = WebDriverWait(driver, 3).until(
-            EC.presence_of_element_located((By.ID, "chk"))
-        )
-        driver.execute_script("arguments[0].checked = true;", radio)
-        Util.sleep(0.2)
-        print(Colors.GREEN + "✅ 차량 체크박스 강제 체크 완료" + Colors.ENDC)
-    except Exception as e:
-        print(Colors.RED + f"❌ 체크박스 체크 실패: {e}" + Colors.ENDC)
-        return False
-
-    if ticket_name == "평일 12시간권":
-        button_text = "12시간권"
-    elif ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)", "휴일 당일권"]:
-        button_text = "파킹박 (web)"
-    elif ticket_name in ["평일 심야권(일~목)", "휴일 심야권(금,토)"]:
-        button_text = "파킹박(야간)"
-    else:
-        print(Colors.RED + f"❌ 정의되지 않은 ticket_name: {ticket_name}" + Colors.ENDC)
-        return False
-
-    try:
-        btn = WebDriverWait(driver, 5).until(
-            EC.element_to_be_clickable((By.XPATH, f"//input[@type='button' and @value='{button_text}']"))
-        )
-
-        # 할인 실행 전, div 영역 ID 추출
-        chk_value = radio.get_attribute("value")  # 예: 311111250411164200
-        result_div_id = f"div_{chk_value}"
-
-        driver.execute_script("arguments[0].checked = true;", radio)
-        Util.sleep(0.2)
-        driver.execute_script("arguments[0].click();", btn)
-        print(Colors.GREEN + f"✅ 할인 버튼 클릭 완료 ({button_text})" + Colors.ENDC)
-
-        Util.sleep(1.5)  # 할인 처리 완료 대기
-
-        try:
-            result_text = driver.find_element(By.ID, result_div_id).text.strip()
-            print(Colors.BLUE + f"✅ 할인 결과 div 텍스트: {result_text}" + Colors.ENDC)
-            return result_text != "" and "할인" in result_text or "등록" in result_text
-        except Exception as e:
-            print(Colors.RED + f"❌ 할인 결과 div 확인 실패: {e}" + Colors.ENDC)
-            return False
-
-    except Exception as e:
-        print(Colors.RED + f"❌ 할인 버튼 클릭 실패: {e}" + Colors.ENDC)
-        return False
 
 
 
@@ -541,7 +505,21 @@ def web_har_in(target, driver):
                                 return False
 
                         if park_id == 12750:
-                            return handle_discount_12750(driver, ticket_name)
+                            harin_script = get_har_in_script(park_id, ticket_name)
+                            if not harin_script:
+                                print(Colors.RED + f"❌ 유효하지 않은 ticket_name: {ticket_name}" + Colors.ENDC)
+                                return False
+
+                            try:
+                                driver.execute_script(harin_script)
+                                print(Colors.GREEN + "✅ 할인 스크립트 직접 실행 완료 (12750)" + Colors.ENDC)
+
+                                # 알림창 처리 (성공 여부 판단)
+                                return check_discount_alert(driver, park_id)
+
+                            except Exception as e:
+                                print(Colors.RED + f"❌ 할인 스크립트 실행 실패 (12750): {e}" + Colors.ENDC)
+                                return False
 
                         if park_id == 19492:
                             try:
@@ -588,6 +566,43 @@ def web_har_in(target, driver):
                             except Exception as e:
                                 print(Colors.RED + f"❌ 19492 할인 처리 실패: {e}" + Colors.ENDC)
                                 return False
+
+                        if park_id == 20863:
+                            try:
+                                # ✅ 이미 체크된 상태 유지 → 재클릭 없이 잠시 대기
+                                Util.sleep(0.8)  # 체크박스 선택 적용 시간 확보
+
+                                # ✅ 할인 버튼 클릭 (파킹박)
+                                btn = WebDriverWait(driver, 5).until(
+                                    EC.element_to_be_clickable(
+                                        (By.XPATH, "//input[@type='button' and @value='파킹박']")
+                                    )
+                                )
+                                driver.execute_script("arguments[0].click();", btn)
+                                print("✅ 파킹박 버튼 클릭 완료 (20863)")
+
+                                Util.sleep(1.0)  # 반응 대기
+
+                                # 20863은 alert 없음 → 체크 생략
+                                return True
+
+                            except Exception as e:
+                                print(Colors.RED + f"❌ 20863 할인 처리 실패: {e}" + Colors.ENDC)
+                                return False
+
+                        if park_id == 19325:
+                            try:
+                                chk_elem = WebDriverWait(driver, 3).until(
+                                    EC.presence_of_element_located((By.ID, "chk")))
+                                is_checked = driver.execute_script("return arguments[0].checked;", chk_elem)
+                                if not is_checked:
+                                    driver.execute_script("arguments[0].checked = true;", chk_elem)
+                                    print("✅ 라디오 버튼 'chk' 강제 체크 적용됨 (19325)")
+                                else:
+                                    print("✅ 라디오 버튼 'chk' 이미 체크되어 있음 (19325)")
+                                Util.sleep(0.3)
+                            except Exception as e:
+                                print(f"⚠️ chk 체크 상태 확인 또는 강제화 실패: {e}")
 
                         if park_id == 35529:
                             try:
@@ -1037,13 +1052,24 @@ def web_har_in(target, driver):
                                 return False
 
                         btn_item = web_info[WebInfo.btnItem]
-                        if park_id != 19492 and btn_item and btn_item != "-":
+                        if park_id not in [12750, 19492] and btn_item and btn_item != "-":
                             driver.find_element_by_id(btn_item).click()
 
                         harin_script = get_har_in_script(park_id, ticket_name)
                         if not harin_script:
                             print("유효하지 않은 ticket_name 입니다.")  # 실패 메시지
                             return False  # 프로세스 종료 (더 진행 안 함)
+
+                        # ✅ 할인 스크립트 실행 직전에 chk 강제 체크 추가
+                        if park_id == 19325:
+                            try:
+                                chk_elem = WebDriverWait(driver, 3).until(
+                                    EC.presence_of_element_located((By.ID, "chk")))
+                                driver.execute_script("arguments[0].checked = true;", chk_elem)
+                                print("✅ (재확인) 라디오 버튼 'chk' 강제 체크 완료 (19325)")
+                                Util.sleep(0.3)
+                            except Exception as e:
+                                print(f"⚠️ (재확인) chk 체크 실패: {e}")
 
                         try:
                             if harin_script.startswith("BTN_"):
@@ -1059,7 +1085,7 @@ def web_har_in(target, driver):
                                 driver.execute_script(harin_script)
 
                             print("할인 스크립트 실행 완료")
-                            return True
+                            return check_discount_alert(driver, park_id)
                         except UnexpectedAlertPresentException:
                             try:
                                 alert = driver.switch_to.alert

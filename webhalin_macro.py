@@ -114,10 +114,10 @@ def web_har_in(target):
         exec_web_har_in(HighMhpOpt, target, driver)
         return True
 
-    #elif park_type == ParkType.HIGH_CITY:
-    #    exec_web_har_in(HighCity, target, driver)
-    #    print(f"park_id: {park_id}, park_type: {park_type}, expected: {ParkType.HIGH_CITY}")
-    #    return True
+    elif park_type == ParkType.HIGH_CITY:
+        exec_web_har_in(HighCity, target, driver)
+        print(f"park_id: {park_id}, park_type: {park_type}, expected: {ParkType.HIGH_CITY}")
+        return True
 
     #아이파킹사이트(운영업체혼합)
     elif park_type == ParkType.I_PARKING:

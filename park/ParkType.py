@@ -94,6 +94,7 @@ parkTypeIparking = [
     19921, #하이파킹 성수무신사캠퍼스N1
     29220, #하이파킹 종로5가역하이뷰더광장
     29175, #하이파킹 SK-C타워(구, 충무로15빌딩)
+    19945, # 신한은행 광교 주차장
     19579, #카카오 T 이마트구로점
     19508,
     19509,
@@ -240,7 +241,7 @@ TARGET_URLS_NICE = [
 
 # 대상 URL 리스트
 TARGET_URLS_NEW_AMANO = [
-    "https://a14926.parkingweb.kr/login","https://a05203.parkingweb.kr","http://112.216.125.10/discount/registration",
+    "https://a14926.parkingweb.kr/login","https://a05203.parkingweb.kr",
     "https://a18822.pweb.kr","https://a14041.parkingweb.kr/","https://a18147.pweb.kr/",
     "https://a12647.parkingweb.kr/","https://www.amanopark.co.kr/",
     "https://a093.parkingweb.kr/","https://a17687.pweb.kr/","http://112.217.102.42/","http://a15820.parkingweb.kr/",
@@ -254,7 +255,8 @@ TARGET_URLS_NEW_AMANO = [
     ,"https://a13687.parkingweb.kr/login","https://s1148.parkingweb.kr/login"
     ,"https://s1151.parkingweb.kr:6650/login","https://a14417.parkingweb.kr/login"
     ,"http://123.214.186.154","https://a17902.pweb.kr","https://a15891.parkingweb.kr"
-    ,"https://a15521.parkingweb.kr/login","https://a20628.pweb.kr/","https://a15531.parkingweb.kr/"]
+    ,"https://a15521.parkingweb.kr/login","https://a20628.pweb.kr/","https://a15531.parkingweb.kr/"
+    ,"https://a00150.parkingweb.kr/login","https://a3590.parkingweb.kr"]
 
 
 # 대상 URL 리스트

@@ -88,6 +88,14 @@ mapIdToWebInfo = {
             "#carList > tr",
             "2"
             ],
+
+    # 신한은행 광교 주차장
+    19945: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
+
     # 카카오 T 이마트구로점
     19579: ["id", "password", "//*[@id='login']",
             "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
@@ -230,6 +238,53 @@ def close_info_and_tutorial(driver):
         print(Colors.YELLOW + "[팝업] 슬라이더 레이어 숨김 완료." + Colors.ENDC)
     except Exception as ex:
         print(Colors.YELLOW + f"[팝업] 슬라이더 숨기기 예외: {ex}" + Colors.ENDC)
+
+
+def handle_discount(driver, park_id, ticket_name):
+    if park_id == 19945:
+        print(Colors.YELLOW + "하이파킹 신한은행 광교 할인 처리 (19945)" + Colors.ENDC)
+        product_list = driver.find_elements(By.CSS_SELECTOR, "#productList > tr")
+        found = False
+
+        normalized_ticket_name = ticket_name.replace(" ", "")  # 공백 제거
+
+        for row in product_list:
+            try:
+                label = row.find_element(By.TAG_NAME, "td").text.strip()
+                apply_button = row.find_element(By.CSS_SELECTOR, "button.btn-apply")
+
+                if not apply_button.is_enabled():
+                    print(Colors.YELLOW + f"⚠️ 버튼 비활성화 상태로 클릭 불가: {label}" + Colors.ENDC)
+                    continue
+
+                if normalized_ticket_name == "주말당일권" and "휴일 당일권" in label:
+                    driver.execute_script("arguments[0].click();", apply_button)
+                    print(Colors.BLUE + "✅ 휴일 당일권 적용 완료 (19945)" + Colors.ENDC)
+                    found = True
+                    break
+
+                elif normalized_ticket_name == "주말3시간권" and "휴일 3시간권" in label:
+                    driver.execute_script("arguments[0].click();", apply_button)
+                    print(Colors.BLUE + "✅ 휴일 3시간권 적용 완료 (19945)" + Colors.ENDC)
+                    found = True
+                    break
+
+                elif normalized_ticket_name == "토일연박권" and "토,일 연박권" in label:
+                    driver.execute_script("arguments[0].click();", apply_button)
+                    print(Colors.BLUE + "✅ 토,일 연박권 적용 완료 (19945)" + Colors.ENDC)
+                    found = True
+                    break
+
+            except Exception as ex:
+                print(Colors.RED + f"❌ 할인 버튼 처리 중 오류: {ex}" + Colors.ENDC)
+
+        if not found:
+            print(Colors.YELLOW + f"⚠️ '{ticket_name}'에 해당하는 할인권을 찾지 못했습니다. (19945)" + Colors.ENDC)
+            return False
+
+        return True
+
+    return None
 
 
 
@@ -418,6 +473,11 @@ def web_har_in(target, driver):
             if not found:
                 print(Colors.YELLOW + f"⚠️ '{ticket_name}'에 해당하는 할인권을 찾지 못했습니다." + Colors.ENDC)
                 return False
+
+
+        elif park_id == 19945:
+            result = handle_discount(driver, park_id, ticket_name)
+            return result if result is not None else False
 
 
 

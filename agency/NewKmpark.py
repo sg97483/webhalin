@@ -247,20 +247,6 @@ def handle_notice_popup_and_redirect(driver, park_id):
         print("ERROR: 할인 페이지 로딩 실패.")
 
 
-def click_discount_menu(driver):
-    """
-    park_id = 19335 에서 '할인' 메뉴 클릭
-    """
-    try:
-        discount_button = WebDriverWait(driver, 5).until(
-            EC.presence_of_element_located((By.XPATH, "//a[contains(text(), '할인')]"))
-        )
-        discount_button.click()
-
-    except TimeoutException:
-        print("ERROR: '할인' 버튼을 찾을 수 없음.")
-
-
 def process_ticket_and_logout(driver, button_id, park_id):
     """
     할인권 클릭 및 로그아웃까지 처리하는 함수
@@ -563,7 +549,7 @@ def handle_ticket(driver, park_id, ticket_name, ori_car_num):
             print("DEBUG: 차량 선택 후 할인권 페이지 로딩 완료")
 
         except TimeoutException:
-            # 차량 검색 결과가 1건이라 차량 선택이 생략되는 경우
+            # 차량 검색 결과가 1건이라 차량 선택 생략되는 경우
             print("DEBUG: 차량 검색 결과가 1건 → 차량 선택 생략하고 바로 할인 처리 진입")
 
         print(f"DEBUG: 19477 전용 할인 처리 시작 (ticket_name={ticket_name})")
@@ -578,33 +564,32 @@ def handle_ticket(driver, park_id, ticket_name, ori_car_num):
                 success = False
                 for row in rows:
                     try:
-                        cell = row.find_element(By.CLASS_NAME, "gbox-body-cell")
-                        button = cell.find_element(By.TAG_NAME, "button")
-                        raw_text = button.text.strip()
+                        button = row.find_element(By.TAG_NAME, "button")
+                        raw_text = button.text.strip().replace(" ", "")
                         print(f"DEBUG: 버튼 내부 텍스트: '{raw_text}'")
 
                         if "24시간(무료)" in raw_text:
-                            button.click()
-                            print("DEBUG: 할인 버튼 클릭 완료")
+                            driver.execute_script("arguments[0].click();", button)
+                            print("DEBUG: 할인 버튼 강제 클릭 완료")
 
-                            # 팝업 처리
+                            # 팝업 처리 (있으면 처리, 없으면 패스)
                             try:
-                                popup = WebDriverWait(driver, 5).until(
+                                popup = WebDriverWait(driver, 3).until(
                                     EC.presence_of_element_located((By.CLASS_NAME, "modal-box"))
                                 )
                                 popup.find_element(By.XPATH, ".//a[@class='modal-btn']").click()
-                                WebDriverWait(driver, 5).until(
+                                WebDriverWait(driver, 3).until(
                                     EC.invisibility_of_element((By.CLASS_NAME, "modal-box"))
                                 )
                                 print("DEBUG: 팝업 닫기 완료")
                             except TimeoutException:
-                                print("DEBUG: 팝업 감지되지 않음")
+                                print("WARNING: 팝업 감지되지 않음 → 무시하고 성공 처리")
 
-                            success = True
+                            success = True  # 팝업 없어도 성공으로 간주
                             break
 
                     except Exception as e:
-                        print(f"WARNING: <td> 또는 <button> 처리 중 예외 발생: {e}")
+                        print(f"WARNING: <button> 처리 중 예외 발생: {e}")
 
                 logout(driver)
 
@@ -619,58 +604,65 @@ def handle_ticket(driver, park_id, ticket_name, ori_car_num):
                 logout(driver)
                 return False
 
+
         else:
             print(f"ERROR: 19477에서 지원하지 않는 ticket_name: {ticket_name}")
             logout(driver)
             return False
 
+    # ✅ 19588 전용 할인 처리 (19477 방식과 동일)
+    if park_id == 19588:
+        print(f"DEBUG: 19588 전용 할인 처리 시작 (ticket_name={ticket_name})")
+        cleaned_ticket_name = ticket_name.strip()
 
-    # ✅ 19582 전용 할인 처리
-    if park_id == 19582:
-        print(f"DEBUG: 19582 전용 할인 처리 시작 (ticket_name={ticket_name})")
-        if ticket_name in ["평일1일권", "주말1일권"]:
+        if cleaned_ticket_name in ["평일1일권", "주말1일권"]:
             try:
                 buttons = WebDriverWait(driver, 10).until(
-                    EC.presence_of_all_elements_located((By.CSS_SELECTOR, "button.btn-visit-coupon"))
+                    EC.presence_of_all_elements_located((By.CLASS_NAME, "btn-visit-coupon"))
                 )
+                print(f"DEBUG: 할인 버튼 {len(buttons)}개 발견됨")
+
+                success = False
                 for button in buttons:
                     try:
-                        text = button.text.strip()
-                        if "24시간(무료)" in text and "무제한" in text:
-                            if button.is_enabled():
-                                button.click()
-                                print("DEBUG: 19582 - 24시간(무료) [무제한] 버튼 클릭 완료.")
+                        text = button.text.strip().replace("\n", "").replace(" ", "")
+                        print(f"DEBUG: 버튼 텍스트 = '{text}'")
 
-                                # 팝업 처리
+                        if "24시간(유료)" in text and "무제한" in text:
+                            if button.is_enabled():
+                                # 강제 클릭
+                                driver.execute_script("arguments[0].click();", button)
+                                print("DEBUG: 할인 버튼 강제 클릭 완료")
+
+                                # 팝업 있으면 처리, 없으면 무시
                                 try:
-                                    popup = WebDriverWait(driver, 5).until(
+                                    popup = WebDriverWait(driver, 3).until(
                                         EC.presence_of_element_located((By.CLASS_NAME, "modal-box"))
                                     )
                                     popup.find_element(By.XPATH, ".//a[@class='modal-btn']").click()
-                                    WebDriverWait(driver, 5).until(
+                                    WebDriverWait(driver, 3).until(
                                         EC.invisibility_of_element((By.CLASS_NAME, "modal-box"))
                                     )
-                                    print("DEBUG: 할인 이후 팝업 닫기 완료.")
+                                    print("DEBUG: 팝업 닫기 완료")
                                 except TimeoutException:
-                                    print("DEBUG: 할인 이후 팝업 감지되지 않음.")
+                                    print("WARNING: 팝업 감지되지 않음 → 무시하고 성공 처리")
 
-                                # 로그아웃 수행
-                                return logout(driver)
+                                success = True
+                                break
                             else:
-                                print("WARNING: 버튼은 찾았지만 비활성화 상태입니다.")
+                                print("WARNING: 버튼 비활성화 상태입니다")
                     except Exception as e:
                         print(f"ERROR: 버튼 내부 처리 중 예외 발생: {e}")
-                print("ERROR: 19582 - 24시간(무료) [무제한] 버튼을 찾지 못함.")
 
                 logout(driver)
+                return success  # 팝업 없어도 success=True면 성공 반환
 
-                return False
             except TimeoutException:
-                print("ERROR: 19582 - 할인 버튼 목록 로딩 실패")
+                print("ERROR: 할인 버튼 로딩 실패")
                 logout(driver)
                 return False
         else:
-            print(f"ERROR: 19582에서 지원하지 않는 ticket_name: {ticket_name}")
+            print(f"ERROR: ticket_name '{cleaned_ticket_name}' 은 19588에서 지원되지 않음")
             logout(driver)
             return False
 
@@ -742,7 +734,6 @@ def handle_ticket(driver, park_id, ticket_name, ori_car_num):
         19892: {"평일 심야권": "15", "주말 심야권": "15", "휴일 당일권": "8"},
         19489: {"평일1일권": "8", "주말1일권": "10", "평일 심야권": "9"},
         19130: {"평일1일권": "14", "평일 심야권": "15"},
-        19335: {"평일1일권": "6", "평일 심야권": "15"},
     }
 
     if park_id not in ticket_map or ticket_name not in ticket_map[park_id]:

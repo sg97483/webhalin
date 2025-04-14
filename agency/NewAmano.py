@@ -26,7 +26,7 @@ btn_confirm_xpath = "/html/body/mhp-console/div/div[2]/div/div/main/div[2]/div[1
 side_nav_xpath = "/html/body/div[3]/table/tbody/tr/td[2]/button"
 
 # 대상 URL 리스트
-TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.kr","http://112.216.125.10/discount/registration"
+TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.kr"
     ,"https://a18822.pweb.kr","https://a14041.parkingweb.kr/","https://a18147.pweb.kr/",
                "https://a12647.parkingweb.kr/","https://www.amanopark.co.kr/"
     ,"https://a093.parkingweb.kr/","https://a17687.pweb.kr/","http://112.217.102.42/"
@@ -40,6 +40,7 @@ TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.k
     ,"https://a13687.parkingweb.kr/login","https://s1148.parkingweb.kr/login"
     ,"https://s1151.parkingweb.kr:6650/login","https://a14417.parkingweb.kr/login","http://123.214.186.154","https://a15521.parkingweb.kr/login"
 ,"https://a17902.pweb.kr","https://a15891.parkingweb.kr","https://a20628.pweb.kr/","https://a15531.parkingweb.kr/"
+,"https://a00150.parkingweb.kr/login","https://a3590.parkingweb.kr"
                ]
 
 def get_park_ids_by_urls(target_urls):
@@ -70,8 +71,7 @@ dynamic_park_ids = get_park_ids_by_urls(TARGET_URLS)
 # 🚨 TARGET_URLS가 park_id 리스트로 바뀌었으면 원래 URL 리스트로 복구
 if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_URLS):
     #print("🚨 DEBUG: TARGET_URLS가 park_id 리스트로 변경됨! 원래 URL 리스트로 복구")
-    TARGET_URLS = ["https://a14926.parkingweb.kr/login", "https://a05203.parkingweb.kr",
-                   "http://112.216.125.10/discount/registration","https://a18822.pweb.kr",
+    TARGET_URLS = ["https://a14926.parkingweb.kr/login", "https://a05203.parkingweb.kr","https://a18822.pweb.kr",
                    "https://a14041.parkingweb.kr/","https://a18147.pweb.kr/","https://a12647.parkingweb.kr/"
         ,"https://www.amanopark.co.kr/","https://a093.parkingweb.kr/"
         ,"https://a17687.pweb.kr/","http://112.217.102.42/"
@@ -86,7 +86,8 @@ if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_
         ,"https://a13687.parkingweb.kr/login","https://s1148.parkingweb.kr/login"
         ,"https://s1151.parkingweb.kr:6650/login","https://a14417.parkingweb.kr/login"
         ,"http://123.214.186.154","https://a17902.pweb.kr","https://a15891.parkingweb.kr"
-        ,"https://a15521.parkingweb.kr/login","https://a20628.pweb.kr/","https://a15531.parkingweb.kr/"]
+        ,"https://a15521.parkingweb.kr/login","https://a20628.pweb.kr/","https://a15531.parkingweb.kr/"
+        ,"https://a00150.parkingweb.kr/login","https://a3590.parkingweb.kr"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["userId", "userPwd", "//*[@id='btnLogin']", "schCarNo", "//*[@id='sForm']/input[3]"]
@@ -287,7 +288,6 @@ def handle_popup_and_go_discount(driver, park_id):
     특정 park_id에 따라 팝업 닫기와 할인 페이지 이동 처리
     """
     park_popup_and_discount_url = {
-        19335: "http://112.216.125.10/discount/registration",
         19934: "https://a17687.pweb.kr/discount/registration",
         19253: "https://175.195.124.15/discount/registration",
         19887: "https://a15820.parkingweb.kr/discount/registration",
@@ -332,21 +332,6 @@ def handle_popup_and_go_discount(driver, park_id):
         print(f"DEBUG: park_id={park_id} 할인 페이지 로딩 완료.")
     except TimeoutException:
         print(f"ERROR: park_id={park_id} 할인 페이지 로딩 실패.")
-
-
-
-def click_discount_menu(driver):
-    """
-    park_id = 19335 에서 '할인' 메뉴 클릭
-    """
-    try:
-        discount_button = WebDriverWait(driver, 5).until(
-            EC.presence_of_element_located((By.XPATH, "//a[contains(text(), '할인')]"))
-        )
-        discount_button.click()
-
-    except TimeoutException:
-        print("ERROR: '할인' 버튼을 찾을 수 없음.")
 
 
 def process_ticket_and_logout(driver, button_id, park_id):
@@ -518,7 +503,6 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19892: {"평일 심야권": "15", "주말 심야권": "15", "휴일 당일권": "8"},
         19489: {"평일1일권": "8", "주말1일권": "10", "평일 심야권": "9"},
         19130: {"평일1일권": "14", "평일 심야권": "15"},
-        19335: {"평일1일권": "6", "평일 심야권": "15"},
         19210: {"평일1일권": "3", "주말1일권": "5", "심야권": "4"},
         19887: {"평일 당일권": "13", "주말 당일권": "14", "심야권": "15", "4시간권": "10", "6시간권": "11"},
         18577: {"평일1일권(화~금)": "838", "주말1일권": "5"},
@@ -546,6 +530,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19904: {"평일4시간권": "5", "주말 당일권": "6"},
         19376: {"주말1일권": "20", "심야권": "13"},
         19870: {"평일1일권": "3", "주말1일권": "3"},
+        19367: {"주말 10시간권": "11"},
         45010: {"평일1일권": "851", "심야권": "10", "2시간권": "850"},
         19899: {"평일 3시간권": "7", "평일 당일권": "8", "토요일 2시간권": "17"},
         19453: {"휴일 당일권": "8", "평일 심야권": "12", "휴일 심야권": "12"},
@@ -555,6 +540,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19250: {"평일 6시간권": "18", "평일 당일권(월,화)": "18", "평일 당일권(수~금)": "18", "금토 2일연박권": "44", "주말 당일권(일요일)": "18", "주말 당일권(토요일)": "18", "평일 심야권": "19"},
         19852: {"평일 당일권": "14"},
         19872: {"평일심야권": "14", "주말1일권": "13"},
+        45304: {"주말1일권": "13", "평일 야간권": "99"},
         29230: {"4시간권": "3", "12시간권": "4", "평일 당일권": "5", "휴일 당일권": "6"},
         19920: {"평일 당일권": "6"},
         29118: {"평일 1일권": "11", "주말 1일권(토요일)": "11", "3시간권": "6", "평일 오후권": "19", "평일 심야권(월~목)": "17"},
@@ -785,14 +771,8 @@ def web_har_in(target, driver):
 
     if ParkUtil.is_park_in(park_id) and park_id in mapIdToWebInfo:
 
-        if park_id == 19335:
-            login_url = "http://112.216.125.10/discount/registration"
-            driver.get(login_url)
-            print("✅ 19335: 로그인 페이지 접속 완료")
-        else:
-            login_url = ParkUtil.get_park_url(park_id)
-            driver.get(login_url)
-
+        login_url = ParkUtil.get_park_url(park_id)
+        driver.get(login_url)
 
         # ✅ 여기! 로그인 상태라면 강제 로그아웃 시도
         try_force_logout_if_already_logged_in(driver, park_id)
@@ -863,7 +843,6 @@ def web_har_in(target, driver):
             # ✅ 29118인 경우 팝업 처리 및 할인 페이지 이동
             handle_notice_popup_and_redirect(driver, park_id)
 
-            # ✅ 19335일 경우, 팝업 닫고 할인 버튼 클릭 추가
             handle_popup_and_go_discount(driver, park_id)
 
             close_vehicle_number_popup(driver)
