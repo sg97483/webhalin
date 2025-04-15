@@ -3688,6 +3688,45 @@ def web_har_in(target, driver):
                         return handle_invalid_ticket(driver)
 
 
+                elif park_id == 29209:
+                    if ticket_name in ["평일 야간권", "휴일 야간권"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_9c9d28df5a4b4265857e305f7695d253']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name == "휴일 당일권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_2feb7e5c4b4546309e16f3cdd0134d3c']",
+                            btn_confirm_xpath
+                        )
+                    else:
+                        return handle_invalid_ticket(driver)
+
+                elif park_id == 29223:
+                    if ticket_name in ["평일 심야권", "휴일 심야권"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_b3e0b01c6f914383ada2c2bbd9096c41']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name == "평일 당일권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_6cfbe8c63d6d4a5397b50ca372fa6395']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name == "휴일 당일권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_d3deba983e16417b8252a9588136832f']",
+                            btn_confirm_xpath
+                        )
+                    else:
+                        return handle_invalid_ticket(driver)
+
+
                 else:
                     try:
                         driver.implicitly_wait(3)
