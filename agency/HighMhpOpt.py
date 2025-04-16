@@ -1094,21 +1094,12 @@ def web_har_in(target, driver):
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "평일 12시간권(화~금)":
-                        return select_discount_and_confirm(
-                            driver,
-                            "//*[@id='discountItemsDataRadio_1f0179302b814bfebb7d90615686a7d6']",
-                            btn_confirm_xpath
-                        )
-
-
                     elif ticket_name == "휴일 당일권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_151fd6c18db041c38f2eacc6d42721a5']",
                             btn_confirm_xpath
                         )
-
 
                     elif ticket_name in ["평일 야간권", "휴일 야간권"]:
                         return select_discount_and_confirm(

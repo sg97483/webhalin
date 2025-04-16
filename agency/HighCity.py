@@ -290,6 +290,34 @@ def get_har_in_script(park_id, ticket_name):
         else:
             return False  # 정의되지 않은 티켓 이름은 실패 처리
 
+    if park_id == 19272:
+        if ticket_name in [
+            "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)",
+            "평일 당일권(목)", "평일 당일권(금)",
+            "휴일 당일권(토)", "휴일 당일권(일)"
+        ]:
+            return "javascript:applyDiscount('08', '', '5', '17|27|', 'ppark', '1', '0');"
+        elif ticket_name == "평일 오후권":
+            return "javascript:applyDiscount('30', '', '1', '', '평일오후권(공유서비스)', '1', '0');"
+        elif ticket_name in ["평일 심야권", "휴일 심야권"]:
+            return "javascript:applyDiscount('32', '', '1', '', '심야권(공유서비스)', '1', '0');"
+        elif ticket_name == "2일 연박권":
+            return "javascript:applyDiscount('80', '', '1', '27|', '2일권', '1', '0');"
+        elif ticket_name == "3일 연박권":
+            return "javascript:applyDiscount('81', '', '1', '27|', '3일권', '1', '0');"
+        elif ticket_name == "4일 연박권":
+            return "javascript:applyDiscount('82', '', '1', '27|', '4일권', '1', '0');"
+        elif ticket_name == "5일 연박권":
+            return "javascript:applyDiscount('83', '', '1', '27|', '5일권', '1', '0');"
+        elif ticket_name == "6일 연박권":
+            return "javascript:applyDiscount('33', '', '1', '', '6연박권(공유서비스)', '1', '0');"
+        elif ticket_name == "7일 연박권":
+            return "javascript:applyDiscount('34', '', '1', '', '7연박권(공유서비스)', '1', '0');"
+        elif ticket_name == "8일 연박권":
+            return "javascript:applyDiscount('35', '', '1', '', '8연박권(공유서비스)', '1', '0');"
+        else:
+            return False
+
 
     if park_id == 20864:
         if ticket_name == "평일 3시간권":
@@ -425,7 +453,7 @@ def check_discount_alert(driver, park_id=None):
     할인 스크립트 실행 후 alert 창을 통해 성공 여부 판단
     단, 특정 주차장은 alert이 존재하지 않음 (예: 20863) → 예외 처리
     """
-    if park_id in [20863, 19364, 19325, 18958, 16003,20864]:
+    if park_id in [20863, 19364, 19325, 18958, 16003,20864,19272]:
         print("✅ 할인 결과 알림창 없음 → 예외 없이 성공 처리 (예상된 구조)")
         return True
 
