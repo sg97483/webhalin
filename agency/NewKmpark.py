@@ -28,7 +28,8 @@ side_nav_xpath = "/html/body/div[3]/table/tbody/tr/td[2]/button"
 # 대상 URL 리스트
 TARGET_URLS = ["http://kmp0000798.iptime.org/","http://kmp0000601.iptime.org/","http://kmp0000483.iptime.org/"
     ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/"
-    ,"http://kmp0000089.iptime.org/","http://kmp0000403.iptime.org/","http://kmp0000131.iptime.org/"]
+    ,"http://kmp0000089.iptime.org/","http://kmp0000403.iptime.org/","http://kmp0000131.iptime.org/"
+    ,"http://kmp0000748.iptime.org/"]
 
 def get_park_ids_by_urls(target_urls):
     """
@@ -58,7 +59,8 @@ if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_
     #print("🚨 DEBUG: TARGET_URLS가 park_id 리스트로 변경됨! 원래 URL 리스트로 복구")
     TARGET_URLS = ["http://kmp0000798.iptime.org/","http://kmp0000601.iptime.org/","http://kmp0000483.iptime.org/"
         ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/"
-        ,"http://kmp0000089.iptime.org/","http://kmp0000403.iptime.org/","http://kmp0000131.iptime.org/"]
+        ,"http://kmp0000089.iptime.org/","http://kmp0000403.iptime.org/"
+        ,"http://kmp0000748.iptime.org/"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["form-login-username", "form-login-password", "//*[@id='form-login']/div[3]/button", "//*[@id='visit-lpn']", "//*[@id='btn-find']"]
@@ -182,7 +184,7 @@ def enter_car_number(driver, car_number_last4, park_id):
         print(f"DEBUG: 차량번호 '{car_number_last4}' 입력 완료.")
 
         # park_id별 검색 버튼 처리
-        if park_id in [18938, 18577, 19906,19258,19239,19331]:  # 두 park_id 모두 class 기반
+        if park_id in [18938, 18577, 19906,19258,19239]:  # 두 park_id 모두 class 기반
             # 18938 전용 검색 버튼
             search_button = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.XPATH, "//input[@class='btnS1_1 btn' and @value='검색']"))
@@ -454,19 +456,6 @@ def handle_ticket(driver, park_id, ticket_name, ori_car_num):
         return click_discount_and_handle_popup(driver, ticket_xpath)
 
 
-        # ✅ 19616 전용 할인 처리
-    if park_id == 19616:
-        print(f"DEBUG: 19616 전용 할인 처리 시작 (ticket_name={ticket_name})")
-        if ticket_name in ["평일 1일권"]:
-            ticket_xpath = "//button[contains(text(), '24시간(무료) [무제한]')]"
-        elif ticket_name == "평일 3시간권":
-            ticket_xpath = "//button[contains(text(), '3시간(무료) [무제한]')]"
-        else:
-            print(f"ERROR: 19616에서 지원하지 않는 ticket_name: {ticket_name}")
-            logout(driver)
-            return False
-        return click_discount_and_handle_popup(driver, ticket_xpath)
-
     if park_id == 19019:
         print(f"DEBUG: 19019 전용 할인 처리 시작 (ticket_name={ticket_name})")
         if ticket_name == "평일1일권":
@@ -476,6 +465,88 @@ def handle_ticket(driver, park_id, ticket_name, ori_car_num):
             print(f"ERROR: 19019에서 지원하지 않는 ticket_name: {ticket_name}")
             logout(driver)
             return False
+
+    if park_id == 19331:
+        print(f"DEBUG: 19331 전용 할인 처리 시작 (ticket_name={ticket_name})")
+        if ticket_name == "평일1일권":
+            try:
+                ticket_xpath = '//*[@id="page-view"]/table/tbody/tr[5]/td/button'
+                return click_discount_and_handle_popup(driver, ticket_xpath)
+            except Exception as e:
+                print(f"ERROR: 19331 - 할인 버튼 처리 중 예외 발생: {e}")
+                return False
+        else:
+            print(f"ERROR: 19331에서 지원하지 않는 ticket_name: {ticket_name}")
+            logout(driver)
+            return False
+
+    # ✅ 19616 전용 할인 처리
+    if park_id == 19616:
+        print(f"DEBUG: 19616 전용 할인 처리 시작 (ticket_name={ticket_name})")
+
+        # 티켓명에 따른 키워드 매핑
+        target_text_map = {
+            "평일 1일권": "24시간(무료)",
+            "평일 3시간권": "3시간(무료)",
+            "평일 저녁권": "6시간(무료)",
+        }
+
+        target_keyword = target_text_map.get(ticket_name)
+        if not target_keyword:
+            print(f"ERROR: 19616에서 지원하지 않는 ticket_name: {ticket_name}")
+            logout(driver)
+            return False
+
+        try:
+            # 할인 버튼들 가져오기
+            buttons = WebDriverWait(driver, 10).until(
+                EC.presence_of_all_elements_located((By.CLASS_NAME, "btn-visit-coupon"))
+            )
+
+            for button in buttons:
+                text = button.text.strip().replace("\n", "").replace(" ", "")
+                print(f"DEBUG: 버튼 텍스트 = '{text}'")
+
+                if target_keyword.replace(" ", "") in text:
+                    driver.execute_script("arguments[0].click();", button)
+                    print(f"DEBUG: '{target_keyword}' 할인 버튼 클릭 완료")
+
+                    # 팝업 처리
+                    try:
+                        popup = WebDriverWait(driver, 3).until(
+                            EC.presence_of_element_located((By.CLASS_NAME, "modal-box"))
+                        )
+                        popup.find_element(By.XPATH, ".//a[@class='modal-btn']").click()
+                        WebDriverWait(driver, 3).until(
+                            EC.invisibility_of_element((By.CLASS_NAME, "modal-box"))
+                        )
+                        print("DEBUG: 팝업 닫기 완료")
+                    except TimeoutException:
+                        print("DEBUG: 팝업 감지되지 않음")
+
+                    return logout(driver)
+
+            print(f"ERROR: 19616 - '{target_keyword}' 텍스트 포함 버튼을 찾지 못함")
+            logout(driver)
+            return False
+
+        except TimeoutException:
+            print("ERROR: 19616 - 할인 버튼 로딩 실패")
+            logout(driver)
+            return False
+
+    # ✅ 19582 전용 할인 처리
+    if park_id == 19582:
+        print(f"DEBUG: 19582 전용 할인 처리 시작 (ticket_name={ticket_name})")
+
+        if ticket_name in ["평일1일권", "주말1일권"]:
+            ticket_xpath = '//*[@id="page-view"]/table/tbody/tr[5]/td/button'
+            return click_discount_and_handle_popup(driver, ticket_xpath)
+        else:
+            print(f"ERROR: 19582에서 지원하지 않는 ticket_name: {ticket_name}")
+            logout(driver)
+            return False
+
 
     # ✅ 19457 전용 할인 처리
     if park_id == 19457:
