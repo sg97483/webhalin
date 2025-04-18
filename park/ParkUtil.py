@@ -63,7 +63,7 @@ def first_access(park_id, current_url):
 
 def get_park_search_css(park_id):
 
-    if park_id in [19492, 15313]:
+    if park_id in [19492, 15313, 19517]:
         return "#tbData > tbody > tr"
 
     park_type = ParkType.get_park_type(park_id)
@@ -480,7 +480,7 @@ def check_same_car_num(parkId, oriCarNum, driver):
 
 
 
-    elif parkId == 15313:
+    elif parkId in [15313, 19517]:
 
         try:
 

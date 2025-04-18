@@ -688,6 +688,28 @@ def handle_ticket(driver, park_id, ticket_name, ori_car_num):
 
         if cleaned_ticket_name in ["평일1일권", "주말1일권"]:
             try:
+                # ✅ 차량 복수 검색 시 선택 처리
+                try:
+                    rows = WebDriverWait(driver, 3).until(
+                        EC.presence_of_all_elements_located(
+                            (By.CSS_SELECTOR, "#page-view tbody.gbox-body tr.gbox-body-row"))
+                    )
+                    print(f"DEBUG: 차량 목록 {len(rows)}건 발견됨 → 차량 선택 시도")
+
+                    if not select_car_in_table(driver, ori_car_num):
+                        print("❌ 19588 - 차량 선택 실패, 로그아웃 후 종료")
+                        logout(driver)
+                        return False
+
+                    WebDriverWait(driver, 10).until(
+                        EC.presence_of_element_located((By.CLASS_NAME, "btn-visit-coupon"))
+                    )
+                    print("DEBUG: 차량 선택 후 할인권 페이지 로딩 완료")
+
+                except TimeoutException:
+                    print("DEBUG: 차량 검색 결과가 1건 → 차량 선택 생략하고 바로 할인 처리 진입")
+
+                # ✅ 할인 버튼 탐색 및 클릭
                 buttons = WebDriverWait(driver, 10).until(
                     EC.presence_of_all_elements_located((By.CLASS_NAME, "btn-visit-coupon"))
                 )
@@ -701,11 +723,9 @@ def handle_ticket(driver, park_id, ticket_name, ori_car_num):
 
                         if "24시간(유료)" in text and "무제한" in text:
                             if button.is_enabled():
-                                # 강제 클릭
                                 driver.execute_script("arguments[0].click();", button)
                                 print("DEBUG: 할인 버튼 강제 클릭 완료")
 
-                                # 팝업 있으면 처리, 없으면 무시
                                 try:
                                     popup = WebDriverWait(driver, 3).until(
                                         EC.presence_of_element_located((By.CLASS_NAME, "modal-box"))
@@ -726,7 +746,7 @@ def handle_ticket(driver, park_id, ticket_name, ori_car_num):
                         print(f"ERROR: 버튼 내부 처리 중 예외 발생: {e}")
 
                 logout(driver)
-                return success  # 팝업 없어도 success=True면 성공 반환
+                return success
 
             except TimeoutException:
                 print("ERROR: 할인 버튼 로딩 실패")

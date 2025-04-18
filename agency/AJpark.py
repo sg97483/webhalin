@@ -63,6 +63,15 @@ mapIdToWebInfo = {
             0  # 야간
             ],
 
+    # 하이파킹 덕수궁롯데캐슬점
+    29184: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
+            ],
+
 }
 
 
@@ -190,6 +199,54 @@ def handle_ticket(driver, park_id, ticket_name):
 
         except Exception as e:
             print(f"ERROR: 19160 처리 중 예외 발생: {e}")
+            return False
+
+
+    # ✅ 29184 전용 할인 처리
+    if park_id == 29184:
+        ticket_map = {
+            "평일 당일권": "평일당일권(공유)",
+            "심야권": "야간권(공유)",
+        }
+
+        if ticket_name not in ticket_map:
+            print(f"ERROR: 29184에서 지원하지 않는 ticket_name: {ticket_name}")
+            return False
+
+        target_text = ticket_map[ticket_name]
+
+        try:
+            select_element = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.ID, "selectDiscount"))
+            )
+            options = select_element.find_elements(By.TAG_NAME, "option")
+            matched = False
+            for option in options:
+                if target_text in option.text:
+                    option.click()
+                    print(f"DEBUG: '{option.text}' 옵션 선택 완료.")
+                    matched = True
+                    break
+
+            if not matched:
+                print(f"ERROR: '{target_text}' 텍스트가 포함된 옵션을 찾을 수 없습니다.")
+                return False
+
+            WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.ID, "discountSubmit"))
+            ).click()
+            print("DEBUG: 할인 적용 버튼 클릭 완료.")
+
+            try:
+                WebDriverWait(driver, 3).until(EC.alert_is_present()).accept()
+                print("DEBUG: 알림창 확인 완료.")
+            except TimeoutException:
+                print("DEBUG: 알림창 없음.")
+
+            return True
+
+        except Exception as e:
+            print(f"ERROR: 29184 처리 중 예외 발생: {e}")
             return False
 
 
@@ -379,7 +436,7 @@ def web_har_in(target, driver, lotName):
                     driver.find_element(By.XPATH, f"/html/body/div[1]/section/div/section/div[{index}]").find_element(By.CLASS_NAME, "selectCarInfo").click()
 
                     # ✅ 19004, 19600은 handle_ticket() 함수로 별도 처리
-                    if park_id in [19004, 19600, 19860, 19160]:
+                    if park_id in [19004, 19600, 19860, 19160, 29184]:
                         return handle_ticket(driver, park_id, ticket_name)
 
                     select = Select(driver.find_element_by_id('selectDiscount'))

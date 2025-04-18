@@ -33,6 +33,7 @@ NEW_KMPARK = 47
 parkTypeHighCity = [
     15313,
     13007,
+    19517,
     18958,
     Parks.SC_BANK,
     Parks.DDMC,
@@ -321,7 +322,8 @@ park_type_aj_park = [
     19600,
     19004,
     19160,
-    19860
+    19860,
+    29184
 ]
 
 park_type_old_aj = [
@@ -409,6 +411,7 @@ haveOneKey = [
 
 haveWeekKey = [
     Parks.DONGIL_TOWER,
+    Parks.MOKDONG_ART,
     Parks.ECC,
     Parks.ECC_MONTH,
     Parks.WEST_GATE,
