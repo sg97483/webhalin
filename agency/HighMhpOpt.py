@@ -893,7 +893,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19737:
-                    if ticket_name == "평일 당일권":
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_1d1ddfdb18bf45d29056b4847b2443a2']",
@@ -1055,6 +1055,13 @@ def web_har_in(target, driver):
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_0519b3a27eaf4bd89d3e487bd50433a1']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "야간8시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_bca160232b82478ab4ec7712a2df4112']",
                             btn_confirm_xpath
                         )
                     else:

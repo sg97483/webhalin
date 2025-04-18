@@ -29,7 +29,7 @@ side_nav_xpath = "/html/body/div[3]/table/tbody/tr/td[2]/button"
 TARGET_URLS = ["http://kmp0000798.iptime.org/","http://kmp0000601.iptime.org/","http://kmp0000483.iptime.org/"
     ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/"
     ,"http://kmp0000089.iptime.org/","http://kmp0000403.iptime.org/","http://kmp0000131.iptime.org/"
-    ,"http://kmp0000748.iptime.org/"]
+    ,"http://kmp0000748.iptime.org/","http://kmp0000025.iptime.org/"]
 
 def get_park_ids_by_urls(target_urls):
     """
@@ -60,7 +60,7 @@ if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_
     TARGET_URLS = ["http://kmp0000798.iptime.org/","http://kmp0000601.iptime.org/","http://kmp0000483.iptime.org/"
         ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/"
         ,"http://kmp0000089.iptime.org/","http://kmp0000403.iptime.org/"
-        ,"http://kmp0000748.iptime.org/"]
+        ,"http://kmp0000748.iptime.org/","http://kmp0000025.iptime.org/"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["form-login-username", "form-login-password", "//*[@id='form-login']/div[3]/button", "//*[@id='visit-lpn']", "//*[@id='btn-find']"]
@@ -385,7 +385,7 @@ def enter_memo_for_18577(driver):
 def select_car_in_table(driver, ori_car_num):
     """
     차량번호가 복수 검색되었을 때 <div id="page-view"> 안의 <tr>에서 전체 차량번호와 일치하는 항목을 클릭
-    이후 할인권 목록 로딩까지 대기
+    이후 할인권 목록 로딩까지 대기 (강제 클릭 포함)
     """
     try:
         rows = WebDriverWait(driver, 5).until(
@@ -399,9 +399,13 @@ def select_car_in_table(driver, ori_car_num):
                 print(f"DEBUG: 감지된 차량번호 → '{found_car_num}'")
                 if found_car_num == ori_car_num.replace(" ", ""):
                     print(f"✅ 정확히 일치하는 차량번호 '{found_car_num}' 클릭 시도")
-                    row.click()
 
-                    # 🚨 클릭 후 할인권 로딩까지 잠시 대기
+                    # 💡 안전하게 스크롤 후 강제 클릭 (click intercepted 방지)
+                    driver.execute_script("arguments[0].scrollIntoView(true);", row)
+                    time.sleep(0.5)
+                    driver.execute_script("arguments[0].click();", row)
+
+                    # 🚨 클릭 후 할인권 로딩까지 대기
                     try:
                         WebDriverWait(driver, 5).until(
                             EC.presence_of_all_elements_located((By.CSS_SELECTOR, "tbody.gbox-body > tr.gbox-body-row"))
@@ -418,6 +422,7 @@ def select_car_in_table(driver, ori_car_num):
     except TimeoutException:
         print("❌ 차량 목록을 찾을 수 없습니다.")
         return False
+
 
 
 
@@ -599,6 +604,7 @@ def handle_ticket(driver, park_id, ticket_name, ori_car_num):
             logout(driver)
             return False
 
+
     # ✅ 19477 전용 할인 처리
     if park_id == 19477:
         try:
@@ -680,6 +686,46 @@ def handle_ticket(driver, park_id, ticket_name, ori_car_num):
             print(f"ERROR: 19477에서 지원하지 않는 ticket_name: {ticket_name}")
             logout(driver)
             return False
+
+    # ✅ 12022 전용 처리 (19477 동일 구조)
+    if park_id == 12022:
+        print(f"DEBUG: 12022 전용 할인 처리 시작 (ticket_name={ticket_name})")
+
+        try:
+            # 차량 목록 선택 (복수일 경우)
+            rows = WebDriverWait(driver, 3).until(
+                EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#page-view tbody.gbox-body tr.gbox-body-row"))
+            )
+            print(f"DEBUG: 차량 목록 {len(rows)}건 발견됨 → 차량 선택 시도")
+
+            if not select_car_in_table(driver, ori_car_num):
+                print("❌ 12022 - 차량 선택 실패, 로그아웃 후 종료")
+                logout(driver)
+                return False
+
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.CLASS_NAME, "btn-visit-coupon"))
+            )
+            print("DEBUG: 차량 선택 후 할인권 페이지 로딩 완료")
+
+        except TimeoutException:
+            print("DEBUG: 차량 검색 결과가 1건 → 차량 선택 생략하고 바로 할인 처리 진입")
+
+        # 할인권 XPath 설정
+        if ticket_name == "평일1일권":
+            ticket_xpath = '//*[@id="page-view"]/table/tbody/tr[6]/td/button'
+        elif ticket_name in ["평일 심야권", "주말 심야권"]:
+            ticket_xpath = '//*[@id="page-view"]/table/tbody/tr[5]/td/button'
+        else:
+            print(f"ERROR: 12022 - 지원하지 않는 ticket_name: {ticket_name}")
+            logout(driver)
+            return False
+
+        return click_discount_and_handle_popup(driver, ticket_xpath)
+
+        # 그 외 처리 생략
+        print(f"ERROR: park_id {park_id}에 대한 할인 처리 미구현")
+        return False
 
     # ✅ 19588 전용 할인 처리 (19477 방식과 동일)
     if park_id == 19588:
@@ -770,54 +816,6 @@ def handle_ticket(driver, park_id, ticket_name, ori_car_num):
             return False
         return click_discount_and_handle_popup(driver, ticket_xpath)
 
-        # ✅ 19588 전용 할인 처리 먼저!
-    if park_id == 19588:
-        print(f"DEBUG: 19588 전용 할인 처리 시작 (ticket_name={ticket_name})")
-        cleaned_ticket_name = ticket_name.strip()
-
-        if cleaned_ticket_name in ["평일1일권", "주말1일권"]:
-            try:
-                buttons = WebDriverWait(driver, 10).until(
-                    EC.presence_of_all_elements_located((By.CLASS_NAME, "btn-visit-coupon"))
-                )
-                print(f"DEBUG: 할인 버튼 {len(buttons)}개 발견됨")
-
-                for button in buttons:
-                    text = button.text.strip().replace("\n", "").replace(" ", "")
-                    print(f"DEBUG: 버튼 텍스트 = '{text}'")
-                    if "24시간(유료)" in text and "무제한" in text:
-                        if button.is_enabled():
-                            button.click()
-                            print("DEBUG: 할인 버튼 클릭 완료")
-
-                            # 팝업 처리
-                            try:
-                                popup = WebDriverWait(driver, 5).until(
-                                    EC.presence_of_element_located((By.CLASS_NAME, "modal-box"))
-                                )
-                                popup.find_element(By.XPATH, ".//a[@class='modal-btn']").click()
-                                WebDriverWait(driver, 5).until(
-                                    EC.invisibility_of_element((By.CLASS_NAME, "modal-box"))
-                                )
-                                print("DEBUG: 팝업 닫기 완료")
-                            except TimeoutException:
-                                print("DEBUG: 팝업 감지되지 않음")
-
-                            return logout(driver)
-                        else:
-                            print("WARNING: 버튼 비활성화 상태입니다")
-                print("ERROR: 원하는 할인권 버튼을 찾지 못함")
-                logout(driver)
-                return False
-
-            except TimeoutException:
-                print("ERROR: 할인 버튼 로딩 실패")
-                logout(driver)  # ✅ 로그아웃 추가
-                return False
-        else:
-            print(f"ERROR: ticket_name '{cleaned_ticket_name}' 은 19588에서 지원되지 않음")
-            logout(driver)  # ✅ 로그아웃 추가
-            return False
 
 
     # ✅ 기타 주차장 할인 처리 (버튼 ID 기반)
