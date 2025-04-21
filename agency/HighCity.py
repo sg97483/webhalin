@@ -500,6 +500,53 @@ def check_discount_alert(driver, park_id=None):
         return False
 
 
+def is_discount_already_applied(driver, ticket_name):
+    """
+    19492 전용 - 할인적용내역에 현재 ticket_name에 해당하는 버튼만 있는지 확인
+    추가 검사: 버튼 외 등록자/등록시각 정보까지 존재하는지 확인
+    """
+    expected_text_map = {
+        "평일1일권": "24시간(유료)",
+        "12시간권": "12시간(유료)",
+        "주말1일권": "휴일당일권"
+    }
+
+    expected_text = expected_text_map.get(ticket_name)
+    if not expected_text:
+        print(f"[ERROR] ticket_name 매핑 실패: {ticket_name}")
+        return False
+
+    try:
+        buttons = driver.find_elements(By.XPATH, "//table[@id='tbData_detail']//button[@name='btnDckey']")
+        for btn in buttons:
+            applied_text = btn.text.strip()
+            if applied_text != expected_text:
+                print(f"⚠️ 다른 할인권 이미 적용됨: {applied_text} ≠ {expected_text}")
+                return False
+
+            # 🔍 버튼 외 등록자/시간 확인
+            try:
+                row = btn.find_element(By.XPATH, "../../..")  # <tr>
+                regman = row.find_elements(By.TAG_NAME, "td")[2].text.strip()
+                regtime = row.find_elements(By.TAG_NAME, "td")[3].text.strip()
+                if not regman or not regtime:
+                    print("⚠️ 등록자/등록시각 비어있음 → 실제 할인 미적용 상태")
+                    return False
+            except Exception as e:
+                print(f"⚠️ 등록자/시각 확인 실패 → 미적용 간주: {e}")
+                return False
+
+        if buttons:
+            print(f"✅ 동일한 할인권 이미 적용됨: {expected_text}")
+            return True
+        else:
+            print("ℹ️ 할인적용내역이 비어있음 → 새로 클릭해야 함")
+            return False
+
+    except Exception as e:
+        print(f"[예외] 할인 적용 내역 확인 중 오류 발생: {e}")
+        return False
+
 
 
 
@@ -604,16 +651,19 @@ def web_har_in(target, driver):
 
                         if park_id == 19492:
                             try:
-                                # <tr> 클릭해서 팝업 띄우기
+                                # 1. 차량 행 클릭 → 팝업 열기
+                                if is_discount_already_applied(driver, ticket_name):
+                                    return True  # 이미 동일한 할인권 적용 → 성공
+
+
                                 tr = WebDriverWait(driver, 5).until(
                                     EC.presence_of_element_located((By.CSS_SELECTOR, "#tbData > tbody > tr"))
                                 )
                                 driver.execute_script("arguments[0].click();", tr)
-                                print(Colors.GREEN + "✅ 19492 <tr> 클릭으로 차량 선택 성공" + Colors.ENDC)
-
+                                print(Colors.GREEN + "✅ 19492 차량 선택 <tr> 클릭 성공" + Colors.ENDC)
                                 Util.sleep(1.5)  # 팝업 로딩 시간 대기
 
-                                # ticket_name에 따라 할인 버튼 텍스트 선택
+                                # 2. ticket_name → 할인 버튼 텍스트 매핑
                                 if ticket_name == "평일1일권":
                                     button_text = "24시간(유료)"
                                 elif ticket_name == "12시간권":
@@ -624,28 +674,50 @@ def web_har_in(target, driver):
                                     print(Colors.RED + "❌ 정의되지 않은 ticket_name" + Colors.ENDC)
                                     return False
 
-                                # 팝업 내 할인 버튼 클릭
+                                # 3. 할인 적용 내역 중복 확인
+                                already_applied = False
+                                try:
+                                    table = driver.find_element(By.ID, "tbData_detail")
+                                    if button_text in table.text:
+                                        print(Colors.YELLOW + f"⚠️ 이미 할인된 내역 존재: {button_text}" + Colors.ENDC)
+                                        already_applied = True
+                                except Exception:
+                                    pass  # 테이블이 없는 경우 무시
+
+                                if already_applied:
+                                    return True  # 이미 적용된 경우 성공 처리
+
+                                # 4. 할인 버튼 클릭 (팝업 내에서)
                                 btn = WebDriverWait(driver, 5).until(
                                     EC.element_to_be_clickable(
                                         (By.XPATH, f"//button[@name='btnDckey' and text()='{button_text}']"))
                                 )
                                 driver.execute_script("arguments[0].click();", btn)
-                                print(Colors.GREEN + f"✅ 팝업 내 할인 버튼 클릭 성공 ({button_text})" + Colors.ENDC)
+                                print(Colors.GREEN + f"✅ 팝업 내 할인 버튼 클릭 성공: {button_text}" + Colors.ENDC)
 
-                                # ✅ Alert 처리 추가
+                                # 5. Alert 처리 및 메시지 분석
                                 try:
                                     WebDriverWait(driver, 3).until(EC.alert_is_present())
                                     alert = driver.switch_to.alert
-                                    print(Colors.BLUE + f"알림창 텍스트: {alert.text}" + Colors.ENDC)
-                                    alert.accept()  # '확인' 버튼 누르기
-                                    print(Colors.GREEN + "✅ 알림창 확인 클릭 완료" + Colors.ENDC)
-                                except Exception as e:
-                                    print(Colors.YELLOW + f"⚠️ 알림창이 뜨지 않거나 자동 확인 실패: {e}" + Colors.ENDC)
+                                    alert_text = alert.text
+                                    print(Colors.BLUE + f"할인 알림창 텍스트: {alert_text}" + Colors.ENDC)
+                                    alert.accept()
 
-                                return True
+                                    if "취소하시겠습니까" in alert_text or "할인을 취소" in alert_text:
+                                        print(Colors.RED + "❌ 이미 할인된 항목 재클릭 → 할인 취소됨" + Colors.ENDC)
+                                        return False
+                                    elif "할인 되었습니다" in alert_text or "등록되었습니다" in alert_text:
+                                        return True
+                                    else:
+                                        print(Colors.YELLOW + "⚠️ 알림창 텍스트가 성공인지 불확실 → 실패 처리" + Colors.ENDC)
+                                        return False
+
+                                except Exception as e:
+                                    print(Colors.RED + f"❌ 알림창 확인 실패: {e}" + Colors.ENDC)
+                                    return False
 
                             except Exception as e:
-                                print(Colors.RED + f"❌ 19492 할인 처리 실패: {e}" + Colors.ENDC)
+                                print(Colors.RED + f"❌ 19492 할인 처리 중 오류: {e}" + Colors.ENDC)
                                 return False
 
                         if park_id == 20863:
