@@ -162,6 +162,15 @@ mapIdToWebInfo = {
             "javascript:applyDiscount('91', '1', '', 'ppark(야간)', '999999999', '0'); ",
             ],
 
+    # 하이파킹 무궁화공영
+    19456: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
+            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
+            "chk",
+            "javascript:applyDiscount('08', '1', '01|', 'ppark', '999999999', '0');",
+            "javascript:applyDiscount('08', '1', '01|', 'ppark', '999999999', '0');",
+            "javascript:applyDiscount('91', '1', '', 'ppark(야간)', '999999999', '0'); ",
+            ],
+
 
     # (하이파킹) 서울역 주차장
     20864: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
@@ -406,8 +415,10 @@ def get_har_in_script(park_id, ticket_name):
 
     if park_id == 19364:
         if ticket_name in [
-            "평일 당일권(월~화)",
-            "평일 당일권(수~목)",
+            "평일 당일권(월)",
+            "평일 당일권(화)",
+            "평일 당일권(수)",
+            "평일 당일권(목)",
             "평일 당일권(금)"
         ]:
             return "javascript:applyDiscount('07', 'CP0802', '1', '01|20|24|', '평일당일권(공유서비스)', '999999999', '0');"
@@ -424,6 +435,7 @@ def get_har_in_script(park_id, ticket_name):
             return "javascript:applyDiscount('90', 'CP0802', '1', '20|', '심야권(공유서비스)', '999999999', '0');"
         else:
             return False
+
 
     if park_id == 20863:
         if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)", "휴일 당일권"]:
@@ -461,11 +473,7 @@ def get_har_in_script(park_id, ticket_name):
 
 
 def check_discount_alert(driver, park_id=None):
-    """
-    할인 스크립트 실행 후 alert 창을 통해 성공 여부 판단
-    단, 특정 주차장은 alert이 존재하지 않음 (예: 20863) → 예외 처리
-    """
-    if park_id in [20863, 19364, 19325, 18958, 16003,20864,19272,12750]:
+    if park_id in [20863, 19364, 19325, 18958, 16003, 20864, 19272, 12750, 19456]:
         print("✅ 할인 결과 알림창 없음 → 예외 없이 성공 처리 (예상된 구조)")
         return True
 
@@ -476,6 +484,12 @@ def check_discount_alert(driver, park_id=None):
         alert.accept()
 
         print(f"할인 결과 알림창: {alert_text}")
+
+        # ❗️중복 클릭 등으로 인한 취소 의도 경고 감지
+        if "취소 하시겠습니까" in alert_text:
+            print("⚠️ 이미 할인된 항목을 재클릭하여 취소 확인창이 떴음 → 실패 처리")
+            return False
+
         if "할인 되었습니다" in alert_text or "등록되었습니다" in alert_text:
             return True
         else:
@@ -484,6 +498,7 @@ def check_discount_alert(driver, park_id=None):
     except Exception as e:
         print("❌ 할인 처리 후 알림창이 감지되지 않음:", e)
         return False
+
 
 
 
@@ -560,6 +575,32 @@ def web_har_in(target, driver):
                             except Exception as e:
                                 print(Colors.RED + f"❌ 할인 스크립트 실행 실패 (12750): {e}" + Colors.ENDC)
                                 return False
+
+                        if park_id == 19456:
+                            if ticket_name == "휴일 당일권":
+                                try:
+                                    btn = WebDriverWait(driver, 5).until(
+                                        EC.element_to_be_clickable(
+                                            (By.XPATH, '//input[@type="button" and @value="ppark"]'))
+                                    )
+                                    driver.execute_script("arguments[0].click();", btn)
+                                    print(Colors.GREEN + "✅ 'ppark' 버튼 클릭 성공 (19456, 휴일 당일권)" + Colors.ENDC)
+
+                                    # Alert 처리
+                                    try:
+                                        WebDriverWait(driver, 3).until(EC.alert_is_present())
+                                        alert = driver.switch_to.alert
+                                        print(Colors.BLUE + f"할인 알림창 텍스트: {alert.text}" + Colors.ENDC)
+                                        alert.accept()
+                                        print(Colors.GREEN + "✅ 알림창 확인 완료 (19456)" + Colors.ENDC)
+                                    except Exception as e:
+                                        print(Colors.YELLOW + f"⚠️ 알림창 없음 또는 확인 실패: {e}" + Colors.ENDC)
+
+                                    return True
+
+                                except Exception as e:
+                                    print(Colors.RED + f"❌ 'ppark' 버튼 클릭 실패 (19456): {e}" + Colors.ENDC)
+                                    return False
 
                         if park_id == 19492:
                             try:

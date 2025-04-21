@@ -48,6 +48,7 @@ parkTypeHighCity = [
     Parks.D_TOWER,
     Parks.BANPO_DONG_GONGYONG,
     Parks.GRAND_CENTRAL,
+    Parks.MUGUNG,
     Parks.HAEUNDAE_IPARK,
     20864,
     19174,
@@ -258,7 +259,7 @@ TARGET_URLS_NEW_AMANO = [
     ,"http://123.214.186.154","https://a17902.pweb.kr","https://a15891.parkingweb.kr"
     ,"https://a15521.parkingweb.kr/login","https://a20628.pweb.kr/","https://a15531.parkingweb.kr/"
     ,"https://a00150.parkingweb.kr/login","https://a3590.parkingweb.kr","https://a20297.pweb.kr/login"
-    ,"http://vg.awp.co.kr","https://a2325.parkingweb.kr/"]
+    ,"http://vg.awp.co.kr","https://a2325.parkingweb.kr/","https://a17498.pweb.kr"]
 
 
 # 대상 URL 리스트
@@ -323,6 +324,7 @@ park_type_aj_park = [
     19004,
     19160,
     19860,
+    19810,
     29184
 ]
 
