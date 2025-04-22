@@ -121,23 +121,41 @@ def click_and_logout(driver):
 
 def select_discount_and_confirm(driver, radio_xpath, confirm_button_xpath):
     """
-    주차권 선택 및 확인 버튼 클릭, 로그아웃까지 처리하는 함수.
+    주차권 선택 → 할인 확인 → 로그아웃까지 모두 수행.
+    성공하면 True, 실패하면 로그아웃 후 False.
     """
     try:
-        driver.find_element_by_xpath(radio_xpath).click()
-        driver.implicitly_wait(5)
-        driver.find_element_by_xpath(confirm_button_xpath).click()
-        driver.implicitly_wait(5)
+        # 할인권 라디오 버튼 클릭
+        driver.find_element(By.XPATH, radio_xpath).click()
+        driver.implicitly_wait(3)
 
-        print(Colors.BLUE + "개발테스트4" + Colors.ENDC)
-        driver.find_element_by_xpath(side_nav_xpath).click()
+        # 확인 버튼 클릭
+        driver.find_element(By.XPATH, confirm_button_xpath).click()
+        driver.implicitly_wait(3)
+
+        print(Colors.BLUE + "✅ 할인권 클릭 및 확인 완료" + Colors.ENDC)
+
+        # ✅ 성공 후에도 반드시 로그아웃
+        try:
+            driver.find_element(By.XPATH, side_nav_xpath).click()
+            print("✅ 할인 성공 후 로그아웃 완료.")
+        except Exception as logout_ex:
+            print(f"⚠️ 성공 후 로그아웃 중 예외 발생: {logout_ex}")
 
         return True
+
     except Exception as ex:
-        print(f"Error during selection: {ex}")
-        driver.implicitly_wait(3)
-        driver.find_element_by_xpath(side_nav_xpath).click()
+        print(f"❌ 할인 처리 중 예외 발생: {ex}")
+
+        # 🚪 실패했더라도 로그아웃 시도
+        try:
+            driver.find_element(By.XPATH, side_nav_xpath).click()
+            print("🚪 실패 후 로그아웃 완료.")
+        except Exception as logout_ex:
+            print(f"⚠️ 실패 후 로그아웃 중 또 다른 예외 발생: {logout_ex}")
+
         return False
+
 
 
 
@@ -650,6 +668,12 @@ def web_har_in(target, driver):
                             "//*[@id='discountItemsDataRadio_e83acc5934e145db8fb5fc5f985c7ce2']",
                             btn_confirm_xpath
                         )
+                    elif ticket_name == "평일 6시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_6def1e0b873846c0a83e767fd74f9995']",
+                            btn_confirm_xpath
+                        )
                     elif ticket_name == "심야권":
                         return select_discount_and_confirm(
                             driver,
@@ -999,7 +1023,7 @@ def web_har_in(target, driver):
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "심야권":
+                    elif ticket_name == "야간권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_e0596e82e573446f8f5724ae098b4ef4']",
@@ -1372,14 +1396,14 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19626:
-                    if ticket_name == "평일 당일권":
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_66c9e8671be54beea0195a0071b60f26']",
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "휴일 당일권":
+                    elif ticket_name == "주말1일권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_308a38dd7c3042bca0fe64c0663327a6']",
@@ -3118,7 +3142,7 @@ def web_har_in(target, driver):
                             "//*[@id='discountItemsDataRadio_668454da082e496a8db4a9f5c7164be3']",
                             btn_confirm_xpath
                         )
-                    elif ticket_name in ["평일 심야권", "휴일 심야권"]:
+                    elif ticket_name in ["평일 야간권", "휴일 야간권"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_104d9d57a69a4698be3086f4d6d75a47']",

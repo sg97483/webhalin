@@ -42,7 +42,7 @@ TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.k
 ,"https://a17902.pweb.kr","https://a15891.parkingweb.kr","https://a20628.pweb.kr/","https://a15531.parkingweb.kr/"
 ,"https://a00150.parkingweb.kr/login","https://a3590.parkingweb.kr","https://a20297.pweb.kr/login"
     ,"http://vg.awp.co.kr","https://a2325.parkingweb.kr/","https://a2325.parkingweb.kr/","https://a17498.pweb.kr"
-,"http://112.216.125.10/discount/registration"
+,"http://112.216.125.10/discount/registration","https://a02412.parkingweb.kr/login"
                ]
 
 def get_park_ids_by_urls(target_urls):
@@ -90,7 +90,8 @@ if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_
         ,"http://123.214.186.154","https://a17902.pweb.kr","https://a15891.parkingweb.kr"
         ,"https://a15521.parkingweb.kr/login","https://a20628.pweb.kr/","https://a15531.parkingweb.kr/"
         ,"https://a00150.parkingweb.kr/login","https://a3590.parkingweb.kr","https://a20297.pweb.kr/login"
-        ,"http://vg.awp.co.kr","https://a2325.parkingweb.kr/","https://a17498.pweb.kr","http://112.216.125.10/discount/registration"]
+        ,"http://vg.awp.co.kr","https://a2325.parkingweb.kr/","https://a17498.pweb.kr"
+        ,"http://112.216.125.10/discount/registration","https://a02412.parkingweb.kr/login"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["userId", "userPwd", "//*[@id='btnLogin']", "schCarNo", "//*[@id='sForm']/input[3]"]
@@ -502,23 +503,30 @@ def check_discount_entries(driver, park_id):
     """
     특정 park_id에 대해 할인내역이 있는지 확인합니다.
     """
-    if park_id == 19391:
-        try:
-            # 할인내역 테이블이 존재하는지 확인
+    try:
+        if park_id == 19391:
             discount_section = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, ".tableBox1"))
             )
-            # 할인내역이 존재하면 False를 반환
-            if discount_section:
-                rows = discount_section.find_elements(By.CSS_SELECTOR, ".obj tr")
-                if len(rows) > 1:  # 할인 내역이 있는 경우
-                    print("DEBUG: 할인내역이 이미 존재합니다. 할인 처리 중단.")
-                    return False
-        except TimeoutException:
-            print("DEBUG: 할인내역 섹션을 찾을 수 없음.")
-        return True  # 할인내역이 없다면 처리 진행
+            rows = discount_section.find_elements(By.CSS_SELECTOR, ".obj tr")
+            if len(rows) > 1:
+                print("DEBUG: 할인내역이 이미 존재합니다. 할인 처리 중단.")
+                return False
 
-    return True  # park_id가 19391이 아니면 무조건 True로 진행
+        elif park_id == 29118:
+            discount_section = WebDriverWait(driver, 5).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, "#gridDtl .obj"))
+            )
+            rows = discount_section.find_elements(By.TAG_NAME, "tr")
+            if len(rows) > 1:
+                print("DEBUG: 29118 - 할인내역 존재함. 할인 처리 중단.")
+                return False
+
+    except TimeoutException:
+        print(f"DEBUG: 할인내역 섹션 감지 실패 (park_id={park_id}).")  # 없으면 문제 없음
+
+    return True  # 기본적으로 할인 가능하다고 간주
+
 
 def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
     """
@@ -571,6 +579,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19852: {"평일 당일권": "14"},
         19335: {"평일1일권": "6", "주말1일권": "6"},
         19872: {"평일심야권": "14", "주말1일권": "13"},
+        19912: {"평일 3시간권": "1", "평일 1시간권": "3", "휴일 당일권": "2"},
         29229: {"평일당일권": "2", "휴일당일권": "2", "심야권": "3", "평일 4시간권": "4", "휴일 4시간권": "4"},
         45304: {"주말1일권": "13", "평일 야간권": "99"},
         29230: {"4시간권": "3", "12시간권": "4", "평일 당일권": "5", "휴일 당일권": "6"},

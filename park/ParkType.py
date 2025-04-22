@@ -259,7 +259,8 @@ TARGET_URLS_NEW_AMANO = [
     ,"http://123.214.186.154","https://a17902.pweb.kr","https://a15891.parkingweb.kr"
     ,"https://a15521.parkingweb.kr/login","https://a20628.pweb.kr/","https://a15531.parkingweb.kr/"
     ,"https://a00150.parkingweb.kr/login","https://a3590.parkingweb.kr","https://a20297.pweb.kr/login"
-    ,"http://vg.awp.co.kr","https://a2325.parkingweb.kr/","https://a17498.pweb.kr","http://112.216.125.10/discount/registration"]
+    ,"http://vg.awp.co.kr","https://a2325.parkingweb.kr/","https://a17498.pweb.kr"
+    ,"http://112.216.125.10/discount/registration","https://a02412.parkingweb.kr/login"]
 
 
 # 대상 URL 리스트
@@ -324,6 +325,7 @@ park_type_aj_park = [
     19004,
     19160,
     19860,
+    29136,
     19810,
     29184
 ]

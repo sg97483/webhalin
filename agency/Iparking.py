@@ -461,12 +461,6 @@ def web_har_in(target, driver):
                         found = True
                         break
 
-                    elif normalized_ticket_name == "야간8시간권" and "야간8시간권(공유서비스)" in label:
-                        driver.execute_script("arguments[0].click();", apply_button)
-                        print(Colors.BLUE + "✅ 야간8시간권(공유서비스) 할인 적용 완료." + Colors.ENDC)
-                        found = True
-                        break
-
                 except Exception as ex:
                     print(Colors.RED + f"❌ 할인 버튼 처리 중 오류: {ex}" + Colors.ENDC)
 

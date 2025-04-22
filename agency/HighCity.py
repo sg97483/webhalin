@@ -398,17 +398,17 @@ def get_har_in_script(park_id, ticket_name):
         else:
             return False  # ❗️트윈시티남산에서 지정된 티켓 외는 실패 처리
 
-
     if park_id == 19174:
-        if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
+        t = ticket_name.strip()  # ← 이 줄 추가
+        if t in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
             return "BTN_공유서비스 종일"
-        elif ticket_name in ["휴일 24시간권(토)", "휴일 24시간권(일)"]:
+        elif t in ["휴일 24시간권(토)", "휴일 24시간권(일)"]:
             return "BTN_공유서비스 주말"
-        elif ticket_name == "평일 12시간권(화~금)":
+        elif t == "평일 12시간권(화~금)":
             return "BTN_12시간권_O2O"
-        elif ticket_name in ["평일 심야권", "휴일 심야권"]:
+        elif t in ["평일 심야권", "휴일 심야권"]:
             return "BTN_공유서비스 야간"
-        elif ticket_name == "평일 3시간권":
+        elif t == "평일 3시간권":
             return "BTN_공유서비스 (3시간)"
         else:
             return False
@@ -1046,7 +1046,6 @@ def web_har_in(target, driver):
                                 "평일 3시간권": "평일3시간권(공유서비스)",
                                 "평일 6시간권": "6시간권",
                                 "휴일 6시간권": "6시간권",
-                                "야간8시간권": "야간8시간권(공유서비스)",
                                 "휴일 24시간권": "휴일24시간(공유서비스)"
                             }
 
@@ -1174,7 +1173,7 @@ def web_har_in(target, driver):
                                     return False
 
                                 # ticket_name → 버튼 ID 매핑
-                                if ticket_name == "평일 당일권":
+                                if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                                     btn_id = "BTN_종일권 (공유서비스)"
                                 elif ticket_name == "휴일 당일권":
                                     btn_id = "BTN_주말권 (공유서비스)"
@@ -1278,6 +1277,7 @@ def web_har_in(target, driver):
                             driver.find_element_by_id(btn_item).click()
 
                         harin_script = get_har_in_script(park_id, ticket_name)
+                        print(f"🎯 get_har_in_script({park_id}, {ticket_name}) → {harin_script}")
                         if not harin_script:
                             print("유효하지 않은 ticket_name 입니다.")  # 실패 메시지
                             return False  # 프로세스 종료 (더 진행 안 함)
@@ -1297,11 +1297,16 @@ def web_har_in(target, driver):
                             if harin_script.startswith("BTN_"):
                                 driver.find_element_by_id(harin_script).click()
 
-                                # ✅ 버튼 클릭 후 confirm 팝업 자동 처리
-                                WebDriverWait(driver, 5).until(EC.alert_is_present())
-                                alert = driver.switch_to.alert
-                                print(f"Alert Text: {alert.text}")  # 팝업 메시지 로그 출력
-                                alert.accept()  # 팝업 '확인' 클릭
+                                # ✅ 버튼 클릭 직후 Alert 수동 처리
+                                try:
+                                    WebDriverWait(driver, 5).until(EC.alert_is_present())
+                                    alert = driver.switch_to.alert
+                                    print(f"✅ Alert 텍스트: {alert.text}")
+                                    alert.accept()
+                                    print("✅ Alert 확인 완료")
+                                except Exception as e:
+                                    print(f"⚠️ Alert 처리 실패 또는 없음: {e}")
+
 
                             else:
                                 driver.execute_script(harin_script)
