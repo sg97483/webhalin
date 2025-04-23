@@ -416,53 +416,60 @@ def handle_search_error_popup(driver):
 
 def check_search_failed_and_logout(driver):
     """
-    차량번호 검색 실패 시 나타나는 팝업 감지 후 '확인' 클릭 및 로그아웃 처리.
-    실패 시 False 반환.
+    차량번호 검색 실패 시 나타나는 팝업 감지 후 '확인' 클릭 및 로그아웃, 세션 초기화까지 포함.
+    실패 시 False 반환. 정상 진행 가능 시 True.
     """
     print("DEBUG: check_search_failed_and_logout() 함수 진입 시도")
     try:
-        # 차량 검색 실패 팝업 감지
+        # 1. 차량 검색 실패 팝업 감지
         popup = WebDriverWait(driver, 3).until(
             EC.presence_of_element_located((By.CLASS_NAME, "w2popup_window"))
         )
         print("DEBUG: 차량번호 검색 실패 팝업 감지됨.")
 
-        # '확인' 버튼 클릭
+        # 2. '확인' 버튼 클릭
         confirm_button = popup.find_element(By.XPATH, ".//input[@type='button' and @value='확인']")
         driver.execute_script("arguments[0].click();", confirm_button)
         print("DEBUG: 팝업 '확인' 버튼 클릭 완료.")
 
-        # 팝업 닫힘 대기
-        try:
-            WebDriverWait(driver, 5).until(
-                EC.invisibility_of_element_located((By.CLASS_NAME, "w2popup_window"))
-            )
-            print("DEBUG: 검색 실패 팝업 닫힘 완료.")
-        except TimeoutException:
-            print("DEBUG: 팝업 닫힘 대기 실패 → 강제 로그아웃 시도 진행.")
-
-        # 로그아웃 시도 (모달 가림 방지 포함)
-        try:
-            driver.execute_script(
-                "var modal = document.getElementById('_modal'); if(modal) modal.style.display='none';"
-            )
-            logout_button = WebDriverWait(driver, 5).until(
-                EC.element_to_be_clickable((By.ID, "mf_wfm_header_btn_logout"))
-            )
-            logout_button.click()
-            print(Colors.YELLOW + "DEBUG: 차량 검색 실패 후 로그아웃 성공 (False 반환)" + Colors.ENDC)
-        except Exception as logout_ex:
-            print(f"DEBUG: 로그아웃 버튼 클릭 실패: {logout_ex}")
-
-        return False
+        # 3. 팝업 닫힘 대기
+        WebDriverWait(driver, 5).until(
+            EC.invisibility_of_element_located((By.CLASS_NAME, "w2popup_window"))
+        )
+        print("DEBUG: 검색 실패 팝업 닫힘 완료.")
 
     except TimeoutException:
         print("DEBUG: 차량 검색 실패 팝업이 감지되지 않음. (정상일 수 있음)")
-        return True  # 팝업이 없으면 정상 진행
+        return True  # 팝업 없으면 그대로 정상 처리
 
     except Exception as ex:
-        print(f"DEBUG: check_search_failed_and_logout() 예외 발생: {ex}")
-        return False
+        print(f"DEBUG: 팝업 처리 중 예외 발생: {ex}")
+
+    # 4. 로그아웃 시도
+    try:
+        driver.execute_script(
+            "var modal = document.getElementById('_modal'); if(modal) modal.style.display='none';"
+        )
+        logout_button = WebDriverWait(driver, 5).until(
+            EC.element_to_be_clickable((By.ID, "mf_wfm_header_btn_logout"))
+        )
+        logout_button.click()
+        print("DEBUG: 로그아웃 버튼 클릭 성공")
+    except Exception as logout_ex:
+        print(f"DEBUG: 로그아웃 버튼 클릭 실패: {logout_ex}")
+
+    # 5. ✅ 세션 정리 (여기 추가된 핵심 파트)
+    try:
+        driver.delete_all_cookies()
+        driver.get("about:blank")
+        print("DEBUG: 세션 쿠키 제거 및 빈 페이지 로딩 완료")
+    except Exception as clear_ex:
+        print(f"DEBUG: 세션 정리 중 예외 발생: {clear_ex}")
+
+    # 6. 종료
+    print(Colors.YELLOW + "DEBUG: 차량 검색 실패 후 로그아웃 및 세션 초기화 완료 (False 반환)" + Colors.ENDC)
+    return False
+
 
 
 def click_matching_car_number(driver, ori_car_num):
