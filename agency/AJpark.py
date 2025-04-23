@@ -90,6 +90,15 @@ mapIdToWebInfo = {
             0  # 야간
             ],
 
+    # 하이파킹 D타워돈의문점
+    19561: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
+            ],
+
 }
 
 
@@ -320,6 +329,63 @@ def handle_ticket(driver, park_id, ticket_name):
         except Exception as e:
             print(f"ERROR: 19860 처리 중 예외 발생: {e}")
             return False
+
+    # ✅ 19561 전용 할인 처리
+    if park_id == 19561:
+        ticket_map = {
+            "평일 3시간권": "3시간권_ONLINE",
+            "평일 오후 4시간권": "오후4시간권_ONLINE",
+
+            "평일 당일권(월)": "설특가 종일권",
+            "평일 당일권(화)": "설특가 종일권",
+            "평일 당일권(수)": "설특가 종일권",
+            "평일 당일권(목)": "설특가 종일권",
+            "평일 당일권(금)": "설특가 종일권",
+
+            "휴일 당일권": "주말권_ONLINE",
+            "휴일 6시간권": "주말권_ONLINE",
+        }
+
+        if ticket_name not in ticket_map:
+            print(f"ERROR: 19561에서 지원하지 않는 ticket_name: {ticket_name}")
+            return False
+
+        target_text = ticket_map[ticket_name]
+
+        try:
+            select_element = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.ID, "selectDiscount"))
+            )
+            options = select_element.find_elements(By.TAG_NAME, "option")
+            matched = False
+            for option in options:
+                if target_text in option.text:
+                    option.click()
+                    print(f"DEBUG: '{option.text}' 옵션 선택 완료.")
+                    matched = True
+                    break
+
+            if not matched:
+                print(f"ERROR: '{target_text}' 텍스트가 포함된 옵션을 찾을 수 없습니다.")
+                return False
+
+            WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.ID, "discountSubmit"))
+            ).click()
+            print("DEBUG: 할인 적용 버튼 클릭 완료.")
+
+            try:
+                WebDriverWait(driver, 3).until(EC.alert_is_present()).accept()
+                print("DEBUG: 알림창 확인 완료.")
+            except TimeoutException:
+                print("DEBUG: 알림창 없음.")
+
+            return True
+
+        except Exception as e:
+            print(f"ERROR: 19561 처리 중 예외 발생: {e}")
+            return False
+
 
 
     # ✅ 29136 전용 할인 처리

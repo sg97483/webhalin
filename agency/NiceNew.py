@@ -465,6 +465,39 @@ def check_search_failed_and_logout(driver):
         return False
 
 
+def click_matching_car_number(driver, ori_car_num):
+    try:
+        WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.ID, "mf_wfm_body_list_carGridView_body_table"))
+        )
+        print("DEBUG: 차량 선택 팝업 테이블 감지됨")
+
+        rows = driver.find_elements(By.CSS_SELECTOR, "#mf_wfm_body_list_carGridView_body_table > tbody > tr")
+
+        for row in rows:
+            try:
+                cells = row.find_elements(By.TAG_NAME, "td")
+                if not cells or len(cells) < 4:
+                    continue
+
+                full_car_num = cells[1].text.strip()  # 두 번째 <td> = 차량번호
+                if full_car_num == ori_car_num:
+                    print(f"✅ 차량번호 일치: {full_car_num} → 선택 버튼 클릭")
+                    select_button = cells[3].find_element(By.TAG_NAME, "button")  # 네 번째 <td> = 선택 버튼
+                    driver.execute_script("arguments[0].click();", select_button)
+                    return True
+            except Exception as e:
+                print(f"DEBUG: 각 행 처리 중 오류: {e}")
+                continue
+
+        print("⚠️ 일치하는 차량번호를 찾을 수 없습니다.")
+        return False
+
+    except TimeoutException:
+        print("DEBUG: 차량 선택 테이블이 감지되지 않음 (팝업이 뜨지 않았을 수도 있음)")
+        return True  # 팝업이 안 떴다면 그대로 다음 단계로 진행
+
+
 def handle_all_optional_popups(driver, park_id):
     """
     주차장에 따라 필요한 팝업만 선택적으로 처리하며, 각 팝업 대기 시간을 최소화함.
@@ -483,6 +516,24 @@ def handle_all_optional_popups(driver, park_id):
 
     except Exception as e:
         print(f"DEBUG: 선택 팝업 처리 중 예외 발생: {e}")
+
+
+def is_car_selection_popup_present(driver, timeout=2):
+    """
+    차량 선택 팝업이 실제로 떠 있는지 확인합니다.
+    (단순 존재 여부가 아니라, 표시되고 있는지까지 확인)
+    """
+    try:
+        table = WebDriverWait(driver, timeout).until(
+            EC.presence_of_element_located((By.ID, "mf_wfm_body_list_carGridView_body_table"))
+        )
+        if table.is_displayed():
+            return True
+        else:
+            return False
+    except TimeoutException:
+        return False
+
 
 
 
@@ -546,6 +597,17 @@ def web_har_in(target, driver):
             if not check_search_failed_and_logout(driver):
                 print("DEBUG: check_search_failed_and_logout() 함수에서 False 반환됨 → 종료")  # Optional
                 return False
+
+
+            # 차량 선택 팝업이 뜬 경우 → 정확히 일치하는 차량 선택
+            if is_car_selection_popup_present(driver):
+                print("DEBUG: 차량 선택 팝업 감지됨 → 차량 선택 시도")
+                if not click_matching_car_number(driver, ori_car_num):
+                    print("DEBUG: 차량 선택 실패 → 종료")
+                    return False
+            else:
+                print("DEBUG: 차량 선택 팝업이 뜨지 않음 → 단일 차량 검색으로 판단하고 진행")
+
 
         except TimeoutException as e:
             print(f"로그인 과정에서 문제가 발생했습니다: {e}")
@@ -953,6 +1015,34 @@ def web_har_in(target, driver):
                 return select_discount_and_confirm(
                     driver,
                     "//*[@id='mf_wfm_body_gen_dcTkList_2_discountTkGrp']"
+                )
+            else:
+                return handle_invalid_ticket(driver)
+
+        elif park_id == 19770:
+            if ticket_name in ["평일1일권", "주말1일권"]:
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_2_discountTkGrp']"
+                )
+            elif ticket_name == "평일3시간권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']"
+                )
+            elif ticket_name == "심야권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']"
+                )
+            else:
+                return handle_invalid_ticket(driver)
+
+        elif park_id == 19966:
+            if ticket_name in ["심야권(일~목)", "심야권(금~토)"]:
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']"
                 )
             else:
                 return handle_invalid_ticket(driver)

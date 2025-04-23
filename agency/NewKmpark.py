@@ -425,7 +425,6 @@ def select_car_in_table(driver, ori_car_num):
 
 
 
-
 def handle_ticket(driver, park_id, ticket_name, ori_car_num):
     """
     주차장 및 주차권에 따른 할인권 처리 (19081, 19610, 19588 포함)
@@ -899,7 +898,6 @@ def logout(driver):
 
 
 
-
 def web_har_in(target, driver):
     """
     주차권 할인을 처리하는 메인 함수
@@ -934,6 +932,7 @@ def web_har_in(target, driver):
                 print("로그인 버튼 클릭 완료!")
 
                 handle_alert(driver)
+
             else:
                 print("DEBUG: 이미 로그인된 상태로 판단됨 → 로그인 생략")
 
