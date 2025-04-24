@@ -15,8 +15,10 @@ def get(max_retry=3):
             options = webdriver.ChromeOptions()
 
             # ✅ 세션 저장 방지를 위한 임시 user-data-dir
-            temp_profile_dir = tempfile.mkdtemp()
-            options.add_argument(f"user-data-dir={temp_profile_dir}")
+            #temp_profile_dir = tempfile.mkdtemp()
+            #options.add_argument(f"user-data-dir={temp_profile_dir}")
+
+            options.add_argument("--guest")
 
             options.add_argument("--disable-features=AutofillServerCommunication,PasswordManagerEnabled,AutofillEnableAccountWalletStorage")
             options.add_argument("--disable-save-password-bubble")
