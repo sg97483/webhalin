@@ -291,13 +291,37 @@ def select_discount_and_confirm(driver, radio_xpath):
         print(f"할인 처리 중 요소를 찾을 수 없음: {ex}")
         return False
 
+
     except Exception as ex:
+
         print(f"할인 처리 중 오류 발생: {ex}")
+        # 할인 실패 시 강제 로그아웃 및 세션 정리
+        try:
+
+            logout_button = WebDriverWait(driver, 5).until(
+
+                EC.element_to_be_clickable((By.ID, "mf_wfm_header_btn_logout"))
+
+            )
+
+            logout_button.click()
+            print("DEBUG: 할인 실패 후 로그아웃 시도 완료.")
+
+        except Exception as logout_ex:
+
+            print(f"DEBUG: 할인 실패 후 로그아웃도 실패: {logout_ex}")
+
+        try:
+
+            driver.delete_all_cookies()
+            driver.get("about:blank")
+            print("DEBUG: 세션 초기화 완료.")
+
+        except Exception as clear_ex:
+
+            print(f"DEBUG: 세션 초기화 중 오류: {clear_ex}")
+
         return False
-
-
-
-
 
 
 import time
@@ -1041,6 +1065,30 @@ def web_har_in(target, driver):
                 return select_discount_and_confirm(
                     driver,
                     "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']"
+                )
+            else:
+                return handle_invalid_ticket(driver)
+
+        elif park_id == 29214:
+            if ticket_name in ["평일 당일권", "휴일 당일권"]:
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_5_discountTkGrp']"
+                )
+            elif ticket_name in ["휴일 심야권", "평일 심야권"]:
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_4_discountTkGrp']"
+                )
+            elif ticket_name == "평일 3시간권(기계식,승용전용)":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']"
+                )
+            elif ticket_name == "평일 5시간권(기계식,승용전용)":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_2_discountTkGrp']"
                 )
             else:
                 return handle_invalid_ticket(driver)
