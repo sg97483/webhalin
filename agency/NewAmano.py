@@ -833,6 +833,34 @@ def close_popup_for_19869(driver, park_id):
         print("DEBUG: 19869 팝업이 감지되지 않음 (정상일 수 있음).")
 
 
+def click_matching_car_number(driver, ori_car_num):
+    try:
+        car_rows = WebDriverWait(driver, 5).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#gridMst .obj tr"))
+        )
+
+        target_suffix = ori_car_num[-7:].replace(" ", "").strip()
+
+        for row in car_rows:
+            cells = row.find_elements(By.TAG_NAME, "td")
+            if len(cells) < 2:
+                continue
+
+            car_num_text = cells[1].text.replace(" ", "").strip()
+            if car_num_text.endswith(target_suffix):
+                print(f"DEBUG: 차량번호 일치 발견 - {car_num_text}")
+                row.click()
+                return True
+
+        print("ERROR: 7자리 일치하는 차량번호를 찾을 수 없음.")
+        return False
+
+    except Exception as e:
+        print(f"ERROR: 차량 선택 중 예외 발생 - {e}")
+        return False
+
+
+
 def web_har_in(target, driver):
     """
     주차권 할인을 처리하는 메인 함수
@@ -933,11 +961,22 @@ def web_har_in(target, driver):
                     if not enter_car_number(driver, driver.car_number_last4, park_id):
                         print("ERROR: 차량번호 입력 실패로 할인 중단.")
                         return False
+
+                    # ✅ 검색 결과 중 정확히 일치하는 차량번호가 있는지 확인
+                    if not click_matching_car_number(driver, ori_car_num):
+                        print("ERROR: 검색된 차량번호와 일치하지 않음 → 할인 중단.")
+                        return False
+
             except Exception:
                 # 예외 발생 시 검색은 수행
                 driver.car_number_last4 = ori_car_num[-4:]
                 if not enter_car_number(driver, driver.car_number_last4, park_id):
                     print("ERROR: 차량번호 입력 실패로 할인 중단.")
+                    return False
+
+                # ✅ 검색 결과 중 정확히 일치하는 차량번호가 있는지 확인
+                if not click_matching_car_number(driver, ori_car_num):
+                    print("ERROR: 검색된 차량번호와 일치하지 않음 → 할인 중단.")
                     return False
 
 
