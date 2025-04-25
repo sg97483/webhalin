@@ -309,7 +309,6 @@ parkType_new_kmpark = {
 
 
 parkType_ip_time = [
-    Parks.SEOUL_SQAURE,
     Parks.SAMSUNG_HWAJAE
 ]
 
@@ -403,7 +402,6 @@ haveOneKey = [
     Parks.GMG_TOWER,
     Parks.SINRA_STAY_G_TOWER,
     Parks.MILLENNIUM_SEOUL_HILTON,
-    Parks.SEOUL_SQAURE,
     Parks.SAMSUNG_HWAJAE,
     Parks.URIM_RODEO_SWEET,
     Parks.V_PLEX,

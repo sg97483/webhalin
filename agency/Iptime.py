@@ -13,11 +13,6 @@ import WebInfo
 
 mapIdToWebInfo = {
 
-    # (하이파킹)서울역 서울스퀘어
-    12903: ["TextBox_ID", "TextBox_Pwd", "//*[@id='Button_Login']",
-            "TextBox_CarNum", "//*[@id='Button_Search']",
-            "#DataGrid1 > tbody > tr:nth-child(2) > td:nth-child(3) > a"
-            ],
 
     # 하이파킹 삼성화재서초타워 (요소 수정)
     19919: ["login_id", "login_pw", "//input[@value='로그인']",  # 로그인 버튼 수정
