@@ -513,13 +513,13 @@ def check_discount_entries(driver, park_id):
                 print("DEBUG: 할인내역이 이미 존재합니다. 할인 처리 중단.")
                 return False
 
-        elif park_id == 29118:
+        elif park_id in [29118, 19239]:
             discount_section = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, "#gridDtl .obj"))
             )
             rows = discount_section.find_elements(By.TAG_NAME, "tr")
             if len(rows) > 1:
-                print("DEBUG: 29118 - 할인내역 존재함. 할인 처리 중단.")
+                print(f"DEBUG: {park_id} - 할인내역 존재함. 할인 처리 중단.")
                 return False
 
     except TimeoutException:
