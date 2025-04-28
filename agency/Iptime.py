@@ -113,16 +113,29 @@ def web_har_in(target, driver):
                     EC.presence_of_element_located((By.ID, "divAjaxFreeDiscount"))
                 )
 
-                # 할인권 버튼 XPath 선택
-                if ticket_name == "평일 12시간권(지하 6층 전용)":
-                    discount_button_xpath = '//*[@id="divAjaxFreeDiscount"]/div/div/button[1]'
-                elif ticket_name == "휴일 당일권(지하 6층 전용)":
-                    discount_button_xpath = '//*[@id="divAjaxFreeDiscount"]/div/div/button[2]'
-                elif ticket_name in ["평일 야간권(지하 6층 전용,금~토)", "평일 야간권(지하 6층 전용,일~목)"]:
-                    discount_button_xpath = '//*[@id="divAjaxFreeDiscount"]/div/div/button[3]'
-                else:
+                # 할인권 이름 변환
+                ticket_name_map = {
+                    "평일 12시간권(지하 6층 전용)": "평일12시간권(공유서비스)",
+                    "휴일 당일권(지하 6층 전용)": "휴일당일권(공유서비스)",
+                    "평일 야간권(지하 6층 전용,금~토)": "야간권(공유서비스)",
+                    "평일 야간권(지하 6층 전용,일~목)": "야간권(공유서비스)",
+                }
+
+                mapped_name = ticket_name_map.get(ticket_name)
+                if not mapped_name:
                     print(Colors.RED + f"지원되지 않는 할인권: {ticket_name}" + Colors.ENDC)
                     return False
+
+                import time
+                time.sleep(20)
+
+                # mapped_name을 기준으로 버튼 클릭
+                if mapped_name == "평일12시간권(공유서비스)":
+                    discount_button_xpath = '//*[@id="divAjaxFreeDiscount"]/div/div/button[4]'
+                elif mapped_name == "휴일당일권(공유서비스)":
+                    discount_button_xpath = '//*[@id="divAjaxFreeDiscount"]/div/div/button[5]'
+                elif mapped_name == "야간권(공유서비스)":
+                    discount_button_xpath = '//*[@id="divAjaxFreeDiscount"]/div/div/button[6]'
 
                 # 할인 버튼 클릭
                 try:

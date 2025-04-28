@@ -241,51 +241,83 @@ def close_info_and_tutorial(driver):
 
 
 def handle_discount(driver, park_id, ticket_name):
+    """
+    19945 (신한은행 광교) 전용 할인 처리 - 클릭 후 등록 성공까지 검증하는 버전
+    """
     if park_id == 19945:
-        print(Colors.YELLOW + "하이파킹 신한은행 광교 할인 처리 (19945)" + Colors.ENDC)
-        product_list = driver.find_elements(By.CSS_SELECTOR, "#productList > tr")
-        found = False
+        print(Colors.YELLOW + "[19945] 신한은행 광교 할인 처리 시작" + Colors.ENDC)
 
-        normalized_ticket_name = ticket_name.replace(" ", "")  # 공백 제거
+        try:
+            product_list = driver.find_elements(By.CSS_SELECTOR, "#productList > tr")
+            found = False
 
-        for row in product_list:
+            normalized_ticket_name = ticket_name.replace(" ", "")  # 공백 제거
+
+            for row in product_list:
+                try:
+                    label = row.find_element(By.TAG_NAME, "td").text.strip()
+                    apply_button = row.find_element(By.CSS_SELECTOR, "button.btn-apply")
+
+                    if not apply_button.is_enabled():
+                        print(Colors.YELLOW + f"⚠️ 비활성화 버튼: {label}" + Colors.ENDC)
+                        continue
+
+                    # (1) 할인권 매칭
+                    if normalized_ticket_name == "주말당일권" and "휴일 당일권" in label:
+                        driver.execute_script("arguments[0].click();", apply_button)
+                        found = True
+                        break
+                    elif normalized_ticket_name == "주말3시간권" and "휴일 3시간권" in label:
+                        driver.execute_script("arguments[0].click();", apply_button)
+                        found = True
+                        break
+                    elif normalized_ticket_name == "토일연박권" and "토,일 연박권" in label:
+                        driver.execute_script("arguments[0].click();", apply_button)
+                        found = True
+                        break
+
+                except Exception as ex:
+                    print(Colors.RED + f"❌ 할인 버튼 클릭 중 오류: {ex}" + Colors.ENDC)
+
+            if not found:
+                print(Colors.YELLOW + f"⚠️ '{ticket_name}'에 해당하는 할인권 버튼을 찾지 못했습니다." + Colors.ENDC)
+                return False
+
+            # (2) 클릭 후 등록 성공 여부 검증
+            Util.sleep(2)  # 클릭 후 반영 대기
+
             try:
-                label = row.find_element(By.TAG_NAME, "td").text.strip()
-                apply_button = row.find_element(By.CSS_SELECTOR, "button.btn-apply")
+                apply_list = driver.find_elements(By.CSS_SELECTOR, "#applyList > tr")
+                registered = False
 
-                if not apply_button.is_enabled():
-                    print(Colors.YELLOW + f"⚠️ 버튼 비활성화 상태로 클릭 불가: {label}" + Colors.ENDC)
-                    continue
+                for row in apply_list:
+                    text = row.text
+                    if normalized_ticket_name == "주말당일권" and "휴일 당일권" in text:
+                        registered = True
+                        break
+                    elif normalized_ticket_name == "주말3시간권" and "휴일 3시간권" in text:
+                        registered = True
+                        break
+                    elif normalized_ticket_name == "토일연박권" and "토,일 연박권" in text:
+                        registered = True
+                        break
 
-                if normalized_ticket_name == "주말당일권" and "휴일 당일권" in label:
-                    driver.execute_script("arguments[0].click();", apply_button)
-                    print(Colors.BLUE + "✅ 휴일 당일권 적용 완료 (19945)" + Colors.ENDC)
-                    found = True
-                    break
-
-                elif normalized_ticket_name == "주말3시간권" and "휴일 3시간권" in label:
-                    driver.execute_script("arguments[0].click();", apply_button)
-                    print(Colors.BLUE + "✅ 휴일 3시간권 적용 완료 (19945)" + Colors.ENDC)
-                    found = True
-                    break
-
-                elif normalized_ticket_name == "토일연박권" and "토,일 연박권" in label:
-                    driver.execute_script("arguments[0].click();", apply_button)
-                    print(Colors.BLUE + "✅ 토,일 연박권 적용 완료 (19945)" + Colors.ENDC)
-                    found = True
-                    break
+                if registered:
+                    print(Colors.BLUE + "✅ 할인권 등록 완료 확인됨." + Colors.ENDC)
+                    return True
+                else:
+                    print(Colors.RED + "❌ 할인 클릭은 했지만 등록 완료되지 않음." + Colors.ENDC)
+                    return False
 
             except Exception as ex:
-                print(Colors.RED + f"❌ 할인 버튼 처리 중 오류: {ex}" + Colors.ENDC)
+                print(Colors.RED + f"❌ 할인 등록 확인 중 오류: {ex}" + Colors.ENDC)
+                return False
 
-        if not found:
-            print(Colors.YELLOW + f"⚠️ '{ticket_name}'에 해당하는 할인권을 찾지 못했습니다. (19945)" + Colors.ENDC)
+        except Exception as e:
+            print(Colors.RED + f"❌ 할인 처리 중 전체 오류 발생: {e}" + Colors.ENDC)
             return False
 
-        return True
-
-    return None
-
+    return None  # park_id가 19945가 아니면 처리하지 않음
 
 
 def web_har_in(target, driver):

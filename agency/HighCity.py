@@ -367,6 +367,8 @@ def get_har_in_script(park_id, ticket_name):
             return "javascript:applyDiscount('23', '1', '36|16|25|35|', '파킹박 (web)', '999999999');"
         elif ticket_name in ["평일 심야권(일~목)", "휴일 심야권(금,토)"]:
             return "javascript:applyDiscount('37', '1', '36|', '파킹박(야간)', '999999999');"
+        elif ticket_name == "휴일 6시간권":
+            return "javascript:applyDiscount('52', '1', '', '휴일6시간권(공유서비스)', '999999999');"
         else:
             return False
 
