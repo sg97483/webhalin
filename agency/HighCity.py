@@ -1114,7 +1114,7 @@ def web_har_in(target, driver):
                                     return False
 
                                 # ticket_name에 따라 버튼 텍스트 매칭
-                                if ticket_name == "평일 당일권":
+                                if ticket_name in ["평일 당일권(월)","평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                                     btn = WebDriverWait(driver, 5).until(
                                         EC.element_to_be_clickable(
                                             (By.XPATH, "//input[@type='button' and contains(@value, '평일당일권 (공유)')]")
@@ -1240,7 +1240,7 @@ def web_har_in(target, driver):
                                     return False
 
                                 # ticket_name 에 따라 버튼 ID 결정
-                                if ticket_name == "평일 당일권":
+                                if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                                     btn_id = "BTN_종일권 (일일권)"
                                 elif ticket_name == "휴일 당일권":
                                     btn_id = "BTN_주말권 (일일권)"
