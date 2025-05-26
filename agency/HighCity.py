@@ -56,13 +56,6 @@ mapIdToWebInfo = {
             "javascript:applyDiscount('14', '1', '', '파킹박(평일)', '999999999', '0');",
             "javascript:applyDiscount('15', '1', '', '파킹박(주말)', '999999999', '0');",
             "javascript:applyDiscount('17', '1', '', '파킹박(야간)', '999999999', '0');"],
-    # SC_BANK
-    12750: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
-            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
-            "chk",
-            "javascript:applyDiscount('23', '1', '16|25|', '파킹박 (web)', '999999999');",
-            "javascript:applyDiscount('23', '1', '16|25|', '파킹박 (web)', '999999999');",
-            ""],
 
     # 트윈시티남산
     16003: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
@@ -359,19 +352,6 @@ def get_har_in_script(park_id, ticket_name):
             return False  # ❗️지정되지 않은 ticket_name은 처리하지 않음
 
 
-        # ✅ 12750 전용 할인권 처리
-    if park_id == 12750:
-        if ticket_name in ["평일 3시간권", "평일 12시간권"]:
-            return "javascript:applyDiscount('76', '1', '', '12시간권', '999999999');"
-        elif ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)", "휴일 당일권"]:
-            return "javascript:applyDiscount('23', '1', '36|16|25|35|', '파킹박 (web)', '999999999');"
-        elif ticket_name in ["평일 심야권(일~목)", "휴일 심야권(금,토)"]:
-            return "javascript:applyDiscount('37', '1', '36|', '파킹박(야간)', '999999999');"
-        elif ticket_name == "휴일 6시간권":
-            return "javascript:applyDiscount('52', '1', '', '휴일6시간권(공유서비스)', '999999999');"
-        else:
-            return False
-
     if park_id == 19325:
         if ticket_name in [
             "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"
@@ -475,7 +455,7 @@ def get_har_in_script(park_id, ticket_name):
 
 
 def check_discount_alert(driver, park_id=None):
-    if park_id in [20863, 19364, 19325, 18958, 16003, 20864, 19272, 12750, 19456]:
+    if park_id in [20863, 19364, 19325, 18958, 16003, 20864, 19272, 19456]:
         print("✅ 할인 결과 알림창 없음 → 예외 없이 성공 처리 (예상된 구조)")
         return True
 
@@ -608,22 +588,6 @@ def web_har_in(target, driver):
                                 print(Colors.RED + f"❌ 차량 라디오 버튼 클릭 실패: {e}" + Colors.ENDC)
                                 return False
 
-                        if park_id == 12750:
-                            harin_script = get_har_in_script(park_id, ticket_name)
-                            if not harin_script:
-                                print(Colors.RED + f"❌ 유효하지 않은 ticket_name: {ticket_name}" + Colors.ENDC)
-                                return False
-
-                            try:
-                                driver.execute_script(harin_script)
-                                print(Colors.GREEN + "✅ 할인 스크립트 직접 실행 완료 (12750)" + Colors.ENDC)
-
-                                # 알림창 처리 (성공 여부 판단)
-                                return check_discount_alert(driver, park_id)
-
-                            except Exception as e:
-                                print(Colors.RED + f"❌ 할인 스크립트 실행 실패 (12750): {e}" + Colors.ENDC)
-                                return False
 
                         if park_id == 19456:
                             if ticket_name == "휴일 당일권":
@@ -1275,7 +1239,7 @@ def web_har_in(target, driver):
                                 return False
 
                         btn_item = web_info[WebInfo.btnItem]
-                        if park_id not in [12750, 19492] and btn_item and btn_item != "-":
+                        if park_id not in [19492] and btn_item and btn_item != "-":
                             driver.find_element_by_id(btn_item).click()
 
                         harin_script = get_har_in_script(park_id, ticket_name)
