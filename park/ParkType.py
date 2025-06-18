@@ -260,7 +260,7 @@ TARGET_URLS_NEW_AMANO = [
     ,"https://a00150.parkingweb.kr/login","https://a3590.parkingweb.kr","https://a20297.pweb.kr/login"
     ,"http://vg.awp.co.kr","https://a2325.parkingweb.kr/","https://a17498.pweb.kr"
     ,"http://112.216.125.10/discount/registration","https://a02412.parkingweb.kr/login"
-    ,"https://a103.parkingweb.kr/discount/registration","https://a17835.pweb.kr/"]
+    ,"https://a103.parkingweb.kr/discount/registration","https://a17835.pweb.kr/","http://1.209.17.122"]
 
 
 # 대상 URL 리스트
@@ -364,7 +364,6 @@ park_type_nice = [
     Parks.NICE_LOTTE_YEON_SU,
     Parks.NICE_LOTTE_POHANG,
     Parks.NICE_MAGOK_INTER_CITY_HOTEL,
-    Parks.NICE_MOKPO_TERMINAL,
     Parks.NICE_BUCHEON_SINEMAJON_BUILDING,
     Parks.NICE_SIHEUNG_SKYDREAM_CITY,
     Parks.NICE_ASAN_ONYANG_TOURIST_HOTEL,

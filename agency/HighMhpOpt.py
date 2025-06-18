@@ -1148,6 +1148,24 @@ def web_har_in(target, driver):
                             "//*[@id='discountItemsDataRadio_c3c5fe62b1ac46fb94e2d8e125e207a0']",
                             btn_confirm_xpath
                         )
+                    elif ticket_name == "평일 3시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_ac0ceff7eac54fcdbc0d4162e1c446f7']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name == "평일 2시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_7f0e706a75bf4869bb7a9bb4dd23be4e']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name == "평일 1시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_9dd1a279b9814007aa09406a8be1560a']",
+                            btn_confirm_xpath
+                        )
                     else:
                         return handle_invalid_ticket(driver)
 
