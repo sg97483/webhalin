@@ -277,13 +277,14 @@ def get_har_in_script(park_id, ticket_name):
     # 1. 특정 주차장 + 특정 티켓 분기
 
     if park_id == 18958:
-        if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
+        if ticket_name in ["평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
             return "javascript:applyDiscount('14', '1', '', '파킹박(평일)', '999999999', '0');"
 
         elif ticket_name == "휴일 당일권":
             return "javascript:applyDiscount('15', '1', '', '파킹박(주말)', '999999999', '0');"
 
         elif ticket_name in [
+            "평일 12시간권",
             "평일 12시간권(월~화)",
             "평일 12시간권(수~목)",
             "평일 12시간권(금)"

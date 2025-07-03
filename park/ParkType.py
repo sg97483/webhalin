@@ -267,7 +267,7 @@ TARGET_URLS_NEW_KMPARK = [
     "http://kmp0000798.iptime.org/","http://kmp0000601.iptime.org/","http://kmp0000483.iptime.org/"
     ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/"
     ,"http://kmp0000089.iptime.org/","http://kmp0000403.iptime.org/","http://kmp0000131.iptime.org/"
-    ,"http://kmp0000748.iptime.org/","http://kmp0000025.iptime.org/"]
+    ,"http://kmp0000748.iptime.org/","http://kmp0000025.iptime.org/","http://kmp0000099.iptime.org/"]
 
 # DB에서 park_id 동적 조회
 dynamic_park_ids = get_park_ids_by_urls(TARGET_URLS)
@@ -321,7 +321,6 @@ park_type_aj_park = [
     Parks.AJ_NON_HYEN,
     19600,
     19004,
-    19160,
     19860,
     29136,
     19561,
