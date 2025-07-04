@@ -255,7 +255,7 @@ def web_har_in(target, driver):
                         discount_button.click()
                         print(Colors.BLUE + "✅ 24시간무료(웹) 할인 적용 완료 (강동홈플러스)." + Colors.ENDC)
                     except TimeoutException:
-                        print(Colors.RED + "❌ 24시간무료(웹) 버튼을 찾을 수 없음 (강동홈플러스)." + Colors.ENDC)
+                        print(Colors.RED + "❌ 24시간무료(웹)ss1 버튼을 찾을 수 없음 (강동홈플러스)." + Colors.ENDC)
                         log_out_web(driver)
                         return False
 
