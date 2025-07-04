@@ -102,6 +102,7 @@ parkTypeIparking = [
 #tbody 있음
 parkTypeGs = [
     Parks.KDB_LIFE,
+    Parks.KANGDONG_HOMEPLUS,
     19237,
     19450, # 경제신문
     19493,#판교아이스퀘어C1
@@ -427,7 +428,8 @@ haveTwoKey = [
     Parks.CENTER_SQUARE_NEW,
     Parks.CENTER_SQUARE,
     Parks.JS_HOTEL,
-    Parks.KDB_LIFE
+    Parks.KDB_LIFE,
+    Parks.KANGDONG_HOMEPLUS
 ]
 
 haveThreeKey = [
@@ -452,6 +454,7 @@ parkTypeNoRequestMain = [
     Parks.DONGHWA_BUILDING,
     Parks.KIUM_NADEGI,
     Parks.KDB_LIFE,
+    Parks.KANGDONG_HOMEPLUS,
     Parks.SAMSUNG_SERVICE_BUILDING,
     Parks.MILLENNIUM_SEOUL_HILTON,
     Parks.NON_SQUARE,

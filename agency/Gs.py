@@ -22,6 +22,16 @@ mapIdToWebInfo = {
             "",
             "javascript:fnDisCount('79:전액무료(웹) / 잔여수량 9956');","javascript:fnDisCount('80:전액무료(웹) / 잔여수량 9956');"],
 
+    # 카카오 T 강동홈플러스
+    19243: ["login_id", "login_pw",
+            "//*[@id='bodyCSS']/div/div/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/form/center/button[1]",
+            "searchCarNo", "//*[@id='btnSearch']",
+            "",  # 차량번호 클릭
+            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 9549');",  # 1일권
+            "javascript:fnDisCount('75:24시간유료(웹) / 잔여수량 9549');",  #
+            "javascript:fnDisCount('75:전액무료(웹) / 잔여수량 9956');",  # 전액 무료
+            "",
+            "javascript:fnDisCount('79:전액무료(웹) / 잔여수량 9956');","javascript:fnDisCount('80:전액무료(웹) / 잔여수량 9956');"],
 
     # 중앙로공영주차장
     19237: ["login_id", "login_pw", "//*[@id='bodyCSS']/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input",
@@ -235,6 +245,19 @@ def web_har_in(target, driver):
                     return False
 
                 Util.sleep(3)
+
+                # ✅ 할인권 적용
+                if park_id == 19243 and ticket_name in ["평일1일권", "주말1일권"]:
+                    try:
+                        discount_button = WebDriverWait(driver, 5).until(
+                            EC.element_to_be_clickable((By.XPATH, "//*[@id='divAjaxFreeDiscount']/input"))
+                        )
+                        discount_button.click()
+                        print(Colors.BLUE + "✅ 24시간무료(웹) 할인 적용 완료 (강동홈플러스)." + Colors.ENDC)
+                    except TimeoutException:
+                        print(Colors.RED + "❌ 24시간무료(웹) 버튼을 찾을 수 없음 (강동홈플러스)." + Colors.ENDC)
+                        log_out_web(driver)
+                        return False
 
                 # ✅ 할인권 적용
                 if park_id in [19493, 19494]:
