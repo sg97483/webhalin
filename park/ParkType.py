@@ -74,7 +74,6 @@ parkTypeBlue = [
     Parks.SAMSUNG_SERVICE_BUILDING,
     Parks.MILLENNIUM_SEOUL_HILTON,
     Parks.URIM_RODEO_SWEET,
-    Parks.FRYDIUM_BUILDING,
     19416,
     19423
 ]
@@ -260,7 +259,8 @@ TARGET_URLS_NEW_AMANO = [
     ,"https://a00150.parkingweb.kr/login","https://a3590.parkingweb.kr","https://a20297.pweb.kr/login"
     ,"http://vg.awp.co.kr","https://a2325.parkingweb.kr/","https://a17498.pweb.kr"
     ,"http://112.216.125.10/discount/registration","https://a02412.parkingweb.kr/login"
-    ,"https://a103.parkingweb.kr/discount/registration","https://a17835.pweb.kr/","http://1.209.17.122"]
+    ,"https://a103.parkingweb.kr/discount/registration","https://a17835.pweb.kr/","http://210.222.86.169"
+    ,"https://s1153.parkingweb.kr/login","http://1.209.17.122"]
 
 
 # 대상 URL 리스트
@@ -403,7 +403,6 @@ haveOneKey = [
     Parks.NY_TOWER,
     Parks.EG_BUILDING,
     Parks.ORAKAI_DAEHAKRO,
-    Parks.FRYDIUM_BUILDING,
     Parks.KOREANA_HOTEL
 ]
 

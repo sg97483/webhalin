@@ -50,13 +50,6 @@ mapIdToWebInfo = {
             "chk_info1",  # 파킹박
             "chk_info1"
             ],
-    # (하이파킹)우림로데오스위트
-    19203: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
-            "carNumber", "/html/body/div[2]/ul/li/button",
-            "",
-            "chk_info1",  # 파킹박
-            "chk_info1"
-            ],
     #청담에비뉴
     19416: ["login_id", "login_pw", "/html/body/div/div/form/center/button[1]",
             "carNumber", "/html/body/div[2]/ul/li/button",
@@ -78,7 +71,6 @@ blue_pass = [
     Parks.SAMSUNG_SERVICE_BUILDING,
     Parks.MILLENNIUM_SEOUL_HILTON,
     Parks.URIM_RODEO_SWEET,
-    Parks.FRYDIUM_BUILDING,
 
 ]
 def log_out_web(driver):

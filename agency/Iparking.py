@@ -509,7 +509,7 @@ def web_har_in(target, driver):
 
         # ✅ 성수무신사 N1 예외 처리 (24시간 무료)
         elif park_id == 19921:
-            if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)", "휴일 당일권"]:
+            if ticket_name in ["평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)", "휴일 당일권"]:
                 print(Colors.YELLOW + "성수무신사 N1 - 24시간 무료권 처리" + Colors.ENDC)
                 product_list = driver.find_elements(By.CSS_SELECTOR, "#productList > tr")
                 found = False

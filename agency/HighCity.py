@@ -299,7 +299,7 @@ def get_har_in_script(park_id, ticket_name):
 
     if park_id == 19272:
         if ticket_name in [
-            "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)",
+            "평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)",
             "평일 당일권(목)", "평일 당일권(금)",
             "휴일 당일권(토)", "휴일 당일권(일)"
         ]:
@@ -331,7 +331,7 @@ def get_har_in_script(park_id, ticket_name):
             return "javascript:applyDiscount('88', '', '1', '', '평일3시간권(공유서비스)', '1', '0');"
         elif ticket_name == "평일 오후 6시간권":
             return "javascript:applyDiscount('90', '', '1', '', '평일오후6시간권(공유)', '1', '0');"
-        elif ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
+        elif ticket_name in ["평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
             return "javascript:applyDiscount('12', '', '5', '01|10|', 'ppark', '1', '0');"
         elif ticket_name == "2일권":
             return "javascript:applyDiscount('25', '', '1', '', 'ppark(연박2일)', '1', '0');"
@@ -347,7 +347,7 @@ def get_har_in_script(park_id, ticket_name):
 
     if park_id == 19325:
         if ticket_name in [
-            "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"
+            "평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"
         ]:
             return "javascript:applyDiscount('14', '1', '11|20|21|', 'ppark', 'Y');"
         elif ticket_name in [
@@ -362,7 +362,7 @@ def get_har_in_script(park_id, ticket_name):
             return False
 
     if park_id == 16003:
-        if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)", "휴일 당일권"]:
+        if ticket_name in ["평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)", "휴일 당일권"]:
             return "javascript:applyDiscount('98', '5', '25|29|', '파킹박', '1', '0');"
         elif ticket_name in ["평일 심야권", "휴일 심야권"]:
             return "javascript:applyDiscount('92', '1', '25|29|', '파킹박(야간)', '1', '0');"
@@ -375,7 +375,7 @@ def get_har_in_script(park_id, ticket_name):
 
     if park_id == 19174:
         t = ticket_name.strip()  # ← 이 줄 추가
-        if t in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
+        if t in ["평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
             return "BTN_공유서비스 종일"
         elif t in ["휴일 24시간권(토)", "휴일 24시간권(일)"]:
             return "BTN_공유서비스 주말"
@@ -390,6 +390,7 @@ def get_har_in_script(park_id, ticket_name):
 
     if park_id == 19364:
         if ticket_name in [
+            "평일 당일권",
             "평일 당일권(월)",
             "평일 당일권(화)",
             "평일 당일권(수)",
@@ -413,7 +414,7 @@ def get_har_in_script(park_id, ticket_name):
 
 
     if park_id == 20863:
-        if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)", "휴일 당일권"]:
+        if ticket_name in ["평일 당일권","평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)", "휴일 당일권"]:
             return "javascript:applyDiscount('19', '1', '05|', '파킹박');"
         else:
             return False  # ❗️20863에서 지정된 티켓 외는 실패 처리
@@ -561,7 +562,33 @@ def web_har_in(target, driver):
                 Util.sleep(3)
 
                 driver.find_element_by_xpath(web_info[WebInfo.btnSearch]).click()
-                Util.sleep(1)
+                Util.sleep(2)
+
+                if park_id in [29218, 18996]:
+                    target_car_number = ori_car_num.replace(" ", "")  # 차량번호 공백제거
+
+                    # 결과 tr 리스트에서 원하는 차량 tr을 찾아 클릭
+                    tr_list = WebDriverWait(driver, 5).until(
+                        EC.presence_of_all_elements_located(
+                            (By.XPATH, "//table[tbody/tr/th/h1[contains(text(), '입차 차량 조회 내역')]]/tbody/tr[td]")
+                        )
+                    )
+                    matched = False
+                    for tr in tr_list:
+                        td_list = tr.find_elements(By.TAG_NAME, "td")
+                        for td in td_list:
+                            # 차량번호 추출 후 비교 (공백제거 등 필요시 추가)
+                            car_number_text = td.text.replace(" ", "")
+                            if target_car_number in car_number_text:
+                                driver.execute_script("arguments[0].click();", tr)
+                                print(f"✅ 차량번호 {target_car_number} 선택 클릭 완료")
+                                matched = True
+                                break
+                        if matched:
+                            break
+                    if not matched:
+                        print(f"❌ '{target_car_number}' 번호에 해당하는 차량이 조회 결과에 없습니다.")
+                        return False
 
                 if ParkUtil.check_search(park_id, driver):
 
@@ -740,7 +767,7 @@ def web_har_in(target, driver):
 
                                 Util.sleep(1.5)  # 페이지 전환 대기
 
-                                if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
+                                if ticket_name in ["평일 당일권","평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                                     btn = WebDriverWait(driver, 5).until(
                                         EC.element_to_be_clickable(
                                             (By.XPATH,
@@ -996,6 +1023,7 @@ def web_har_in(target, driver):
                             print(f"DEBUG: 13007 전용 할인 처리 시작 (ticket_name={ticket_name})")
 
                             ticket_button_map = {
+                                "평일 당일권": "파킹박",
                                 "평일 당일권(월)": "파킹박",
                                 "평일 당일권(화)": "파킹박",
                                 "평일 당일권(수)": "파킹박",
@@ -1132,7 +1160,7 @@ def web_har_in(target, driver):
                                     return False
 
                                 # ticket_name → 버튼 ID 매핑
-                                if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
+                                if ticket_name in ["평일 당일권","평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                                     btn_id = "BTN_종일권 (공유서비스)"
                                 elif ticket_name == "휴일 당일권":
                                     btn_id = "BTN_주말권 (공유서비스)"
