@@ -30,12 +30,6 @@ mapIdToWebInfo = {
             "",
             "javascript:onclickDiscount('1440', '20211118094204-99999', '00015', '24시간할인권', '111테1111', '매수차감', form1.remark.value);",
             "javascript:onclickDiscount('960', '20211118094204-99999', '00016', '야간권', '111테1111', '매수차감', form1.remark.value);"],
-    # 타워8(x)
-    19504: ["name", "pwd", "//*[@id='login']/table[1]/tbody/tr[3]/td[2]/input",
-            "carNumber", "/html/body/table[2]/tbody/tr[5]/td/input",
-            "",
-            "javascript:onclickDiscount('20200407090327-00361', '00009', '당일 무료', '56너0427', '매수차감', form1.remark.value);",
-            "javascript:onclickDiscount('20200407090327-00361', '00009', '당일 무료', '56너0427', '매수차감', form1.remark.value);"],
     # 소노타워  (x)
     19505: ["name", "pwd", "//*[@id='login']/table[1]/tbody/tr[3]/td[2]/input",
             "carNumber", "/html/body/table[2]/tbody/tr[5]/td/input",
