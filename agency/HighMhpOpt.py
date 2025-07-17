@@ -197,6 +197,13 @@ def check_discount_open_button(driver):
 
 # 기존 코드에서 중복된 부분을 이 함수로 대체
 def web_har_in(target, driver):
+
+    # ======================================================================
+    # 💡 여기에 변수를 추가해주세요.
+    # ======================================================================
+    car_num_xpath = "//span[contains(@class, 'text-xl') and contains(@class, 'font-semibold')]"
+    # ======================================================================
+
     pid = target[0]
     park_id = int(Util.all_trim(target[1]))
     ori_car_num = Util.all_trim(target[2])
@@ -239,6 +246,42 @@ def web_har_in(target, driver):
                 driver.find_element_by_xpath(web_info[WebInfo.btnSearch]).click()
 
                 Util.sleep(3)
+
+                # ======================================================================
+                # 💡 여기부터 새로운 검증 코드 추가
+                # ======================================================================
+                try:
+                    # 1. 화면에 표시된 차량 번호 요소가 나타날 때까지 최대 5초 대기
+                    wait = WebDriverWait(driver, 5)
+                    car_num_element = wait.until(EC.visibility_of_element_located((By.XPATH, car_num_xpath)))
+
+                    # 2. 요소에서 실제 차량 번호 텍스트를 가져오기 (예: '04마3127')
+                    displayed_car_num = Util.all_trim(car_num_element.text)
+
+                    # 3. DB에서 온 번호(ori_car_num)와 화면 번호의 뒤 7자리를 비교
+                    if displayed_car_num[-7:] == ori_car_num[-7:]:
+                        # ✅ 번호가 일치하면 정상 진행
+                        print(Colors.GREEN + f"✅ 차량번호 일치 확인: {displayed_car_num}" + Colors.ENDC)
+                    else:
+                        # ❌ 번호가 다르면 로그 남기고 실패 처리 후 로그아웃
+                        print(
+                            Colors.RED + f"❌ 차량번호 불일치. [DB: {ori_car_num}] != [화면: {displayed_car_num}]" + Colors.ENDC)
+                        driver.find_element(By.XPATH, side_nav_xpath).click()  # 로그아웃
+                        return False
+
+                except (NoSuchElementException, TimeoutException):
+                    # 검색 결과가 없거나, 차량 번호 요소를 찾지 못한 경우
+                    print(Colors.RED + f"❌ 차량 검색 결과가 없거나 요소를 찾을 수 없습니다. (검색어: {search_id})" + Colors.ENDC)
+                    # 현재 페이지에 로그아웃 버튼이 없을 수 있으므로 예외처리하며 로그아웃 시도
+                    try:
+                        driver.find_element(By.XPATH, side_nav_xpath).click()  # 로그아웃
+                    except:
+                        pass  # 로그아웃 버튼이 없어도 그냥 넘어감
+                    return False
+                # ======================================================================
+                # 💡 검증 코드 끝
+                # ======================================================================
+
 
                 # '할인 열기' 버튼 있는지 확인
                 if not check_discount_open_button(driver):
@@ -3342,21 +3385,42 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 29176:
-                    if ticket_name == "평일 당일권(지하4층전용)":
+                    if ticket_name in ["평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_d4c93184281e4816ae0cf26c66874eaf']",
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "주말 당일권":
+                    elif ticket_name == "휴일 당일권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_0d8fc56ad17d47b7801cdb29a3f54940']",
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "심야권":
+                    elif ticket_name == "평일 3시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_8324beb73d504292ac70b9ec847ea309']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 2시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_ce0c21ea73514663874a066dd9cb16f9']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 1시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_f4a9dabc9fbc4ecab4a9a8545a7840ab']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name in ["평일 심야권", "휴일 심야권"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_a584211ac8cc4da79d0aed26081fc1e9']",
@@ -4812,6 +4876,13 @@ def web_har_in(target, driver):
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_ac27b2c213e1412c956d6a5cccddf7e5']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 12시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_8e70e5df94824ffa970a80bbda14b472']",
                             btn_confirm_xpath
                         )
 
