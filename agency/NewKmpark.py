@@ -29,7 +29,8 @@ side_nav_xpath = "/html/body/div[3]/table/tbody/tr/td[2]/button"
 TARGET_URLS = ["http://kmp0000798.iptime.org/","http://kmp0000601.iptime.org/","http://kmp0000483.iptime.org/"
     ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/"
     ,"http://kmp0000089.iptime.org/","http://kmp0000403.iptime.org/","http://kmp0000131.iptime.org/"
-    ,"http://kmp0000748.iptime.org/","http://kmp0000025.iptime.org/","http://kmp0000099.iptime.org/"]
+    ,"http://kmp0000748.iptime.org/","http://kmp0000025.iptime.org/","http://kmp0000099.iptime.org/"
+    ,"http://kmp0000871.iptime.org/"]
 
 def get_park_ids_by_urls(target_urls):
     """
@@ -60,7 +61,7 @@ if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_
     TARGET_URLS = ["http://kmp0000798.iptime.org/","http://kmp0000601.iptime.org/","http://kmp0000483.iptime.org/"
         ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/"
         ,"http://kmp0000089.iptime.org/","http://kmp0000403.iptime.org/"
-        ,"http://kmp0000748.iptime.org/","http://kmp0000025.iptime.org/","http://kmp0000099.iptime.org/"]
+        ,"http://kmp0000748.iptime.org/","http://kmp0000025.iptime.org/","http://kmp0000099.iptime.org/","http://kmp0000871.iptime.org/"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["form-login-username", "form-login-password", "//*[@id='form-login']/div[3]/button", "//*[@id='visit-lpn']", "//*[@id='btn-find']"]
@@ -184,8 +185,7 @@ def enter_car_number(driver, car_number_last4, park_id):
         print(f"DEBUG: 차량번호 '{car_number_last4}' 입력 완료.")
 
         # park_id별 검색 버튼 처리
-        if park_id in [18938, 18577, 19906,19258,19239]:  # 두 park_id 모두 class 기반
-            # 18938 전용 검색 버튼
+        if park_id in [18577, 19906,19258,19239]:  # 두 park_id 모두 class 기반
             search_button = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.XPATH, "//input[@class='btnS1_1 btn' and @value='검색']"))
             )
@@ -301,11 +301,9 @@ def enter_password_standard(driver, user_password):
 
 
 def wait_and_click_discount_button(driver, button_id):
-     """
-     18938 전용 - 차량 검색 후 버튼 대기 후 클릭
-     """
+
      try:
-         print(f"DEBUG: 18938 전용 할인 버튼 대기 시작 (id={button_id})")
+         print(f"DEBUG: 할인 버튼 대기 시작 (id={button_id})")
 
          # 최대 10초 대기 (버튼이 나타날 때까지)
          button = WebDriverWait(driver, 10).until(
@@ -324,7 +322,7 @@ def wait_and_click_discount_button(driver, button_id):
 
 def search_car_number_and_wait_discount(driver, car_number_last4, discount_button_id):
     """
-    18938 전용: 차량번호 검색 후 할인권 버튼이 나타날 때까지 대기
+    차량번호 검색 후 할인권 버튼이 나타날 때까지 대기
     """
     try:
         close_vehicle_number_popup(driver)  # 팝업 닫기
@@ -816,15 +814,15 @@ def handle_ticket(driver, park_id, ticket_name, ori_car_num):
             logout(driver)
             return False
 
-    # ✅ 19610 전용 할인 처리
-    if park_id == 19610:
-        print(f"DEBUG: 19610 전용 할인 처리 시작 (ticket_name={ticket_name})")
+    # ✅ 19577, 19610 통합 할인 처리
+    if park_id in [19577, 19610]:
+        print(f"DEBUG: {park_id} 전용 할인 처리 시작 (ticket_name={ticket_name})")
         if ticket_name in ["평일1일권", "주말1일권"]:
             ticket_xpath = '//*[@id="page-view"]/table/tbody/tr[6]/td/button'
         elif ticket_name == "심야권":
             ticket_xpath = '//*[@id="page-view"]/table/tbody/tr[5]/td/button'
         else:
-            print(f"ERROR: 19610에서 지원하지 않는 ticket_name: {ticket_name}")
+            print(f"ERROR: {park_id}에서 지원하지 않는 ticket_name: {ticket_name}")
             logout(driver)
             return False
         return click_discount_and_handle_popup(driver, ticket_xpath)
