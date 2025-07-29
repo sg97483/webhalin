@@ -106,14 +106,6 @@ mapIdToWebInfo = {
             "javascript:applyDiscount('13', '1', '01|02|03|', 'ppark', '999999999', '0');",
             "javascript:applyDiscount('31', '1', '', 'ppark(야간)', '999999999', '0');",
             ],
-    #  힐스테이트에코마곡나루역
-    19272: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
-            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
-            "chk",
-            "javascript:applyDiscount('08', '1', '17|', 'ppark', '1', '0');",
-            "javascript:applyDiscount('08', '1', '17|', 'ppark', '1', '0');"
-            ],
-
     #  동산마을공영
     19276: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
@@ -297,34 +289,6 @@ def get_har_in_script(park_id, ticket_name):
         else:
             return False  # 정의되지 않은 티켓 이름은 실패 처리
 
-    if park_id == 19272:
-        if ticket_name in [
-            "평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)",
-            "평일 당일권(목)", "평일 당일권(금)",
-            "휴일 당일권(토)", "휴일 당일권(일)"
-        ]:
-            return "javascript:applyDiscount('08', '', '5', '17|27|', 'ppark', '1', '0');"
-        elif ticket_name == "평일 오후권":
-            return "javascript:applyDiscount('30', '', '1', '', '평일오후권(공유서비스)', '1', '0');"
-        elif ticket_name in ["평일 심야권", "휴일 심야권"]:
-            return "javascript:applyDiscount('32', '', '1', '', '심야권(공유서비스)', '1', '0');"
-        elif ticket_name == "2일 연박권":
-            return "javascript:applyDiscount('80', '', '1', '27|', '2일권', '1', '0');"
-        elif ticket_name == "3일 연박권":
-            return "javascript:applyDiscount('81', '', '1', '27|', '3일권', '1', '0');"
-        elif ticket_name == "4일 연박권":
-            return "javascript:applyDiscount('82', '', '1', '27|', '4일권', '1', '0');"
-        elif ticket_name == "5일 연박권":
-            return "javascript:applyDiscount('83', '', '1', '27|', '5일권', '1', '0');"
-        elif ticket_name == "6일 연박권":
-            return "javascript:applyDiscount('33', '', '1', '', '6연박권(공유서비스)', '1', '0');"
-        elif ticket_name == "7일 연박권":
-            return "javascript:applyDiscount('34', '', '1', '', '7연박권(공유서비스)', '1', '0');"
-        elif ticket_name == "8일 연박권":
-            return "javascript:applyDiscount('35', '', '1', '', '8연박권(공유서비스)', '1', '0');"
-        else:
-            return False
-
 
     if park_id == 20864:
         if ticket_name == "평일 3시간권":
@@ -449,7 +413,7 @@ def get_har_in_script(park_id, ticket_name):
 
 
 def check_discount_alert(driver, park_id=None):
-    if park_id in [20863, 19364, 19325, 18958, 16003, 20864, 19272, 19456]:
+    if park_id in [20863, 19364, 19325, 18958, 16003, 20864, 19456]:
         print("✅ 할인 결과 알림창 없음 → 예외 없이 성공 처리 (예상된 구조)")
         return True
 

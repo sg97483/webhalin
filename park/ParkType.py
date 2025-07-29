@@ -41,7 +41,6 @@ parkTypeHighCity = [
     Parks.EG_BUILDING,
     #Parks.MUNJUNG_PLAZA,
     Parks.KOREANA_HOTEL,
-    Parks.HILL_STATE_ECO_MAGOKNARU,
     Parks.DONGSAN_GONGYEONG,
     Parks.D_TOWER,
     Parks.BANPO_DONG_GONGYONG,
