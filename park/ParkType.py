@@ -95,7 +95,6 @@ parkTypeIparking = [
     19945, # 신한은행 광교 주차장
     19579, #카카오 T 이마트구로점
     19508,
-    19509,
 ]
 #tbody 있음
 parkTypeGs = [
@@ -259,7 +258,7 @@ TARGET_URLS_NEW_AMANO = [
     ,"http://vg.awp.co.kr","https://a2325.parkingweb.kr/","https://a17498.pweb.kr"
     ,"http://112.216.125.10/discount/registration","https://a02412.parkingweb.kr/login"
     ,"https://a103.parkingweb.kr/discount/registration","https://a17835.pweb.kr/","http://210.222.86.169"
-    ,"https://s1153.parkingweb.kr/login","http://1.209.17.122"]
+    ,"https://s1153.parkingweb.kr/login","http://1.209.17.122","http://hipjungan.iptime.org"]
 
 
 # 대상 URL 리스트
@@ -268,7 +267,7 @@ TARGET_URLS_NEW_KMPARK = [
     ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/"
     ,"http://kmp0000089.iptime.org/","http://kmp0000403.iptime.org/","http://kmp0000131.iptime.org/"
     ,"http://kmp0000748.iptime.org/","http://kmp0000025.iptime.org/","http://kmp0000099.iptime.org/"
-    ,"http://kmp0000871.iptime.org/"]
+    ,"http://kmp0000871.iptime.org/","http://kmp0000869.iptime.org/"]
 
 # DB에서 park_id 동적 조회
 dynamic_park_ids = get_park_ids_by_urls(TARGET_URLS)

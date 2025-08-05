@@ -255,16 +255,6 @@ mapIdToWebInfo = {
             "20",  # 평일1일권 2호기
             "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
             ],
-    # 정안빌딩
-    19267: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
-            "schCarNo", "//*[@id='sForm']/input[3]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "9",  # ppar
-            "9",  # ppark
-            "",  #
-            "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-            ],
-
     # 하나금융 투자빌딩
     19040: ["userId", "userPwd", "//*[@id='loginForm']/li[4]/input",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -557,16 +547,6 @@ mapIdToWebInfo = {
                 "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
                 ],
 
-        # 현대델리안오피스텔
-        19488: ["userId", "userPwd", "//input[@type='submit']",
-                "schCarNo", "//*[@id='sForm']/input[3]",
-                "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-                "8",
-                "8",
-                "8",
-                "javascript:document.getElementById('discountTypeValue').click"  # 실행 함수
-                ],
-
         # SK 명동
         14618: ["userId", "userPwd", "//input[@type='submit']",
             "schCarNo", "//*[@id='sForm']/input[3]",
@@ -589,7 +569,6 @@ amano_need_log_out = [
     Parks.SUN_HWA_BUILDING,
     18946,
     19438,
-    19488,
     19437
 ]
 

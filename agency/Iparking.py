@@ -64,12 +64,6 @@ mapIdToWebInfo = {
              "#carList > tr",
              "2"
              ],
-     # 이마트트레이더스김포점
-     19509: ["id", "password", "//*[@id='login']",
-             "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
-             "#carList > tr",
-             "2"
-             ],
     # 하이파킹 성수무신사캠퍼스N1
     19921: ["id", "password", "//*[@id='login']",
             "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
