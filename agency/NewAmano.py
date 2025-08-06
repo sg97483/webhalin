@@ -44,7 +44,7 @@ TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.k
     ,"http://vg.awp.co.kr","https://a2325.parkingweb.kr/","https://a2325.parkingweb.kr/","https://a17498.pweb.kr"
 ,"http://112.216.125.10/discount/registration","https://a02412.parkingweb.kr/login"
     ,"https://a103.parkingweb.kr/discount/registration","https://a17835.pweb.kr/","http://210.222.86.169"
-    ,"https://s1153.parkingweb.kr/login","http://1.209.17.122","http://hipjungan.iptime.org"
+    ,"https://s1153.parkingweb.kr/login","http://1.209.17.122","http://hipjungan.iptime.org","https://cpost.parkingweb.kr/discount/registration"
                ]
 
 def get_park_ids_by_urls(target_urls):
@@ -95,7 +95,7 @@ if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_
         ,"http://vg.awp.co.kr","https://a2325.parkingweb.kr/","https://a17498.pweb.kr"
         ,"http://112.216.125.10/discount/registration","https://a02412.parkingweb.kr/login"
         ,"https://a103.parkingweb.kr/discount/registration","https://a17835.pweb.kr/","http://210.222.86.169"
-        ,"https://s1153.parkingweb.kr/login","http://1.209.17.122","http://hipjungan.iptime.org"]
+        ,"https://s1153.parkingweb.kr/login","http://1.209.17.122","http://hipjungan.iptime.org","https://cpost.parkingweb.kr/discount/registration"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["userId", "userPwd", "//*[@id='btnLogin']", "schCarNo", "//*[@id='sForm']/input[3]"]
@@ -221,7 +221,7 @@ def enter_car_number(driver, car_number_last4, park_id):
         print(f"DEBUG: 차량번호 '{car_number_last4}' 입력 완료.")
 
         # park_id별 검색 버튼 처리
-        if park_id in [18938, 18577, 19906, 19258, 19239, 19331,19077,16096,45010,14618,19253,19882,29141,19905,19267]:  # 특정 park_id 전용 처리
+        if park_id in [18938, 18577, 19906, 19258, 19239, 19331,19077,16096,45010,14618,19253,19882,29141,19905,19267,19424]:  # 특정 park_id 전용 처리
             search_button = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.XPATH, "//input[@class='btnS1_1 btn' and @value='검색']"))
             )
@@ -388,7 +388,7 @@ def enter_password(driver, user_password, park_id):
     """
     try:
         # 19489, 18938 전용
-        if park_id in [19489, 18938, 19906,19258,19239,19331,19077,16096,45010,14618,19253,19882,29141,19905,19267]:
+        if park_id in [19489, 18938, 19906,19258,19239,19331,19077,16096,45010,14618,19253,19882,29141,19905,19267,19424]:
             print(f"DEBUG: {park_id} 전용 비밀번호 필드 탐색")
             password_field = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.NAME, "userPwd"))
@@ -565,6 +565,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19391: {"평일1일권": "9", "주말1일권": "9"},
         19858: {"평일1일권": "4", "주말1일권": "4"},
         19869: {"평일1일권": "9", "주말1일권": "9"},
+        19424: {"주말1일권": "22", "평일야간권": "22"},
         19267: {"평일 당일권(월)": "9", "평일 당일권(화)": "9", "평일 당일권(수)": "9", "평일 당일권(목)": "9", "평일 당일권(금)": "9", "휴일 당일권": "9", "평일 오후 4시간권": "28", "평일 3시간권": "33"},
         19256: {"평일1일권": "12", "주말1일권": "13", "심야권": "14", "2시간권": "10"},
         19941: {"평일당일권": "15", "휴일당일권": "15", "심야권": "18", "3시간권": "16"},
@@ -820,6 +821,36 @@ def close_popup_window_for_19239(driver, park_id):
             driver.switch_to.window(main_window)
             break
 
+def close_popup_for_19424(driver, park_id):
+    """
+    park_id = 19424 접속 시 뜨는 안내 팝업의 '닫기' 버튼 클릭
+    """
+    if park_id != 19424:
+        return
+
+    try:
+        # 팝업의 내부 컨테이너를 5초간 기다립니다.
+        popup_inner = WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "modal-inner"))
+        )
+        print("DEBUG: 19424 안내 팝업 감지됨.")
+
+        # '닫기' 버튼을 텍스트로 찾아서 클릭합니다. (더 안정적인 방법)
+        close_button = popup_inner.find_element(By.XPATH, ".//a[text()='닫기']")
+        close_button.click()
+        print("DEBUG: 19424 팝업 '닫기' 버튼 클릭 완료.")
+
+        # 팝업이 사라질 때까지 대기합니다.
+        WebDriverWait(driver, 5).until(
+            EC.invisibility_of_element(popup_inner)
+        )
+        print("DEBUG: 19424 팝업 닫힘 완료.")
+
+    except TimeoutException:
+        # 팝업이 시간 내에 나타나지 않으면 정상 진행
+        print("DEBUG: 19424 안내 팝업이 감지되지 않음.")
+    except Exception as e:
+        print(f"ERROR: 19424 팝업 처리 중 예외 발생: {e}")
 
 def close_popup_for_19869(driver, park_id):
     """
@@ -896,6 +927,7 @@ def web_har_in(target, driver):
 
         # ✅ 바로 팝업 닫기 처리
         close_popup_for_19869(driver, park_id)
+        close_popup_for_19424(driver, park_id)
 
         # ✅ 여기! 로그인 상태라면 강제 로그아웃 시도
         try_force_logout_if_already_logged_in(driver, park_id)
@@ -940,7 +972,7 @@ def web_har_in(target, driver):
                         driver.execute_script("arguments[0].click();", login_button)
                         print("✅ 16096 로그인 JS 클릭 성공")
 
-                elif park_id in [18938, 18577, 19906, 19258, 19239, 19331, 19077, 45010, 14618, 19253,19882,29141,19905,19267]:
+                elif park_id in [18938, 18577, 19906, 19258, 19239, 19331, 19077, 45010, 14618, 19253,19882,29141,19905,19267,19424]:
                     print(f"DEBUG: {park_id} 전용 로그인 버튼 클릭")
                     login_button = WebDriverWait(driver, 10).until(
                         EC.presence_of_element_located((By.CLASS_NAME, "login_area_btn"))
