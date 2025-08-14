@@ -515,16 +515,32 @@ def check_discount_entries(driver, park_id):
     특정 park_id에 대해 할인내역이 있는지 확인합니다.
     """
     try:
-        if park_id == 19391:
+        if park_id == 999999:
+            print("DEBUG: 19391 park_id 할인 내역 확인 로직 실행")
+
+            # 할인내역 테이블 컨테이너를 찾음
             discount_section = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, ".tableBox1"))
             )
-            rows = discount_section.find_elements(By.CSS_SELECTOR, ".obj tr")
-            if len(rows) > 1:
+
+            # 💡 수정된 로직: 할인 내역의 첫 번째 행(데이터)이 존재하는지 확인
+            # 실제 데이터가 담긴 행은 클래스가 없거나, 특정 클래스가 있을 수 있습니다.
+            # 이 코드는 `.obj tbody` 내에 있는 두 번째 `<tr>`부터를 데이터 행으로 가정합니다.
+            try:
+                # 데이터 행이 있는지 확인 (헤더를 제외한 첫 번째 행)
+                data_row = discount_section.find_element(By.CSS_SELECTOR, ".obj tbody tr:nth-of-type(2)")
+                print(f"DEBUG: 할인 내역 데이터 행 감지: {data_row.text}")
+
+                # 데이터 행이 감지되면 할인 내역이 있는 것으로 판단
                 print("DEBUG: 할인내역이 이미 존재합니다. 할인 처리 중단.")
                 return False
 
-        elif park_id in [29118, 19239]:
+            except NoSuchElementException:
+                # 데이터 행이 존재하지 않으면 이 예외가 발생
+                print("DEBUG: 할인 내역 데이터 행을 찾을 수 없음. 할인 진행.")
+                return True
+
+        elif park_id in [29118, 19239, 19391]:
             discount_section = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, "#gridDtl .obj"))
             )
