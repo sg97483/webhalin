@@ -315,7 +315,7 @@ def get_har_in_script(park_id, ticket_name):
         ]:
             return "javascript:applyDiscount('14', '1', '11|20|21|', 'ppark', 'Y');"
         elif ticket_name in [
-            "평일 12시간권(월)", "평일 12시간권(화~금)"
+            "평일 12시간권(월)", "평일 12시간권(화~금)", "평일 12시간권"
         ]:
             return "javascript:applyDiscount('75', '1', '', '12시간', '');"
         elif ticket_name == "휴일 당일권":
