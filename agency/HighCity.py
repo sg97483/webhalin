@@ -413,7 +413,7 @@ def get_har_in_script(park_id, ticket_name):
 
 
 def check_discount_alert(driver, park_id=None):
-    if park_id in [20863, 19364, 19325, 18958, 16003, 20864, 19456]:
+    if park_id in [20863, 19364, 19325, 18958, 16003, 20864, 19456, 19194]:
         print("✅ 할인 결과 알림창 없음 → 예외 없이 성공 처리 (예상된 구조)")
         return True
 
@@ -516,9 +516,25 @@ def web_har_in(target, driver):
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
             if ParkUtil.first_access(park_id, driver.current_url):
 
-                driver.find_element_by_id(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
-                driver.find_element_by_id(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
-                driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
+                try:
+                    # WebDriverWait를 사용하여 요소가 나타날 때까지 최대 10초간 기다립니다.
+                    wait = WebDriverWait(driver, 10)
+
+                    # ID 입력
+                    user_id_field = wait.until(EC.presence_of_element_located((By.ID, web_info[WebInfo.inputId])))
+                    user_id_field.send_keys(web_har_in_info[WebInfo.webHarInId])
+
+                    # PW 입력
+                    user_pw_field = wait.until(EC.presence_of_element_located((By.ID, web_info[WebInfo.inputPw])))
+                    user_pw_field.send_keys(web_har_in_info[WebInfo.webHarInPw])
+
+                    # 로그인 버튼 클릭
+                    login_button = wait.until(EC.element_to_be_clickable((By.XPATH, web_info[WebInfo.btnLogin])))
+                    login_button.click()
+
+                except Exception as e:
+                    print(Colors.RED + f"❌ 로그인 과정에서 오류 발생: {e}" + Colors.ENDC)
+                    return False  # 로그인 실패 시 함수 종료
 
                 driver.implicitly_wait(3)
 

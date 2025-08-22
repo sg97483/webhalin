@@ -349,23 +349,51 @@ def handle_popup_and_go_discount(driver, park_id):
 
 def process_ticket_and_logout(driver, button_id, park_id):
      """
-     할인권 클릭 및 로그아웃까지 처리하는 함수
+     할인권 클릭 및 로그아웃까지 처리하는 함수 (Stale Element 예외 처리 강화)
      """
      try:
-         # ✅ 수정된 부분: 버튼이 클릭 가능해질 때까지 최대 5초 대기 후 클릭
-         discount_button = WebDriverWait(driver, 5).until(
-             EC.element_to_be_clickable((By.ID, button_id))
-         )
-         discount_button.click()
-         print(f"DEBUG: 할인권 버튼(id={button_id}) 클릭 완료.")
+         # StaleElementReferenceException에 대한 재시도 로직 추가
+         attempts = 0
+         while attempts < 3:
+             try:
+                 # 클릭 직전에 항상 요소를 새로 찾도록 WebDriverWait 사용
+                 discount_button = WebDriverWait(driver, 5).until(
+                     EC.element_to_be_clickable((By.ID, button_id))
+                 )
+                 discount_button.click()
+                 print(f"DEBUG: 할인권 버튼(id={button_id}) 클릭 완료.")
+                 break  # 성공 시 루프 탈출
+             except TimeoutException:
+                 print(f"ERROR: 할인권 버튼(id={button_id})을 찾거나 클릭할 수 없음.")
+                 return False  # 버튼을 못찾으면 재시도 의미 없으므로 종료
+             except NoSuchElementException:
+                 print(f"ERROR: 할인권 버튼(id={button_id})을 찾을 수 없음.")
+                 return False
+             except Exception as e:
+                 # Stale Element 에러가 발생하면 재시도
+                 if "stale element reference" in str(e).lower():
+                     print(f"DEBUG: StaleElementReferenceException 감지됨. 재시도 중... ({attempts + 1}/3)")
+                     attempts += 1
+                     time.sleep(0.5)  # 잠시 대기 후 재시도
+                 else:
+                     # 다른 예외는 즉시 실패 처리
+                     print(f"ERROR: 할인권 클릭 중 예외 발생: {e}")
+                     return False
 
-         WebDriverWait(driver, 3).until(EC.alert_is_present()).accept()
-         print("DEBUG: 할인권 적용 확인 알림 닫기 완료.")
-     except TimeoutException:
-         print("DEBUG: 할인권 적용 알림 없음 (정상일 수 있음).")
+         if attempts >= 3:
+             print("ERROR: StaleElementReferenceException 재시도 3회 실패.")
+             return False
+
+         # 할인 적용 확인 알림 처리
+         try:
+             WebDriverWait(driver, 3).until(EC.alert_is_present()).accept()
+             print("DEBUG: 할인권 적용 확인 알림 닫기 완료.")
+         except TimeoutException:
+             print("DEBUG: 할인권 적용 알림 없음 (정상일 수 있음).")
+
      except Exception as e:
-         print(f"ERROR: 할인권 클릭 중 예외 발생: {e}")
-         return False  # 🚨 실패로 처리
+         print(f"ERROR: 할인권 처리 과정에서 예상치 못한 오류 발생: {e}")
+         return False
 
      # 팝업 처리
      try:

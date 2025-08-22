@@ -422,12 +422,65 @@ def select_car_in_table(driver, ori_car_num):
         print("❌ 차량 목록을 찾을 수 없습니다.")
         return False
 
+def check_if_discount_applied(driver):
+    """
+    '할인 내역'에 이미 할인이 적용되었는지 확인합니다. (안정성 강화)
+    """
+    try:
+        # 1. (핵심) 차량 조회 결과 전체 컨테이너가 로드될 때까지 먼저 기다립니다.
+        WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.ID, "page-view"))
+        )
+        print("DEBUG: 차량 조회 결과 컨테이너('page-view') 로딩 확인.")
+
+        # 2. 컨테이너 로딩 후 '할인 내역' 텍스트를 찾습니다.
+        discount_cell = driver.find_element(By.XPATH, "//td[contains(text(), '할인 내역')]/following-sibling::td")
+
+        # 3. 할인 내역(div)이 있는지 확인합니다.
+        applied_discounts = discount_cell.find_elements(By.CLASS_NAME, "qbox-filter-field")
+
+        if len(applied_discounts) > 0:
+            print(f"DEBUG: 이미 {len(applied_discounts)}개의 할인이 적용되어 있습니다. 추가 할인을 중단합니다.")
+            return True
+        else:
+            print("DEBUG: 적용된 할인 내역이 없습니다. 할인을 진행합니다.")
+            return False
+
+    except (TimeoutException, NoSuchElementException):
+        print("DEBUG: '할인 내역' 섹션을 찾을 수 없습니다. 할인을 진행합니다.")
+        return False
 
 
 def handle_ticket(driver, park_id, ticket_name, ori_car_num):
     """
     주차장 및 주차권에 따른 할인권 처리 (19081, 19610, 19588 포함)
     """
+
+    # =================== 📍 아래 로직을 새로 추가해주세요 📍 ===================
+    try:
+        # 1. 차량 목록이 보이는지 3초간 확인하여 분기 처리
+        WebDriverWait(driver, 3).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#page-view tbody.gbox-body tr.gbox-body-row"))
+        )
+        print("DEBUG: 차량 목록 페이지로 판단됨. 특정 차량을 선택합니다.")
+
+        # 2. 목록 페이지일 경우, 먼저 차량을 선택하여 상세 페이지로 이동
+        if not select_car_in_table(driver, ori_car_num):
+            print("❌ 차량 목록에서 일치하는 차량을 선택하지 못했습니다.")
+            logout(driver)
+            return False
+
+    except TimeoutException:
+        # 3. 차량 목록이 없으면, 이미 상세 페이지인 것으로 간주
+        print("DEBUG: 단일 차량 상세 페이지로 판단됨.")
+
+    # 4. 이제 (상세 페이지에서) 중복 할인을 체크
+    if check_if_discount_applied(driver):
+        print("DEBUG: 이미 할인이 적용되어 있으므로 로그아웃합니다.")
+        logout(driver)
+        return True
+    # =======================================================================
+
     print(f"DEBUG: 할인 처리 시작 (park_id={park_id}, ticket_name={ticket_name})")
 
     if park_id == 19392:
@@ -631,80 +684,63 @@ def handle_ticket(driver, park_id, ticket_name, ori_car_num):
     # ✅ 19477 전용 할인 처리
     if park_id == 19477:
         try:
-            # 차량 검색 결과가 복수인 경우 → 차량 선택 필요
+            # 차량 검색 결과에 따라 차량 선택
             rows = WebDriverWait(driver, 3).until(
                 EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#page-view tbody.gbox-body tr.gbox-body-row"))
             )
             print(f"DEBUG: 차량 목록 {len(rows)}건 발견됨 → 차량 선택 시도")
-
             if not select_car_in_table(driver, ori_car_num):
                 print("❌ 19477 - 차량 선택 실패, 로그아웃 후 종료")
                 logout(driver)
                 return False
-
-            # 차량 클릭 후 할인권 페이지 로딩 대기
-            WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.CLASS_NAME, "btn-visit-coupon"))
-            )
-            print("DEBUG: 차량 선택 후 할인권 페이지 로딩 완료")
-
         except TimeoutException:
-            # 차량 검색 결과가 1건이라 차량 선택 생략되는 경우
-            print("DEBUG: 차량 검색 결과가 1건 → 차량 선택 생략하고 바로 할인 처리 진입")
+            print("DEBUG: 차량 검색 결과가 1건 → 차량 선택 생략")
 
         print(f"DEBUG: 19477 전용 할인 처리 시작 (ticket_name={ticket_name})")
-
         if ticket_name == "평일1일권":
             try:
+                # 1. 클릭할 버튼 찾기
+                target_button = None
                 rows = WebDriverWait(driver, 10).until(
                     EC.presence_of_all_elements_located((By.CSS_SELECTOR, "tbody.gbox-body > tr.gbox-body-row"))
                 )
-                print("DEBUG: 할인권 리스트 로딩 확인 완료")
-
-                success = False
                 for row in rows:
                     try:
                         button = row.find_element(By.TAG_NAME, "button")
                         raw_text = button.text.strip().replace(" ", "")
-                        print(f"DEBUG: 버튼 내부 텍스트: '{raw_text}'")
-
                         if "24시간(무료)" in raw_text:
-                            driver.execute_script("arguments[0].click();", button)
-                            print("DEBUG: 할인 버튼 강제 클릭 완료")
-
-                            # 팝업 처리 (있으면 처리, 없으면 패스)
-                            try:
-                                popup = WebDriverWait(driver, 3).until(
-                                    EC.presence_of_element_located((By.CLASS_NAME, "modal-box"))
-                                )
-                                popup.find_element(By.XPATH, ".//a[@class='modal-btn']").click()
-                                WebDriverWait(driver, 3).until(
-                                    EC.invisibility_of_element((By.CLASS_NAME, "modal-box"))
-                                )
-                                print("DEBUG: 팝업 닫기 완료")
-                            except TimeoutException:
-                                print("WARNING: 팝업 감지되지 않음 → 무시하고 성공 처리")
-
-                            success = True  # 팝업 없어도 성공으로 간주
+                            target_button = button
                             break
+                    except NoSuchElementException:
+                        continue  # 버튼이 없는 행은 건너뜀
 
-                    except Exception as e:
-                        print(f"WARNING: <button> 처리 중 예외 발생: {e}")
-
-                logout(driver)
-
-                if success:
-                    return True
-                else:
-                    print("ERROR: 19477 - '24시간(무료)' 할인권을 찾지 못함")
+                # 2. 버튼을 못 찾았으면 실패 처리
+                if target_button is None:
+                    print("ERROR: 19477 - 클릭할 '24시간(무료)' 버튼을 찾지 못함")
+                    logout(driver)
                     return False
 
-            except TimeoutException:
-                print("ERROR: 19477 - 할인권 목록 로딩 실패")
+                # 3. 버튼 클릭 실행
+                print("DEBUG: 할인 버튼 강제 클릭 실행")
+                driver.execute_script("arguments[0].click();", target_button)
+                time.sleep(1)  # 할인 내역이 UI에 반영될 시간을 줌
+
+                # 4. (핵심) 클릭 후, 할인이 실제로 적용되었는지 최종 확인
+                print("DEBUG: 할인이 실제로 적용되었는지 최종 확인합니다...")
+                is_applied_successfully = check_if_discount_applied(driver)
+
+                # 5. 최종 결과에 따라 로그아웃 및 결과 반환
+                logout(driver)
+                if is_applied_successfully:
+                    print("✅ 최종 확인 결과: 할인 적용 성공")
+                else:
+                    print("❌ 최종 확인 결과: 할인 적용 실패")
+                return is_applied_successfully
+
+            except Exception as e:
+                print(f"ERROR: 19477 처리 중 예외 발생: {e}")
                 logout(driver)
                 return False
-
-
         else:
             print(f"ERROR: 19477에서 지원하지 않는 ticket_name: {ticket_name}")
             logout(driver)
