@@ -20,6 +20,12 @@ mapIdToWebInfo = {
             "2"
             ],
 
+   # 신한은행광교
+   19945: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
     # 서초 꽃마을
     19433: ["id", "password", "//*[@id='login']",
             "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
@@ -236,82 +242,89 @@ def close_info_and_tutorial(driver):
 
 def handle_discount(driver, park_id, ticket_name):
     """
-    19945 (신한은행 광교) 전용 할인 처리 - 클릭 후 등록 성공까지 검증하는 버전
+    19945 (신한은행 광교) 전용 할인 처리 - 2단계 팝업 처리 후 즉시 성공으로 간주하는 최종 버전
     """
-    if park_id == 19945:
-        print(Colors.YELLOW + "[19945] 신한은행 광교 할인 처리 시작" + Colors.ENDC)
+    if park_id != 19945:
+        return None
 
-        try:
-            product_list = driver.find_elements(By.CSS_SELECTOR, "#productList > tr")
-            found = False
+    print(Colors.YELLOW + "[19945] 신한은행 광교 할인 처리 시작" + Colors.ENDC)
 
-            normalized_ticket_name = ticket_name.replace(" ", "")  # 공백 제거
+    ticket_map = {
+        "주말 당일권": "휴일 당일권",
+        "주말 3시간권": "휴일 3시간권",
+        "토일 연박권": "토,일 연박권"
+    }
 
-            for row in product_list:
-                try:
-                    label = row.find_element(By.TAG_NAME, "td").text.strip()
-                    apply_button = row.find_element(By.CSS_SELECTOR, "button.btn-apply")
+    if ticket_name not in ticket_map:
+        print(Colors.RED + f"❌ [19945] 지원하지 않는 티켓({ticket_name})입니다." + Colors.ENDC)
+        return False
 
-                    if not apply_button.is_enabled():
-                        print(Colors.YELLOW + f"⚠️ 비활성화 버튼: {label}" + Colors.ENDC)
-                        continue
+    target_text = ticket_map[ticket_name]
 
-                    # (1) 할인권 매칭
-                    if normalized_ticket_name == "주말당일권" and "휴일 당일권" in label:
-                        driver.execute_script("arguments[0].click();", apply_button)
-                        found = True
-                        break
-                    elif normalized_ticket_name == "주말3시간권" and "휴일 3시간권" in label:
-                        driver.execute_script("arguments[0].click();", apply_button)
-                        found = True
-                        break
-                    elif normalized_ticket_name == "토일연박권" and "토,일 연박권" in label:
-                        driver.execute_script("arguments[0].click();", apply_button)
-                        found = True
-                        break
-
-                except Exception as ex:
-                    print(Colors.RED + f"❌ 할인 버튼 클릭 중 오류: {ex}" + Colors.ENDC)
-
-            if not found:
-                print(Colors.YELLOW + f"⚠️ '{ticket_name}'에 해당하는 할인권 버튼을 찾지 못했습니다." + Colors.ENDC)
-                return False
-
-            # (2) 클릭 후 등록 성공 여부 검증
-            Util.sleep(2)  # 클릭 후 반영 대기
-
+    try:
+        # 1. 할인권 '적용' 버튼 찾아서 클릭
+        product_list = driver.find_elements(By.CSS_SELECTOR, "#productList > tr")
+        found_and_clicked = False
+        for row in product_list:
             try:
-                apply_list = driver.find_elements(By.CSS_SELECTOR, "#applyList > tr")
-                registered = False
-
-                for row in apply_list:
-                    text = row.text
-                    if normalized_ticket_name == "주말당일권" and "휴일 당일권" in text:
-                        registered = True
+                cell_text = row.find_element(By.TAG_NAME, "td").text.strip()
+                if target_text in cell_text:
+                    apply_button = row.find_element(By.CSS_SELECTOR, "button.btn-apply")
+                    if apply_button.is_enabled():
+                        driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", apply_button)
+                        import time
+                        time.sleep(0.5)
+                        driver.execute_script("arguments[0].click();", apply_button)
+                        print(Colors.BLUE + f"✅ '{target_text}' [적용] 버튼 클릭 완료." + Colors.ENDC)
+                        found_and_clicked = True
                         break
-                    elif normalized_ticket_name == "주말3시간권" and "휴일 3시간권" in text:
-                        registered = True
-                        break
-                    elif normalized_ticket_name == "토일연박권" and "토,일 연박권" in text:
-                        registered = True
-                        break
-
-                if registered:
-                    print(Colors.BLUE + "✅ 할인권 등록 완료 확인됨." + Colors.ENDC)
-                    return True
-                else:
-                    print(Colors.RED + "❌ 할인 클릭은 했지만 등록 완료되지 않음." + Colors.ENDC)
-                    return False
-
             except Exception as ex:
-                print(Colors.RED + f"❌ 할인 등록 확인 중 오류: {ex}" + Colors.ENDC)
-                return False
+                print(Colors.RED + f"❌ 할인 버튼 탐색/클릭 중 오류: {ex}" + Colors.ENDC)
 
-        except Exception as e:
-            print(Colors.RED + f"❌ 할인 처리 중 전체 오류 발생: {e}" + Colors.ENDC)
+        if not found_and_clicked:
+            print(Colors.YELLOW + f"⚠️ '{target_text}'에 해당하는 할인권 버튼을 찾지 못했습니다." + Colors.ENDC)
             return False
 
-    return None  # park_id가 19945가 아니면 처리하지 않음
+        # 2. 2단계 팝업 처리
+        try:
+            print("DEBUG: [1/2] '적용하시겠습니까?' 팝업을 기다립니다...")
+            first_confirm_button = WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.ID, "popupOk"))
+            )
+            first_confirm_button.click()
+            print("DEBUG: [1/2] 첫 번째 팝업의 '확인' 버튼 클릭 완료.")
+
+            WebDriverWait(driver, 5).until(
+                EC.staleness_of(first_confirm_button)
+            )
+            print("DEBUG: [1/2] 첫 번째 팝업 닫힘 확인.")
+
+            print("DEBUG: [2/2] '적용되었습니다' 팝업을 기다립니다...")
+            second_confirm_button = WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.ID, "popupOk"))
+            )
+            second_confirm_button.click()
+            print("DEBUG: [2/2] 두 번째 팝업의 '확인' 버튼 클릭 완료.")
+
+            WebDriverWait(driver, 5).until(
+                EC.invisibility_of_element_located((By.ID, "popupOk"))
+            )
+            print("DEBUG: [2/2] 두 번째 팝업 닫힘 확인.")
+
+        except Exception as e:
+            # 2단계 팝업 처리 중 하나라도 실패하면 명확한 오류로 간주
+            print(f"ERROR: 2단계 팝업 처리 중 오류 발생: {e}")
+            return False
+
+        # --- 📍 여기가 핵심 수정 부분입니다 📍 ---
+        # 3. 2단계 팝업 처리가 모두 성공했으므로, 최종 검증 없이 즉시 성공으로 처리
+        print(Colors.GREEN + "✅ 2단계 팝업 처리가 완료되었으므로 할인이 성공적으로 적용된 것으로 간주합니다." + Colors.ENDC)
+        return True
+        # ----------------------------------------
+
+    except Exception as e:
+        print(Colors.RED + f"❌ [19945] 할인 처리 중 전체 오류 발생: {e}" + Colors.ENDC)
+        return False
 
 
 def web_har_in(target, driver):
@@ -496,10 +509,7 @@ def web_har_in(target, driver):
 
 
         elif park_id == 19945:
-            result = handle_discount(driver, park_id, ticket_name)
-            return result if result is not None else False
-
-
+            return handle_discount(driver, park_id, ticket_name)
 
         # ✅ 성수무신사 N1 예외 처리 (24시간 무료)
         elif park_id == 19921:

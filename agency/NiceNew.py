@@ -495,7 +495,6 @@ def check_search_failed_and_logout(driver):
     return False
 
 
-
 def click_matching_car_number(driver, ori_car_num):
     try:
         WebDriverWait(driver, 5).until(
@@ -511,10 +510,12 @@ def click_matching_car_number(driver, ori_car_num):
                 if not cells or len(cells) < 4:
                     continue
 
-                full_car_num = cells[1].text.strip()  # 두 번째 <td> = 차량번호
-                if full_car_num == ori_car_num:
-                    print(f"✅ 차량번호 일치: {full_car_num} → 선택 버튼 클릭")
-                    select_button = cells[3].find_element(By.TAG_NAME, "button")  # 네 번째 <td> = 선택 버튼
+                full_car_num = cells[1].text.strip()
+
+                # (핵심 수정) 전체 번호 대신, 공백 제거 후 끝 5자리가 일치하는지 비교
+                if full_car_num.replace(" ", "")[-5:] == ori_car_num.replace(" ", "")[-5:]:
+                    print(f"✅ 차량번호 끝 5자리 일치: {full_car_num} → 선택 버튼 클릭")
+                    select_button = cells[3].find_element(By.TAG_NAME, "button")
                     driver.execute_script("arguments[0].click();", select_button)
                     return True
             except Exception as e:
@@ -526,7 +527,7 @@ def click_matching_car_number(driver, ori_car_num):
 
     except TimeoutException:
         print("DEBUG: 차량 선택 테이블이 감지되지 않음 (팝업이 뜨지 않았을 수도 있음)")
-        return True  # 팝업이 안 떴다면 그대로 다음 단계로 진행
+        return True
 
 
 def handle_all_optional_popups(driver, park_id):
@@ -1316,6 +1317,21 @@ def web_har_in(target, driver):
                 return select_discount_and_confirm(
                     driver,
                     "//*[@id='mf_wfm_body_gen_dcTkList_3_discountTkGrp']"
+                )
+            else:
+                return handle_invalid_ticket(driver)
+
+        elif park_id == 19284:
+
+            if ticket_name == "평일 저녁권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']"
+                )
+            elif ticket_name in ["평일1일권", "주말1일권"]:
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']"
                 )
             else:
                 return handle_invalid_ticket(driver)
