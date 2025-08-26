@@ -44,7 +44,8 @@ TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.k
     ,"http://vg.awp.co.kr","https://a2325.parkingweb.kr/","https://a2325.parkingweb.kr/","https://a17498.pweb.kr"
 ,"http://112.216.125.10/discount/registration","https://a02412.parkingweb.kr/login"
     ,"https://a103.parkingweb.kr/discount/registration","https://a17835.pweb.kr/","http://210.222.86.169"
-    ,"https://s1153.parkingweb.kr/login","http://1.209.17.122","http://hipjungan.iptime.org","https://cpost.parkingweb.kr/discount/registration"
+    ,"https://s1153.parkingweb.kr/login","http://1.209.17.122","http://hipjungan.iptime.org"
+    ,"https://cpost.parkingweb.kr/discount/registration","http://211.106.97.154/login"
                ]
 
 def get_park_ids_by_urls(target_urls):
@@ -95,7 +96,8 @@ if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_
         ,"http://vg.awp.co.kr","https://a2325.parkingweb.kr/","https://a17498.pweb.kr"
         ,"http://112.216.125.10/discount/registration","https://a02412.parkingweb.kr/login"
         ,"https://a103.parkingweb.kr/discount/registration","https://a17835.pweb.kr/","http://210.222.86.169"
-        ,"https://s1153.parkingweb.kr/login","http://1.209.17.122","http://hipjungan.iptime.org","https://cpost.parkingweb.kr/discount/registration"]
+        ,"https://s1153.parkingweb.kr/login","http://1.209.17.122","http://hipjungan.iptime.org"
+        ,"https://cpost.parkingweb.kr/discount/registration","http://211.106.97.154/login"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["userId", "userPwd", "//*[@id='btnLogin']", "schCarNo", "//*[@id='sForm']/input[3]"]
@@ -349,7 +351,7 @@ def handle_popup_and_go_discount(driver, park_id):
 
 def process_ticket_and_logout(driver, button_id, park_id):
      """
-     할인권 클릭 및 로그아웃까지 처리하는 함수 (Stale Element 예외 처리 강화)
+     할인권 클릭 및 로그아웃까지 처리하는 함수 (클릭 안정성 강화)
      """
      try:
          # StaleElementReferenceException에 대한 재시도 로직 추가
@@ -360,23 +362,30 @@ def process_ticket_and_logout(driver, button_id, park_id):
                  discount_button = WebDriverWait(driver, 5).until(
                      EC.element_to_be_clickable((By.ID, button_id))
                  )
-                 discount_button.click()
-                 print(f"DEBUG: 할인권 버튼(id={button_id}) 클릭 완료.")
+
+                 # (핵심 수정) JavaScript로 더 확실하게 클릭
+                 print(f"DEBUG: 할인 버튼(id={button_id})을 화면 중앙으로 스크롤합니다.")
+                 driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", discount_button)
+                 time.sleep(0.5)  # 스크롤 후 잠시 대기
+
+                 print(f"DEBUG: JavaScript로 할인 버튼(id={button_id})을 강제 클릭합니다.")
+                 driver.execute_script("arguments[0].click();", discount_button)
+
+                 print(f"DEBUG: 할인권 버튼(id={button_id}) 클릭 명령 실행 완료.")
                  break  # 성공 시 루프 탈출
+
              except TimeoutException:
                  print(f"ERROR: 할인권 버튼(id={button_id})을 찾거나 클릭할 수 없음.")
-                 return False  # 버튼을 못찾으면 재시도 의미 없으므로 종료
+                 return False
              except NoSuchElementException:
                  print(f"ERROR: 할인권 버튼(id={button_id})을 찾을 수 없음.")
                  return False
              except Exception as e:
-                 # Stale Element 에러가 발생하면 재시도
                  if "stale element reference" in str(e).lower():
                      print(f"DEBUG: StaleElementReferenceException 감지됨. 재시도 중... ({attempts + 1}/3)")
                      attempts += 1
-                     time.sleep(0.5)  # 잠시 대기 후 재시도
+                     time.sleep(0.5)
                  else:
-                     # 다른 예외는 즉시 실패 처리
                      print(f"ERROR: 할인권 클릭 중 예외 발생: {e}")
                      return False
 
@@ -406,7 +415,6 @@ def process_ticket_and_logout(driver, button_id, park_id):
      except TimeoutException:
          print("DEBUG: 할인 이후 팝업 감지되지 않음.")
 
-     # 🚨 주차장에 따른 로그아웃 분기
      return logout(driver, park_id)
 
 
@@ -610,6 +618,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19858: {"평일1일권": "4", "주말1일권": "4"},
         19869: {"평일1일권": "9", "주말1일권": "9"},
         19424: {"주말1일권": "22", "평일야간권": "22"},
+        19886: {"평일 당일권": "198", "평일 3시간권": "197", "평일 심야권(지상전용)": "196"},
         19267: {"평일 당일권(월)": "9", "평일 당일권(화)": "9", "평일 당일권(수)": "9", "평일 당일권(목)": "9", "평일 당일권(금)": "9", "휴일 당일권": "9", "평일 오후 4시간권": "28", "평일 3시간권": "33"},
         19256: {"평일1일권": "12", "주말1일권": "13", "심야권": "14", "2시간권": "10"},
         19941: {"평일당일권": "15", "휴일당일권": "15", "심야권": "18", "3시간권": "16"},
