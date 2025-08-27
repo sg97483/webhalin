@@ -369,6 +369,8 @@ def get_har_in_script(park_id, ticket_name):
             return "javascript:applyDiscount('08', 'CP0802', '1', '01|20|24|', '휴일당일권(공유서비스)', '999999999', '0');"
         elif ticket_name == "휴일 연박권(토,일)":
             return "javascript:applyDiscount('70', 'CP0802', '1', '20|24|', '2일권', '999999999', '0');"
+        elif ticket_name == "평일 2시간권":
+            return "javascript:applyDiscount('62', 'CP0802', '1', '', '평일2시간권(공유서비스)', '999999999', '0');"
         elif ticket_name == "평일 3시간권":
             return "javascript:applyDiscount('25', 'CP0802', '1', '', '3시간권', '999999999', '0');"
         elif ticket_name in ["평일 심야권", "휴일 심야권"]:
