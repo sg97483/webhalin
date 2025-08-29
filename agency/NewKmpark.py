@@ -485,7 +485,7 @@ def handle_ticket(driver, park_id, ticket_name, ori_car_num):
 
     if park_id == 19392:
         print(f"DEBUG: 19392 전용 할인 처리 시작 (ticket_name={ticket_name})")
-        if ticket_name == "평일1일권":
+        if ticket_name in ["평일1일권", "주말1일권"]:
             try:
                 ticket_xpath = '//*[@id="page-view"]/table/tbody/tr[5]/td/button'
                 return click_discount_and_handle_popup(driver, ticket_xpath)

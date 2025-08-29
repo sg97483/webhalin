@@ -76,6 +76,12 @@ mapIdToWebInfo = {
             "#carList > tr",
             "2"
             ],
+    # 용산베르디움프렌즈 주차장
+    19440: ["id", "password", "//*[@id='login']",
+            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
+            "#carList > tr",
+            "2"
+            ],
     # 하이파킹 종로5가역하이뷰더광장
     29220: ["id", "password", "//*[@id='login']",
             "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
@@ -511,6 +517,7 @@ def web_har_in(target, driver):
         elif park_id == 19945:
             return handle_discount(driver, park_id, ticket_name)
 
+
         # ✅ 성수무신사 N1 예외 처리 (24시간 무료)
         elif park_id == 19921:
             if ticket_name in ["평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)", "휴일 당일권"]:
@@ -535,6 +542,39 @@ def web_har_in(target, driver):
             else:
                 print(Colors.RED + f"❌ 성수무신사 N1 - 허용되지 않은 티켓({ticket_name})으로 할인 불가!" + Colors.ENDC)
                 return False  # ✅ 티켓 조건이 맞지 않으면 중단
+
+                # ✅ 용산베르디움프렌즈(19440) 예외 처리 (24시간권 적용)
+        elif park_id == 19440:
+            if ticket_name == '24시간권':
+                    print(Colors.YELLOW + "용산베르디움프렌즈 - 24시간권 처리" + Colors.ENDC)
+
+                    # 할인권 목록(productList)에서 모든 행(tr)을 가져옵니다.
+                    product_list = driver.find_elements(By.CSS_SELECTOR, "#productList > tr")
+                    found = False
+
+                    for row in product_list:
+                        try:
+                            # 각 행의 첫 번째 칸(td) 텍스트를 확인합니다.
+                            cell_text = row.find_element(By.TAG_NAME, "td").text.strip()
+
+                            # 텍스트에 "24시간"이 포함되어 있는지 확인합니다.
+                            if "24시간" in cell_text and "무료" not in cell_text:  # "24시간"은 포함, "무료"는 미포함
+                                # '적용' 버튼을 찾아 클릭합니다.
+                                apply_button = row.find_element(By.CSS_SELECTOR, "button.btn-apply")
+                                if apply_button.is_enabled():
+                                    driver.execute_script("arguments[0].click();", apply_button)
+                                    print(Colors.BLUE + "✅ 24시간 할인 적용 완료." + Colors.ENDC)
+                                    found = True
+                                    break  # 버튼을 찾았으면 반복 종료
+                        except Exception as ex:
+                            print(Colors.RED + f"❌ 할인 버튼 찾기 중 오류: {ex}" + Colors.ENDC)
+
+                    if not found:
+                        print(Colors.YELLOW + "⚠️ 24시간 할인권을 찾지 못했습니다." + Colors.ENDC)
+                        return False  # 할인권을 못 찾았으면 실패 처리
+            else:
+                print(Colors.RED + f"❌ 용산베르디움프렌즈 - 허용되지 않은 티켓({ticket_name})으로 할인 불가!" + Colors.ENDC)
+                return False
 
         # ✅ 카카오 T 이마트구로점 예외 처리 (일일권(24시간) 적용)
         elif park_id == 19579:

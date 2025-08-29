@@ -45,7 +45,7 @@ TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.k
 ,"http://112.216.125.10/discount/registration","https://a02412.parkingweb.kr/login"
     ,"https://a103.parkingweb.kr/discount/registration","https://a17835.pweb.kr/","http://210.222.86.169"
     ,"https://s1153.parkingweb.kr/login","http://1.209.17.122","http://hipjungan.iptime.org"
-    ,"https://cpost.parkingweb.kr/discount/registration","http://211.106.97.154/login"
+    ,"https://cpost.parkingweb.kr/discount/registration","http://211.106.97.154/login","http://a12773.parkingweb.kr"
                ]
 
 def get_park_ids_by_urls(target_urls):
@@ -97,7 +97,7 @@ if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_
         ,"http://112.216.125.10/discount/registration","https://a02412.parkingweb.kr/login"
         ,"https://a103.parkingweb.kr/discount/registration","https://a17835.pweb.kr/","http://210.222.86.169"
         ,"https://s1153.parkingweb.kr/login","http://1.209.17.122","http://hipjungan.iptime.org"
-        ,"https://cpost.parkingweb.kr/discount/registration","http://211.106.97.154/login"]
+        ,"https://cpost.parkingweb.kr/discount/registration","http://211.106.97.154/login","http://a12773.parkingweb.kr"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["userId", "userPwd", "//*[@id='btnLogin']", "schCarNo", "//*[@id='sForm']/input[3]"]
@@ -312,6 +312,7 @@ def handle_popup_and_go_discount(driver, park_id):
         29141: "https://a103.parkingweb.kr/discount/registration",
         19938: "https://a17498.pweb.kr/discount/registration",
         19319: "http://1.209.17.122/discount/registration",
+        19488: "https://a12773.parkingweb.kr/discount/registration",
         19941: "https://a17902.pweb.kr/discount/registration"
     }
 
@@ -424,7 +425,7 @@ def enter_password(driver, user_password, park_id):
     """
     try:
         # 19489, 18938 전용
-        if park_id in [19489, 18938, 19906,19258,19239,19331,19077,16096,45010,14618,19253,19882,29141,19905,19267,19424]:
+        if park_id in [19489, 18938, 19906,19258,19239,19331,19077,16096,45010,14618,19253,19882,29141,19905,19267,19424,19488]:
             print(f"DEBUG: {park_id} 전용 비밀번호 필드 탐색")
             password_field = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.NAME, "userPwd"))
@@ -636,6 +637,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         45010: {"평일1일권": "851", "심야권": "10", "2시간권": "850"},
         19882: {"심야권": "24"},
         19938: {"평일 야간권": "14", "주말 당일권": "16"},
+        19488: {"평일 당일권": "12", "주말 당일권": "12", "3시간권": "13"},
         29141: {"평일 당일권(월)": "9", "평일 당일권(화)": "9", "평일 당일권(수)": "9", "평일 당일권(목)": "9", "평일 당일권(금)": "9", "평일 야간권(월~목)": "10", "야간권(금,일)": "17", "휴일 야간권(토)": "18", "평일 1시간권": "20", "평일 2시간권": "21", "평일 3시간권": "22"},
         19899: {"평일 3시간권": "7", "평일 당일권": "8", "토요일 2시간권": "17"},
         19319: {"평일 2시간권": "13", "평일 12시간권": "14","주말 2시간권": "16", "주말 12시간권": "17"},
@@ -936,13 +938,23 @@ def close_popup_for_19869(driver, park_id):
         print("DEBUG: 19869 팝업이 감지되지 않음 (정상일 수 있음).")
 
 
-def click_matching_car_number(driver, ori_car_num):
+def click_matching_car_number(driver, ori_car_num, park_id):
+    """
+    차량번호가 복수 검색되었을 때 일치하는 항목을 클릭합니다.
+    park_id 19488은 끝 4자리, 나머지는 끝 7자리로 비교합니다.
+    """
     try:
         car_rows = WebDriverWait(driver, 5).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#gridMst .obj tr"))
         )
 
-        target_suffix = ori_car_num[-7:].replace(" ", "").strip()
+        # (핵심 수정) park_id에 따라 비교할 차량번호 끝자리를 결정
+        if park_id == 19488:
+            target_suffix = ori_car_num[-4:].replace(" ", "").strip()
+            print(f"DEBUG: park_id 19488 전용, 끝 4자리 '{target_suffix}'로 비교합니다.")
+        else:
+            target_suffix = ori_car_num[-7:].replace(" ", "").strip()
+            print(f"DEBUG: 기본 규칙, 끝 7자리 '{target_suffix}'로 비교합니다.")
 
         for row in car_rows:
             cells = row.find_elements(By.TAG_NAME, "td")
@@ -955,7 +967,7 @@ def click_matching_car_number(driver, ori_car_num):
                 row.click()
                 return True
 
-        print("ERROR: 7자리 일치하는 차량번호를 찾을 수 없음.")
+        print(f"ERROR: 끝자리가 '{target_suffix}'와 일치하는 차량번호를 찾을 수 없음.")
         return False
 
     except Exception as e:
@@ -1025,7 +1037,7 @@ def web_har_in(target, driver):
                         driver.execute_script("arguments[0].click();", login_button)
                         print("✅ 16096 로그인 JS 클릭 성공")
 
-                elif park_id in [18938, 18577, 19906, 19258, 19239, 19331, 19077, 45010, 14618, 19253,19882,29141,19905,19267,19424]:
+                elif park_id in [18938, 18577, 19906, 19258, 19239, 19331, 19077, 45010, 14618, 19253,19882,29141,19905,19267,19424,19488]:
                     print(f"DEBUG: {park_id} 전용 로그인 버튼 클릭")
                     login_button = WebDriverWait(driver, 10).until(
                         EC.presence_of_element_located((By.CLASS_NAME, "login_area_btn"))
@@ -1067,7 +1079,7 @@ def web_har_in(target, driver):
                         return False
 
                     # ✅ 검색 결과 중 정확히 일치하는 차량번호가 있는지 확인
-                    if not click_matching_car_number(driver, ori_car_num):
+                    if not click_matching_car_number(driver, ori_car_num, park_id): # park_id 추가
                         print("ERROR: 검색된 차량번호와 일치하지 않음 → 할인 중단.")
                         return False
 
@@ -1079,7 +1091,7 @@ def web_har_in(target, driver):
                     return False
 
                 # ✅ 검색 결과 중 정확히 일치하는 차량번호가 있는지 확인
-                if not click_matching_car_number(driver, ori_car_num):
+                if not click_matching_car_number(driver, ori_car_num, park_id): # park_id 추가
                     print("ERROR: 검색된 차량번호와 일치하지 않음 → 할인 중단.")
                     return False
 

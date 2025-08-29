@@ -90,6 +90,7 @@ parkTypeIparking = [
     19462,#화광빌딩
     19476, #이마트TR송림점
     19921, #하이파킹 성수무신사캠퍼스N1
+    19440, #용산베르디움프렌즈 주차장
     29220, #하이파킹 종로5가역하이뷰더광장
     29175, #하이파킹 SK-C타워(구, 충무로15빌딩)
     19945, # 신한은행 광교 주차장
@@ -259,7 +260,7 @@ TARGET_URLS_NEW_AMANO = [
     ,"http://112.216.125.10/discount/registration","https://a02412.parkingweb.kr/login"
     ,"https://a103.parkingweb.kr/discount/registration","https://a17835.pweb.kr/","http://210.222.86.169"
     ,"https://s1153.parkingweb.kr/login","http://1.209.17.122","http://hipjungan.iptime.org"
-    ,"https://cpost.parkingweb.kr/discount/registration","http://211.106.97.154/login"]
+    ,"https://cpost.parkingweb.kr/discount/registration","http://211.106.97.154/login","http://a12773.parkingweb.kr"]
 
 
 # 대상 URL 리스트
