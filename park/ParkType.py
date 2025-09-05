@@ -34,7 +34,6 @@ parkTypeHighCity = [
     15313,
     13007,
     19517,
-    18958,
     Parks.DDMC,
     Parks.TWIN_CITY,
     Parks.RIVER_TOWER,
@@ -432,7 +431,6 @@ haveTwoKey = [
 ]
 
 haveThreeKey = [
-    Parks.AIA,
     # Parks.N_TOWER,
     Parks.JANG_AN_SPIZON,
     Parks.JAYANG_PALACE,

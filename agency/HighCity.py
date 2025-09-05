@@ -49,14 +49,6 @@ mapIdToWebInfo = {
         "-",  # 야간권 스크립트
     ],
 
-    # AIA 타워
-    18958: ["user_id", "password", "//input[@type='button']",
-            "license_plate_number", "//input[@type='button']",
-            "chk",
-            "javascript:applyDiscount('14', '1', '', '파킹박(평일)', '999999999', '0');",
-            "javascript:applyDiscount('15', '1', '', '파킹박(주말)', '999999999', '0');",
-            "javascript:applyDiscount('17', '1', '', '파킹박(야간)', '999999999', '0');"],
-
     # 트윈시티남산
     16003: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
@@ -268,28 +260,6 @@ mapIdToWebInfo = {
 def get_har_in_script(park_id, ticket_name):
     # 1. 특정 주차장 + 특정 티켓 분기
 
-    if park_id == 18958:
-        if ticket_name in ["평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
-            return "javascript:applyDiscount('14', '1', '', '파킹박(평일)', '999999999', '0');"
-
-        elif ticket_name == "휴일 당일권":
-            return "javascript:applyDiscount('15', '1', '', '파킹박(주말)', '999999999', '0');"
-
-        elif ticket_name in [
-            "평일 12시간권",
-            "평일 12시간권(월~화)",
-            "평일 12시간권(수~목)",
-            "평일 12시간권(금)"
-        ]:
-            return "javascript:applyDiscount('23', '1', '', '12시간권', '999999999', '0');"
-
-        elif ticket_name == "평일 심야권":
-            return "javascript:applyDiscount('17', '1', '', '파킹박(야간)', '999999999', '0');"
-
-        else:
-            return False  # 정의되지 않은 티켓 이름은 실패 처리
-
-
     if park_id == 20864:
         if ticket_name == "평일 3시간권":
             return "javascript:applyDiscount('88', '', '1', '', '평일3시간권(공유서비스)', '1', '0');"
@@ -415,7 +385,7 @@ def get_har_in_script(park_id, ticket_name):
 
 
 def check_discount_alert(driver, park_id=None):
-    if park_id in [20863, 19364, 19325, 18958, 16003, 20864, 19456, 19194]:
+    if park_id in [20863, 19364, 19325, 16003, 20864, 19456, 19194]:
         print("✅ 할인 결과 알림창 없음 → 예외 없이 성공 처리 (예상된 구조)")
         return True
 
