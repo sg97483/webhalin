@@ -259,7 +259,9 @@ TARGET_URLS_NEW_AMANO = [
     ,"http://112.216.125.10/discount/registration","https://a02412.parkingweb.kr/login"
     ,"https://a103.parkingweb.kr/discount/registration","https://a17835.pweb.kr/","http://210.222.86.169"
     ,"https://s1153.parkingweb.kr/login","http://1.209.17.122","http://hipjungan.iptime.org"
-    ,"https://cpost.parkingweb.kr/discount/registration","http://211.106.97.154/login","http://a12773.parkingweb.kr"]
+    ,"https://cpost.parkingweb.kr/discount/registration","http://211.106.97.154/login","http://a12773.parkingweb.kr"
+    ,"https://a16541.parkingweb.kr"
+]
 
 
 # 대상 URL 리스트
