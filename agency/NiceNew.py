@@ -716,7 +716,7 @@ def web_har_in(target, driver):
 
 
         elif park_id == 19280:
-            if ticket_name == "평일1일권":
+            if ticket_name == "평일 당일권":
                 return select_discount_and_confirm(
                     driver,
                     "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']"

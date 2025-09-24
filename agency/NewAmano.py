@@ -45,7 +45,8 @@ TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.k
 ,"http://112.216.125.10/discount/registration","https://a02412.parkingweb.kr/login"
     ,"https://a103.parkingweb.kr/discount/registration","https://a17835.pweb.kr/","http://210.222.86.169"
     ,"https://s1153.parkingweb.kr/login","http://1.209.17.122","http://hipjungan.iptime.org"
-    ,"https://cpost.parkingweb.kr/discount/registration","http://211.106.97.154/login","http://a12773.parkingweb.kr","https://a16541.parkingweb.kr"
+    ,"https://cpost.parkingweb.kr/discount/registration","http://211.106.97.154/login"
+    ,"http://a12773.parkingweb.kr","https://a16541.parkingweb.kr","https://a05386.parkingweb.kr"
                ]
 
 def get_park_ids_by_urls(target_urls):
@@ -98,7 +99,7 @@ if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_
         ,"https://a103.parkingweb.kr/discount/registration","https://a17835.pweb.kr/","http://210.222.86.169"
         ,"https://s1153.parkingweb.kr/login","http://1.209.17.122","http://hipjungan.iptime.org"
         ,"https://cpost.parkingweb.kr/discount/registration","http://211.106.97.154/login"
-        ,"http://a12773.parkingweb.kr","https://a16541.parkingweb.kr"]
+        ,"http://a12773.parkingweb.kr","https://a16541.parkingweb.kr","https://a05386.parkingweb.kr"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["userId", "userPwd", "//*[@id='btnLogin']", "schCarNo", "//*[@id='sForm']/input[3]"]
@@ -652,6 +653,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19852: {"평일 당일권": "14"},
         19905: {"평일2시간권": "10"},
         19335: {"평일1일권": "6", "주말1일권": "6"},
+        19189: {"평일1일권": "12", "주말1일권": "12"},
         19872: {"평일심야권": "14", "주말1일권": "13"},
         19912: {"평일 3시간권": "1", "평일 1시간권": "3", "휴일 당일권": "2"},
         19943: {"평일 당일권": "10", "주말 당일권": "9", "심야권": "8", "3시간권": "7"},
