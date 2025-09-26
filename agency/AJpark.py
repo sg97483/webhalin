@@ -90,6 +90,15 @@ mapIdToWebInfo = {
             0  # 야간
             ],
 
+    # 하이파킹 강남빌딩
+    19271: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권
+            0,  # 주말
+            0  # 야간
+            ],
+
     # 하이파킹 서울가든호텔점
     19148: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
@@ -324,6 +333,50 @@ def handle_ticket(driver, park_id, ticket_name):
         except Exception as e:
             print(f"ERROR: 19860 처리 중 예외 발생: {e}")
             return False
+
+        # ✅ 19271 하이파킹 강남빌딩 전용 할인 처리
+    if park_id == 19271:
+            ticket_map = {
+                '야간권(금,토)': "231168",  # HTML: 야간권(공유서비스)
+                '평일 야간권(일~목)': "231168",  # HTML: 야간권(공유서비스)
+                '휴일 당일권': "249245"  # HTML: 주말권(공유서비스)
+            }
+
+            if ticket_name not in ticket_map:
+                print(f"ERROR: 19271에서 지원하지 않는 ticket_name: {ticket_name}")
+                return False
+
+            target_value = ticket_map[ticket_name]
+
+            try:
+                # <select> 요소를 찾습니다.
+                select_element = WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located((By.ID, "selectDiscount"))
+                )
+
+                # Select 객체를 생성하고 value로 옵션을 선택합니다.
+                select = Select(select_element)
+                select.select_by_value(target_value)
+                print(f"DEBUG: park_id 19271: value '{target_value}' (티켓: {ticket_name}) 할인권 선택 완료.")
+
+                # '할인 적용' 버튼 클릭
+                WebDriverWait(driver, 5).until(
+                    EC.element_to_be_clickable((By.ID, "discountSubmit"))
+                ).click()
+                print("DEBUG: 할인 적용 버튼 클릭 완료.")
+
+                # 알림창 처리
+                try:
+                    WebDriverWait(driver, 3).until(EC.alert_is_present()).accept()
+                    print("DEBUG: 알림창 확인 완료.")
+                except TimeoutException:
+                    print("DEBUG: 알림창 없음.")
+
+                return True
+
+            except Exception as e:
+                print(f"ERROR: 19271 처리 중 예외 발생: {e}")
+                return False
 
     # ✅ 19561 전용 할인 처리
     if park_id == 19561:
@@ -669,7 +722,7 @@ def web_har_in(target, driver, lotName):
                     driver.find_element(By.XPATH, f"/html/body/div[1]/section/div/section/div[{index}]").find_element(By.CLASS_NAME, "selectCarInfo").click()
 
                     # ✅ 19004, 19600은 handle_ticket() 함수로 별도 처리
-                    if park_id in [19004, 19600, 19860, 29184, 29136,19148,19156]:
+                    if park_id in [19004, 19600, 19860, 29184, 29136,19148,19156, 19271]:
                         return handle_ticket(driver, park_id, ticket_name)
 
                     select = Select(driver.find_element_by_id('selectDiscount'))
