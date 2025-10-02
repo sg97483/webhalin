@@ -81,8 +81,8 @@ mapIdToWebInfo = {
             0  # 야간
             ],
 
-    # 하이파킹 D타워돈의문점
-    19561: ["email", "password", "//*[@id='login']",
+    # 하이파킹 강남빌딩
+    19271: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
             1,  # 평일권
@@ -90,8 +90,8 @@ mapIdToWebInfo = {
             0  # 야간
             ],
 
-    # 하이파킹 강남빌딩
-    19271: ["email", "password", "//*[@id='login']",
+    # TURU KTnG타워
+    19862: ["email", "password", "//*[@id='login']",
             "carNo", "searchSubmitByDate",
             "",
             1,  # 평일권
@@ -175,6 +175,63 @@ def handle_ticket(driver, park_id, ticket_name):
         except Exception as e:
             print(f"ERROR: {park_id} 처리 중 예외 발생: {e}")
             return False
+
+        # ✅ 19862 신규 주차장 전용 할인 처리
+    if park_id == 19862:
+        ticket_map = {
+                "평일 당일권(월)": "201805",  # HTML: 평일당일권_(ONLINE)
+                "평일 당일권(화)": "201805",  # HTML: 평일당일권_(ONLINE)
+                "평일 당일권(수)": "201805",  # HTML: 평일당일권_(ONLINE)
+                "평일 당일권(목)": "201805",  # HTML: 평일당일권_(ONLINE)
+                "평일당일권(금)": "201805",  # HTML: 평일당일권_(ONLINE)
+                "평일오후6시간권": "237809",  # HTML: 평일 오후권_(ONLINE)
+                "평일오후6시간권(금)": "237809",  # HTML: 평일 오후권_(ONLINE)
+                "평일 3시간권": "201804",  # HTML: 평일3시간권_(ONLINE)
+                "평일 2시간권": "347857",  # HTML: 2시간(공유서비스)
+                "평일 1시간권": "347858",  # HTML: 1시간(공유서비스)
+                "휴일 당일권": "201806",  # HTML: 휴일당일권_(ONLINE)
+                "야간권": "292451",  # HTML: 야간권(ONLINE)
+        }
+
+        if ticket_name not in ticket_map:
+                # 스크린샷에 없는 '3시간(공유서비스)' 같은 케이스를 위해 예외 처리
+            if "3시간" in ticket_name:
+                    target_value = "347856"
+            else:
+                    print(f"ERROR: 19862에서 지원하지 않는 ticket_name: {ticket_name}")
+                    return False
+        else:
+            target_value = ticket_map[ticket_name]
+
+            try:
+                # <select> 요소를 찾습니다.
+                select_element = WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located((By.ID, "selectDiscount"))
+                )
+
+                # Select 객체를 생성하고 value로 옵션을 선택합니다.
+                select = Select(select_element)
+                select.select_by_value(target_value)
+                print(f"DEBUG: park_id 19862: value '{target_value}' (티켓: {ticket_name}) 할인권 선택 완료.")
+
+                # '할인 적용' 버튼 클릭
+                WebDriverWait(driver, 5).until(
+                    EC.element_to_be_clickable((By.ID, "discountSubmit"))
+                ).click()
+                print("DEBUG: 할인 적용 버튼 클릭 완료.")
+
+                # 알림창 처리
+                try:
+                    WebDriverWait(driver, 3).until(EC.alert_is_present()).accept()
+                    print("DEBUG: 알림창 확인 완료.")
+                except TimeoutException:
+                    print("DEBUG: 알림창 없음.")
+
+                return True
+
+            except Exception as e:
+                print(f"ERROR: 19862 처리 중 예외 발생: {e}")
+                return False
 
     # ✅ 19004 전용 할인 처리
     if park_id == 19004:
@@ -378,61 +435,6 @@ def handle_ticket(driver, park_id, ticket_name):
                 print(f"ERROR: 19271 처리 중 예외 발생: {e}")
                 return False
 
-    # ✅ 19561 전용 할인 처리
-    if park_id == 19561:
-        ticket_map = {
-            "평일 3시간권": "3시간권_ONLINE",
-            "평일 오후 4시간권": "오후4시간권_ONLINE",
-            "평일 당일권": "설특가 종일권",
-            "평일 당일권(월)": "설특가 종일권",
-            "평일 당일권(화)": "설특가 종일권",
-            "평일 당일권(수)": "설특가 종일권",
-            "평일 당일권(목)": "설특가 종일권",
-            "평일 당일권(금)": "설특가 종일권",
-
-            "휴일 당일권": "주말권_ONLINE",
-            "휴일 6시간권": "주말권_ONLINE",
-        }
-
-        if ticket_name not in ticket_map:
-            print(f"ERROR: 19561에서 지원하지 않는 ticket_name: {ticket_name}")
-            return False
-
-        target_text = ticket_map[ticket_name]
-
-        try:
-            select_element = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.ID, "selectDiscount"))
-            )
-            options = select_element.find_elements(By.TAG_NAME, "option")
-            matched = False
-            for option in options:
-                if target_text in option.text:
-                    option.click()
-                    print(f"DEBUG: '{option.text}' 옵션 선택 완료.")
-                    matched = True
-                    break
-
-            if not matched:
-                print(f"ERROR: '{target_text}' 텍스트가 포함된 옵션을 찾을 수 없습니다.")
-                return False
-
-            WebDriverWait(driver, 5).until(
-                EC.element_to_be_clickable((By.ID, "discountSubmit"))
-            ).click()
-            print("DEBUG: 할인 적용 버튼 클릭 완료.")
-
-            try:
-                WebDriverWait(driver, 3).until(EC.alert_is_present()).accept()
-                print("DEBUG: 알림창 확인 완료.")
-            except TimeoutException:
-                print("DEBUG: 알림창 없음.")
-
-            return True
-
-        except Exception as e:
-            print(f"ERROR: 19561 처리 중 예외 발생: {e}")
-            return False
 
     # ✅ 19148 전용 할인 처리 (29136 스타일로 수정)
     if park_id == 19148:
@@ -722,7 +724,7 @@ def web_har_in(target, driver, lotName):
                     driver.find_element(By.XPATH, f"/html/body/div[1]/section/div/section/div[{index}]").find_element(By.CLASS_NAME, "selectCarInfo").click()
 
                     # ✅ 19004, 19600은 handle_ticket() 함수로 별도 처리
-                    if park_id in [19004, 19600, 19860, 29184, 29136,19148,19156, 19271]:
+                    if park_id in [19004, 19600, 19860, 29184, 29136,19148,19156, 19271, 19862 ]:
                         return handle_ticket(driver, park_id, ticket_name)
 
                     select = Select(driver.find_element_by_id('selectDiscount'))
