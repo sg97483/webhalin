@@ -316,6 +316,7 @@ def handle_popup_and_go_discount(driver, park_id):
         19319: "http://1.209.17.122/discount/registration",
         19488: "https://a12773.parkingweb.kr/discount/registration",
         29335: "https://a21877.pweb.kr/discount/registration",
+        19869: "https://a14705.parkingweb.kr/discount/registration",
         19894: "https://a16541.parkingweb.kr/discount/registration",
         19941: "https://a17902.pweb.kr/discount/registration"
     }
@@ -621,7 +622,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19334: {"평일1일권": "8", "토요일권": "8"},
         19391: {"평일1일권": "9", "주말1일권": "9"},
         19858: {"평일1일권": "4", "주말1일권": "4"},
-        19869: {"평일1일권": "9", "주말1일권": "9"},
+        19869: {"3시간권": "18", "평일 오후권": "19", "평일 당일권": "9", "휴일 오후권": "19", "휴일 당일권": "9", "(일~목)심야권": "17", "(금~토)심야권": "17"},
         19424: {"주말1일권": "22", "평일야간권": "22"},
         19886: {"평일 당일권": "198", "평일 3시간권": "197", "평일 심야권(지상전용)": "196"},
         19267: {"평일 당일권(월)": "9", "평일 당일권(화)": "9", "평일 당일권(수)": "9", "평일 당일권(목)": "9", "평일 당일권(금)": "9", "휴일 당일권": "9", "평일 오후 4시간권": "28", "평일 3시간권": "33"},
