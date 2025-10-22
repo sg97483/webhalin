@@ -8,8 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-driver = webdriver.Chrome('chromedriver')
-driver.implicitly_wait(5)
+# driver 초기화는 webhalin_macro.py에서 처리됨
 
 
 def web_har_in(target, driver):

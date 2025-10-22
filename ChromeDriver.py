@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.common.exceptions import SessionNotCreatedException, WebDriverException
 import time
 import os
@@ -10,7 +11,7 @@ def get(max_retry=3):
 
     for attempt in range(1, max_retry + 1):
         try:
-            print(f"🚀 ChromeDriver 실행 시도 {attempt}/{max_retry}")
+            print(f"ChromeDriver 실행 시도 {attempt}/{max_retry}")
 
             options = webdriver.ChromeOptions()
 
@@ -39,7 +40,8 @@ def get(max_retry=3):
             os.system("taskkill /f /im chromedriver.exe >nul 2>&1")
             os.system("taskkill /f /im chrome.exe >nul 2>&1")
 
-            driver = webdriver.Chrome(executable_path=chrome_driver_path, options=options)
+            service = Service(chrome_driver_path)
+            driver = webdriver.Chrome(service=service, options=options)
 
             # navigator.webdriver 숨김
             driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
@@ -48,12 +50,12 @@ def get(max_retry=3):
 
             driver.implicitly_wait(3)
             driver.maximize_window()
-            print("✅ ChromeDriver 실행 성공")
+            print("ChromeDriver 실행 성공")
             return driver
 
         except (SessionNotCreatedException, WebDriverException) as e:
-            print(f"⚠️ ChromeDriver 실행 실패: {e}")
+            print(f"ChromeDriver 실행 실패: {e}")
             time.sleep(2)
 
-    print("❌ 모든 ChromeDriver 실행 시도 실패")
+    print("모든 ChromeDriver 실행 시도 실패")
     return None

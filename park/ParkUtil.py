@@ -181,17 +181,6 @@ def check_search(park_id, driver):
                 print("ERROR: 19740 차량 정보 영역 로딩 시간 초과")
                 return False
 
-
-        if park_id == 19323:
-            try:
-                # 차량 검색 결과 테이블의 <a> 요소가 존재하는지로 판별
-                driver.find_element(By.CSS_SELECTOR, "#divAjaxCarList a")
-                print(Colors.GREEN + "✅ 19323 차량 검색 성공" + Colors.ENDC)
-                return True
-            except Exception:
-                print(Colors.YELLOW + "❌ 19323 차량 검색 결과 없음" + Colors.ENDC)
-                return False
-
         if park_id == 29248:
             try:
                 # 차량 검색 결과 테이블의 <a> 요소가 존재하는지로 판별
@@ -411,35 +400,6 @@ def check_same_car_num(parkId, oriCarNum, driver):
             print(Colors.RED + f"ERROR: 차량번호 확인 중 오류 발생 (19740): {e}" + Colors.ENDC)
             return False
 
-
-    if parkId == 19323:
-        try:
-            # 19323: <a onclick=...><font>차량번호</font></a>
-            car_link = WebDriverWait(driver, 5).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, "#divAjaxCarList a font"))
-            )
-            site_car_num = car_link.text.strip()
-            print(f"DEBUG: 19323 추출 차량번호: {site_car_num}")
-
-            ori_last7 = oriCarNum[-7:]
-            site_last7 = site_car_num[-7:]
-
-            if oriCarNum == site_car_num:
-                print(Colors.GREEN + "차량번호 정확 일치 (19323)" + Colors.ENDC)
-                return True
-            if ori_last7 == site_last7:
-                print(Colors.GREEN + "차량번호 7자리 일치 (19323)" + Colors.ENDC)
-                return True
-            if ori_last7[1:] == site_last7[1:] and len(ori_last7) == len(site_last7):
-                print(Colors.GREEN + "앞자리 제외 일치 (19323)" + Colors.ENDC)
-                return True
-
-            print(Colors.MARGENTA + f"차량번호 불일치 (19323, 사이트: {site_car_num})" + Colors.ENDC)
-            return False
-
-        except Exception as e:
-            print(Colors.RED + f"ERROR: 차량번호 확인 중 오류 발생 (19323): {e}" + Colors.ENDC)
-            return False
     # 🎯 19174 전용 처리
     if parkId == 19174:
         try:

@@ -223,16 +223,6 @@ mapIdToWebInfo = {
             "-",  # night 스크립트 제거
             ],
 
-    # 하이파킹 천안G스퀘어
-    19323: ["login_id", "login_pw", "//*[@id='bodyCSS']/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td/div/div[1]/input",
-            "searchCarNo", "//*[@id='btnSearch']",
-            "",  # radio 버튼 처리 안함
-            "-",  # btnItem 없음
-            "-",  # weekday 스크립트 제거
-            "-",  # weekend 스크립트 제거
-            "-",  # night 스크립트 제거
-            ],
-
     # 	DWI 마곡595빌딩 주차장
     29248: ["txtID", "txtPassword",
             "//*[@id='lbtnLogin']",
@@ -469,6 +459,7 @@ def web_har_in(target, driver):
     ticket_name = target[3]
     park_type = ParkType.get_park_type(park_id)
 
+    print(Colors.BLUE + f"DEBUG: HighCity.web_har_in 시작 - park_id: {park_id}, park_type: {park_type}" + Colors.ENDC)
 
     trim_car_num = Util.all_trim(ori_car_num)
     search_id = trim_car_num[-4:]
@@ -476,6 +467,9 @@ def web_har_in(target, driver):
     print("parkId = " + str(park_id) + ", " + "searchId = " + search_id)
     print(Colors.BLUE + ticket_name + Colors.ENDC)
 
+    print(Colors.BLUE + f"DEBUG: ParkUtil.is_park_in({park_id}) = {ParkUtil.is_park_in(park_id)}" + Colors.ENDC)
+    print(Colors.BLUE + f"DEBUG: park_id {park_id} in mapIdToWebInfo = {park_id in mapIdToWebInfo}" + Colors.ENDC)
+    
     if ParkUtil.is_park_in(park_id):
         if park_id in mapIdToWebInfo:
             login_url = ParkUtil.get_park_url(park_id)
@@ -484,25 +478,40 @@ def web_har_in(target, driver):
 
             web_info = mapIdToWebInfo[park_id]
             web_har_in_info = ParkUtil.get_park_lot_option(park_id)
+            
+            print(Colors.BLUE + f"DEBUG: web_info 로드 완료: {web_info}" + Colors.ENDC)
+            print(Colors.BLUE + f"DEBUG: web_har_in_info 로드 완료: {web_har_in_info}" + Colors.ENDC)
 
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
-            if ParkUtil.first_access(park_id, driver.current_url):
+            print(Colors.BLUE + f"DEBUG: ParkUtil.first_access({park_id}, {driver.current_url}) 확인 중..." + Colors.ENDC)
+            first_access_result = ParkUtil.first_access(park_id, driver.current_url)
+            print(Colors.BLUE + f"DEBUG: ParkUtil.first_access 결과: {first_access_result}" + Colors.ENDC)
+            
+            if first_access_result:
+                print(Colors.GREEN + "DEBUG: first_access가 True - 로그인 과정 실행" + Colors.ENDC)
+                print(Colors.BLUE + f"DEBUG: 로그인 페이지 접속 - URL: {driver.current_url}" + Colors.ENDC)
 
                 try:
                     # WebDriverWait를 사용하여 요소가 나타날 때까지 최대 10초간 기다립니다.
                     wait = WebDriverWait(driver, 10)
 
                     # ID 입력
+                    print(Colors.BLUE + f"DEBUG: ID 입력 필드 찾는 중 - {web_info[WebInfo.inputId]}" + Colors.ENDC)
                     user_id_field = wait.until(EC.presence_of_element_located((By.ID, web_info[WebInfo.inputId])))
                     user_id_field.send_keys(web_har_in_info[WebInfo.webHarInId])
+                    print(Colors.GREEN + "✅ ID 입력 완료" + Colors.ENDC)
 
                     # PW 입력
+                    print(Colors.BLUE + f"DEBUG: PW 입력 필드 찾는 중 - {web_info[WebInfo.inputPw]}" + Colors.ENDC)
                     user_pw_field = wait.until(EC.presence_of_element_located((By.ID, web_info[WebInfo.inputPw])))
                     user_pw_field.send_keys(web_har_in_info[WebInfo.webHarInPw])
+                    print(Colors.GREEN + "✅ PW 입력 완료" + Colors.ENDC)
 
                     # 로그인 버튼 클릭
+                    print(Colors.BLUE + f"DEBUG: 로그인 버튼 찾는 중 - {web_info[WebInfo.btnLogin]}" + Colors.ENDC)
                     login_button = wait.until(EC.element_to_be_clickable((By.XPATH, web_info[WebInfo.btnLogin])))
                     login_button.click()
+                    print(Colors.GREEN + "✅ 로그인 버튼 클릭 완료" + Colors.ENDC)
 
                 except Exception as e:
                     print(Colors.RED + f"❌ 로그인 과정에서 오류 발생: {e}" + Colors.ENDC)
@@ -510,11 +519,17 @@ def web_har_in(target, driver):
 
                 driver.implicitly_wait(3)
 
-                driver.find_element_by_id(web_info[WebInfo.inputSearch]).send_keys(search_id)
+                print(Colors.BLUE + f"DEBUG: 차량번호 검색 - {search_id}" + Colors.ENDC)
+                driver.find_element(By.ID, web_info[WebInfo.inputSearch]).send_keys(search_id)
                 Util.sleep(3)
 
-                driver.find_element_by_xpath(web_info[WebInfo.btnSearch]).click()
+                print(Colors.BLUE + f"DEBUG: 검색 버튼 클릭 - {web_info[WebInfo.btnSearch]}" + Colors.ENDC)
+                driver.find_element(By.XPATH, web_info[WebInfo.btnSearch]).click()
                 Util.sleep(2)
+                print(Colors.GREEN + "✅ 차량 검색 완료" + Colors.ENDC)
+
+                print(Colors.BLUE + f"DEBUG: ParkUtil.check_search({park_id}, driver) 호출 직전..." + Colors.ENDC)
+                print(Colors.BLUE + f"DEBUG: 현재 페이지 URL: {driver.current_url}" + Colors.ENDC)
 
                 if park_id in [29218, 18996]:
                     target_car_number = ori_car_num.replace(" ", "")  # 차량번호 공백제거
@@ -542,9 +557,16 @@ def web_har_in(target, driver):
                         print(f"❌ '{target_car_number}' 번호에 해당하는 차량이 조회 결과에 없습니다.")
                         return False
 
-                if ParkUtil.check_search(park_id, driver):
-
-                    if ParkUtil.check_same_car_num(park_id, ori_car_num, driver):
+                print(Colors.BLUE + f"DEBUG: ParkUtil.check_search({park_id}, driver) 확인 중..." + Colors.ENDC)
+                check_search_result = ParkUtil.check_search(park_id, driver)
+                print(Colors.BLUE + f"DEBUG: ParkUtil.check_search 결과: {check_search_result}" + Colors.ENDC)
+                
+                if check_search_result:
+                    print(Colors.BLUE + f"DEBUG: ParkUtil.check_same_car_num({park_id}, {ori_car_num}, driver) 확인 중..." + Colors.ENDC)
+                    check_same_car_result = ParkUtil.check_same_car_num(park_id, ori_car_num, driver)
+                    print(Colors.BLUE + f"DEBUG: ParkUtil.check_same_car_num 결과: {check_same_car_result}" + Colors.ENDC)
+                    
+                    if check_same_car_result:
 
                         # ✅ 여기에 radio 체크 처리 삽입
                         btn_item = web_info[WebInfo.btnItem]
@@ -792,64 +814,6 @@ def web_har_in(target, driver):
                                 print(Colors.RED + f"❌ 29248 처리 중 오류: {e}" + Colors.ENDC)
                                 return False
 
-                        if park_id == 19323:
-                            try:
-                                # 차량번호 비교 성공 후: <a onclick="fnCarInfoTotal(...)"> 클릭 처리
-                                car_link = WebDriverWait(driver, 5).until(
-                                    EC.presence_of_element_located((By.CSS_SELECTOR, "#divAjaxCarList a"))
-                                )
-                                onclick_script = car_link.get_attribute("onclick")
-                                if onclick_script:
-                                    driver.execute_script(onclick_script)
-                                    print(Colors.GREEN + "✅ 차량 클릭 스크립트 실행 완료 (19323)" + Colors.ENDC)
-                                else:
-                                    print(Colors.RED + "❌ 차량 클릭 스크립트 없음 (19323)" + Colors.ENDC)
-                                    return False
-
-                                Util.sleep(1.5)  # 팝업 로딩 대기
-
-                                # ticket_name → 버튼 텍스트 매핑
-                                ticket_button_map = {
-                                    "평일 12시간권": "12시간(공유서비스)",
-                                    "휴일 12시간권": "12시간(공유서비스)",
-                                    "평일 24시간권": "24시간(공유서비스)",
-                                    "휴일 24시간권": "24시간(공유서비스)",
-                                    "평일 48시간권": "48시간(공유서비스)",
-                                    "휴일 48시간권": "48시간(공유서비스)",
-                                    "평일 60시간권": "60시간(공유서비스)",
-                                    "휴일 60시간권": "60시간(공유서비스)",
-                                }
-
-                                if ticket_name not in ticket_button_map:
-                                    print(Colors.RED + f"❌ 정의되지 않은 ticket_name: {ticket_name}" + Colors.ENDC)
-                                    return False
-
-                                button_text = ticket_button_map[ticket_name]
-
-                                # 팝업 내 버튼 XPath 클릭
-                                button_xpath = f"//div[@id='divAjaxFreeDiscount']//button[contains(text(), '{button_text}')]"
-                                btn = WebDriverWait(driver, 5).until(
-                                    EC.element_to_be_clickable((By.XPATH, button_xpath))
-                                )
-                                driver.execute_script("arguments[0].click();", btn)
-                                print(Colors.GREEN + f"✅ 할인 버튼 클릭 성공 (19323): {button_text}" + Colors.ENDC)
-
-                                # Alert 처리
-                                try:
-                                    WebDriverWait(driver, 3).until(EC.alert_is_present())
-                                    alert = driver.switch_to.alert
-                                    print(Colors.BLUE + f"할인 알림창 텍스트: {alert.text}" + Colors.ENDC)
-                                    alert.accept()
-                                    print(Colors.GREEN + "✅ 알림창 확인 완료 (19323)" + Colors.ENDC)
-                                except Exception as e:
-                                    print(Colors.YELLOW + f"⚠️ 알림창 없음 또는 확인 실패: {e}" + Colors.ENDC)
-
-                                return True
-
-                            except Exception as e:
-                                print(Colors.RED + f"❌ 19323 처리 중 오류: {e}" + Colors.ENDC)
-                                return False
-
                         if park_id == 15313:
                             try:
                                 # 차량번호 입력
@@ -1080,14 +1044,18 @@ def web_har_in(target, driver):
                                 return False
 
                         if park_id in [29218, 18996]:
+                            print(Colors.BLUE + f"DEBUG: 18996 주차장 처리 시작 - ticket_name: {ticket_name}" + Colors.ENDC)
                             try:
                                 ori_car_num = ori_car_num.replace(" ", "")  # 차량번호 공백 제거
+                                print(Colors.BLUE + f"DEBUG: 처리할 차량번호: {ori_car_num}" + Colors.ENDC)
 
                                 # 차량 정보 영역 확인
-                                info_td = WebDriverWait(driver, 5).until(
+                                print(Colors.BLUE + "DEBUG: 차량 정보 영역 찾는 중..." + Colors.ENDC)
+                                info_td = WebDriverWait(driver, 10).until(
                                     EC.presence_of_element_located((By.XPATH, "//td[h3[contains(text(), '차량 정보')]]"))
                                 )
                                 text = info_td.text.strip()
+                                print(Colors.BLUE + f"DEBUG: 차량 정보 영역 텍스트: {text[:200]}..." + Colors.ENDC)
 
                                 # 차량번호 추출
                                 site_car_num = None
@@ -1123,11 +1091,35 @@ def web_har_in(target, driver):
                                     return False
 
                                 # 버튼 클릭
-                                print(Colors.BLUE + f"버튼 ID: {btn_id}" + Colors.ENDC)
-                                btn = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, btn_id)))
-                                driver.execute_script("arguments[0].scrollIntoView(true);", btn)
-                                driver.execute_script("arguments[0].click();", btn)
-                                print(Colors.GREEN + f"✅ 할인 버튼 클릭 성공: {btn_id}" + Colors.ENDC)
+                                print(Colors.BLUE + f"DEBUG: 버튼 ID: {btn_id}" + Colors.ENDC)
+
+                                # 페이지의 모든 버튼 확인
+                                all_buttons = driver.find_elements(By.TAG_NAME, "input")
+                                print(Colors.BLUE + f"DEBUG: 페이지의 모든 input 버튼 수: {len(all_buttons)}" + Colors.ENDC)
+                                for i, btn in enumerate(all_buttons[:5]):  # 처음 5개만 출력
+                                    print(Colors.BLUE + f"DEBUG: 버튼 {i+1} - ID: {btn.get_attribute('id')}, Value: {btn.get_attribute('value')}" + Colors.ENDC)
+
+                                # 버튼이 존재하는지 먼저 확인
+                                try:
+                                    print(Colors.BLUE + f"DEBUG: 버튼 {btn_id} 찾는 중..." + Colors.ENDC)
+                                    btn = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, btn_id)))
+                                    print(Colors.GREEN + f"✅ 버튼 발견: {btn_id}" + Colors.ENDC)
+
+                                    # 버튼이 클릭 가능한 상태인지 확인
+                                    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.ID, btn_id)))
+
+                                    # 스크롤하여 버튼을 화면에 보이게 함
+                                    driver.execute_script("arguments[0].scrollIntoView(true);", btn)
+                                    Util.sleep(1)
+
+                                    # JavaScript로 클릭
+                                    driver.execute_script("arguments[0].click();", btn)
+                                    print(Colors.GREEN + f"✅ 할인 버튼 클릭 성공: {btn_id}" + Colors.ENDC)
+
+                                except Exception as e:
+                                    print(Colors.RED + f"❌ 버튼 클릭 실패: {btn_id}, 오류: {e}" + Colors.ENDC)
+                                    print(Colors.RED + f"DEBUG: 현재 페이지 URL: {driver.current_url}" + Colors.ENDC)
+                                    return False
 
                                 # Alert 처리
                                 try:
@@ -1213,7 +1205,7 @@ def web_har_in(target, driver):
 
                         btn_item = web_info[WebInfo.btnItem]
                         if park_id not in [19492] and btn_item and btn_item != "-":
-                            driver.find_element_by_id(btn_item).click()
+                            driver.find_element(By.ID, btn_item).click()
 
                         harin_script = get_har_in_script(park_id, ticket_name)
                         print(f"🎯 get_har_in_script({park_id}, {ticket_name}) → {harin_script}")
@@ -1234,7 +1226,7 @@ def web_har_in(target, driver):
 
                         try:
                             if harin_script.startswith("BTN_"):
-                                driver.find_element_by_id(harin_script).click()
+                                driver.find_element(By.ID, harin_script).click()
 
                                 # ✅ 버튼 클릭 직후 Alert 수동 처리
                                 try:
@@ -1265,6 +1257,28 @@ def web_har_in(target, driver):
                             return False
 
                 return False
+            else:
+                print(Colors.RED + f"DEBUG: ParkUtil.first_access가 False를 반환했습니다. 재접속으로 간주됨." + Colors.ENDC)
+                print(Colors.RED + f"DEBUG: else 블록 실행 중..." + Colors.ENDC)
+                print(Colors.BLUE + f"DEBUG: ParkUtil.check_search({park_id}, driver) 확인 중..." + Colors.ENDC)
+                check_search_result = ParkUtil.check_search(park_id, driver)
+                print(Colors.BLUE + f"DEBUG: ParkUtil.check_search 결과: {check_search_result}" + Colors.ENDC)
+                
+                if check_search_result:
+                    print(Colors.BLUE + f"DEBUG: ParkUtil.check_same_car_num({park_id}, {ori_car_num}, driver) 확인 중..." + Colors.ENDC)
+                    check_same_car_result = ParkUtil.check_same_car_num(park_id, ori_car_num, driver)
+                    print(Colors.BLUE + f"DEBUG: ParkUtil.check_same_car_num 결과: {check_same_car_result}" + Colors.ENDC)
+                    
+                    if check_same_car_result:
+                        # 18996 주차장 특별 처리 로직을 여기에 추가
+                        print(Colors.BLUE + f"DEBUG: 18996 주차장 특별 처리 로직 실행" + Colors.ENDC)
+                        # 기존의 18996 처리 로직을 여기에 복사
+                    else:
+                        print(Colors.RED + f"DEBUG: ParkUtil.check_same_car_num이 False를 반환했습니다." + Colors.ENDC)
+                        return False
+                else:
+                    print(Colors.RED + f"DEBUG: ParkUtil.check_search가 False를 반환했습니다." + Colors.ENDC)
+                    return False
 
         else:
             print(Colors.BLUE + "high현재 웹할인 페이지 분석이 되어 있지 않는 주차장입니다." + Colors.ENDC)
