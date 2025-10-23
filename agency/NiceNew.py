@@ -256,32 +256,36 @@ def select_discount_and_confirm(driver, radio_xpath):
         )
         print("할인 버튼 감지됨. 클릭 시도.")
 
-        # 재탐색 후 클릭
+        # 재탐색 후 클릭 (JavaScript로 강제 클릭)
         discount_button = driver.find_element(By.XPATH, radio_xpath)
-        discount_button.click()
+        driver.execute_script("arguments[0].click();", discount_button)
         print(Colors.BLUE + "할인 처리 완료" + Colors.ENDC)
 
         # 할인권 클릭 이후
         driver.execute_script("document.getElementById('___processbar2').style.display='none';")
         print("DEBUG: 로딩 모달 강제로 숨김.")
 
-        # _modal 대기
+        # _modal 팝업 강제 제거
         try:
-            WebDriverWait(driver, 5).until(
-                EC.invisibility_of_element_located((By.ID, "_modal"))
-            )
-            print("DEBUG: _modal 사라짐 감지 완료.")
-        except TimeoutException:
-            print("DEBUG: _modal이 사라지지 않음. 강제 숨김 시도.")
-            driver.execute_script("document.getElementById('_modal').style.display='none';")
-            print("DEBUG: _modal 강제 숨김 완료.")
+            # 먼저 _modal이 있는지 확인
+            modal = driver.find_element(By.ID, "_modal")
+            if modal.is_displayed():
+                print("DEBUG: _modal 팝업 감지됨. 강제 제거 시도.")
+                driver.execute_script("document.getElementById('_modal').style.display='none';")
+                driver.execute_script("document.getElementById('_modal').remove();")
+                print("DEBUG: _modal 강제 제거 완료.")
+        except NoSuchElementException:
+            print("DEBUG: _modal 팝업이 없음.")
+        
+        # 추가 대기 및 확인
+        time.sleep(1)
 
         # 로그아웃 버튼 클릭 전 대기
         print("로그아웃 버튼 클릭 전 대기 중...")
         logout_button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.ID, "mf_wfm_header_btn_logout"))  # 로그아웃 버튼 ID
+            EC.presence_of_element_located((By.ID, "mf_wfm_header_btn_logout"))  # 로그아웃 버튼 ID
         )
-        logout_button.click()
+        driver.execute_script("arguments[0].click();", logout_button)
         print("로그아웃 완료!")
         return True
 
@@ -299,14 +303,20 @@ def select_discount_and_confirm(driver, radio_xpath):
         print(f"할인 처리 중 오류 발생: {ex}")
         # 할인 실패 시 강제 로그아웃 및 세션 정리
         try:
+            # _modal 팝업 강제 제거
+            try:
+                modal = driver.find_element(By.ID, "_modal")
+                if modal.is_displayed():
+                    driver.execute_script("document.getElementById('_modal').style.display='none';")
+                    driver.execute_script("document.getElementById('_modal').remove();")
+                    print("DEBUG: 예외 처리 중 _modal 강제 제거 완료.")
+            except NoSuchElementException:
+                pass
 
             logout_button = WebDriverWait(driver, 5).until(
-
-                EC.element_to_be_clickable((By.ID, "mf_wfm_header_btn_logout"))
-
+                EC.presence_of_element_located((By.ID, "mf_wfm_header_btn_logout"))
             )
-
-            logout_button.click()
+            driver.execute_script("arguments[0].click();", logout_button)
             print("DEBUG: 할인 실패 후 로그아웃 시도 완료.")
 
         except Exception as logout_ex:
@@ -557,7 +567,7 @@ def handle_all_optional_popups(driver, park_id):
             handle_notice_popup(driver, timeout=2)
 
         # 공통 처리 (팝업 없을 가능성 높음)
-        handle_popup(driver, timeout=2)
+        handle_popup(driver)
 
     except Exception as e:
         print(f"DEBUG: 선택 팝업 처리 중 예외 발생: {e}")
