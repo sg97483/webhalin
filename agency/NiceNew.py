@@ -326,9 +326,9 @@ def select_discount_and_confirm(driver, radio_xpath):
 
 import time
 
-def enter_car_number(driver, car_number_last4):
+def enter_car_number(driver, car_number_last6):
     """
-    차량번호 뒤 4자리를 키패드로 입력하고 'OK' 버튼 클릭.
+    차량번호 뒤 6자리를 키패드로 입력하고 'OK' 버튼 클릭.
     """
     try:
         # 🚨 키패드가 뜰 때까지 대기 (확인용으로 상단의 고유 div 사용)
@@ -338,7 +338,7 @@ def enter_car_number(driver, car_number_last4):
         print("DEBUG: 차량번호 키패드 감지됨.")
 
         # 차량번호 숫자 키패드 버튼 클릭
-        for digit in car_number_last4:
+        for digit in car_number_last6:
             button_xpath = f"//input[@value='{digit}' and contains(@class, 'carNumBtn')]"
             button = WebDriverWait(driver, 5).until(
                 EC.element_to_be_clickable((By.XPATH, button_xpath))
@@ -512,9 +512,22 @@ def click_matching_car_number(driver, ori_car_num):
 
                 full_car_num = cells[1].text.strip()
 
-                # (핵심 수정) 전체 번호 대신, 공백 제거 후 끝 5자리가 일치하는지 비교
-                if full_car_num.replace(" ", "")[-5:] == ori_car_num.replace(" ", "")[-5:]:
-                    print(f"✅ 차량번호 끝 5자리 일치: {full_car_num} → 선택 버튼 클릭")
+                # 차량번호 비교: 최소 6자리 이상 일치해야 함 (예: 12소1234 → 2소1234까지)
+                full_clean = full_car_num.replace(" ", "")
+                ori_clean = ori_car_num.replace(" ", "")
+                
+                # 최소 6자리부터 전체까지 비교
+                min_match_length = 6
+                max_match_length = min(len(full_clean), len(ori_clean))
+                
+                match_found = False
+                for match_length in range(min_match_length, max_match_length + 1):
+                    if full_clean[-match_length:] == ori_clean[-match_length:]:
+                        print(f"✅ 차량번호 끝 {match_length}자리 일치: {full_car_num} → 선택 버튼 클릭")
+                        match_found = True
+                        break
+                
+                if match_found:
                     select_button = cells[3].find_element(By.TAG_NAME, "button")
                     driver.execute_script("arguments[0].click();", select_button)
                     return True
@@ -617,12 +630,12 @@ def web_har_in(target, driver):
             # 팝업 처리
             handle_popup(driver)
 
-            # 차량번호 뒤 4자리 추출
-            car_number_last4 = ori_car_num[-4:]  # 차량번호 뒤 4자리
-            print(f"입력할 차량번호 마지막 4자리: {car_number_last4}")
+            # 차량번호 뒤 6자리 추출 (최소 6자리 이상 입력)
+            car_number_last6 = ori_car_num[-6:]  # 차량번호 뒤 6자리
+            print(f"입력할 차량번호 마지막 6자리: {car_number_last6}")
 
             # 차량번호 입력
-            enter_car_number(driver, car_number_last4)
+            enter_car_number(driver, car_number_last6)
 
             # 차량 검색 실패 팝업 감지 → 로그아웃 → 실패 처리
             print("DEBUG: check_search_failed_and_logout() 함수 진입 시도")  # <-- 이 줄을 추가
