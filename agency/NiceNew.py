@@ -145,7 +145,10 @@ def handle_password_reset_popup(driver, timeout=3):
         )
         print("DEBUG: 비밀번호 초기화 팝업 감지됨.")
 
-        cancel_button = popup.find_element(By.ID, "mf_wfm_body_btn_cancel")
+        # stale element 방지를 위해 직접 요소를 다시 찾기
+        cancel_button = WebDriverWait(driver, timeout).until(
+            EC.element_to_be_clickable((By.ID, "mf_wfm_body_btn_cancel"))
+        )
         driver.execute_script("arguments[0].click();", cancel_button)
         print("DEBUG: 비밀번호 초기화 팝업 '아니오' 버튼 클릭 완료.")
 
@@ -156,6 +159,8 @@ def handle_password_reset_popup(driver, timeout=3):
 
     except TimeoutException:
         print("DEBUG: 비밀번호 초기화 팝업이 감지되지 않음. (정상일 수 있음)")
+    except Exception as e:
+        print(f"DEBUG: 비밀번호 초기화 팝업 처리 중 오류: {e}")
 
 
 
@@ -204,7 +209,10 @@ def handle_init_password_popup(driver, timeout=3):
         print("DEBUG: 알림 또는 비밀번호 초기화 팝업 감지됨.")
 
         try:
-            confirm_button = popup.find_element(By.XPATH, ".//input[@value='확인']")
+            # stale element 방지를 위해 직접 요소를 다시 찾기
+            confirm_button = WebDriverWait(driver, timeout).until(
+                EC.element_to_be_clickable((By.XPATH, "//input[@value='확인']"))
+            )
             driver.execute_script("arguments[0].click();", confirm_button)
             print("DEBUG: 팝업 '확인' 버튼 JS로 강제 클릭 완료.")
 
@@ -214,6 +222,8 @@ def handle_init_password_popup(driver, timeout=3):
             print("DEBUG: 팝업 닫힘 완료.")
         except NoSuchElementException:
             print("DEBUG: 팝업에는 '확인' 버튼이 없음 (무시하고 진행).")
+        except Exception as e:
+            print(f"DEBUG: 팝업 '확인' 버튼 처리 중 오류: {e}")
     except TimeoutException:
         print("DEBUG: '알림/비밀번호 초기화' 팝업이 감지되지 않음 (정상일 수 있음).")
 
@@ -416,9 +426,11 @@ def handle_search_error_popup(driver):
         )
         print("DEBUG: 팝업이 감지되었습니다.")
 
-        # 팝업 '확인' 버튼 처리
-        confirm_button = popup.find_element(By.XPATH, ".//input[@value='확인']")
-        confirm_button.click()
+        # stale element 방지를 위해 직접 요소를 다시 찾기
+        confirm_button = WebDriverWait(driver, 5).until(
+            EC.element_to_be_clickable((By.XPATH, "//input[@value='확인']"))
+        )
+        driver.execute_script("arguments[0].click();", confirm_button)
         print("DEBUG: 팝업의 '확인' 버튼이 클릭되었습니다.")
 
         # 팝업이 닫힐 때까지 대기
@@ -432,11 +444,13 @@ def handle_search_error_popup(driver):
             logout_button = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.ID, "mf_wfm_header_btn_logout"))  # 로그아웃 버튼 ID
             )
-            logout_button.click()
+            driver.execute_script("arguments[0].click();", logout_button)
             print("DEBUG: 로그아웃 버튼이 클릭되었습니다.")
         except NoSuchElementException:
             print("DEBUG: 로그아웃 버튼을 찾을 수 없습니다. DOM 구조를 확인하세요.")
             raise
+        except Exception as e:
+            print(f"DEBUG: 로그아웃 버튼 클릭 중 오류: {e}")
 
         # 로그아웃 후 다음 동작으로 이동
         return True
@@ -461,8 +475,10 @@ def check_search_failed_and_logout(driver):
         )
         print("DEBUG: 차량번호 검색 실패 팝업 감지됨.")
 
-        # 2. '확인' 버튼 클릭
-        confirm_button = popup.find_element(By.XPATH, ".//input[@type='button' and @value='확인']")
+        # 2. '확인' 버튼 클릭 (stale element 방지)
+        confirm_button = WebDriverWait(driver, 3).until(
+            EC.element_to_be_clickable((By.XPATH, "//input[@type='button' and @value='확인']"))
+        )
         driver.execute_script("arguments[0].click();", confirm_button)
         print("DEBUG: 팝업 '확인' 버튼 클릭 완료.")
 
