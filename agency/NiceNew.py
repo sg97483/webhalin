@@ -9,6 +9,8 @@ import Util
 import Colors
 from park import ParkUtil, ParkType
 import WebInfo
+import re
+import time
 
 # DB 연결 정보
 DB_CONFIG = {
@@ -324,11 +326,9 @@ def select_discount_and_confirm(driver, radio_xpath):
         return False
 
 
-import time
-
-def enter_car_number(driver, car_number_last6):
+def enter_car_number(driver, car_number_last4):
     """
-    차량번호 뒤 6자리를 키패드로 입력하고 'OK' 버튼 클릭.
+    차량번호 뒤 4자리를 키패드로 입력하고 'OK' 버튼 클릭.
     """
     try:
         # 🚨 키패드가 뜰 때까지 대기 (확인용으로 상단의 고유 div 사용)
@@ -338,7 +338,7 @@ def enter_car_number(driver, car_number_last6):
         print("DEBUG: 차량번호 키패드 감지됨.")
 
         # 차량번호 숫자 키패드 버튼 클릭
-        for digit in car_number_last6:
+        for digit in car_number_last4:
             button_xpath = f"//input[@value='{digit}' and contains(@class, 'carNumBtn')]"
             button = WebDriverWait(driver, 5).until(
                 EC.element_to_be_clickable((By.XPATH, button_xpath))
@@ -630,12 +630,14 @@ def web_har_in(target, driver):
             # 팝업 처리
             handle_popup(driver)
 
-            # 차량번호 뒤 6자리 추출 (최소 6자리 이상 입력)
-            car_number_last6 = ori_car_num[-6:]  # 차량번호 뒤 6자리
-            print(f"입력할 차량번호 마지막 6자리: {car_number_last6}")
+            # 차량번호 뒤 4자리 추출 (숫자만)
+            # 숫자만 추출
+            numbers_only = re.sub(r'[^0-9]', '', ori_car_num)
+            car_number_last4 = numbers_only[-4:] if len(numbers_only) >= 4 else numbers_only
+            print(f"입력할 차량번호 마지막 4자리 (숫자만): {car_number_last4}")
 
             # 차량번호 입력
-            enter_car_number(driver, car_number_last6)
+            enter_car_number(driver, car_number_last4)
 
             # 차량 검색 실패 팝업 감지 → 로그아웃 → 실패 처리
             print("DEBUG: check_search_failed_and_logout() 함수 진입 시도")  # <-- 이 줄을 추가
