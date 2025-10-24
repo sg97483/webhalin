@@ -271,6 +271,10 @@ def select_discount_and_confirm(driver, radio_xpath):
         driver.execute_script("arguments[0].click();", discount_button)
         print(Colors.BLUE + "할인 처리 완료" + Colors.ENDC)
 
+        # 할인권 클릭 후 화면 변화 확인 (2초 대기)
+        time.sleep(2)
+        print("DEBUG: 할인권 클릭 후 화면 안정화 대기 완료.")
+
         # 할인권 클릭 이후
         driver.execute_script("document.getElementById('___processbar2').style.display='none';")
         print("DEBUG: 로딩 모달 강제로 숨김.")
@@ -489,8 +493,17 @@ def check_search_failed_and_logout(driver):
         print("DEBUG: 검색 실패 팝업 닫힘 완료.")
 
     except TimeoutException:
-        print("DEBUG: 차량 검색 실패 팝업이 감지되지 않음. (정상일 수 있음)")
-        return True  # 팝업 없으면 그대로 정상 처리
+        print("DEBUG: 차량 검색 실패 팝업이 감지되지 않음.")
+        # 할인권 화면이 나타났는지 확인
+        try:
+            WebDriverWait(driver, 2).until(
+                EC.presence_of_element_located((By.CLASS_NAME, "used_ticket_box"))
+            )
+            print("DEBUG: 할인권 화면 감지됨 → 정상 진행")
+            return True
+        except:
+            print("DEBUG: 할인권 화면도 없음 → 검색 실패로 판단")
+            return False
 
     except Exception as ex:
         print(f"DEBUG: 팝업 처리 중 예외 발생: {ex}")
@@ -503,7 +516,7 @@ def check_search_failed_and_logout(driver):
         logout_button = WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.ID, "mf_wfm_header_btn_logout"))
         )
-        logout_button.click()
+        driver.execute_script("arguments[0].click();", logout_button)
         print("DEBUG: 로그아웃 버튼 클릭 성공")
     except Exception as logout_ex:
         print(f"DEBUG: 로그아웃 버튼 클릭 실패: {logout_ex}")
