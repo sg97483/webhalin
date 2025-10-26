@@ -683,8 +683,12 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
 
     # ✅ 19820 전용 처리ddddd
     if park_id == 19820:
-        if ticket_name in ["평일1일권", "평일1일권(월)", "평일1일권(화)", "평일1일권(수~금)"]:
+        if ticket_name in ["평일1일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수~금)"]:
             button_id = "15"  # 종일권(평일) 버튼의 id
+        elif ticket_name in ["휴일 당일권(토,공휴일)", "휴일 당일권(일)"]:
+            button_id = "16"  # 종일권(평일) 버튼의 id
+        elif ticket_name in ["저녁권"]:
+            button_id = "17"  # 종일권(평일) 버튼의 id
         else:
             print(f"ERROR: park_id=19820, ticket_name={ticket_name} 은 유효하지 않음.")
             return False
@@ -694,6 +698,9 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
     if park_id == 19934 and ticket_name == "심야권":
         button_id = "9" if entry_day_of_week in ["Fri", "Sat"] else "8"
         print(f"DEBUG: 19934 심야권 - {entry_day_of_week} 요일로 버튼 id={button_id} 선택")
+    elif park_id == 19820:
+        # park_id 19820은 이미 위에서 처리됨, button_id가 설정되어 있음
+        print(f"DEBUG: park_id=19820, ticket_name={ticket_name}, button_id={button_id}")
     else:
         if park_id not in ticket_map or ticket_name not in ticket_map[park_id]:
             print(f"ERROR: No matching ticket found for park_id={park_id}, ticket_name={ticket_name}")
