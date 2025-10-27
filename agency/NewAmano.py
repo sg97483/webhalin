@@ -48,6 +48,7 @@ TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.k
     ,"https://cpost.parkingweb.kr/discount/registration","http://211.106.97.154/login"
     ,"http://a12773.parkingweb.kr","https://a16541.parkingweb.kr"
     ,"https://a05386.parkingweb.kr","https://a21877.pweb.kr/login","https://a03235.parkingweb.kr/"
+    ,"https://a13660.parkingweb.kr"
                ]
 
 def get_park_ids_by_urls(target_urls):
@@ -101,7 +102,8 @@ if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_
         ,"https://s1153.parkingweb.kr/login","http://1.209.17.122","http://hipjungan.iptime.org"
         ,"https://cpost.parkingweb.kr/discount/registration","http://211.106.97.154/login"
         ,"http://a12773.parkingweb.kr","https://a16541.parkingweb.kr"
-        ,"https://a05386.parkingweb.kr","https://a21877.pweb.kr/login","https://a03235.parkingweb.kr/"]
+        ,"https://a05386.parkingweb.kr","https://a21877.pweb.kr/login","https://a03235.parkingweb.kr/"
+                   ,"https://a13660.parkingweb.kr"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["userId", "userPwd", "//*[@id='btnLogin']", "schCarNo", "//*[@id='sForm']/input[3]"]
@@ -319,6 +321,7 @@ def handle_popup_and_go_discount(driver, park_id):
         19488: "https://a12773.parkingweb.kr/discount/registration",
         29335: "https://a21877.pweb.kr/discount/registration",
         19869: "https://a14705.parkingweb.kr/discount/registration",
+        29327: "https://a13660.parkingweb.kr/discount/registration",
         19894: "https://a16541.parkingweb.kr/discount/registration",
         19941: "https://a17902.pweb.kr/discount/registration"
     }
@@ -646,6 +649,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19882: {"심야권": "24"},
         19938: {"평일 야간권": "14", "주말 당일권": "16"},
         19010: {"주말1일권": "5", "주말1일권": "5"},
+        29327: {"평일 당일권": "9", "휴일 당일권": "9", "평일 심야권": "10", "휴일 심야권": "10"},
         19488: {"평일 당일권": "12", "주말 당일권": "12", "3시간권": "13"},
         29141: {"평일 당일권(월)": "9", "평일 당일권(화)": "9", "평일 당일권(수)": "9", "평일 당일권(목)": "9", "평일 당일권(금)": "9", "평일 야간권(월~목)": "10", "야간권(금,일)": "17", "휴일 야간권(토)": "18", "평일 1시간권": "20", "평일 2시간권": "21", "평일 3시간권": "22"},
         19899: {"평일 3시간권": "7", "평일 당일권": "8", "토요일 2시간권": "17"},
