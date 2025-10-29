@@ -472,66 +472,84 @@ def check_search_failed_and_logout(driver):
     실패 시 False 반환. 정상 진행 가능 시 True.
     """
     print("DEBUG: check_search_failed_and_logout() 함수 진입 시도")
+    
+    # 먼저 팝업이 있는지 확인
+    popup_detected = False
     try:
-        # 1. 차량 검색 실패 팝업 감지
+        # 1. 차량 검색 실패 팝업 감지 (messagebox class 포함)
         popup = WebDriverWait(driver, 3).until(
-            EC.presence_of_element_located((By.CLASS_NAME, "w2popup_window"))
+            EC.presence_of_element_located((By.CSS_SELECTOR, "div.w2popup_window.messagebox"))
         )
         print("DEBUG: 차량번호 검색 실패 팝업 감지됨.")
+        popup_detected = True
 
-        # 2. '확인' 버튼 클릭 (stale element 방지)
+        # 2. '확인' 버튼 클릭
         confirm_button = WebDriverWait(driver, 3).until(
-            EC.element_to_be_clickable((By.XPATH, "//input[@type='button' and @value='확인']"))
+            EC.element_to_be_clickable((By.CSS_SELECTOR, "div.w2popup_window.messagebox input[type='button'][value='확인']"))
         )
         driver.execute_script("arguments[0].click();", confirm_button)
         print("DEBUG: 팝업 '확인' 버튼 클릭 완료.")
 
         # 3. 팝업 닫힘 대기
         WebDriverWait(driver, 5).until(
-            EC.invisibility_of_element_located((By.CLASS_NAME, "w2popup_window"))
+            EC.invisibility_of_element_located((By.CSS_SELECTOR, "div.w2popup_window.messagebox"))
         )
         print("DEBUG: 검색 실패 팝업 닫힘 완료.")
 
     except TimeoutException:
         print("DEBUG: 차량 검색 실패 팝업이 감지되지 않음.")
-        # 할인권 화면이 나타났는지 확인
-        try:
-            WebDriverWait(driver, 2).until(
-                EC.presence_of_element_located((By.CLASS_NAME, "used_ticket_box"))
-            )
-            print("DEBUG: 할인권 화면 감지됨 → 정상 진행")
-            return True
-        except:
-            print("DEBUG: 할인권 화면도 없음 → 검색 실패로 판단")
-            return False
 
     except Exception as ex:
         print(f"DEBUG: 팝업 처리 중 예외 발생: {ex}")
 
-    # 4. 로그아웃 시도
-    try:
-        driver.execute_script(
-            "var modal = document.getElementById('_modal'); if(modal) modal.style.display='none';"
-        )
-        logout_button = WebDriverWait(driver, 5).until(
-            EC.element_to_be_clickable((By.ID, "mf_wfm_header_btn_logout"))
-        )
-        driver.execute_script("arguments[0].click();", logout_button)
-        print("DEBUG: 로그아웃 버튼 클릭 성공")
-    except Exception as logout_ex:
-        print(f"DEBUG: 로그아웃 버튼 클릭 실패: {logout_ex}")
+    # 팝업이 감지되었다면 로그아웃하고 False 반환
+    if popup_detected:
+        # 로그아웃 시도
+        try:
+            driver.execute_script(
+                "var modal = document.getElementById('_modal'); if(modal) modal.style.display='none';"
+            )
+            logout_button = WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.ID, "mf_wfm_header_btn_logout"))
+            )
+            driver.execute_script("arguments[0].click();", logout_button)
+            print("DEBUG: 로그아웃 버튼 클릭 성공")
+        except Exception as logout_ex:
+            print(f"DEBUG: 로그아웃 버튼 클릭 실패: {logout_ex}")
 
-    # 5. ✅ 세션 정리 (여기 추가된 핵심 파트)
-    try:
-        driver.delete_all_cookies()
-        driver.get("about:blank")
-        print("DEBUG: 세션 쿠키 제거 및 빈 페이지 로딩 완료")
-    except Exception as clear_ex:
-        print(f"DEBUG: 세션 정리 중 예외 발생: {clear_ex}")
+        # 세션 정리
+        try:
+            driver.delete_all_cookies()
+            driver.get("about:blank")
+            print("DEBUG: 세션 쿠키 제거 및 빈 페이지 로딩 완료")
+        except Exception as clear_ex:
+            print(f"DEBUG: 세션 정리 중 예외 발생: {clear_ex}")
 
-    # 6. 종료
-    print(Colors.YELLOW + "DEBUG: 차량 검색 실패 후 로그아웃 및 세션 초기화 완료 (False 반환)" + Colors.ENDC)
-    return False
+        print(Colors.YELLOW + "DEBUG: 차량 검색 실패 후 로그아웃 및 세션 초기화 완료 (False 반환)" + Colors.ENDC)
+        return False
+    
+    # 팝업이 없었다면 할인권 화면이 있는지 확인
+    try:
+        WebDriverWait(driver, 2).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "used_ticket_box"))
+        )
+        print("DEBUG: 할인권 화면 감지됨 → 정상 진행")
+        return True
+    except:
+        print("DEBUG: 할인권 화면도 없음 → 검색 실패로 판단")
+        # 여기서도 로그아웃 처리
+        try:
+            driver.execute_script(
+                "var modal = document.getElementById('_modal'); if(modal) modal.style.display='none';"
+            )
+            logout_button = WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.ID, "mf_wfm_header_btn_logout"))
+            )
+            driver.execute_script("arguments[0].click();", logout_button)
+            print("DEBUG: 할인권 화면 없음 → 로그아웃")
+        except Exception as logout_ex:
+            print(f"DEBUG: 로그아웃 실패: {logout_ex}")
+        return False
 
 
 def click_matching_car_number(driver, ori_car_num):
@@ -969,12 +987,12 @@ def web_har_in(target, driver):
             if ticket_name in ["평일1일권", "주말1일권"]:
                 return select_discount_and_confirm(
                     driver,
-                    "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']"
+                    "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']"
                 )
             elif ticket_name in ["심야권(일~목)", "심야권(금~토)"]:
                 return select_discount_and_confirm(
                     driver,
-                    "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']"
+                    "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']"
                 )
             else:
                 return handle_invalid_ticket(driver)
