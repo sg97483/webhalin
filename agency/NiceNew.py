@@ -491,10 +491,9 @@ def check_search_failed_and_logout(driver):
         print("DEBUG: 팝업 '확인' 버튼 클릭 완료.")
 
         # 3. 팝업 닫힘 대기
-        WebDriverWait(driver, 5).until(
-            EC.invisibility_of_element_located((By.CSS_SELECTOR, "div.w2popup_window.messagebox"))
-        )
-        print("DEBUG: 검색 실패 팝업 닫힘 완료.")
+        time.sleep(1)  # 확인 버튼 클릭 후 잠시 대기
+        
+        print("DEBUG: 검색 실패 팝업 처리 완료.")
 
     except TimeoutException:
         print("DEBUG: 차량 검색 실패 팝업이 감지되지 않음.")
@@ -746,12 +745,12 @@ def web_har_in(target, driver):
             if ticket_name in ["평일1일권", "주말1일권"]:
                 return select_discount_and_confirm(
                     driver,
-                    "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']"
+                    "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']"
                 )
             elif ticket_name == "심야권":
                 return select_discount_and_confirm(
                     driver,
-                    "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']"
+                    "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']"
                 )
             else:
                 return handle_invalid_ticket(driver)
@@ -841,7 +840,7 @@ def web_har_in(target, driver):
             if ticket_name in ["평일1일권", "주말1일권"]:
                 return select_discount_and_confirm(
                     driver,
-                    "//*[@id='mf_wfm_body_gen_dcTkList_2_discountTkGrp']"
+                    "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']"
                 )
             elif ticket_name in ["평일 3시간권", "주말 3시간권"]:
                 return select_discount_and_confirm(
@@ -851,7 +850,7 @@ def web_har_in(target, driver):
             elif ticket_name in ["심야권(일~목)", "심야권(금~토)"]:
                 return select_discount_and_confirm(
                     driver,
-                    "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']"
+                    "//*[@id='mf_wfm_body_gen_dcTkList_2_discountTkGrp']"
                 )
             else:
                 return handle_invalid_ticket(driver)
@@ -967,7 +966,7 @@ def web_har_in(target, driver):
             if ticket_name == "당일권":
                 return select_discount_and_confirm(
                     driver,
-                    "//*[@id='mf_wfm_body_gen_dcTkList_2_discountTkGrp']"
+                    "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']"
                 )
             elif ticket_name == "심야권":
                 return select_discount_and_confirm(
@@ -1001,12 +1000,12 @@ def web_har_in(target, driver):
             if ticket_name in ["평일 1일권", "주말1일권"]:
                 return select_discount_and_confirm(
                     driver,
-                    "//*[@id='mf_wfm_body_gen_dcTkList_2_discountTkGrp']"
+                    "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']"
                 )
             elif ticket_name == "심야권":
                 return select_discount_and_confirm(
                     driver,
-                    "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']"
+                    "//*[@id='mf_wfm_body_gen_dcTkList_2_discountTkGrp']"
                 )
             else:
                 return handle_invalid_ticket(driver)
