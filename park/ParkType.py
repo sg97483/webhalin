@@ -260,7 +260,7 @@ TARGET_URLS_NEW_AMANO = [
     ,"https://s1153.parkingweb.kr/login","http://1.209.17.122","http://hipjungan.iptime.org"
     ,"https://cpost.parkingweb.kr/discount/registration","http://211.106.97.154/login","http://a12773.parkingweb.kr"
     ,"https://a16541.parkingweb.kr","https://a05386.parkingweb.kr"
-    ,"https://a21877.pweb.kr/login","https://a03235.parkingweb.kr/","https://a13660.parkingweb.kr"
+    ,"https://a21877.pweb.kr/login","https://a03235.parkingweb.kr/","https://a13660.parkingweb.kr","https://a16054.parkingweb.kr/login"
 ]
 
 
