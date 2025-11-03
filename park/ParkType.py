@@ -262,7 +262,7 @@ TARGET_URLS_NEW_AMANO = [
     ,"https://a16541.parkingweb.kr","https://a05386.parkingweb.kr"
     ,"https://a21877.pweb.kr/login","https://a03235.parkingweb.kr/",
     "https://a13660.parkingweb.kr","https://a16054.parkingweb.kr/login"
-    ,"https://a00540.pweb.kr/login","https://postyud.parkingweb.kr/"
+    ,"https://a00540.pweb.kr/login","https://postyud.parkingweb.kr/","https://a21504.pweb.kr/"
 ]
 
 
