@@ -474,7 +474,12 @@ def web_har_in(target, driver):
         if park_id in mapIdToWebInfo:
             login_url = ParkUtil.get_park_url(park_id)
             driver.implicitly_wait(3)
-            driver.get(login_url)
+            
+            try:
+                driver.get(login_url)
+            except Exception as url_ex:
+                print(Colors.RED + f"❌ URL 접속 실패: {login_url}, 오류: {url_ex}" + Colors.ENDC)
+                return False
 
             web_info = mapIdToWebInfo[park_id]
             web_har_in_info = ParkUtil.get_park_lot_option(park_id)
