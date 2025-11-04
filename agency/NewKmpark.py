@@ -1052,7 +1052,7 @@ def web_har_in(target, driver):
                 time.sleep(3)
 
                 login_button = WebDriverWait(driver, 15).until(
-                    EC.presence_of_element_located((By.XPATH, "//*[@id='form-login']/div[3]/button"))
+                    EC.presence_of_element_located((By.XPATH, "//*[@id='form-login']/div[4]/button"))
                 )
                 login_button.click()
                 print("로그인 버튼 클릭 완료!")
