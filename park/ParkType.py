@@ -263,6 +263,7 @@ TARGET_URLS_NEW_AMANO = [
     ,"https://a21877.pweb.kr/login","https://a03235.parkingweb.kr/",
     "https://a13660.parkingweb.kr","https://a16054.parkingweb.kr/login"
     ,"https://a00540.pweb.kr/login","https://postyud.parkingweb.kr/","https://a21504.pweb.kr/"
+    ,"https://a15602.pweb.kr"
 ]
 
 
@@ -326,6 +327,7 @@ park_type_aj_park = [
     Parks.AJ_NON_HYEN,
     19600,
     19004,
+    19540,
     19860,
     29136,
     19271,
