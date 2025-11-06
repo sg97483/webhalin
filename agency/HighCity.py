@@ -234,6 +234,17 @@ mapIdToWebInfo = {
             "-",  # night 스크립트 제거
             ],
 
+    # 	역삼아르누보시티
+    29364: ["//div[@name='login-id']/input", "//div[@name='login-password']/input",
+            "//button[contains(@class, 'login-button')]",
+            "//*[@id='hho']", "//button[contains(@class, 'button-submit')]",
+            "",  # radio 버튼 처리 안함
+            "-",  # btnItem 없음
+            "-",  # weekday 스크립트 제거
+            "-",  # weekend 스크립트 제거
+            "-",  # night 스크립트 제거
+            ],
+
 # 	하이파킹 아이콘삼성
     35529: ["login_id", "login_pw",
             "/html/body/div/div/form/center/button[1]",
@@ -500,23 +511,100 @@ def web_har_in(target, driver):
                     # WebDriverWait를 사용하여 요소가 나타날 때까지 최대 10초간 기다립니다.
                     wait = WebDriverWait(driver, 10)
 
-                    # ID 입력
-                    print(Colors.BLUE + f"DEBUG: ID 입력 필드 찾는 중 - {web_info[WebInfo.inputId]}" + Colors.ENDC)
-                    user_id_field = wait.until(EC.presence_of_element_located((By.ID, web_info[WebInfo.inputId])))
-                    user_id_field.send_keys(web_har_in_info[WebInfo.webHarInId])
+                    # ID 입력 - XPath인지 ID인지 자동 판별
+                    id_selector = web_info[WebInfo.inputId]
+                    print(Colors.BLUE + f"DEBUG: ID 입력 필드 찾는 중 - {id_selector}" + Colors.ENDC)
+                    if id_selector.startswith("//") or id_selector.startswith("/"):
+                        # XPath 사용
+                        user_id_field = wait.until(EC.presence_of_element_located((By.XPATH, id_selector)))
+                    else:
+                        # ID 사용
+                        user_id_field = wait.until(EC.presence_of_element_located((By.ID, id_selector)))
+                    
+                    # 29364 주차장은 JavaScript로 입력 (React/Vue 프레임워크 대응)
+                    if park_id == 29364:
+                        driver.execute_script("arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input', { bubbles: true }));", 
+                                             user_id_field, web_har_in_info[WebInfo.webHarInId])
+                    else:
+                        user_id_field.send_keys(web_har_in_info[WebInfo.webHarInId])
                     print(Colors.GREEN + "✅ ID 입력 완료" + Colors.ENDC)
 
-                    # PW 입력
-                    print(Colors.BLUE + f"DEBUG: PW 입력 필드 찾는 중 - {web_info[WebInfo.inputPw]}" + Colors.ENDC)
-                    user_pw_field = wait.until(EC.presence_of_element_located((By.ID, web_info[WebInfo.inputPw])))
-                    user_pw_field.send_keys(web_har_in_info[WebInfo.webHarInPw])
+                    # PW 입력 - XPath인지 ID인지 자동 판별
+                    pw_selector = web_info[WebInfo.inputPw]
+                    print(Colors.BLUE + f"DEBUG: PW 입력 필드 찾는 중 - {pw_selector}" + Colors.ENDC)
+                    if pw_selector.startswith("//") or pw_selector.startswith("/"):
+                        # XPath 사용
+                        user_pw_field = wait.until(EC.presence_of_element_located((By.XPATH, pw_selector)))
+                    else:
+                        # ID 사용
+                        user_pw_field = wait.until(EC.presence_of_element_located((By.ID, pw_selector)))
+                    
+                    # 29364 주차장은 JavaScript로 입력 (React/Vue 프레임워크 대응)
+                    if park_id == 29364:
+                        driver.execute_script("arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input', { bubbles: true }));", 
+                                             user_pw_field, web_har_in_info[WebInfo.webHarInPw])
+                    else:
+                        user_pw_field.send_keys(web_har_in_info[WebInfo.webHarInPw])
                     print(Colors.GREEN + "✅ PW 입력 완료" + Colors.ENDC)
 
                     # 로그인 버튼 클릭
                     print(Colors.BLUE + f"DEBUG: 로그인 버튼 찾는 중 - {web_info[WebInfo.btnLogin]}" + Colors.ENDC)
-                    login_button = wait.until(EC.element_to_be_clickable((By.XPATH, web_info[WebInfo.btnLogin])))
-                    login_button.click()
+                    login_button = wait.until(EC.presence_of_element_located((By.XPATH, web_info[WebInfo.btnLogin])))
+                    # 29364 주차장은 JavaScript로 클릭 (React/Vue 프레임워크 대응)
+                    if park_id == 29364:
+                        driver.execute_script("arguments[0].click();", login_button)
+                    else:
+                        login_button.click()
                     print(Colors.GREEN + "✅ 로그인 버튼 클릭 완료" + Colors.ENDC)
+
+                    # 29364 주차장: 로그인 후 모달 팝업 처리 (다른 기기 로그인 전환 확인)
+                    if park_id == 29364:
+                        try:
+                            Util.sleep(2)  # 모달이 나타날 시간 대기
+                            wait_modal = WebDriverWait(driver, 5)
+                            
+                            # 모달 텍스트 확인 ("다른 기기에 로그인되어 있습니다" 포함)
+                            modal_text = wait_modal.until(
+                                EC.presence_of_element_located((By.XPATH, "//div[contains(text(), '다른 기기에 로그인되어 있습니다')]"))
+                            )
+                            
+                            # 모달이 실제로 보이는지 확인 (부모 modal-container 확인)
+                            modal_container = modal_text.find_element(By.XPATH, "./ancestor::div[@class='modal-container']")
+                            is_visible = driver.execute_script(
+                                "var style = window.getComputedStyle(arguments[0]); return style.display !== 'none' && style.visibility !== 'hidden';",
+                                modal_container
+                            )
+                            
+                            if is_visible:
+                                print(Colors.BLUE + "DEBUG: 로그인 전환 모달 팝업 감지됨" + Colors.ENDC)
+                                
+                                # 확인 버튼 찾기 - 여러 방법 시도
+                                try:
+                                    # 방법 1: modal-container 내부의 확인 버튼 찾기
+                                    modal_submit_button = modal_container.find_element(By.XPATH, ".//button[contains(@class, 'modal-submit-button')]")
+                                except:
+                                    # 방법 2: 전체 페이지에서 확인 버튼 찾기
+                                    modal_submit_button = wait_modal.until(
+                                        EC.presence_of_element_located((By.XPATH, "//button[contains(@class, 'modal-submit-button')]"))
+                                    )
+                                
+                                # 버튼이 보이는지 확인 후 클릭
+                                button_visible = driver.execute_script(
+                                    "var style = window.getComputedStyle(arguments[0]); return style.display !== 'none' && style.visibility !== 'hidden';",
+                                    modal_submit_button
+                                )
+                                
+                                if button_visible:
+                                    driver.execute_script("arguments[0].click();", modal_submit_button)
+                                    print(Colors.GREEN + "✅ 모달 확인 버튼 클릭 완료" + Colors.ENDC)
+                                    Util.sleep(2)  # 모달 닫힐 시간 대기
+                                else:
+                                    print(Colors.YELLOW + "⚠️ 확인 버튼이 보이지 않음" + Colors.ENDC)
+                            else:
+                                print(Colors.BLUE + "DEBUG: 로그인 전환 모달이 숨겨져 있음" + Colors.ENDC)
+                        except Exception as e:
+                            # 모달이 나타나지 않았거나 이미 사라진 경우 (정상)
+                            print(Colors.BLUE + f"DEBUG: 로그인 전환 모달 없음 (정상) - {str(e)[:100]}" + Colors.ENDC)
 
                 except Exception as e:
                     print(Colors.RED + f"❌ 로그인 과정에서 오류 발생: {e}" + Colors.ENDC)
@@ -525,11 +613,63 @@ def web_har_in(target, driver):
                 driver.implicitly_wait(3)
 
                 print(Colors.BLUE + f"DEBUG: 차량번호 검색 - {search_id}" + Colors.ENDC)
-                driver.find_element(By.ID, web_info[WebInfo.inputSearch]).send_keys(search_id)
-                Util.sleep(3)
+                # 차량번호 입력 필드 - XPath인지 ID인지 자동 판별
+                search_selector = web_info[WebInfo.inputSearch]
+                wait_search = WebDriverWait(driver, 10)
+                
+                if park_id == 29364:
+                    # 29364 주차장: React/Vue 프레임워크 대응 - JavaScript로 입력
+                    try:
+                        # ID로 요소 찾기
+                        search_field = wait_search.until(
+                            EC.presence_of_element_located((By.ID, "hho"))
+                        )
+                        # JavaScript로 값 입력 및 이벤트 트리거
+                        driver.execute_script(
+                            "arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input', { bubbles: true })); arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
+                            search_field, search_id
+                        )
+                        print(Colors.GREEN + "✅ 차량번호 입력 완료 (JavaScript)" + Colors.ENDC)
+                        Util.sleep(1)
+                    except Exception as e:
+                        print(Colors.RED + f"❌ 차량번호 입력 실패: {e}" + Colors.ENDC)
+                        return False
+                else:
+                    # 다른 주차장: 기존 방식
+                    if search_selector.startswith("//") or search_selector.startswith("/"):
+                        # XPath 사용
+                        search_field = wait_search.until(
+                            EC.presence_of_element_located((By.XPATH, search_selector))
+                        )
+                        search_field.send_keys(search_id)
+                    else:
+                        # ID 사용
+                        search_field = wait_search.until(
+                            EC.presence_of_element_located((By.ID, search_selector))
+                        )
+                        search_field.send_keys(search_id)
+                    Util.sleep(3)
 
                 print(Colors.BLUE + f"DEBUG: 검색 버튼 클릭 - {web_info[WebInfo.btnSearch]}" + Colors.ENDC)
-                driver.find_element(By.XPATH, web_info[WebInfo.btnSearch]).click()
+                if park_id == 29364:
+                    # 29364 주차장: JavaScript로 클릭
+                    try:
+                        # 차량번호 입력 필드와 같은 부모 안의 검색 버튼 찾기
+                        search_button = wait_search.until(
+                            EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'mh-search-wrap')]/input[@id='hho']/following-sibling::button[contains(@class, 'button-submit')]"))
+                        )
+                    except:
+                        # 위 방법이 실패하면 일반적인 button-submit 찾기
+                        search_button = wait_search.until(
+                            EC.presence_of_element_located((By.XPATH, web_info[WebInfo.btnSearch]))
+                        )
+                    driver.execute_script("arguments[0].click();", search_button)
+                    print(Colors.GREEN + "✅ 검색 버튼 클릭 완료 (JavaScript)" + Colors.ENDC)
+                else:
+                    search_button = wait_search.until(
+                        EC.element_to_be_clickable((By.XPATH, web_info[WebInfo.btnSearch]))
+                    )
+                    search_button.click()
                 Util.sleep(2)
                 print(Colors.GREEN + "✅ 차량 검색 완료" + Colors.ENDC)
 
@@ -566,12 +706,299 @@ def web_har_in(target, driver):
                 check_search_result = ParkUtil.check_search(park_id, driver)
                 print(Colors.BLUE + f"DEBUG: ParkUtil.check_search 결과: {check_search_result}" + Colors.ENDC)
                 
+                # 29364 주차장: URL이 할인 등록 페이지면 바로 심야권 처리로 진행
+                if park_id == 29364 and "/discount/regist/" in driver.current_url:
+                    print(Colors.BLUE + "DEBUG: 29364 할인 등록 페이지 감지 - 심야권 처리로 진행" + Colors.ENDC)
+                    # check_same_car_num을 건너뛰고 바로 심야권 처리
+                    if ticket_name == "심야권":
+                        try:
+                            wait_ticket = WebDriverWait(driver, 10)
+                            
+                            # 1. "심야권" 쿠폰 항목 찾기 및 plus 버튼 클릭
+                            print(Colors.BLUE + "DEBUG: 심야권 쿠폰 항목 찾는 중..." + Colors.ENDC)
+                            night_ticket_item = wait_ticket.until(
+                                EC.presence_of_element_located((By.XPATH, "//div[@class='discount-coupon-item']//span[@class='coupon-type' and text()='심야권']/ancestor::div[@class='discount-coupon-item']"))
+                            )
+                            
+                            # plus 버튼 클릭
+                            plus_button = night_ticket_item.find_element(By.XPATH, ".//button[contains(@class, 'plus-button')]")
+                            driver.execute_script("arguments[0].click();", plus_button)
+                            print(Colors.GREEN + "✅ 심야권 plus 버튼 클릭 완료" + Colors.ENDC)
+                            Util.sleep(1)
+                            
+                            # 2. "할인하기" 버튼 클릭
+                            print(Colors.BLUE + "DEBUG: 할인하기 버튼 찾는 중..." + Colors.ENDC)
+                            discount_button = wait_ticket.until(
+                                EC.element_to_be_clickable((By.XPATH, "//div[@class='reduce-parking-fees-footer']//button[contains(@class, 'discount-button')]//span[text()='할인하기']/ancestor::button"))
+                            )
+                            driver.execute_script("arguments[0].click();", discount_button)
+                            print(Colors.GREEN + "✅ 할인하기 버튼 클릭 완료" + Colors.ENDC)
+                            Util.sleep(1.5)
+                            
+                            # 3. 확인 모달 - "확인" 버튼 클릭
+                            print(Colors.BLUE + "DEBUG: 할인 확인 모달 찾는 중..." + Colors.ENDC)
+                            Util.sleep(2)  # 모달이 나타날 시간 대기
+                            wait_modal = WebDriverWait(driver, 10)
+                            
+                            # 모달 컨테이너가 나타나는지 확인
+                            modal_container = wait_modal.until(
+                                EC.presence_of_element_located((By.XPATH, "//div[@class='modal-container']"))
+                            )
+                            
+                            # 모달이 실제로 보이는지 확인
+                            is_visible = driver.execute_script(
+                                "var style = window.getComputedStyle(arguments[0]); return style.display !== 'none' && style.visibility !== 'hidden';",
+                                modal_container
+                            )
+                            
+                            if not is_visible:
+                                print(Colors.YELLOW + "⚠️ 모달이 숨겨져 있음, 추가 대기..." + Colors.ENDC)
+                                Util.sleep(1)
+                            
+                            # 모달 텍스트 확인 (여러 방법 시도)
+                            try:
+                                # 방법 1: "할인을" 텍스트로 찾기
+                                confirm_modal = wait_modal.until(
+                                    EC.presence_of_element_located((By.XPATH, "//div[@class='modal-container']//div[contains(text(), '할인을')]"))
+                                )
+                            except:
+                                try:
+                                    # 방법 2: "등록하시겠습니까" 텍스트로 찾기
+                                    confirm_modal = wait_modal.until(
+                                        EC.presence_of_element_located((By.XPATH, "//div[@class='modal-container']//div[contains(text(), '등록하시겠습니까')]"))
+                                    )
+                                except:
+                                    # 방법 3: inform-message 클래스로 찾기
+                                    confirm_modal = wait_modal.until(
+                                        EC.presence_of_element_located((By.XPATH, "//div[@class='modal-container']//div[@class='inform-message']"))
+                                    )
+                            
+                            # 확인 버튼 찾기
+                            confirm_button = wait_modal.until(
+                                EC.element_to_be_clickable((By.XPATH, "//div[@class='modal-container']//button[contains(@class, 'modal-submit-button')]"))
+                            )
+                            driver.execute_script("arguments[0].click();", confirm_button)
+                            print(Colors.GREEN + "✅ 할인 확인 모달 '확인' 버튼 클릭 완료" + Colors.ENDC)
+                            Util.sleep(4)  # 4초 대기
+                            
+                            # 4. 로그아웃 처리
+                            print(Colors.BLUE + "DEBUG: 로그아웃 처리 시작" + Colors.ENDC)
+                            wait_logout = WebDriverWait(driver, 10)
+                            
+                            # 햄버거 메뉴 버튼 클릭
+                            menu_button = wait_logout.until(
+                                EC.element_to_be_clickable((By.XPATH, "//div[@class='am-header']//button[contains(@class, 'am-image-button')]//i[contains(@class, 'i-ico-hamburger')]/ancestor::button[1]"))
+                            )
+                            driver.execute_script("arguments[0].click();", menu_button)
+                            print(Colors.GREEN + "✅ 햄버거 메뉴 버튼 클릭 완료" + Colors.ENDC)
+                            Util.sleep(1.5)
+                            
+                            # 프로필 버튼 클릭
+                            profile_button = wait_logout.until(
+                                EC.element_to_be_clickable((By.XPATH, "//button[@id='my' and contains(@class, 'am-image-button')]"))
+                            )
+                            driver.execute_script("arguments[0].click();", profile_button)
+                            print(Colors.GREEN + "✅ 프로필 버튼 클릭 완료" + Colors.ENDC)
+                            Util.sleep(1.5)
+                            
+                            # 로그아웃 버튼 클릭
+                            logout_button = wait_logout.until(
+                                EC.element_to_be_clickable((By.XPATH, "//div[@class='my-control']//button[contains(@class, 'am-button')]//span[text()='로그아웃']/ancestor::button[1]"))
+                            )
+                            driver.execute_script("arguments[0].click();", logout_button)
+                            print(Colors.GREEN + "✅ 로그아웃 버튼 클릭 완료" + Colors.ENDC)
+                            Util.sleep(1.5)
+                            
+                            # 로그아웃 확인 모달 - "예" 버튼 클릭
+                            modal_text = wait_logout.until(
+                                EC.presence_of_element_located((By.XPATH, "//div[contains(text(), '계정을 로그아웃')]"))
+                            )
+                            print(Colors.BLUE + "DEBUG: 로그아웃 확인 모달 감지됨" + Colors.ENDC)
+                            
+                            confirm_logout_button = wait_logout.until(
+                                EC.element_to_be_clickable((By.XPATH, "//div[@class='modal-container']//button[contains(@class, 'modal-submit-button')]"))
+                            )
+                            driver.execute_script("arguments[0].click();", confirm_logout_button)
+                            print(Colors.GREEN + "✅ 로그아웃 확인 모달 '예' 버튼 클릭 완료" + Colors.ENDC)
+                            Util.sleep(2)
+                            
+                            print(Colors.GREEN + "✅ 심야권 할인 처리 완료 - True 반환" + Colors.ENDC)
+                            return True
+                            
+                        except Exception as e:
+                            print(Colors.RED + f"❌ 29364 심야권 처리 실패: {e}" + Colors.ENDC)
+                            return False
+                    else:
+                        print(Colors.YELLOW + f"⚠️ 29364 할인 등록 페이지이지만 ticket_name이 '심야권'이 아님: {ticket_name}" + Colors.ENDC)
+                        return False
+                
+                # 29364 주차장: 검색 실패 시 뒤로가기 버튼 클릭 후 로그아웃
+                if park_id == 29364 and not check_search_result:
+                    try:
+                        # "차량을 찾지 못했습니다" 메시지 확인
+                        empty_results = WebDriverWait(driver, 3).until(
+                            EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'empty-results')]"))
+                        )
+                        print(Colors.YELLOW + "⚠️ 차량 검색 실패 - 뒤로가기 버튼 클릭" + Colors.ENDC)
+                        # 뒤로가기 버튼 클릭
+                        goback_button = WebDriverWait(driver, 5).until(
+                            EC.element_to_be_clickable((By.XPATH, "//button[contains(@class, 'button-goback')]"))
+                        )
+                        driver.execute_script("arguments[0].click();", goback_button)
+                        print(Colors.GREEN + "✅ 뒤로가기 버튼 클릭 완료" + Colors.ENDC)
+                        Util.sleep(2)  # 페이지 전환 대기
+                        
+                        # 로그아웃 처리
+                        print(Colors.BLUE + "DEBUG: 로그아웃 처리 시작" + Colors.ENDC)
+                        try:
+                            wait_logout = WebDriverWait(driver, 10)
+                            
+                            # 1. 햄버거 메뉴 버튼 클릭
+                            menu_button = wait_logout.until(
+                                EC.element_to_be_clickable((By.XPATH, "//div[@class='am-header']//button[contains(@class, 'am-image-button')]//i[contains(@class, 'i-ico-hamburger')]/ancestor::button[1]"))
+                            )
+                            driver.execute_script("arguments[0].click();", menu_button)
+                            print(Colors.GREEN + "✅ 햄버거 메뉴 버튼 클릭 완료" + Colors.ENDC)
+                            Util.sleep(1.5)
+                            
+                            # 2. 프로필 버튼 클릭
+                            profile_button = wait_logout.until(
+                                EC.element_to_be_clickable((By.XPATH, "//button[@id='my' and contains(@class, 'am-image-button')]"))
+                            )
+                            driver.execute_script("arguments[0].click();", profile_button)
+                            print(Colors.GREEN + "✅ 프로필 버튼 클릭 완료" + Colors.ENDC)
+                            Util.sleep(1.5)
+                            
+                            # 3. 로그아웃 버튼 클릭
+                            logout_button = wait_logout.until(
+                                EC.element_to_be_clickable((By.XPATH, "//div[@class='my-control']//button[contains(@class, 'am-button')]//span[text()='로그아웃']/ancestor::button[1]"))
+                            )
+                            driver.execute_script("arguments[0].click();", logout_button)
+                            print(Colors.GREEN + "✅ 로그아웃 버튼 클릭 완료" + Colors.ENDC)
+                            Util.sleep(1.5)
+                            
+                            # 4. 로그아웃 확인 모달 - "예" 버튼 클릭
+                            try:
+                                # 모달 텍스트 확인 ("계정을 로그아웃" 포함)
+                                modal_text = wait_logout.until(
+                                    EC.presence_of_element_located((By.XPATH, "//div[contains(text(), '계정을 로그아웃')]"))
+                                )
+                                print(Colors.BLUE + "DEBUG: 로그아웃 확인 모달 감지됨" + Colors.ENDC)
+                                
+                                # "예" 버튼 클릭
+                                confirm_button = wait_logout.until(
+                                    EC.element_to_be_clickable((By.XPATH, "//div[@class='modal-container']//button[contains(@class, 'modal-submit-button')]"))
+                                )
+                                driver.execute_script("arguments[0].click();", confirm_button)
+                                print(Colors.GREEN + "✅ 로그아웃 확인 모달 '예' 버튼 클릭 완료" + Colors.ENDC)
+                                Util.sleep(2)  # 로그아웃 완료 대기
+                                
+                            except Exception as modal_e:
+                                print(Colors.YELLOW + f"⚠️ 로그아웃 확인 모달 처리 실패: {modal_e}" + Colors.ENDC)
+                            
+                            print(Colors.BLUE + "DEBUG: 로그아웃 처리 완료 - False 반환" + Colors.ENDC)
+                            return False
+                            
+                        except Exception as logout_e:
+                            print(Colors.RED + f"❌ 로그아웃 처리 실패: {logout_e}" + Colors.ENDC)
+                            return False
+                            
+                    except Exception as e:
+                        print(Colors.YELLOW + f"⚠️ 뒤로가기 버튼 클릭 실패 또는 검색 결과 페이지가 아님: {e}" + Colors.ENDC)
+                        return False
+                
                 if check_search_result:
                     print(Colors.BLUE + f"DEBUG: ParkUtil.check_same_car_num({park_id}, {ori_car_num}, driver) 확인 중..." + Colors.ENDC)
                     check_same_car_result = ParkUtil.check_same_car_num(park_id, ori_car_num, driver)
                     print(Colors.BLUE + f"DEBUG: ParkUtil.check_same_car_num 결과: {check_same_car_result}" + Colors.ENDC)
                     
                     if check_same_car_result:
+
+                        # 29364 주차장: 심야권 처리
+                        if park_id == 29364 and ticket_name == "심야권":
+                            try:
+                                wait_ticket = WebDriverWait(driver, 10)
+                                
+                                # 1. "심야권" 쿠폰 항목 찾기 및 plus 버튼 클릭
+                                print(Colors.BLUE + "DEBUG: 심야권 쿠폰 항목 찾는 중..." + Colors.ENDC)
+                                night_ticket_item = wait_ticket.until(
+                                    EC.presence_of_element_located((By.XPATH, "//div[@class='discount-coupon-item']//span[@class='coupon-type' and text()='심야권']/ancestor::div[@class='discount-coupon-item']"))
+                                )
+                                
+                                # plus 버튼 클릭
+                                plus_button = night_ticket_item.find_element(By.XPATH, ".//button[contains(@class, 'plus-button')]")
+                                driver.execute_script("arguments[0].click();", plus_button)
+                                print(Colors.GREEN + "✅ 심야권 plus 버튼 클릭 완료" + Colors.ENDC)
+                                Util.sleep(1)
+                                
+                                # 2. "할인하기" 버튼 클릭
+                                print(Colors.BLUE + "DEBUG: 할인하기 버튼 찾는 중..." + Colors.ENDC)
+                                discount_button = wait_ticket.until(
+                                    EC.element_to_be_clickable((By.XPATH, "//div[@class='reduce-parking-fees-footer']//button[contains(@class, 'discount-button')]//span[text()='할인하기']/ancestor::button"))
+                                )
+                                driver.execute_script("arguments[0].click();", discount_button)
+                                print(Colors.GREEN + "✅ 할인하기 버튼 클릭 완료" + Colors.ENDC)
+                                Util.sleep(1.5)
+                                
+                                # 3. 확인 모달 - "확인" 버튼 클릭
+                                print(Colors.BLUE + "DEBUG: 할인 확인 모달 찾는 중..." + Colors.ENDC)
+                                confirm_modal = wait_ticket.until(
+                                    EC.presence_of_element_located((By.XPATH, "//div[contains(text(), '할인을')]"))
+                                )
+                                confirm_button = wait_ticket.until(
+                                    EC.element_to_be_clickable((By.XPATH, "//div[@class='modal-container']//button[contains(@class, 'modal-submit-button')]"))
+                                )
+                                driver.execute_script("arguments[0].click();", confirm_button)
+                                print(Colors.GREEN + "✅ 할인 확인 모달 '확인' 버튼 클릭 완료" + Colors.ENDC)
+                                Util.sleep(4)  # 4초 대기
+                                
+                                # 4. 로그아웃 처리
+                                print(Colors.BLUE + "DEBUG: 로그아웃 처리 시작" + Colors.ENDC)
+                                wait_logout = WebDriverWait(driver, 10)
+                                
+                                # 햄버거 메뉴 버튼 클릭
+                                menu_button = wait_logout.until(
+                                    EC.element_to_be_clickable((By.XPATH, "//div[@class='am-header']//button[contains(@class, 'am-image-button')]//i[contains(@class, 'i-ico-hamburger')]/ancestor::button[1]"))
+                                )
+                                driver.execute_script("arguments[0].click();", menu_button)
+                                print(Colors.GREEN + "✅ 햄버거 메뉴 버튼 클릭 완료" + Colors.ENDC)
+                                Util.sleep(1.5)
+                                
+                                # 프로필 버튼 클릭
+                                profile_button = wait_logout.until(
+                                    EC.element_to_be_clickable((By.XPATH, "//button[@id='my' and contains(@class, 'am-image-button')]"))
+                                )
+                                driver.execute_script("arguments[0].click();", profile_button)
+                                print(Colors.GREEN + "✅ 프로필 버튼 클릭 완료" + Colors.ENDC)
+                                Util.sleep(1.5)
+                                
+                                # 로그아웃 버튼 클릭
+                                logout_button = wait_logout.until(
+                                    EC.element_to_be_clickable((By.XPATH, "//div[@class='my-control']//button[contains(@class, 'am-button')]//span[text()='로그아웃']/ancestor::button[1]"))
+                                )
+                                driver.execute_script("arguments[0].click();", logout_button)
+                                print(Colors.GREEN + "✅ 로그아웃 버튼 클릭 완료" + Colors.ENDC)
+                                Util.sleep(1.5)
+                                
+                                # 로그아웃 확인 모달 - "예" 버튼 클릭
+                                modal_text = wait_logout.until(
+                                    EC.presence_of_element_located((By.XPATH, "//div[contains(text(), '계정을 로그아웃')]"))
+                                )
+                                print(Colors.BLUE + "DEBUG: 로그아웃 확인 모달 감지됨" + Colors.ENDC)
+                                
+                                confirm_logout_button = wait_logout.until(
+                                    EC.element_to_be_clickable((By.XPATH, "//div[@class='modal-container']//button[contains(@class, 'modal-submit-button')]"))
+                                )
+                                driver.execute_script("arguments[0].click();", confirm_logout_button)
+                                print(Colors.GREEN + "✅ 로그아웃 확인 모달 '예' 버튼 클릭 완료" + Colors.ENDC)
+                                Util.sleep(2)
+                                
+                                print(Colors.GREEN + "✅ 심야권 할인 처리 완료 - True 반환" + Colors.ENDC)
+                                return True
+                                
+                            except Exception as e:
+                                print(Colors.RED + f"❌ 29364 심야권 처리 실패: {e}" + Colors.ENDC)
+                                return False
 
                         # ✅ 여기에 radio 체크 처리 삽입
                         btn_item = web_info[WebInfo.btnItem]
