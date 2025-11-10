@@ -438,9 +438,22 @@ def check_if_discount_applied(driver):
 
         # 3. 할인 내역(div)이 있는지 확인합니다.
         applied_discounts = discount_cell.find_elements(By.CLASS_NAME, "qbox-filter-field")
+        valid_discounts = []
 
-        if len(applied_discounts) > 0:
-            print(f"DEBUG: 이미 {len(applied_discounts)}개의 할인이 적용되어 있습니다. 추가 할인을 중단합니다.")
+        for discount in applied_discounts:
+            # 공백/개행 제거 후 텍스트 확인
+            cleaned_text = discount.text.replace("\n", "").replace("\r", "").strip()
+            has_cancel_button = discount.find_elements(By.CLASS_NAME, "btn-cancel-visit-coupon")
+
+            if cleaned_text and cleaned_text != "X":
+                valid_discounts.append(discount)
+                continue
+
+            if has_cancel_button:
+                valid_discounts.append(discount)
+
+        if len(valid_discounts) > 0:
+            print(f"DEBUG: 이미 {len(valid_discounts)}개의 할인이 적용되어 있습니다. 추가 할인을 중단합니다.")
             return True
         else:
             print("DEBUG: 적용된 할인 내역이 없습니다. 할인을 진행합니다.")

@@ -52,6 +52,7 @@ parkTypeHighCity = [
     19492,#반포2동공영
     29248,#DWI 마곡595빌딩 주차장
     29364,#역삼아르누보시티
+    29361,#보타니끄논현오피스텔
     35529,#하이파킹 아이콘삼성
     19740,#하이파킹 평촌역점
     29218,# 하이파킹 판교알파리움타워(2동)
@@ -264,7 +265,7 @@ TARGET_URLS_NEW_AMANO = [
     ,"https://a21877.pweb.kr/login","https://a03235.parkingweb.kr/",
     "https://a13660.parkingweb.kr","https://a16054.parkingweb.kr/login"
     ,"https://a00540.pweb.kr/login","https://postyud.parkingweb.kr/","https://a21504.pweb.kr/"
-    ,"https://a15602.pweb.kr"
+    ,"https://a15602.pweb.kr","https://a12859.parkingweb.kr/login"
 ]
 
 
