@@ -905,7 +905,7 @@ def web_har_in(target, driver):
                     driver,
                     "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']"
                 )
-            elif ticket_name == "심야권(일~목)":
+            elif ticket_name in ["심야권(일~목)", "심야권(금~토)"]:
                 return select_discount_and_confirm(
                     driver,
                     "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']"

@@ -53,7 +53,6 @@ parkTypeHighCity = [
     29248,#DWI 마곡595빌딩 주차장
     29364,#역삼아르누보시티
     29361,#보타니끄논현오피스텔
-    35529,#하이파킹 아이콘삼성
     19740,#하이파킹 평촌역점
     29218,# 하이파킹 판교알파리움타워(2동)
     18996,# 하이파킹 판교알파리움타워(1동)
@@ -265,7 +264,7 @@ TARGET_URLS_NEW_AMANO = [
     ,"https://a21877.pweb.kr/login","https://a03235.parkingweb.kr/",
     "https://a13660.parkingweb.kr","https://a16054.parkingweb.kr/login"
     ,"https://a00540.pweb.kr/login","https://postyud.parkingweb.kr/","https://a21504.pweb.kr/"
-    ,"https://a15602.pweb.kr","https://a12859.parkingweb.kr/login","https://a21023.pweb.kr"
+    ,"https://a15602.pweb.kr","https://a12859.parkingweb.kr/login","https://a21023.pweb.kr","https://a22272.pweb.kr/"
 ]
 
 
@@ -275,7 +274,7 @@ TARGET_URLS_NEW_KMPARK = [
     ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/"
     ,"http://kmp0000089.iptime.org/","http://kmp0000403.iptime.org/","http://kmp0000131.iptime.org/"
     ,"http://kmp0000748.iptime.org/","http://kmp0000025.iptime.org/","http://kmp0000099.iptime.org/"
-    ,"http://kmp0000871.iptime.org/","http://kmp0000869.iptime.org/","http://kmp0000525.iptime.org/"]
+    ,"http://kmp0000871.iptime.org/","http://kmp0000869.iptime.org/","http://kmp0000525.iptime.org/","http://kmp0000007.iptime.org/"]
 
 # DB에서 park_id 동적 조회
 dynamic_park_ids = get_park_ids_by_urls(TARGET_URLS)

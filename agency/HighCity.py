@@ -245,17 +245,6 @@ mapIdToWebInfo = {
             "-",  # night 스크립트 제거
             ],
 
-# 	하이파킹 아이콘삼성
-    35529: ["login_id", "login_pw",
-            "/html/body/div/div/form/center/button[1]",
-            "carNumber", "/html/body/div[2]/ul/li/button",
-            "",  # radio 버튼 처리 안함
-            "-",  # btnItem 없음
-            "-",  # weekday 스크립트 제거
-            "-",  # weekend 스크립트 제거
-            "-",  # night 스크립트 제거
-            ],
-
     # 	보타니끄논현오피스텔
     29361: ["//div[@name='login-id']/input", "//div[@name='login-password']/input",
             "//button[contains(@class, 'login-button')]",
@@ -1135,59 +1124,6 @@ def web_har_in(target, driver):
                             except Exception as e:
                                 print(f"⚠️ chk 체크 상태 확인 또는 강제화 실패: {e}")
 
-                        if park_id == 35529:
-                            try:
-                                ori_car_num = ori_car_num.replace(" ", "")  # 차량번호 공백 제거
-
-                                # 차량 검색 결과 영역에서 <a> 요소 목록 조회
-                                car_links = WebDriverWait(driver, 5).until(
-                                    EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#divAjaxCarList a"))
-                                )
-
-                                matched = False
-                                for a_tag in car_links:
-                                    site_car_num = a_tag.text.strip()
-                                    if site_car_num == ori_car_num or site_car_num[-7:] == ori_car_num[-7:]:
-                                        driver.execute_script("arguments[0].click();", a_tag)
-                                        print(Colors.GREEN + f"✅ 차량번호 클릭 성공 (35529): {site_car_num}" + Colors.ENDC)
-                                        matched = True
-                                        break
-
-                                if not matched:
-                                    print(Colors.RED + f"❌ 일치하는 차량번호를 찾을 수 없습니다 (35529)" + Colors.ENDC)
-                                    return False
-
-                                Util.sleep(1.5)  # 페이지 전환 대기
-
-                                if ticket_name in ["평일 당일권","평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
-                                    btn = WebDriverWait(driver, 5).until(
-                                        EC.element_to_be_clickable(
-                                            (By.XPATH,
-                                             "//td[@id='DCInfo']//input[@type='button' and contains(@value, '파킹박(평일종일)')]")
-                                        )
-                                    )
-                                    driver.execute_script("arguments[0].click();", btn)
-                                    print(Colors.GREEN + "✅ 할인 버튼 클릭 성공: 파킹박(평일종일) (35529)" + Colors.ENDC)
-
-                                    # Alert 처리
-                                    try:
-                                        WebDriverWait(driver, 3).until(EC.alert_is_present())
-                                        alert = driver.switch_to.alert
-                                        print(Colors.BLUE + f"알림창 텍스트: {alert.text}" + Colors.ENDC)
-                                        alert.accept()
-                                        print(Colors.GREEN + "✅ 알림창 확인 완료 (35529)" + Colors.ENDC)
-                                    except Exception as e:
-                                        print(Colors.YELLOW + f"⚠️ 알림창 없음 또는 처리 실패: {e}" + Colors.ENDC)
-
-                                    return True
-
-                                else:
-                                    print(Colors.RED + f"❌ 정의되지 않은 ticket_name: {ticket_name}" + Colors.ENDC)
-                                    return False
-
-                            except Exception as e:
-                                print(Colors.RED + f"❌ 35529 할인 처리 실패: {e}" + Colors.ENDC)
-                                return False
 
                         if park_id == 29248:
                             try:

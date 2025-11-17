@@ -138,18 +138,6 @@ def check_search(park_id, driver):
                 print(f"ERROR: AMANO 처리 중 오류 발생: {e}")
                 return False
 
-        if park_id == 35529:
-            try:
-                # 차량 리스트의 <a> 요소가 있는지 확인
-                WebDriverWait(driver, 5).until(
-                    EC.presence_of_element_located((By.CSS_SELECTOR, "#divAjaxCarList a"))
-                )
-                print(Colors.GREEN + "✅ 차량 검색 성공 (35529)" + Colors.ENDC)
-                return True
-            except Exception:
-                print(Colors.YELLOW + "❌ 차량 검색 실패 (35529)" + Colors.ENDC)
-                return False
-
         if park_id in [29218, 18996]:
             try:
                 element = WebDriverWait(driver, 5).until(
@@ -303,33 +291,6 @@ def check_same_car_num(parkId, oriCarNum, driver):
             print(Colors.RED + f"ERROR: 차량번호 확인 중 오류 발생 (19493): {e}" + Colors.ENDC)
             return False
 
-
-    if parkId == 35529:
-        try:
-            car_link = WebDriverWait(driver, 5).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, "#divAjaxCarList a"))
-            )
-            site_car_num = car_link.text.strip()
-            print(f"DEBUG: 추출 차량번호 (35529): {site_car_num}")
-
-            ori_last7 = oriCarNum[-7:]
-            site_last7 = site_car_num[-7:]
-
-            if oriCarNum == site_car_num:
-                print(Colors.GREEN + "차량번호 정확 일치 (35529)" + Colors.ENDC)
-                return True
-            if ori_last7 == site_last7:
-                print(Colors.GREEN + "차량번호 7자리 일치 (35529)" + Colors.ENDC)
-                return True
-            if ori_last7[1:] == site_last7[1:] and len(ori_last7) == len(site_last7):
-                print(Colors.GREEN + "앞자리 제외 일치 (35529)" + Colors.ENDC)
-                return True
-
-            print(Colors.MARGENTA + f"차량번호 불일치 (35529, 사이트: {site_car_num})" + Colors.ENDC)
-            return False
-        except Exception as e:
-            print(Colors.RED + f"ERROR: 차량번호 확인 중 오류 발생 (35529): {e}" + Colors.ENDC)
-            return False
 
 
     if parkId in [29218, 18996]:
