@@ -326,7 +326,6 @@ parkType_center_square = [Parks.CENTER_SQUARE]
 
 park_type_aj_park = [
     Parks.AJ_NON_HYEN,
-    19600,
     19004,
     19540,
     19534,
