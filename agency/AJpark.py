@@ -116,6 +116,15 @@ mapIdToWebInfo = {
             0,  # 주말
             0   # 야간
             ],
+
+    # ▼▼▼▼▼ 29177 추가 ▼▼▼▼▼
+    29177: ["email", "password", "//*[@id='login']",
+            "carNo", "searchSubmitByDate",
+            "",
+            1,  # 평일권 (사용하지 않지만 형식상 추가)
+            0,  # 주말
+            0   # 야간
+            ],
 }
 
 
@@ -286,6 +295,63 @@ def handle_ticket(driver, park_id, ticket_name):
 
         except Exception as e:
             print(f"ERROR: 19534 처리 중 예외 발생: {e}")
+            return False
+
+    # ✅ 29177 전용 할인 처리
+    if park_id == 29177:
+        ticket_map = {
+            "평일 당일권(월)": "평일당일권(공유)",
+            "평일 당일권(화)": "평일당일권(공유)",
+            "평일 당일권(수)": "평일당일권(공유)",
+            "평일 당일권(목)": "평일당일권(공유)",
+            "평일 당일권(금)": "평일당일권(공유)",
+            "평일 3시간권": "평일3시간권(공유)",
+            "평일 오후권": "12시간권(공유)",
+            "평일 야간권": "심야권",
+            "휴일 12시간권": "12시간권(공유)",
+            "평일 2시간권": "평일2시간권(공유서비스)",
+            "평일 1시간권": "평일1시간권(공유서비스)",
+        }
+
+        if ticket_name not in ticket_map:
+            print(f"ERROR: 29177에서 지원하지 않는 ticket_name: {ticket_name}")
+            return False
+
+        target_text = ticket_map[ticket_name]
+
+        try:
+            select_element = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.ID, "selectDiscount"))
+            )
+            options = select_element.find_elements(By.TAG_NAME, "option")
+            matched = False
+            for option in options:
+                # 텍스트가 정확히 일치하거나, 해당 텍스트로 시작하는 옵션을 찾음
+                if target_text in option.text:
+                    option.click()
+                    print(f"DEBUG: '{option.text}' 옵션 선택 완료.")
+                    matched = True
+                    break
+
+            if not matched:
+                print(f"ERROR: '{target_text}' 텍스트가 포함된 옵션을 찾을 수 없습니다.")
+                return False
+
+            WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.ID, "discountSubmit"))
+            ).click()
+            print("DEBUG: 할인 적용 버튼 클릭 완료.")
+
+            try:
+                WebDriverWait(driver, 3).until(EC.alert_is_present()).accept()
+                print("DEBUG: 알림창 확인 완료.")
+            except TimeoutException:
+                print("DEBUG: 알림창 없음.")
+
+            return True
+
+        except Exception as e:
+            print(f"ERROR: 29177 처리 중 예외 발생: {e}")
             return False
 
         # ✅ 19862 신규 주차장 전용 할인 처리
@@ -809,7 +875,7 @@ def web_har_in(target, driver, lotName):
                     driver.find_element(By.XPATH, f"/html/body/div[1]/section/div/section/div[{index}]").find_element(By.CLASS_NAME, "selectCarInfo").click()
 
                     # ✅ 19004은 handle_ticket() 함수로 별도 처리
-                    if park_id in [19004, 19860, 29184, 29136,19148,19156, 19271, 19862, 19540, 19534]:
+                    if park_id in [19004, 19860, 29184, 29136,19148,19156, 19271, 19862, 19540, 19534, 29177]:
                         return handle_ticket(driver, park_id, ticket_name)
 
                     select = Select(driver.find_element_by_id('selectDiscount'))
