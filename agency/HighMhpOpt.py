@@ -4855,35 +4855,35 @@ def web_har_in(target, driver):
                     if ticket_name in ["평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
-                            "//*[@id='discountItemsDataRadio_11fd2bea1da84eb283ce8955688d1603']",
+                            "//*[@id='discountItemsDataRadio_6cd3a6b60fe7481caeffdad2644f4e6d']",
                             btn_confirm_xpath
                         )
 
                     elif ticket_name == "휴일 당일권":
                         return select_discount_and_confirm(
                             driver,
-                            "//*[@id='discountItemsDataRadio_127a6ae581184797898257a25c111030']",
+                            "//*[@id='discountItemsDataRadio_050215df1ca44cc78ac69f07f2ff202b']",
                             btn_confirm_xpath
                         )
 
                     elif ticket_name == "평일 3시간권":
                         return select_discount_and_confirm(
                             driver,
-                            "//*[@id='discountItemsDataRadio_5e7d03723a17463ab8f09d301045e170']",
+                            "//*[@id='discountItemsDataRadio_644b9f48bf4f4fb988c2a52994fda2d8']",
                             btn_confirm_xpath
                         )
 
                     elif ticket_name == "평일 2시간권":
                         return select_discount_and_confirm(
                             driver,
-                            "//*[@id='discountItemsDataRadio_5e7d03723a17463ab8f09d301045e170']",
+                            "//*[@id='discountItemsDataRadio_dcae5612ca1c443abffe8a4c385ef09a']",
                             btn_confirm_xpath
                         )
 
                     elif ticket_name == "평일 1시간권":
                         return select_discount_and_confirm(
                             driver,
-                            "//*[@id='discountItemsDataRadio_5e7d03723a17463ab8f09d301045e170']",
+                            "//*[@id='discountItemsDataRadio_ea3ac2e8adc243559bfb14ebc51f12c5']",
                             btn_confirm_xpath
                         )
 
@@ -5122,7 +5122,7 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 19857:
-                    if ticket_name in ["평일 당일권(월", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_cfedf48b2ca841698f6b4cdfa9470c8e']",
@@ -6566,6 +6566,32 @@ def web_har_in(target, driver):
                     else:
                         return handle_invalid_ticket(driver)
 
+
+                elif park_id == 29289:
+
+                    if ticket_name in ["평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_fa0b01f3bd924cb38125c6f41bb41fdd']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name in ["휴일 당일권(토)", "휴일 당일권(일)"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_967d96ec7bf8451192bf4694ea415bed']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 6시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_12d6c0f99437448c98565ccc2430d8c4']",
+                            btn_confirm_xpath
+                        )
+
+                    else:
+                        return handle_invalid_ticket(driver)
 
 
                 elif park_id == 19323:

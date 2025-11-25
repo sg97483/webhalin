@@ -256,6 +256,17 @@ mapIdToWebInfo = {
             "-",  # night 스크립트 제거
             ],
 
+    # 	서초그랑자이그랑몰
+    29362: ["//div[@name='login-id']/input", "//div[@name='login-password']/input",
+            "//button[contains(@class, 'login-button')]",
+            "//*[@id='hho']", "//button[contains(@class, 'button-submit')]",
+            "",  # radio 버튼 처리 안함
+            "-",  # btnItem 없음
+            "-",  # weekday 스크립트 제거
+            "-",  # weekend 스크립트 제거
+            "-",  # night 스크립트 제거
+            ],
+
 }
 
 def get_har_in_script(park_id, ticket_name):
@@ -522,7 +533,7 @@ def web_har_in(target, driver):
                         user_id_field = wait.until(EC.presence_of_element_located((By.ID, id_selector)))
                     
                     # 29364 주차장은 JavaScript로 입력 (React/Vue 프레임워크 대응)
-                    if park_id in [29364, 29361]:
+                    if park_id in [29364, 29361, 29362]:
                         driver.execute_script("arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input', { bubbles: true }));", 
                                              user_id_field, web_har_in_info[WebInfo.webHarInId])
                     else:
@@ -540,7 +551,7 @@ def web_har_in(target, driver):
                         user_pw_field = wait.until(EC.presence_of_element_located((By.ID, pw_selector)))
                     
                     # 29364 주차장은 JavaScript로 입력 (React/Vue 프레임워크 대응)
-                    if park_id in [29364, 29361]:
+                    if park_id in [29364, 29361, 29362]:
                         driver.execute_script("arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input', { bubbles: true }));", 
                                              user_pw_field, web_har_in_info[WebInfo.webHarInPw])
                     else:
@@ -551,14 +562,14 @@ def web_har_in(target, driver):
                     print(Colors.BLUE + f"DEBUG: 로그인 버튼 찾는 중 - {web_info[WebInfo.btnLogin]}" + Colors.ENDC)
                     login_button = wait.until(EC.presence_of_element_located((By.XPATH, web_info[WebInfo.btnLogin])))
                     # 29364 주차장은 JavaScript로 클릭 (React/Vue 프레임워크 대응)
-                    if park_id in [29364, 29361]:
+                    if park_id in [29364, 29361, 29362]:
                         driver.execute_script("arguments[0].click();", login_button)
                     else:
                         login_button.click()
                     print(Colors.GREEN + "✅ 로그인 버튼 클릭 완료" + Colors.ENDC)
 
                     # 29364 주차장: 로그인 후 모달 팝업 처리 (다른 기기 로그인 전환 확인)
-                    if park_id in [29364, 29361]:
+                    if park_id in [29364, 29361, 29362]:
                         try:
                             Util.sleep(2)  # 모달이 나타날 시간 대기
                             wait_modal = WebDriverWait(driver, 5)
@@ -617,7 +628,7 @@ def web_har_in(target, driver):
                 search_selector = web_info[WebInfo.inputSearch]
                 wait_search = WebDriverWait(driver, 10)
                 
-                if park_id in [29364, 29361]:
+                if park_id in [29364, 29361, 29362]:
                     # 29364 주차장: React/Vue 프레임워크 대응 - JavaScript로 입력
                     try:
                         # ID로 요소 찾기
@@ -651,7 +662,7 @@ def web_har_in(target, driver):
                     Util.sleep(3)
 
                 print(Colors.BLUE + f"DEBUG: 검색 버튼 클릭 - {web_info[WebInfo.btnSearch]}" + Colors.ENDC)
-                if park_id in [29364, 29361]:
+                if park_id in [29364, 29361, 29362]:
                     # 29364 주차장: JavaScript로 클릭
                     try:
                         # 차량번호 입력 필드와 같은 부모 안의 검색 버튼 찾기
@@ -706,9 +717,9 @@ def web_har_in(target, driver):
                 check_search_result = ParkUtil.check_search(park_id, driver)
                 print(Colors.BLUE + f"DEBUG: ParkUtil.check_search 결과: {check_search_result}" + Colors.ENDC)
                 
-                # 29364 & 29361 주차장: URL이 할인 등록 페이지면 바로 심야권 처리로 진행
-                if park_id in [29364, 29361] and "/discount/regist/" in driver.current_url:
-                    print(Colors.BLUE + "DEBUG: (29364/29361) 할인 등록 페이지 감지 - 할인 처리로 진행" + Colors.ENDC)
+                # 29364 & 29361 & 29362 주차장: URL이 할인 등록 페이지면 바로 심야권 처리로 진행
+                if park_id in [29364, 29361, 29362] and "/discount/regist/" in driver.current_url:
+                    print(Colors.BLUE + "DEBUG: (29364/29361/29362) 할인 등록 페이지 감지 - 할인 처리로 진행" + Colors.ENDC)
                     return process_highcity_2936x_discount(driver, ticket_name, park_id)
 
                 if check_search_result:
@@ -718,8 +729,8 @@ def web_har_in(target, driver):
                     
                     if check_same_car_result:
 
-                        # 29364 & 29361 주차장: 심야권 처리
-                        if park_id in [29364, 29361] and ticket_name == "심야권":
+                        # 29364 & 29361 & 29362 주차장: 심야권 처리
+                        if park_id in [29364, 29361, 29362] and ticket_name == "심야권":
                             try:
                                 wait_ticket = WebDriverWait(driver, 10)
                                 
@@ -801,14 +812,14 @@ def web_har_in(target, driver):
                                 return True
                                 
                             except Exception as e:
-                                print(Colors.RED + f"❌ 29364/29361 심야권 처리 실패: {e}" + Colors.ENDC)
+                                print(Colors.RED + f"❌ 29364/29361/29362 심야권 처리 실패: {e}" + Colors.ENDC)
                                 return False
                     else:
-                        print(Colors.YELLOW + f"⚠️ 29364/29361 할인 등록 페이지이지만 ticket_name이 '심야권'이 아님: {ticket_name}" + Colors.ENDC)
+                        print(Colors.YELLOW + f"⚠️ 29364/29361/29362 할인 등록 페이지이지만 ticket_name이 '심야권'이 아님: {ticket_name}" + Colors.ENDC)
                         return False
                 
-                # 29364 & 29361 주차장: 검색 실패 시 뒤로가기 버튼 클릭 후 로그아웃
-                if park_id in [29364, 29361] and not check_search_result:
+                # 29364 & 29361 & 29362 주차장: 검색 실패 시 뒤로가기 버튼 클릭 후 로그아웃
+                if park_id in [29364, 29361, 29362] and not check_search_result:
                     try:
                         # "차량을 찾지 못했습니다" 메시지 확인
                         empty_results = WebDriverWait(driver, 3).until(
@@ -889,8 +900,8 @@ def web_har_in(target, driver):
                     
                     if check_same_car_result:
 
-                        # 29364 & 29361 주차장: 심야권 처리
-                        if park_id in [29364, 29361] and ticket_name == "심야권":
+                        # 29364 & 29361 & 29362 주차장: 심야권 처리
+                        if park_id in [29364, 29361, 29362] and ticket_name == "심야권":
                             try:
                                 wait_ticket = WebDriverWait(driver, 10)
                                 
@@ -972,7 +983,7 @@ def web_har_in(target, driver):
                                 return True
                                 
                             except Exception as e:
-                                print(Colors.RED + f"❌ 29364/29361 심야권 처리 실패: {e}" + Colors.ENDC)
+                                print(Colors.RED + f"❌ 29364/29361/29362 심야권 처리 실패: {e}" + Colors.ENDC)
                                 return False
 
                         # ✅ 여기에 radio 체크 처리 삽입
@@ -1644,19 +1655,39 @@ def web_har_in(target, driver):
 
 def process_highcity_2936x_discount(driver, ticket_name, park_id):
     """
-    29364 / 29361 전용 할인 처리 공통 로직
+    29364 / 29361 / 29362 전용 할인 처리 공통 로직
     """
-    ticket_name_map = {
-        "심야권": ["심야권"],
-        "평일 3시간권": ["평일3시간권", "평일 3시간권"],
-        "평일3시간권": ["평일3시간권", "평일 3시간권"],
-        "평일 당일권": ["평일당일권", "평일 당일권"],
-        "평일당일권": ["평일당일권", "평일 당일권"],
-        "휴일 4시간권": ["휴일4시간권", "휴일 4시간권"],
-        "휴일4시간권": ["휴일4시간권", "휴일 4시간권"],
-        "휴일 당일권": ["휴일당일권", "휴일 당일권"],
-        "휴일당일권": ["휴일당일권", "휴일 당일권"],
-    }
+    # 29362는 제휴당일권 사용
+    if park_id == 29362:
+        ticket_name_map = {
+            "심야권": ["심야권"],
+            "평일 3시간권": ["평일3시간권", "평일 3시간권"],
+            "평일3시간권": ["평일3시간권", "평일 3시간권"],
+            "평일 당일권": ["제휴평일당일권"],
+            "평일당일권": ["제휴평일당일권"],
+            "평일 당일권(월)": ["제휴평일당일권"],
+            "평일 당일권(화)": ["제휴평일당일권"],
+            "평일 당일권(수)": ["제휴평일당일권"],
+            "평일 당일권(목)": ["제휴평일당일권"],
+            "평일 당일권(금)": ["제휴평일당일권"],
+            "휴일 4시간권": ["휴일4시간권", "휴일 4시간권"],
+            "휴일4시간권": ["휴일4시간권", "휴일 4시간권"],
+            "휴일 당일권": ["제휴휴일당일권"],
+            "휴일당일권": ["제휴휴일당일권"],
+        }
+    else:
+        # 29364, 29361은 기존 매핑 사용
+        ticket_name_map = {
+            "심야권": ["심야권"],
+            "평일 3시간권": ["평일3시간권", "평일 3시간권"],
+            "평일3시간권": ["평일3시간권", "평일 3시간권"],
+            "평일 당일권": ["평일당일권", "평일 당일권"],
+            "평일당일권": ["평일당일권", "평일 당일권"],
+            "휴일 4시간권": ["휴일4시간권", "휴일 4시간권"],
+            "휴일4시간권": ["휴일4시간권", "휴일 4시간권"],
+            "휴일 당일권": ["휴일당일권", "휴일 당일권"],
+            "휴일당일권": ["휴일당일권", "휴일 당일권"],
+        }
 
     candidates = ticket_name_map.get(ticket_name)
     if not candidates:
