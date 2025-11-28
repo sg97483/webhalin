@@ -1591,17 +1591,71 @@ def web_har_in(target, driver):
 
                         try:
                             if harin_script.startswith("BTN_"):
-                                driver.find_element(By.ID, harin_script).click()
+                                # ✅ 19174는 JavaScript로 클릭하고 Alert 처리
+                                if park_id == 19174:
+                                    try:
+                                        btn_element = driver.find_element(By.ID, harin_script)
+                                        # JavaScript로 클릭 (Alert가 나타나도 예외 발생 안 함)
+                                        driver.execute_script("arguments[0].click();", btn_element)
+                                        print(f"✅ 버튼 클릭 완료 (JavaScript): {harin_script}")
+                                        
+                                        # Alert 처리
+                                        WebDriverWait(driver, 5).until(EC.alert_is_present())
+                                        alert = driver.switch_to.alert
+                                        alert_text = alert.text
+                                        print(f"✅ Alert 텍스트: {alert_text}")
+                                        alert.accept()
+                                        print("✅ Alert 확인 완료 (19174)")
+                                        
+                                        # 페이지 전환 및 할인 승인 내역 테이블 로딩 대기
+                                        Util.sleep(2)  # 페이지 전환 대기
+                                        
+                                        # ✅ 할인 승인 내역 테이블에 데이터가 실제로 추가되었는지 확인
+                                        try:
+                                            # "할인 승인 내역" 테이블의 tbody > tr 요소 확인
+                                            wait_table = WebDriverWait(driver, 5)
+                                            # 테이블이 로드될 때까지 대기
+                                            table = wait_table.until(
+                                                EC.presence_of_element_located((By.XPATH, "//h3[contains(text(), '할인 승인 내역')]/following-sibling::table"))
+                                            )
+                                            
+                                            # tbody 내부의 tr 요소 확인 (헤더 제외)
+                                            rows = table.find_elements(By.XPATH, ".//tbody/tr[td]")
+                                            
+                                            if len(rows) > 0:
+                                                # 데이터가 있는 경우, 승인 정보 컬럼 확인
+                                                for row in rows:
+                                                    cells = row.find_elements(By.TAG_NAME, "td")
+                                                    if len(cells) >= 3:
+                                                        approval_info = cells[2].text.strip()
+                                                        print(f"✅ 할인 승인 내역 확인됨: {approval_info}")
+                                                        return True
+                                                
+                                                print("✅ 할인 승인 내역 테이블에 데이터 있음")
+                                                return True
+                                            else:
+                                                print("❌ 할인 승인 내역 테이블에 데이터 없음")
+                                                return False
+                                                
+                                        except Exception as table_e:
+                                            print(f"⚠️ 할인 승인 내역 테이블 확인 실패: {table_e}")
+                                            return False
+                                        
+                                    except Exception as e:
+                                        print(f"⚠️ 19174 Alert 처리 실패: {e}")
+                                        return False
+                                else:
+                                    driver.find_element(By.ID, harin_script).click()
 
-                                # ✅ 버튼 클릭 직후 Alert 수동 처리
-                                try:
-                                    WebDriverWait(driver, 5).until(EC.alert_is_present())
-                                    alert = driver.switch_to.alert
-                                    print(f"✅ Alert 텍스트: {alert.text}")
-                                    alert.accept()
-                                    print("✅ Alert 확인 완료")
-                                except Exception as e:
-                                    print(f"⚠️ Alert 처리 실패 또는 없음: {e}")
+                                    # ✅ 버튼 클릭 직후 Alert 수동 처리
+                                    try:
+                                        WebDriverWait(driver, 5).until(EC.alert_is_present())
+                                        alert = driver.switch_to.alert
+                                        print(f"✅ Alert 텍스트: {alert.text}")
+                                        alert.accept()
+                                        print("✅ Alert 확인 완료")
+                                    except Exception as e:
+                                        print(f"⚠️ Alert 처리 실패 또는 없음: {e}")
 
 
                             else:
@@ -1612,8 +1666,47 @@ def web_har_in(target, driver):
                         except UnexpectedAlertPresentException:
                             try:
                                 alert = driver.switch_to.alert
-                                print(f"[ERROR 처리 중 Alert 발생] Alert Text: {alert.text}")
+                                alert_text = alert.text
+                                print(f"[ERROR 처리 중 Alert 발생] Alert Text: {alert_text}")
                                 alert.accept()
+                                print("✅ Alert 확인 완료 (UnexpectedAlertPresentException 처리)")
+                                
+                                # ✅ 19174의 경우 Alert 확인 후 할인 승인 내역 확인
+                                if park_id == 19174:
+                                    Util.sleep(2)  # 페이지 전환 대기
+                                    
+                                    # ✅ 할인 승인 내역 테이블에 데이터가 실제로 추가되었는지 확인
+                                    try:
+                                        # "할인 승인 내역" 테이블의 tbody > tr 요소 확인
+                                        wait_table = WebDriverWait(driver, 5)
+                                        # 테이블이 로드될 때까지 대기
+                                        table = wait_table.until(
+                                            EC.presence_of_element_located((By.XPATH, "//h3[contains(text(), '할인 승인 내역')]/following-sibling::table"))
+                                        )
+                                        
+                                        # tbody 내부의 tr 요소 확인 (헤더 제외)
+                                        rows = table.find_elements(By.XPATH, ".//tbody/tr[td]")
+                                        
+                                        if len(rows) > 0:
+                                            # 데이터가 있는 경우, 승인 정보 컬럼 확인
+                                            for row in rows:
+                                                cells = row.find_elements(By.TAG_NAME, "td")
+                                                if len(cells) >= 3:
+                                                    approval_info = cells[2].text.strip()
+                                                    print(f"✅ 할인 승인 내역 확인됨: {approval_info}")
+                                                    return True
+                                            
+                                            print("✅ 할인 승인 내역 테이블에 데이터 있음")
+                                            return True
+                                        else:
+                                            print("❌ 할인 승인 내역 테이블에 데이터 없음")
+                                            return False
+                                            
+                                    except Exception as table_e:
+                                        print(f"⚠️ 할인 승인 내역 테이블 확인 실패: {table_e}")
+                                        return False
+                                else:
+                                    return False
                             except NoAlertPresentException:
                                 pass
                             return False

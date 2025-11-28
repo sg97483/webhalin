@@ -712,7 +712,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
             print("ERROR: 45010 메모 필드 찾기 실패")
             return False
 
-    # ✅ 19820 전용 처리ddddd
+    # ✅ 19820 전용 f처리ddddd
     if park_id == 19820:
         if ticket_name in ["평일1일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수~금)"]:
             button_id = "15"  # 종일권(평일) 버튼의 id
