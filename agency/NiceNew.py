@@ -1510,6 +1510,18 @@ def web_har_in(target, driver):
             else:
                 return handle_invalid_ticket(driver)
 
+
+        elif park_id == 29171:
+
+            if ticket_name == "평일 주간권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']"
+                )
+            else:
+                return handle_invalid_ticket(driver)
+
+
         elif park_id == 29168:
             if ticket_name == "평일 주간권(승용전용)":
                 return select_discount_and_confirm(
