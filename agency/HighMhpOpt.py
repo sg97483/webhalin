@@ -6747,6 +6747,46 @@ def web_har_in(target, driver):
                         return handle_invalid_ticket(driver)
 
 
+                elif park_id == 29393:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_0d73c1fd2d404a6d8b456d62b124420c']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 3시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_c18c798072a04ced807bff1178587171']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 심야권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_ea4893c80e6a4aef8050aab0030539ba']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name in ["휴일 당일권(토)", "휴일 당일권(일)"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_f1cd17c1e13e4b30a3876e59d509bea5']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "휴일 심야권":
+                       return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_f39538be55354232b306498d1d766edc']",
+                            btn_confirm_xpath
+                        )
+
+                    else:
+                        return handle_invalid_ticket(driver)
+
+
                 elif park_id == 19467:
                     if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)"]:
                         return select_discount_and_confirm(

@@ -263,6 +263,7 @@ def process_ticket_and_logout(driver, button_id, park_id):
         print("DEBUG: 할인권 적용 알림 없음 (정상일 수 있음).")
     except Exception as e:
         print(f"ERROR: 할인권 클릭 중 예외 발생: {e}")
+        return False
 
     # 팝업 처리
     try:
@@ -275,8 +276,18 @@ def process_ticket_and_logout(driver, button_id, park_id):
     except TimeoutException:
         print("DEBUG: 할인 이후 팝업 감지되지 않음.")
 
-    # 🚨 주차장에 따른 로그아웃 분기
-    return logout(driver, park_id)
+    # � [검증 추가] 실제 할인이 적용되었는지 확인
+    print("DEBUG: 할인 적용 여부 최종 검증 중...")
+    time.sleep(1)  # UI 반영 대기
+    if not check_if_discount_applied(driver):
+        print("❌ CRITICAL: 전산상 할인 내역이 확인되지 않습니다. (실패 처리)")
+        logout(driver)
+        return False
+
+    print("✅ 할인 적용 확인됨.")
+
+    # �🚨 주차장에 따른 로그아웃 분기
+    return logout(driver)
 
 
 def enter_password_standard(driver, user_password):
@@ -1063,6 +1074,16 @@ def click_discount_and_handle_popup(driver, ticket_xpath):
         print("DEBUG: 할인 이후 팝업 닫기 완료.")
     except TimeoutException:
         print("DEBUG: 할인 이후 팝업 감지되지 않음.")  # 팝업 없을 수도 있음
+
+    # 🚀 [검증 추가] 실제 할인이 적용되었는지 확인
+    print("DEBUG: 할인 적용 여부 최종 검증 중...")
+    time.sleep(1)  # UI 반영 대기
+    if not check_if_discount_applied(driver):
+        print("❌ CRITICAL: 전산상 할인 내역이 확인되지 않습니다. (실패 처리)")
+        logout(driver)
+        return False
+    
+    print("✅ 할인 적용 확인됨.")
 
     # ✅ 로그아웃 수행
     return logout(driver)
