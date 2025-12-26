@@ -262,7 +262,7 @@ def select_discount_and_confirm(driver, radio_xpath):
         # 🚨 할인 버튼이 새로 뜰 때까지 대기 (화면 새로고침/변화 고려)
         print("할인 버튼 로드 대기 중...")
         WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, radio_xpath))
+            EC.visibility_of_element_located((By.XPATH, radio_xpath))
         )
         print("할인 버튼 감지됨. 클릭 시도.")
 
@@ -530,12 +530,17 @@ def check_search_failed_and_logout(driver):
     # 팝업이 없었다면 할인권 화면이 있는지 확인
     try:
         WebDriverWait(driver, 2).until(
-            EC.presence_of_element_located((By.CLASS_NAME, "used_ticket_box"))
+            EC.visibility_of_element_located((By.CLASS_NAME, "used_ticket_box"))
         )
         print("DEBUG: 할인권 화면 감지됨 → 정상 진행")
         return True
     except:
-        print("DEBUG: 할인권 화면도 없음 → 검색 실패로 판단")
+        # 할인권 화면이 없더라도, 차량 선택 팝업이 떠 있다면 정상 진행으로 간주
+        if is_car_selection_popup_present(driver, timeout=1):
+            print("DEBUG: 할인권 화면은 없으나 차량 선택 팝업 감지됨 → 정상 진행")
+            return True
+
+        print("DEBUG: 할인권 화면도 없고 차량 선택 팝업도 없음 → 검색 실패로 판단")
         # 여기서도 로그아웃 처리
         try:
             driver.execute_script(

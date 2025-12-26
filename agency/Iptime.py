@@ -15,7 +15,7 @@ mapIdToWebInfo = {
 
 
     # 하이파킹 삼성화재서초타워 (요소 수정)
-    19919: ["login_id", "login_pw", "//input[@value='로그인']",  # 로그인 버튼 수정
+    99999: ["login_id", "login_pw", "//input[@value='로그인']",  # 로그인 버튼 수정
             "searchCarNo", "//*[@id='btnSearch']",  # 차량 번호 입력 필드, 검색 버튼
             "//td/a[contains(text(), '{car_number}')]"
             ],
@@ -63,7 +63,7 @@ def web_har_in(target, driver):
     print(Colors.BLUE + ticket_name + Colors.ENDC)
 
     if ParkUtil.is_park_in(park_id):
-        if park_id == 19919:  # 삼성화재서초타워
+        if park_id == 99999:  # 삼성화재서초타워
             login_url = ParkUtil.get_park_url(park_id)
             driver.get(login_url)
             driver.implicitly_wait(5)

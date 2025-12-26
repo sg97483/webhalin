@@ -266,7 +266,7 @@ TARGET_URLS_NEW_AMANO = [
     "https://a13660.parkingweb.kr","https://a16054.parkingweb.kr/login"
     ,"https://a00540.pweb.kr/login","https://postyud.parkingweb.kr/","https://a21504.pweb.kr/"
     ,"https://a15602.pweb.kr","https://a12859.parkingweb.kr/login","https://a21023.pweb.kr"
-    ,"https://a22272.pweb.kr/","http://211.55.2.163/login"
+    ,"https://a22272.pweb.kr/","http://211.55.2.163/login","https://a19813.pweb.kr/"
 ]
 
 
@@ -314,11 +314,6 @@ parkType_new_kmpark = {
     park_id: DEFAULT_WEB_INFO_NEW_KMPARK
     for park_id in dynamic_park_ids_new_kmpark
 }
-
-
-parkType_ip_time = [
-    Parks.SAMSUNG_HWAJAE
-]
 
 parkType_grang_seoul = [Parks.GRANG_SEUOL]
 parkType_kait_tower = [Parks.KAIT_TOWER]
@@ -407,7 +402,6 @@ haveOneKey = [
     Parks.GMG_TOWER,
     Parks.SINRA_STAY_G_TOWER,
     Parks.MILLENNIUM_SEOUL_HILTON,
-    Parks.SAMSUNG_HWAJAE,
     Parks.URIM_RODEO_SWEET,
     Parks.V_PLEX,
     Parks.NY_TOWER,
@@ -566,8 +560,6 @@ def get_park_type(park_id):
         return NEW_AMANO
     elif park_id in parkType_new_kmpark:
         return NEW_KMPARK
-    elif park_id in parkType_ip_time:
-        return IP_TIME
     elif park_id in parkType_grang_seoul:
         return GRANG_SEOUL
     elif park_id in parkType_kait_tower:
