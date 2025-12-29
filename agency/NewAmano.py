@@ -235,7 +235,7 @@ def enter_car_number(driver, car_number_last4, park_id):
         print(f"DEBUG: 차량번호 '{car_number_last4}' 입력 완료.")
 
         # park_id별 검색 버튼 처리
-        if park_id in [18938, 18577, 19906, 19258, 19239, 19331,19077,16096,45010,14618,19253,19882,29141,19905,19267,19424]:  # 특정 park_id 전용 처리
+        if park_id in [18938, 18577, 19906, 19258, 19239, 19331,19077,16096,45010,14618,19253,19882,29141,19905,19424]:  # 특정 park_id 전용 처리
             search_button = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.XPATH, "//input[@class='btnS1_1 btn' and @value='검색']"))
             )
@@ -451,7 +451,7 @@ def enter_password(driver, user_password, park_id):
     """
     try:
         # 19489, 18938 전용
-        if park_id in [19489, 18938, 19906,19258,19239,19331,19077,16096,45010,14618,19253,19882,29141,19905,19267,19424,19488]:
+        if park_id in [19489, 18938, 19906,19258,19239,19331,19077,16096,45010,14618,19253,19882,29141,19905,19424,19488]:
             print(f"DEBUG: {park_id} 전용 비밀번호 필드 탐색")
             password_field = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.NAME, "userPwd"))
@@ -646,7 +646,6 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19869: {"3시간권": "18", "평일 오후권": "19", "평일 당일권": "9", "휴일 오후권": "19", "휴일 당일권": "9", "(일~목)심야권": "17", "(금~토)심야권": "17"},
         19424: {"주말1일권": "22", "평일야간권": "22"},
         19886: {"평일 당일권": "198", "평일 3시간권": "197", "평일 심야권(지상전용)": "196"},
-        19267: {"평일 당일권(월)": "9", "평일 당일권(화)": "9", "평일 당일권(수)": "9", "평일 당일권(목)": "9", "평일 당일권(금)": "9", "휴일 당일권": "9", "평일 오후 4시간권": "28", "평일 3시간권": "33"},
         19256: {"평일1일권": "12", "주말1일권": "13", "심야권": "14", "2시간권": "10"},
         19941: {"평일당일권": "15", "휴일당일권": "15", "심야권": "18", "3시간권": "16"},
         19842: {"평일 2시간권": "13", "평일 4시간권": "18", "평일 6시간권": "19", "심야권": "20", "평일 당일권": "12", "주말 당일권": "14"},
@@ -796,7 +795,7 @@ def logout(driver, park_id):
             )
 
 
-        elif park_id in [16096, 19267]:
+        elif park_id in [16096, 16096]:
             print(f"DEBUG: {park_id} 전용 로그아웃 버튼 XPath로 탐색")
             try:
                 # 1순위: onclick='logout()' 속성으로 찾기
@@ -1085,7 +1084,7 @@ def web_har_in(target, driver):
                         driver.execute_script("arguments[0].click();", login_button)
                         print("✅ 16096 로그인 JS 클릭 성공")
 
-                elif park_id in [18938, 18577, 19906, 19258, 19239, 19331, 19077, 45010, 14618, 19253,19882,29141,19905,19267,19424,19488]:
+                elif park_id in [18938, 18577, 19906, 19258, 19239, 19331, 19077, 45010, 14618, 19253,19882,29141,19905,19424,19488]:
                     print(f"DEBUG: {park_id} 전용 로그인 버튼 클릭")
                     login_button = WebDriverWait(driver, 10).until(
                         EC.presence_of_element_located((By.CLASS_NAME, "login_area_btn"))
