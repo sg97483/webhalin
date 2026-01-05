@@ -13,13 +13,6 @@ from selenium.webdriver.common.by import By
 
 mapIdToWebInfo = {
 
-    # KT 구로지밸리
-   19425: ["id", "password", "//*[@id='login']",
-            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
-            "#carList > tr",
-            "2"
-            ],
-
    # 신한은행광교
    19945: ["id", "password", "//*[@id='login']",
             "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
@@ -601,30 +594,6 @@ def web_har_in(target, driver):
             else:
                 print(Colors.RED + f"❌ 카카오 T 이마트구로점 - 허용되지 않은 티켓({ticket_name})으로 할인 불가!" + Colors.ENDC)
                 return False
-
-
-        # ✅ KT 구로지밸리 예외 처리 (24시간 적용)
-        elif park_id == 19425 and ticket_name in ['평일1일권', '주말1일권']:
-            print(Colors.YELLOW + "KT 구로지밸리 - 24시간 할인권 처리" + Colors.ENDC)
-            product_list = driver.find_elements(By.CSS_SELECTOR, "#productList > tr")
-            found = False
-
-            for row in product_list:
-                try:
-                    cell_text = row.find_element(By.TAG_NAME, "td").text.strip()
-                    if "24시간" in cell_text:  # "24시간" 포함된 행 찾기
-                        apply_button = row.find_element(By.CSS_SELECTOR, "button.btn-apply")
-                        if apply_button.is_enabled():
-                            driver.execute_script("arguments[0].click();", apply_button)
-                            print(Colors.BLUE + "✅ 24시간 할인 적용 완료." + Colors.ENDC)
-                            found = True
-                            break
-                except Exception as ex:
-                    print(Colors.RED + f"❌ 할인 버튼 찾기 중 오류: {ex}" + Colors.ENDC)
-
-            if not found:
-                print(Colors.YELLOW + "⚠️ 24시간 할인권을 찾지 못했습니다." + Colors.ENDC)
-                return False  # ✅ 할인 실패 시 중단
 
 
         # 기본 할인 적용 (기존 코드)

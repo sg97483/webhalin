@@ -82,7 +82,6 @@ parkTypeDarae = [
 ]
 
 parkTypeIparking = [
-    19425, # kt구로지밸리
     19433, # 서초꽃마을
     19448, #예전빌딩
     19459,#동양프라자

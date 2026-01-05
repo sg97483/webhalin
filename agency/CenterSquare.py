@@ -109,10 +109,14 @@ def web_har_in(target, driver):
 
     elif ticket_name == '24시간권':
         try:
-            driver.find_element_by_xpath('//*[@id="boundlist-1021-listEl"]/ul/li[4]').click()
+            WebDriverWait(driver, 1).until(
+                EC.element_to_be_clickable((By.XPATH, '//*[@id="boundlist-1021-listEl"]/ul/li[4]'))
+            ).click()
             print("24시간권 : 1021처리")
         except:
-            driver.find_element_by_xpath('//*[@id="boundlist-1019-listEl"]/ul/li[4]').click()
+            WebDriverWait(driver, 3).until(
+                EC.element_to_be_clickable((By.XPATH, '//*[@id="boundlist-1019-listEl"]/ul/li[4]'))
+            ).click()
             print("24시간권 : 1019처리")
 
 
