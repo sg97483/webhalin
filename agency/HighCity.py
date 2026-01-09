@@ -1148,7 +1148,7 @@ def web_har_in(target, driver):
                                 Util.sleep(1.5)  # 팝업 또는 화면 전환 대기
 
                                 # ticket_name에 따라 할인권 선택
-                                if ticket_name in ["평일1일권", "주말1일권"]:
+                                if ticket_name in ["평일 당일권", "휴일 당일권"]:
                                     select_element = WebDriverWait(driver, 5).until(
                                         EC.presence_of_element_located((By.ID, "ContentPlaceHolder_ddlDiscountName"))
                                     )
