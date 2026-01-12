@@ -93,7 +93,6 @@ parkTypeIparking = [
     29220, #하이파킹 종로5가역하이뷰더광장
     29175, #하이파킹 SK-C타워(구, 충무로15빌딩)
     19945, # 신한은행 광교 주차장
-    19579, #카카오 T 이마트구로점
     19508,
 ]
 #tbody 있음
@@ -267,7 +266,7 @@ TARGET_URLS_NEW_AMANO = [
     ,"https://a15602.pweb.kr","https://a12859.parkingweb.kr/login","https://a21023.pweb.kr"
     ,"https://a22272.pweb.kr/","http://211.55.2.163/login","https://a19813.pweb.kr/",
     "https://a22037.pweb.kr","https://a21320.pweb.kr/","https://a21347.pweb.kr/"
-    ,"https://a21351.pweb.kr/","http://a16591.parkingweb.kr"
+    ,"https://a21351.pweb.kr/","http://a16591.parkingweb.kr","http://1.223.26.123/login"
 ]
 
 
@@ -277,7 +276,8 @@ TARGET_URLS_NEW_KMPARK = [
     ,"http://kmp0000575.iptime.org/","http://kmp0000854.iptime.org/","http://kmp0000774.iptime.org/"
     ,"http://kmp0000089.iptime.org/","http://kmp0000403.iptime.org/","http://kmp0000131.iptime.org/"
     ,"http://kmp0000748.iptime.org/","http://kmp0000025.iptime.org/","http://kmp0000099.iptime.org/"
-    ,"http://kmp0000871.iptime.org/","http://kmp0000869.iptime.org/","http://kmp0000525.iptime.org/","http://kmp0000007.iptime.org/"]
+    ,"http://kmp0000871.iptime.org/","http://kmp0000869.iptime.org/","http://kmp0000525.iptime.org/"
+    ,"http://kmp0000007.iptime.org/","http://kmp0000678.iptime.org"]
 
 # DB에서 park_id 동적 조회
 dynamic_park_ids = get_park_ids_by_urls(TARGET_URLS)
@@ -438,8 +438,7 @@ haveTwoKey = [
 haveThreeKey = [
     # Parks.N_TOWER,
     Parks.JANG_AN_SPIZON,
-    Parks.JAYANG_PALACE,
-    Parks.CHUNGJEONGNO_HOUSE
+    Parks.JAYANG_PALACE
 ]
 
 haveFourKey = [

@@ -95,12 +95,7 @@ mapIdToWebInfo = {
             "2"
             ],
 
-    # 카카오 T 이마트구로점
-    19579: ["id", "password", "//*[@id='login']",
-            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
-            "#carList > tr",
-            "2"
-            ],
+
 }
 
 i_parking_hi_parking = [
@@ -569,31 +564,7 @@ def web_har_in(target, driver):
                 print(Colors.RED + f"❌ 용산베르디움프렌즈 - 허용되지 않은 티켓({ticket_name})으로 할인 불가!" + Colors.ENDC)
                 return False
 
-        # ✅ 카카오 T 이마트구로점 예외 처리 (일일권(24시간) 적용)
-        elif park_id == 19579:
-            if ticket_name in ['평일1일권', '주말1일권']:
-                print(Colors.YELLOW + "카카오 T 이마트구로점 - 일일권(24시간) 할인권 처리" + Colors.ENDC)
-                product_list = driver.find_elements(By.CSS_SELECTOR, "#productList > tr")
-                found = False
-                for row in product_list:
-                    try:
-                        cell_text = row.find_element(By.TAG_NAME, "td").text.strip()
-                        if "일일권(24시간)" in cell_text:
-                            apply_button = row.find_element(By.CSS_SELECTOR, "button.btn-apply")
-                            if apply_button.is_enabled():
-                                driver.execute_script("arguments[0].click();", apply_button)
-                                print(Colors.BLUE + "✅ 일일권(24시간) 할인 적용 완료." + Colors.ENDC)
-                                found = True
-                                break
-                    except Exception as ex:
-                        print(Colors.RED + f"❌ 할인 버튼 찾기 중 오류: {ex}" + Colors.ENDC)
 
-                if not found:
-                    print(Colors.YELLOW + "⚠️ 일일권(24시간) 할인권을 찾지 못했습니다." + Colors.ENDC)
-                    return False  # 할인권이 없으면 중단
-            else:
-                print(Colors.RED + f"❌ 카카오 T 이마트구로점 - 허용되지 않은 티켓({ticket_name})으로 할인 불가!" + Colors.ENDC)
-                return False
 
 
         # 기본 할인 적용 (기존 코드)

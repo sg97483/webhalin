@@ -214,17 +214,6 @@ mapIdToWebInfo = {
             "17",  # 3시간권
             "16"  # 2시간권
             ],
-    # 충정로청년주택
-    19191: ["userId", "userPwd", "//*[@id='btnLogin']",
-            "schCarNo", "//*[@id='sForm']/input[3]",
-            "#gridMst > div.objbox > table > tbody > tr.ev_dhx_skyblue.rowselected",
-            "2",  # 평일종일권(파킹셰어)
-            "",  #
-            "",  #
-            "javascript:document.getElementById('discountTypeValue').click",  # 실행 함수
-            "15",  # 3시간권
-            "5"  # 2시간권
-            ],
     # 오목교주차장
     19235: ["userId", "userPwd", "//*[@id='btnLogin']",
             "schCarNo", "//*[@id='sForm']/input[3]",
