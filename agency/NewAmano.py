@@ -53,6 +53,7 @@ TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.k
     ,"https://a12859.parkingweb.kr/login","https://a21023.pweb.kr","https://a22272.pweb.kr/"
     ,"http://211.55.2.163/login","https://a19813.pweb.kr/","https://a22037.pweb.kr","https://a21320.pweb.kr/"
     ,"https://a21347.pweb.kr/","https://a21351.pweb.kr/","http://a16591.parkingweb.kr","http://1.223.26.123/login"
+    ,"https://a22496.pweb.kr/login","https://a22039.pweb.kr/login"
                ]
 
 def get_park_ids_by_urls(target_urls):
@@ -112,7 +113,8 @@ if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_
                    ,"https://a15602.pweb.kr","https://a12859.parkingweb.kr/login"
                    ,"https://a21023.pweb.kr","https://a22272.pweb.kr/","http://211.55.2.163/login","https://a19813.pweb.kr/"
         ,"https://a22037.pweb.kr","https://a21320.pweb.kr/","https://a21347.pweb.kr/"
-        ,"https://a21351.pweb.kr/","http://a16591.parkingweb.kr","http://1.223.26.123/login"]
+        ,"https://a21351.pweb.kr/","http://a16591.parkingweb.kr","http://1.223.26.123/login"
+        ,"https://a22496.pweb.kr/login","https://a22039.pweb.kr/login"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["userId", "userPwd", "//*[@id='btnLogin']", "schCarNo", "//*[@id='sForm']/input[3]"]
@@ -348,6 +350,8 @@ def handle_popup_and_go_discount(driver, park_id):
         19894: "https://a16541.parkingweb.kr/discount/registration",
         19438: "https://postyud.parkingweb.kr/discount/registration",
         19191: "http://1.223.26.123/discount/registration",
+        29481: "https://a22496.pweb.kr/discount/registration",
+        29331: "https://a22039.pweb.kr/discount/registration",
         19941: "https://a17902.pweb.kr/discount/registration"
     }
 
@@ -704,10 +708,12 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19912: {"평일 3시간권": "1", "평일 1시간권": "3", "휴일 당일권": "2"},
         29483: {"3시간권": "6", "당일권": "15", "2일연박권": "8", "3일연박권": "9", "4일연박권": "10", "5일연박권": "11", "6일연박권": "12", "7일연박권": "13"},
         29455: {"당일권": "13", "심야권": "14"},
+        29481: {"평일 6시간권": "11", "평일 당일권": "8", "평일 심야권": "9", "휴일 당일권": "8", "휴일 심야권": "9", "평일 1시간권": "10"},
         29343: {"평일 당일권": "10", "휴일 당일권": "10", "심야권": "9"},
         19943: {"평일 당일권": "10", "주말 당일권": "9", "심야권": "8", "3시간권": "7"},
         19191: {"평일 5시간권(지하3층전용)": "5", "평일 오후권(지하3층전용)": "19", "평일 당일권(지하3층전용)": "17", "휴일 당일권(지하3층전용)": "17"},
         29229: {"평일당일권": "2", "휴일당일권": "2", "심야권": "3", "평일 4시간권": "4", "휴일 4시간권": "4"},
+        29331: {"당일권": "3", "심야권": "4", "1시간권": "5", "3시간권": "6"},
         45304: {"주말1일권": "13", "평일 야간권": "99"},
         29230: {"4시간권": "3", "12시간권": "4", "평일 당일권": "5", "휴일 당일권": "6"},
         19920: {"평일 당일권": "6"},
