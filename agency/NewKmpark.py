@@ -601,61 +601,6 @@ def handle_ticket(driver, park_id, ticket_name, ori_car_num):
             logout(driver)
             return False
 
-    # ✅ 19616 전용 할인 처리
-    if park_id == 19616:
-        print(f"DEBUG: 19616 전용 할인 처리 시작 (ticket_name={ticket_name})")
-
-        # 티켓명에 따른 키워드 매핑
-        target_text_map = {
-            "평일 1일권": "24시간(무료)",
-            "평일 3시간권": "3시간(무료)",
-            "평일 저녁권": "6시간(무료)",
-        }
-
-        target_keyword = target_text_map.get(ticket_name)
-        if not target_keyword:
-            print(f"ERROR: 19616에서 지원하지 않는 ticket_name: {ticket_name}")
-            logout(driver)
-            return False
-
-        try:
-            # 할인 버튼들 가져오기
-            buttons = WebDriverWait(driver, 10).until(
-                EC.presence_of_all_elements_located((By.CLASS_NAME, "btn-visit-coupon"))
-            )
-
-            for button in buttons:
-                text = button.text.strip().replace("\n", "").replace(" ", "")
-                print(f"DEBUG: 버튼 텍스트 = '{text}'")
-
-                if target_keyword.replace(" ", "") in text:
-                    driver.execute_script("arguments[0].click();", button)
-                    print(f"DEBUG: '{target_keyword}' 할인 버튼 클릭 완료")
-
-                    # 팝업 처리
-                    try:
-                        popup = WebDriverWait(driver, 3).until(
-                            EC.presence_of_element_located((By.CLASS_NAME, "modal-box"))
-                        )
-                        popup.find_element(By.XPATH, ".//a[@class='modal-btn']").click()
-                        WebDriverWait(driver, 3).until(
-                            EC.invisibility_of_element((By.CLASS_NAME, "modal-box"))
-                        )
-                        print("DEBUG: 팝업 닫기 완료")
-                    except TimeoutException:
-                        print("DEBUG: 팝업 감지되지 않음")
-
-                    return logout(driver)
-
-            print(f"ERROR: 19616 - '{target_keyword}' 텍스트 포함 버튼을 찾지 못함")
-            logout(driver)
-            return False
-
-        except TimeoutException:
-            print("ERROR: 19616 - 할인 버튼 로딩 실패")
-            logout(driver)
-            return False
-
     # ✅ 19582 전용 할인 처리
     if park_id == 19582:
         print(f"DEBUG: 19582 전용 할인 처리 시작 (ticket_name={ticket_name})")
