@@ -6832,6 +6832,52 @@ def web_har_in(target, driver):
                     else:
                         return handle_invalid_ticket(driver)
 
+                elif park_id == 19919:
+                    if ticket_name == "평일 3시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_b8171d537f1f437694bda920b023049a']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 2시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_e0285d6b480c470f8a3e8b2b0e9f87fc']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 1시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_dd1ea2429f6744fdb65604e0533d1fed']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "휴일 당일권(지하 6층 전용)":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_fa2db1e1ebeb4551999250b583ada774']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "야간권(지하 6층 전용,금~토)":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_a41226e3d35e40788ade1c49803bfdae']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "야간권(지하 6층 전용,일~목)":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_a41226e3d35e40788ade1c49803bfdae']",
+                            btn_confirm_xpath
+                        )
+
+                    else:
+                        return handle_invalid_ticket(driver)
+
 
                 elif park_id == 19323:
 
