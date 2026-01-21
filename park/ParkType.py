@@ -348,7 +348,6 @@ park_type_old_aj = [
 ]
 
 park_type_etc = [
-    Parks.WESTERN_853,
     Parks.HUMAX_VILLAGE,
     19427, #종로플레이스
 

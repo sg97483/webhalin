@@ -6851,6 +6851,60 @@ def web_har_in(target, driver):
                     else:
                         return handle_invalid_ticket(driver)
 
+
+                elif park_id == 18999:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_9c93453fdc5b4fde85890b134e6e2255']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "휴일 당일권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_057d71e4ee974702a87ef39c7202bf44']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 심야권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_d35092b510c849b39fe998cef844eb53']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "휴일 심야권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_c6b6546ac49649f09931c704d8a5c45b']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 3시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_4327bf5e7be5410f980c506820bd4df5']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 2시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_9b879089e42545bbb1d2902fa1b89e65']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 1시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_0871743f2820471b92989c42fcfa31dc']",
+                            btn_confirm_xpath
+                        )
+
+                    else:
+                        return handle_invalid_ticket(driver)
+
                 elif park_id == 19919:
                     if ticket_name == "평일 3시간권":
                         return select_discount_and_confirm(

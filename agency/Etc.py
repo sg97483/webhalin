@@ -11,12 +11,6 @@ from park import ParkUtil, ParkType, Parks
 import WebInfo
 
 mapIdToWebInfo = {
-    # (하이파킹) 웨스턴853오피스텔
-    18999: ["""//*[@id='sc-login-form']/div/div[1]/div/input""", """//*[@id='sc-login-form']/div/div[2]/div/input""", """//*[@id="sc-login-form"]/div/div[3]/a""",
-            """//*[@id="sc-page-content"]/div/div/div/div[2]/div/div[1]/div/input""", "",
-            "",
-            "",
-            ""],
 
     #하이파킹 종로플레이스
     19427: ["""//*[@id="sc-login-form"]/div/div[1]/div/input""", """//*[@id="sc-login-form"]/div/div[2]/div/input""", """//*[@id="sc-login-form"]/div/div[3]/a""",
@@ -59,7 +53,7 @@ def web_har_in(target, driver):
             web_har_in_info = ParkUtil.get_park_lot_option(park_id)
 
             # 재접속이 아닐 때, 그러니까 처음 접속할 때
-            if park_id == Parks.WESTERN_853 or park_id == Parks.HUMAX_VILLAGE or park_id==19427:
+            if park_id == Parks.HUMAX_VILLAGE or park_id==19427:
                 if ParkUtil.check_first_conn(park_id):
                     driver.find_element_by_xpath(web_info[WebInfo.inputId]).send_keys(web_har_in_info[WebInfo.webHarInId])
                     driver.find_element_by_xpath(web_info[WebInfo.inputPw]).send_keys(web_har_in_info[WebInfo.webHarInPw])
