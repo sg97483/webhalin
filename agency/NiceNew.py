@@ -271,9 +271,23 @@ def select_discount_and_confirm(driver, radio_xpath):
         driver.execute_script("arguments[0].click();", discount_button)
         print(Colors.BLUE + "할인 처리 완료" + Colors.ENDC)
 
-        # 할인권 클릭 후 화면 변화 확인 (2초 대기)
-        time.sleep(2)
-        print("DEBUG: 할인권 클릭 후 화면 안정화 대기 완료.")
+        # 할인권 클릭 후 실제 적용 여부 검증 (HTML 분석 기반, 최대 5초 대기)
+        try:
+            # '적용된 할인권' 영역(apply_ticket_box)이 DOM에 생성되는지 확인
+            # 제공해주신 HTML: <div ... class="w2group apply_ticket_box blue etc">
+            verify_xpath = "//*[contains(@class, 'apply_ticket_box')]"
+            WebDriverWait(driver, 5).until(
+                EC.presence_of_element_located((By.XPATH, verify_xpath))
+            )
+            print(Colors.BLUE + "검증 성공: 할인권이 정상적으로 목록에 등록되었습니다." + Colors.ENDC)
+            
+            # 검증 성공 후 화면 UI 안정화를 위해 잠시 대기
+            time.sleep(1)
+
+        except TimeoutException:
+            print(Colors.RED + "검증 실패: 할인 버튼을 눌렀으나 '적용된 할인권'이 나타나지 않음. (할인 미적용)" + Colors.ENDC)
+            # 할인 적용이 안 됐으므로 로그아웃 전 False 반환
+            return False
 
         # 할인권 클릭 이후
         driver.execute_script("document.getElementById('___processbar2').style.display='none';")
