@@ -268,7 +268,7 @@ TARGET_URLS_NEW_AMANO = [
     "https://a22037.pweb.kr","https://a21320.pweb.kr/","https://a21347.pweb.kr/"
     ,"https://a21351.pweb.kr/","http://a16591.parkingweb.kr","http://1.223.26.123/login"
     ,"https://a22496.pweb.kr/login","https://a22039.pweb.kr/login"
-    ,"https://a21949.pweb.kr/login","https://a21771.pweb.kr/login"
+    ,"https://a21949.pweb.kr/login","https://a21771.pweb.kr/login","https://a22730.pweb.kr/login"
 ]
 
 
