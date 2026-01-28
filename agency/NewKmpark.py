@@ -668,18 +668,7 @@ def handle_ticket(driver, park_id, ticket_name, ori_car_num):
 
     # ✅ 19477 전용 할인 처리
     if park_id == 19477:
-        try:
-            # 차량 검색 결과에 따라 차량 선택
-            rows = WebDriverWait(driver, 3).until(
-                EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#page-view tbody.gbox-body tr.gbox-body-row"))
-            )
-            print(f"DEBUG: 차량 목록 {len(rows)}건 발견됨 → 차량 선택 시도")
-            if not select_car_in_table(driver, ori_car_num):
-                print("❌ 19477 - 차량 선택 실패, 로그아웃 후 종료")
-                logout(driver)
-                return False
-        except TimeoutException:
-            print("DEBUG: 차량 검색 결과가 1건 → 차량 선택 생략")
+        # 중복 차량 선택 로직 제거함 (상단 handle_ticket 진입 시 이미 수행됨)
 
         print(f"DEBUG: 19477 전용 할인 처리 시작 (ticket_name={ticket_name})")
         if ticket_name == "평일1일권":
@@ -708,11 +697,31 @@ def handle_ticket(driver, park_id, ticket_name, ori_car_num):
                 # 3. 버튼 클릭 실행
                 print("DEBUG: 할인 버튼 강제 클릭 실행")
                 driver.execute_script("arguments[0].click();", target_button)
-                time.sleep(1)  # 할인 내역이 UI에 반영될 시간을 줌
+                time.sleep(2)  # 할인 내역이 UI에 반영될 시간을 줌 (1초 -> 2초 늘림)
 
                 # 4. (핵심) 클릭 후, 할인이 실제로 적용되었는지 최종 확인
                 print("DEBUG: 할인이 실제로 적용되었는지 최종 확인합니다...")
-                is_applied_successfully = check_if_discount_applied(driver)
+                
+                # 19477 Strict Verification: 단순히 칸이 있는지가 아니라, '24시간' 또는 '무료' 텍스트가 있는지 확인
+                is_applied_successfully = False
+                if check_if_discount_applied(driver):
+                    try:
+                        # 이미 check_if_discount_applied에서 기다렸으므로 바로 찾음
+                        discount_cell = driver.find_element(By.XPATH, "//td[contains(text(), '할인 내역')]/following-sibling::td")
+                        applied_discounts = discount_cell.find_elements(By.CLASS_NAME, "qbox-filter-field")
+                        for discount in applied_discounts:
+                            d_text = discount.text.replace("\n", "").replace(" ", "")
+                            # 유효 키워드 확인
+                            if "24시간" in d_text or "무료" in d_text:
+                                is_applied_successfully = True
+                                print(f"DEBUG: 19477 유효 할인 내역 확인됨: {discount.text}")
+                                break
+                        
+                        if not is_applied_successfully:
+                            print(f"WARNING: 할인 내역 감지되었으나 식별 키워드(24시간, 무료) 부재 -> False 처리 ({park_id})")
+                    except Exception as e:
+                        print(f"WARNING: 19477 정밀 검증 오류: {e}")
+                        is_applied_successfully = False
 
                 # 5. 최종 결과에 따라 로그아웃 및 결과 반환
                 logout(driver)
