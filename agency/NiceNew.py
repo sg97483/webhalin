@@ -915,6 +915,11 @@ def web_har_in(target, driver):
                     driver,
                     "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']"
                 )
+            elif ticket_name == "휴일 당일권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']"
+                )
             else:
                 return handle_invalid_ticket(driver)
 
