@@ -38,7 +38,6 @@ parkTypeHighCity = [
     Parks.TWIN_CITY,
     Parks.RIVER_TOWER,
     Parks.EG_BUILDING,
-    #Parks.MUNJUNG_PLAZA,
     Parks.KOREANA_HOTEL,
     Parks.DONGSAN_GONGYEONG,
     Parks.D_TOWER,
