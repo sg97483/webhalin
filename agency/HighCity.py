@@ -74,13 +74,6 @@ mapIdToWebInfo = {
             "javascript:applyDiscount('20', '1', '', 'ppark', '1', '0');",
             "javascript:applyDiscount('32', '1', '', 'ppark(야간)', '1', '0') ;",
             ],
-    # (하이파킹) 오라카이대학로
-    19181: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
-            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
-            "chk",
-            "javascript:applyDiscount('21', '1', '', 'ppark', '999999999', '0');",
-            "javascript:applyDiscount('21', '1', '', 'ppark', '999999999', '0');"
-            ],
 
     #  코리아나호텔
     19248: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",

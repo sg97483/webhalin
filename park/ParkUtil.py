@@ -76,7 +76,6 @@ def get_park_search_css(park_id):
 
 
 check_searched_car_number_self = [
-    Parks.ORAKAI_DAEHAKRO,
     18973
 ]
 

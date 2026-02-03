@@ -60,10 +60,6 @@ parkTypeHighCity = [
 
 ]
 
-parkTypeHighCity2 = [
-    Parks.ORAKAI_DAEHAKRO
-]
-
 
 parkTypeBlue = [
     4588,
@@ -405,7 +401,6 @@ haveOneKey = [
     Parks.V_PLEX,
     Parks.NY_TOWER,
     Parks.EG_BUILDING,
-    Parks.ORAKAI_DAEHAKRO,
     Parks.KOREANA_HOTEL
 ]
 
@@ -505,8 +500,7 @@ mapToAgency = {
     ARC_PLACE: "/html/body/table[2]/tbody/tr[3]/td[2]/text()[1]",
     AJ_PARK: "body > div.wrap > section > div > section > div:nth-child(2) > div > dl:nth-child(4) > dd",
     HIGH_CITY_2: "#search_form > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)",
-    OLD_AJ: "/html/body/table[2]/tbody/tr[3]/td[2]/text()[1]",
-    Parks.ORAKAI_DAEHAKRO: "#search_form > table > tbody > tr > td:nth-child(2) > table:nth-child(3) > tbody > tr:nth-child(2) > td:nth-child(2)"
+    OLD_AJ: "/html/body/table[2]/tbody/tr[3]/td[2]/text()[1]"
 }
 
 mapToHarinUrl = {
@@ -540,8 +534,6 @@ def get_park_type(park_id):
 
     if park_id in parkTypeHighCity:
         return HIGH_CITY
-    elif park_id in parkTypeHighCity2:
-        return HIGH_CITY_2
     elif park_id in parkTypeBlue:
         return BLUE
     elif park_id in parkTypeDarae:
