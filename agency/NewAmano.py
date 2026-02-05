@@ -319,7 +319,7 @@ def handle_popup_and_go_discount(driver, park_id):
     park_popup_and_discount_url = {
         19335: "http://112.216.125.10/discount/registration",
         19934: "https://a17687.pweb.kr/discount/registration",
-        19253: "https://175.195.124.15/discount/registration",
+        19253: "http://175.195.124.15/discount/registration",
         19887: "https://a15820.parkingweb.kr/discount/registration",
         19842: "https://a14417.parkingweb.kr/discount/registration",
         19903: "https://s1151.parkingweb.kr:6650/discount/registration",

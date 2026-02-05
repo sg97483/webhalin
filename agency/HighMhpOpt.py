@@ -7076,12 +7076,38 @@ def web_har_in(target, driver):
                         return handle_invalid_ticket(driver)
 
 
-                elif park_id == 19860:
+                elif park_id == 29269:
 
-                    if ticket_name in ["평일 당일권(월, 지하 2층 전용)", "평일 당일권(화, 지하 2층 전용)", "평일 당일권(수, 지하 2층 전용)", "평일 당일권(목, 지하 2층 전용)", "평일 당일권(금, 지하 2층 전용)"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
-                            "//*[@id='discountItemsDataRadio_c2e7ee25136644b18e485b972313a9a9']",
+                            "//*[@id='discountItemsDataRadio_a7fb5a271265408c8cd845a39793ee6d']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name in ["평일 6시간권(월-목)", "평일 6시간권(금)"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_d5d57506ed584a3aa2c36d8a46518917']",
+                            btn_confirm_xpath
+                        )
+
+                    else:
+                        return handle_invalid_ticket(driver)
+
+
+                elif park_id == 19860:
+
+                    if ticket_name in [
+                        "평일 당일권(월, 지하 2층 전용)",
+                        "평일 당일권(화, 지하 2층 전용)",
+                        "평일 당일권(수, 지하 2층 전용)",
+                        "평일 당일권(목, 지하 2층 전용)",
+                        "평일 당일권(금, 지하 2층 전용)"
+                    ]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_c7426c51aa2a4ad9be677a9e16982832']",
                             btn_confirm_xpath
                         )
 
