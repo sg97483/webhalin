@@ -144,7 +144,7 @@ mapIdToWebInfo = {
         "//*[@id='login']/table[1]/tbody/tr[3]/td[2]/input",  # 2: 로그인 버튼
         "carNumber",  # 3: 차량번호 입력
         "/html/body/table[2]/tbody/tr[5]/td/input",  # 4: 검색 버튼
-        "BTN_공유서비스 종일"  # 5: 할인 버튼 ID (예시)
+        ""  # 5: radio 버튼 없음 (할인 버튼은 ticket_name에 따라 별도 처리)
     ],
 
     # 오라카이 청계산
@@ -306,9 +306,9 @@ def get_har_in_script(park_id, ticket_name):
 
     if park_id == 19174:
         t = ticket_name.strip()  # ← 이 줄 추가
-        if t in ["평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
+        if t in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
             return "BTN_공유서비스 종일"
-        elif t in ["휴일 24시간권(토)", "휴일 24시간권(일)"]:
+        elif t in ["휴일 당일권(토)", "휴일 당일권(일)"]:
             return "BTN_공유서비스 주말"
         elif t == "평일 12시간권(화~금)":
             return "BTN_12시간권_O2O"
@@ -316,6 +316,10 @@ def get_har_in_script(park_id, ticket_name):
             return "BTN_공유서비스 야간"
         elif t == "평일 3시간권":
             return "BTN_공유서비스 (3시간)"
+        elif t == "평일 2시간권":
+            return "BTN_공유서비스 (2시간)"
+        elif t == "평일 1시간권":
+            return "BTN_공유서비스 (1시간)"
         else:
             return False
 
