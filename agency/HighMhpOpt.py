@@ -1450,7 +1450,7 @@ def web_har_in(target, driver):
                             "//*[@id='discountItemsDataRadio_c6b465dbbb9d431bb8659025e52851d2']",
                             btn_confirm_xpath
                         )
-                    elif ticket_name in ["평일 심야권", "휴일 심야권"]:
+                    elif ticket_name in ["평일 야간권", "휴일 야간권"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_330b95139d0a4c14a1c2e1a85fa90b32']",
