@@ -54,7 +54,7 @@ TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.k
     ,"http://211.55.2.163/login","https://a19813.pweb.kr/","https://a22037.pweb.kr","https://a21320.pweb.kr/"
     ,"https://a21347.pweb.kr/","https://a21351.pweb.kr/","http://a16591.parkingweb.kr","http://1.223.26.123/login"
     ,"https://a22496.pweb.kr/login","https://a22039.pweb.kr/login","https://a21949.pweb.kr/login"
-    ,"https://a21771.pweb.kr/login","https://a22730.pweb.kr/login"
+    ,"https://a21771.pweb.kr/login","https://a22730.pweb.kr/login","http://1.225.144.66/login"
                ]
 
 def get_park_ids_by_urls(target_urls):
@@ -116,7 +116,7 @@ if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_
         ,"https://a22037.pweb.kr","https://a21320.pweb.kr/","https://a21347.pweb.kr/"
         ,"https://a21351.pweb.kr/","http://a16591.parkingweb.kr","http://1.223.26.123/login"
         ,"https://a22496.pweb.kr/login","https://a22039.pweb.kr/login","https://a21949.pweb.kr/login"
-        ,"https://a21771.pweb.kr/login","https://a22730.pweb.kr/login"]
+        ,"https://a21771.pweb.kr/login","https://a22730.pweb.kr/login","http://1.225.144.66/login"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["userId", "userPwd", "//*[@id='btnLogin']", "schCarNo", "//*[@id='sForm']/input[3]"]
@@ -242,7 +242,7 @@ def enter_car_number(driver, car_number_last4, park_id):
         print(f"DEBUG: 차량번호 '{car_number_last4}' 입력 완료.")
 
         # park_id별 검색 버튼 처리
-        if park_id in [18938, 18577, 19906, 19258, 19239, 19331,19077,16096,45010,14618,19253,19882,29141,19905,19424]:  # 특정 park_id 전용 처리
+        if park_id in [18938, 18577, 19906, 19258, 19239, 19331,19077,16096,45010,14618,19253,19882,29141,19905,19424,29329]:  # 특정 park_id 전용 처리
             search_button = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.XPATH, "//input[@class='btnS1_1 btn' and @value='검색']"))
             )
@@ -356,7 +356,8 @@ def handle_popup_and_go_discount(driver, park_id):
         29331: "https://a22039.pweb.kr/discount/registration",
         29330: "https://a21949.pweb.kr/discount/registration",
         29478: "https://a22730.pweb.kr/discount/registration",
-        19941: "https://a17902.pweb.kr/discount/registration"
+        19941: "https://a17902.pweb.kr/discount/registration",
+        29329: "http://1.225.144.66/discount/registration"
     }
 
     if park_id not in park_popup_and_discount_url:
@@ -370,9 +371,27 @@ def handle_popup_and_go_discount(driver, park_id):
         )
         print(f"DEBUG: park_id={park_id} 로그인 후 안내 팝업 감지됨.")
 
-        close_button = popup.find_elements(By.CLASS_NAME, "modal-btn")[-1]
-        close_button.click()
-        print(f"DEBUG: park_id={park_id} 팝업 '닫기' 버튼 클릭 완료.")
+        if park_id == 29329:
+            # 29329: '7일간 보지 않기' 버튼 찾아서 클릭
+            buttons = popup.find_elements(By.CLASS_NAME, "modal-btn")
+            clicked_7days = False
+            for btn in buttons:
+                if "7일간" in btn.text:
+                    btn.click()
+                    print(f"DEBUG: park_id={park_id} 팝업 '7일간 보지 않기' 버튼 클릭 완료.")
+                    clicked_7days = True
+                    break
+            
+            if not clicked_7days and buttons:
+                # 텍스트로 못 찾으면 첫번째 버튼(보통 7일간 보지 않기) 클릭
+                buttons[0].click()
+                print(f"DEBUG: park_id={park_id} 팝업 '7일간 보지 않기'(첫번째 버튼) 클릭 완료.")
+
+        else:
+            # 기본: 마지막 버튼('닫기') 클릭
+            close_button = popup.find_elements(By.CLASS_NAME, "modal-btn")[-1]
+            close_button.click()
+            print(f"DEBUG: park_id={park_id} 팝업 '닫기' 버튼 클릭 완료.")
 
         WebDriverWait(driver, 5).until(EC.invisibility_of_element((By.CLASS_NAME, "modal-box")))
         print(f"DEBUG: park_id={park_id} 팝업이 완전히 사라짐.")
@@ -468,7 +487,7 @@ def enter_password(driver, user_password, park_id):
     """
     try:
         # 19489, 18938 전용
-        if park_id in [19489, 18938, 19906,19258,19239,19331,19077,16096,45010,14618,19253,19882,29141,19905,19424,19488]:
+        if park_id in [19489, 18938, 19906,19258,19239,19331,19077,16096,45010,14618,19253,19882,29141,19905,19424,19488,29329]:
             print(f"DEBUG: {park_id} 전용 비밀번호 필드 탐색")
             password_field = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.NAME, "userPwd"))
@@ -696,6 +715,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19250: {"평일 당일권": "18","평일 6시간권": "18", "평일 당일권(월,화)": "18", "평일 당일권(수~금)": "18", "금토 2일연박권": "44", "주말 당일권(일요일)": "18", "주말 당일권(토요일)": "18", "평일 심야권": "19"},
         19852: {"평일 당일권": "14"},
         19905: {"평일2시간권": "10"},
+        29329: {"3시간권": "12"},
         19335: {"평일1일권": "6", "주말1일권": "6"},
         29325: {"평일 당일권": "5", "휴일 당일권": "5", "심야권": "4"},
         29354: {"평일 5시간권	": "29", "평일 당일권": "25", "평일 오후권": "28", "휴일 당일권": "25", "휴일 심야권": "26", "평일 심야권": "26"},
