@@ -55,7 +55,7 @@ TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.k
     ,"https://a21347.pweb.kr/","https://a21351.pweb.kr/","http://a16591.parkingweb.kr","http://1.223.26.123/login"
     ,"https://a22496.pweb.kr/login","https://a22039.pweb.kr/login","https://a21949.pweb.kr/login"
     ,"https://a21771.pweb.kr/login","https://a22730.pweb.kr/login","http://1.225.144.66/login"
-    ,"http://a18217.pweb.kr/login","http://a21069.pweb.kr/"
+    ,"http://a18217.pweb.kr/login","http://a21069.pweb.kr/","http://a15213.parkingweb.kr"
                ]
 
 def get_park_ids_by_urls(target_urls):
@@ -118,7 +118,8 @@ if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_
         ,"https://a21351.pweb.kr/","http://a16591.parkingweb.kr","http://1.223.26.123/login"
         ,"https://a22496.pweb.kr/login","https://a22039.pweb.kr/login","https://a21949.pweb.kr/login"
         ,"https://a21771.pweb.kr/login","https://a22730.pweb.kr/login"
-        ,"http://1.225.144.66/login","http://a18217.pweb.kr/login","http://a21069.pweb.kr/"]
+        ,"http://1.225.144.66/login","http://a18217.pweb.kr/login"
+        ,"http://a21069.pweb.kr/","http://a15213.parkingweb.kr"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["userId", "userPwd", "//*[@id='btnLogin']", "schCarNo", "//*[@id='sForm']/input[3]"]
@@ -360,6 +361,7 @@ def handle_popup_and_go_discount(driver, park_id):
         29478: "https://a22730.pweb.kr/discount/registration",
         19941: "https://a17902.pweb.kr/discount/registration",
         29454: "http://a21069.pweb.kr/discount/registration",
+        19867: "http://a15213.parkingweb.kr/discount/registration",
         29329: "http://1.225.144.66/discount/registration"
     }
 
@@ -727,6 +729,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19438: {"평일 심야권": "16", "평일 당일권(수)": "17", "평일 당일권(목)": "17", "평일 당일권(금)": "17", "휴일 당일권": "17"},
         29114: {"평일 당일권": "9", "주말 당일권": "9"},
         29335: {"평일 5시간권": "2", "평일 당일권": "4", "휴일 당일권": "4", "심야권": "3"},
+        19867: {"평일 3시간권": "13", "평일 당일권": "4", "휴일 3시간권": "13", "휴일 당일권": "4"},
         19189: {"평일1일권": "12", "주말1일권": "12"},
         29324: {"평일 당일권": "7", "휴일 당일권": "7", "야간권": "8"},
         29234: {"평일 당일권(야외전용, 월)": "8", "평일 당일권(야외전용, 화)": "8", "평일 당일권(야외전용, 수)": "8", "평일 당일권(야외전용, 목)": "8", "평일 당일권(야외전용, 금)": "8", "야간권(야외전용)": "9", "휴일 당일권(토)": "11", "휴일 당일권(일)": "11"},
@@ -1038,6 +1041,48 @@ def close_popup_for_19869(driver, park_id):
         print("DEBUG: 19869 팝업이 감지되지 않음 (정상일 수 있음).")
 
 
+
+def close_popup_for_19867(driver, park_id):
+    """
+    park_id = 19867 접속 시 뜨는 안내 팝업의 '7일간 보지 않기' 버튼 클릭
+    """
+    if park_id != 19867:
+        return
+
+    try:
+        # 팝업 감지
+        popup = WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "modal-box"))
+        )
+        print(f"DEBUG: {park_id} 안내 팝업 감지됨.")
+
+        # '7일간 보지 않기' 버튼 찾기
+        buttons = popup.find_elements(By.CLASS_NAME, "modal-btn")
+        clicked = False
+        for btn in buttons:
+            if "7일간" in btn.text:
+                btn.click()
+                print(f"DEBUG: {park_id} 팝업 '7일간 보지 않기' 버튼 클릭 완료.")
+                clicked = True
+                break
+        
+        # 만약 '7일간' 텍스트를 못 찾았는데 버튼이 있다면 첫 번째 버튼 클릭
+        if not clicked and buttons:
+            buttons[0].click()
+            print(f"DEBUG: {park_id} 팝업 첫 번째 버튼 클릭 (대체 처리).")
+
+        # 팝업 사라질 때까지 대기
+        WebDriverWait(driver, 5).until(
+            EC.invisibility_of_element((By.CLASS_NAME, "modal-box"))
+        )
+        print(f"DEBUG: {park_id} 팝업 닫힘 완료.")
+
+    except TimeoutException:
+        print(f"DEBUG: {park_id} 팝업이 감지되지 않음 (정상).")
+    except Exception as e:
+        print(f"ERROR: {park_id} 팝업 처리 중 예외 발생: {e}")
+
+
 def close_popup_for_19191(driver, park_id):
     """
     park_id = 19191 접속 시 뜨는 안내 팝업의 '닫기' 버튼 클릭
@@ -1135,6 +1180,7 @@ def web_har_in(target, driver):
         close_popup_for_19869(driver, park_id)
         close_popup_for_19424(driver, park_id)
         close_popup_for_19191(driver, park_id)
+        close_popup_for_19867(driver, park_id)
 
         # ✅ 여기! 로그인 상태라면 강제 로그아웃 시도
         try_force_logout_if_already_logged_in(driver, park_id)
