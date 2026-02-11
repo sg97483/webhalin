@@ -315,11 +315,11 @@ def get_har_in_script(park_id, ticket_name):
         elif t in ["평일 심야권", "휴일 심야권"]:
             return "BTN_공유서비스 야간"
         elif t == "평일 3시간권":
-            return "BTN_공유서비스 (3시간)"
+            return "BTN_3시간권(공유서비스)"
         elif t == "평일 2시간권":
-            return "BTN_공유서비스 (2시간)"
+            return "BTN_2시간권(공유서비스)"
         elif t == "평일 1시간권":
-            return "BTN_공유서비스 (1시간)"
+            return "BTN_1시간권(공유서비스)"
         else:
             return False
 
