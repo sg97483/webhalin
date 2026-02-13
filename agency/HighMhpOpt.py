@@ -131,6 +131,49 @@ def select_discount_and_confirm(driver, radio_xpath, confirm_button_xpath):
 
         # 확인 버튼 클릭
         driver.find_element(By.XPATH, confirm_button_xpath).click()
+        
+        # ---------------------------------------------------------------
+        # 💡 [예외 처리] "입차당 할인 한도 적용 불가" 팝업 감지
+        # ---------------------------------------------------------------
+        try:
+            Util.sleep(1)  # 팝업이 렌더링될 시간을 잠시 대기
+            
+            # 팝업 내 텍스트 확인
+            limit_msg_elements = driver.find_elements(By.XPATH, "//div[@role='alertdialog']//p[contains(text(), '입차당 할인 한도 적용 불가')]")
+            
+            if len(limit_msg_elements) > 0:
+                print(Colors.YELLOW + "⚠️ [입차당 할인 한도 적용 불가] 팝업이 감지되었습니다." + Colors.ENDC)
+                
+                # 팝업 내 '확인' 버튼 찾기
+                confirm_btns = driver.find_elements(By.XPATH, "//div[@role='alertdialog']//span[@data-i18n-key='confirm']")
+                
+                if len(confirm_btns) > 0:
+                    confirm_btns[0].click() # 부모 button이 아니라 span을 클릭해도 이벤트 버블링으로 동작 예상되나, 안전하게 클릭
+                    print("⚠️ 팝업 '확인' 버튼 클릭 완료.")
+                else:
+                    # span을 못 찾은 경우 팝업 내 button 태그 검색
+                    btns = driver.find_elements(By.XPATH, "//div[@role='alertdialog']//button")
+                    if len(btns) > 0:
+                        btns[0].click()
+                        print("⚠️ 팝업 '확인(대체)' 버튼 클릭 완료.")
+                
+                Util.sleep(1)
+                
+                # 팝업 닫은 후 로그아웃 시도
+                try:
+                    driver.find_element(By.XPATH, side_nav_xpath).click()
+                    print("🚪 한도 초과 팝업 처리 후 로그아웃 완료.")
+                except Exception as out_ex:
+                    print(f"⚠️ 로그아웃 중 예외: {out_ex}")
+                
+                # 실패 처리(False) 반환
+                return False
+                
+        except Exception as p_ex:
+            # 팝업 체크 중 에러가 나더라도 메인 로직은 계속 진행 (로그만 출력)
+            print(f"DEBUG: 팝업 체크 중 예외 발생(무시됨): {p_ex}")
+        # ---------------------------------------------------------------
+
         driver.implicitly_wait(3)
 
         print(Colors.BLUE + "✅ 할인권 클릭 및 확인 완료" + Colors.ENDC)
@@ -845,6 +888,13 @@ def web_har_in(target, driver):
                             "//*[@id='discountItemsDataRadio_5f1421c404084c46a9b637e1d9677cee']",
                             btn_confirm_xpath
                         )
+                    elif ticket_name == "평일 5시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_0a5c7d594401410682e5f07d8527cfd9']",
+                            btn_confirm_xpath
+                        )
+
                     elif ticket_name == "평일 3시간권":
                         return select_discount_and_confirm(
                             driver,
