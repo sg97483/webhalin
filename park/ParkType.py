@@ -276,7 +276,7 @@ TARGET_URLS_NEW_KMPARK = [
     ,"http://kmp0000089.iptime.org/","http://kmp0000403.iptime.org/","http://kmp0000131.iptime.org/"
     ,"http://kmp0000748.iptime.org/","http://kmp0000025.iptime.org/","http://kmp0000099.iptime.org/"
     ,"http://kmp0000871.iptime.org/","http://kmp0000869.iptime.org/","http://kmp0000525.iptime.org/"
-    ,"http://kmp0000007.iptime.org/","http://kmp0000678.iptime.org"]
+    ,"http://kmp0000007.iptime.org/","http://kmp0000678.iptime.org","http://kmp0000571.iptime.org/"]
 
 # DB에서 park_id 동적 조회
 dynamic_park_ids = get_park_ids_by_urls(TARGET_URLS)
