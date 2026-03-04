@@ -45,7 +45,6 @@ parkTypeHighCity = [
     Parks.GRAND_CENTRAL,
     Parks.MUGUNG,
     Parks.HAEUNDAE_IPARK,
-    20864,
     19174,
     19185,
     19492,#반포2동공영
@@ -443,7 +442,7 @@ haveFourKey = [
 
 haveFiveKey = [
     # Parks.HONG_MUN_KWAN
-    Parks.SEOUL_TRAIN
+    # Parks.SEOUL_TRAIN
 ]
 
 parkTypeNoRequestMain = [

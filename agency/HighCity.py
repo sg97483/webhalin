@@ -126,17 +126,6 @@ mapIdToWebInfo = {
             ],
 
 
-    # (하이파킹) 서울역 주차장
-    20864: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
-            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
-            "chk",
-            "javascript:applyDiscount('12', '', '5', '01|', 'ppark', '1', '0');",  # 평일1일권
-            "javascript:applyDiscount('25', '', '1', '', 'ppark(연박2일)', '1', '0');",  # 연박2일권"",
-            "javascript:applyDiscount('26', '', '1', '', 'ppark(연박3일)', '1', '0');",  # 연박3일권"",
-            "javascript:applyDiscount('27', '', '1', '', 'ppark(연박4일)', '1', '0');",  # 연박4일권"",
-            "javascript:applyDiscount('28', '', '1', '', 'ppark(연박5일)', '1', '0');",  # 연박5일권"",
-            ],
-
     # TURU 을지트윈타워 (할인 버튼을 직접 클릭하므로 스크립트는 불필요)
     19174: [
         "name_form",  # 0: ID 입력 필드
@@ -257,24 +246,6 @@ mapIdToWebInfo = {
 def get_har_in_script(park_id, ticket_name):
     # 1. 특정 주차장 + 특정 티켓 분기
 
-    if park_id == 20864:
-        if ticket_name == "평일 3시간권":
-            return "javascript:applyDiscount('88', '', '1', '', '평일3시간권(공유서비스)', '1', '0');"
-        elif ticket_name == "평일 오후 6시간권":
-            return "javascript:applyDiscount('90', '', '1', '', '평일오후6시간권(공유)', '1', '0');"
-        elif ticket_name in ["평일 당일권", "휴일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
-            return "javascript:applyDiscount('12', '', '5', '01|10|', 'ppark', '1', '0');"
-        elif ticket_name == "2일권":
-            return "javascript:applyDiscount('25', '', '1', '', 'ppark(연박2일)', '1', '0');"
-        elif ticket_name == "3일권":
-            return "javascript:applyDiscount('26', '', '1', '', 'ppark(연박3일)', '1', '0');"
-        elif ticket_name == "4일권":
-            return "javascript:applyDiscount('27', '', '1', '', 'ppark(연박4일)', '1', '0');"
-        elif ticket_name == "5일권":
-            return "javascript:applyDiscount('28', '', '1', '', 'ppark(연박5일)', '1', '0');"
-        else:
-            return False  # ❗️지정되지 않은 ticket_name은 처리하지 않음
-
 
     if park_id == 19325:
         if ticket_name in [
@@ -386,7 +357,7 @@ def get_har_in_script(park_id, ticket_name):
 
 
 def check_discount_alert(driver, park_id=None):
-    if park_id in [20863, 19364, 19325, 16003, 20864, 19456, 19194]:
+    if park_id in [20863, 19364, 19325, 16003, 19456, 19194]:
         print("✅ 할인 결과 알림창 없음 → 예외 없이 성공 처리 (예상된 구조)")
         return True
 
