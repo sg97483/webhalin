@@ -3475,19 +3475,17 @@ def web_har_in(target, driver):
                             "//*[@id='discountItemsDataRadio_3ba2ee7fad8f401b8759bf4ab983424a']",
                             btn_confirm_xpath
                         )
-
-
-                    elif ticket_name in ["평일 12시간권(월,화)", "평일 12시간권(수~금)"]:
-                        return select_discount_and_confirm(
-                            driver,
-                            "//*[@id='discountItemsDataRadio_78cd981b00f149caa968aa397ed3da87']",
-                            btn_confirm_xpath
-                        )
-
                     elif ticket_name == "휴일 당일권":
                         return select_discount_and_confirm(
                             driver,
-                            "//*[@id='discountItemsDataRadio_c81c5bc23f914b90add723692af20072']",
+                            "//*[@id='discountItemsDataRadio_74b69bc572d949a48fee277f1d5c1e7f']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name in ["평일 12시간권(월,화)", "평일 12시간권(수~금)", "평일 12시간권"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_78cd981b00f149caa968aa397ed3da87']",
                             btn_confirm_xpath
                         )
 
