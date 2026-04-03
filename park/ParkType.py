@@ -46,7 +46,6 @@ parkTypeHighCity = [
     Parks.MUGUNG,
     Parks.HAEUNDAE_IPARK,
     19174,
-    19185,
     19492,#반포2동공영
     29248,#DWI 마곡595빌딩 주차장
     29364,#역삼아르누보시티

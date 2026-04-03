@@ -136,15 +136,6 @@ mapIdToWebInfo = {
         ""  # 5: radio 버튼 없음 (할인 버튼은 ticket_name에 따라 별도 처리)
     ],
 
-    # 오라카이 청계산
-    19185: ["user_id", "password", "//input[@type='button']",
-            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
-            "chk",
-            "javascript:applyDiscount('31', '1', '', '파킹박', '1', '0')   ",  # 평일1일권
-            "javascript:applyDiscount('31', '1', '', '파킹박', '1', '0')  ",  # 주말
-            "javascript:applyDiscount('31', '1', '', '파킹박', '1', '0') ",
-            ],
-
 
     # GS타임즈 반포2동공영
     19492: ["user_id", "user_pw", "//*[@id='btnLogin']",
