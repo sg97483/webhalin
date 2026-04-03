@@ -40,7 +40,6 @@ parkTypeHighCity = [
     Parks.EG_BUILDING,
     Parks.KOREANA_HOTEL,
     Parks.DONGSAN_GONGYEONG,
-    Parks.D_TOWER,
     Parks.BANPO_DONG_GONGYONG,
     Parks.GRAND_CENTRAL,
     Parks.MUGUNG,

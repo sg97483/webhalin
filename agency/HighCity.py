@@ -91,14 +91,7 @@ mapIdToWebInfo = {
             "javascript:applyDiscount('08', '1', '01|', 'ppark', '1', '0');",
             "javascript:applyDiscount('08', '1', '01|', 'ppark', '1', '0');",
             ],
-    #  D타워
-    19325: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
-            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
-            "chk",
-            "javascript:applyDiscount('14', '1', '11|20|21|', 'ppark', 'Y');",
-            "javascript:applyDiscount('14', '1', '11|20|21|', 'ppark', 'Y');",
-            "javascript:applyDiscount('17', '1', '11|20|21|', 'ppark(야간)', 'Y');",  # ← 이 부분 고쳐야 함
-            ],
+
     #  반포동방음언덕형공영
     19273: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
@@ -228,22 +221,6 @@ def get_har_in_script(park_id, ticket_name):
     # 1. 특정 주차장 + 특정 티켓 분기
 
 
-    if park_id == 19325:
-        if ticket_name in [
-            "평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"
-        ]:
-            return "javascript:applyDiscount('14', '1', '11|20|21|', 'ppark', 'Y');"
-        elif ticket_name in [
-            "평일 12시간권(월)", "평일 12시간권(화~금)", "평일 12시간권"
-        ]:
-            return "javascript:applyDiscount('75', '1', '', '12시간', '');"
-        elif ticket_name == "휴일 당일권":
-            return "javascript:applyDiscount('83', '1', '20|21|', 'ppark(주말24시간)', 'Y');"
-        elif ticket_name in ["평일 심야권(일~목)", "심야권(금,토)"]:
-            return "javascript:applyDiscount('17', '1', '11|20|21|', 'ppark(야간)', 'Y');"
-        else:
-            return False
-
     if park_id == 16003:
         if ticket_name in ["평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)", "휴일 당일권"]:
             return "javascript:applyDiscount('98', '5', '25|29|', '파킹박', '1', '0');"
@@ -338,7 +315,7 @@ def get_har_in_script(park_id, ticket_name):
 
 
 def check_discount_alert(driver, park_id=None):
-    if park_id in [20863, 19364, 19325, 16003, 19456, 19194]:
+    if park_id in [20863, 19364, 16003, 19456, 19194]:
         print("✅ 할인 결과 알림창 없음 → 예외 없이 성공 처리 (예상된 구조)")
         return True
 
@@ -1061,20 +1038,6 @@ def web_har_in(target, driver):
                             except Exception as e:
                                 print(Colors.RED + f"❌ 20863 할인 처리 실패: {e}" + Colors.ENDC)
                                 return False
-
-                        if park_id == 19325:
-                            try:
-                                chk_elem = WebDriverWait(driver, 3).until(
-                                    EC.presence_of_element_located((By.ID, "chk")))
-                                is_checked = driver.execute_script("return arguments[0].checked;", chk_elem)
-                                if not is_checked:
-                                    driver.execute_script("arguments[0].checked = true;", chk_elem)
-                                    print("✅ 라디오 버튼 'chk' 강제 체크 적용됨 (19325)")
-                                else:
-                                    print("✅ 라디오 버튼 'chk' 이미 체크되어 있음 (19325)")
-                                Util.sleep(0.3)
-                            except Exception as e:
-                                print(f"⚠️ chk 체크 상태 확인 또는 강제화 실패: {e}")
 
 
                         if park_id == 29248:
