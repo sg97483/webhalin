@@ -247,11 +247,11 @@ def handle_multiple_cars(driver, ori_car_num, park_id, ticket_name):
                         discount_buttons[i].click()
                         print(Colors.GREEN + f"✅ 할인 열기 버튼 클릭 완료: {displayed_car_num}" + Colors.ENDC)
                         
-                        # 할인 열기 버튼 클릭 후 잠시 대기
+                        # 할인 열기 버튼 클릭 후 UI 반영될 때까지 대기
                         Util.sleep(2)
                         
-                        # 할인 처리 로직 실행
-                        return process_discount_for_park(driver, park_id, ticket_name)
+                        # 다중 차량에서 할인 열기 성공 (이후 기존 로직이 이어서 처리)
+                        return True
                     else:
                         print(Colors.RED + f"❌ 할인 열기 버튼을 찾을 수 없습니다: {displayed_car_num}" + Colors.ENDC)
                         return False
@@ -528,13 +528,8 @@ def web_har_in(target, driver):
                     print(Colors.BLUE + "다중 차량이 조회되었습니다. 다중 차량 처리 로직을 실행합니다." + Colors.ENDC)
                     # 다중 차량 처리 로직 실행
                     if handle_multiple_cars(driver, ori_car_num, park_id, ticket_name):
-                        # 다중 차량 처리 성공 시 로그아웃 후 종료
-                        try:
-                            driver.find_element(By.XPATH, side_nav_xpath).click()
-                            print(Colors.BLUE + "다중 차량 처리 완료 후 로그아웃." + Colors.ENDC)
-                        except Exception as ex:
-                            print(f"로그아웃 중 예외 발생: {ex}")
-                        return True
+                        print(Colors.BLUE + "다중 차량 '할인 열기' 클릭 완료. 기본 처리 로직을 이어갑니다." + Colors.ENDC)
+                        pass  # 성공 시 아래의 park_id별 할인권 선택 로직으로 자연스럽게 넘어감
                     else:
                         # 다중 차량 처리 실패 시 로그아웃 후 종료
                         try:
@@ -543,7 +538,6 @@ def web_har_in(target, driver):
                         except Exception as ex:
                             print(f"로그아웃 중 예외 발생: {ex}")
                         return False
-
 
                 if park_id == 19598:
                     if ticket_name == "평일 시간권(12시간)":
@@ -7646,6 +7640,26 @@ def web_har_in(target, driver):
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_5e1ee87b7cd04c39b8aa8130c1c186e7']",
+                            btn_confirm_xpath
+                        )
+
+                    else:
+                        return handle_invalid_ticket(driver)
+
+
+                elif park_id == 29484:
+
+                    if ticket_name in ["평일 당일권(기계식, 월)", "평일 당일권(기계식, 화)", "평일 당일권(기계식, 수)", "평일 당일권(기계식, 목)", "평일 당일권(기계식, 금)"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_8ae3dbf7460a4308b811e935a4d44c6d']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name in ["휴일 당일권(자주식, 토)", "휴일 당일권(자주식, 일)"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_8ae3dbf7460a4308b811e935a4d44c6d']",
                             btn_confirm_xpath
                         )
 
