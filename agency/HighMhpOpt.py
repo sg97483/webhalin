@@ -4193,29 +4193,52 @@ def web_har_in(target, driver):
 
 
                 elif park_id == 29226:
-                    if ticket_name == "평일3시간권":
+                    if ticket_name == "평일 3시간권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_38d6f37c1981484d9c9a793d306ba7c8']",
                             btn_confirm_xpath
                         )
-
-                    elif ticket_name == "평일 당일권":
+                    elif ticket_name == "평일 2시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_20360c1e46254c2389544308229e3581']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name == "평일 1시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_d5cc8f3270d54eafb33c400107bd6e50']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name in ["평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_802c71c947b447338c73981f99ea3a8f']",
                             btn_confirm_xpath
                         )
-                    elif ticket_name == "휴일 당일권":
+                    elif ticket_name in ["평일 심야권", "휴일 심야권"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_66a75235248846538f2a48949563947b']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name in ["휴일 당일권(토)", "휴일 당일권(일)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_e4b74f288b944a5ebc99fad8e16faefc']",
                             btn_confirm_xpath
                         )
-                    elif ticket_name == "심야권":
+                    elif ticket_name == "2일연박권(토,일)":
                         return select_discount_and_confirm(
                             driver,
-                            "//*[@id='discountItemsDataRadio_66a75235248846538f2a48949563947b']",
+                            "//*[@id='discountItemsDataRadio_57dd130a0f9d4ec09034ef3eb1dc8d1d']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name == "3일연박권(금,토,일)":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_d6ab607885bc44c4b28d5ccf537ee668']",
                             btn_confirm_xpath
                         )
                     elif ticket_name == "평일 오후 7시간권":
