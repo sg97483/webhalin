@@ -167,7 +167,7 @@ def web_har_in(target):
 
 
     else:
-        print(Colors.BLUE + "웹할인 페이지가 없는 주차장 입니다." + Colors.ENDC)
+        print(Colors.BLUE + "웹할인 페이지가 없는 주차장 입니다. " + Colors.ENDC)
 
 
 repeatCnt = 0
