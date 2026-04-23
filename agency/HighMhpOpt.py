@@ -5423,7 +5423,7 @@ def web_har_in(target, driver):
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name in ["평일 12시간권(월~목)", "평일 12시간권(금)"]:
+                    elif ticket_name in ["평일 12시간권(월~목)", "평일 12시간권(금)", "평일 12시간권"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_7415ecbfb25642bea04d194de8d1876d']",
