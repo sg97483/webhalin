@@ -56,7 +56,7 @@ TARGET_URLS = ["https://a14926.parkingweb.kr/login","https://a05203.parkingweb.k
     ,"https://a22496.pweb.kr/login","https://a22039.pweb.kr/login","https://a21949.pweb.kr/login"
     ,"https://a21771.pweb.kr/login","https://a22730.pweb.kr/login","http://1.225.144.66/login"
     ,"http://a18217.pweb.kr/login","http://a21069.pweb.kr/","http://a15213.parkingweb.kr"
-    ,"http://a22380.pweb.kr/","http://a22733.pweb.kr/login"
+    ,"http://a22380.pweb.kr/","http://a22733.pweb.kr/login","http://a18525.pweb.kr/"
                ]
 
 def get_park_ids_by_urls(target_urls):
@@ -120,7 +120,8 @@ if isinstance(TARGET_URLS, list) and all(isinstance(url, int) for url in TARGET_
         ,"https://a22496.pweb.kr/login","https://a22039.pweb.kr/login","https://a21949.pweb.kr/login"
         ,"https://a21771.pweb.kr/login","https://a22730.pweb.kr/login"
         ,"http://1.225.144.66/login","http://a18217.pweb.kr/login"
-        ,"http://a21069.pweb.kr/","http://a15213.parkingweb.kr","http://a22380.pweb.kr/","http://a22733.pweb.kr/login"]
+        ,"http://a21069.pweb.kr/","http://a15213.parkingweb.kr","http://a22380.pweb.kr/"
+        ,"http://a22733.pweb.kr/login","http://a18525.pweb.kr/"]
 
 # mapIdToWebInfo 동적 생성
 mapIdToWebInfo = {park_id: ["userId", "userPwd", "//*[@id='btnLogin']", "schCarNo", "//*[@id='sForm']/input[3]"]
@@ -743,6 +744,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         29455: {"당일권": "13", "심야권": "14", "6시간권": "15"},
         29481: {"평일 6시간권": "11", "평일 당일권": "8", "평일 심야권": "9", "휴일 당일권": "8", "휴일 심야권": "9", "평일 1시간권": "10"},
         29343: {"평일 당일권": "10", "휴일 당일권": "10", "심야권": "9"},
+        19433: {"주말 24시간권": "16", "평일 24시간권": "16"},
         19943: {"평일 당일권": "10", "주말 당일권": "9", "심야권": "8", "3시간권": "7"},
         19191: {"평일 5시간권(지하3층전용)": "5", "평일 오후권(지하3층전용)": "19", "평일 당일권(지하3층전용)": "17", "휴일 당일권(지하3층전용)": "17"},
         29229: {"평일당일권": "2", "휴일당일권": "2", "심야권": "3", "평일 4시간권": "4", "휴일 4시간권": "4"},

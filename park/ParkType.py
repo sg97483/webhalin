@@ -73,7 +73,6 @@ parkTypeDarae = [
 ]
 
 parkTypeIparking = [
-    19433, # 서초꽃마을
     19448, #예전빌딩
     19459,#동양프라자
     19461,#다산법조메디컬타워
@@ -262,7 +261,7 @@ TARGET_URLS_NEW_AMANO = [
     ,"https://a21949.pweb.kr/login","https://a21771.pweb.kr/login"
     ,"https://a22730.pweb.kr/login","http://1.225.144.66/login"
     ,"http://a18217.pweb.kr/login","http://a21069.pweb.kr/","http://a15213.parkingweb.kr"
-    ,"http://a22380.pweb.kr/","http://a22733.pweb.kr/login"
+    ,"http://a22380.pweb.kr/","http://a22733.pweb.kr/login","http://a18525.pweb.kr/"
 ]
 
 

@@ -19,12 +19,6 @@ mapIdToWebInfo = {
             "#carList > tr",
             "2"
             ],
-    # 서초 꽃마을
-    19433: ["id", "password", "//*[@id='login']",
-            "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
-            "#carList > tr",
-            "2"
-            ],
     # 예전빌딩
     19448: ["id", "password", "//*[@id='login']",
             "carNumber", "//*[@id='container']/section[2]/div[2]/div/button",
