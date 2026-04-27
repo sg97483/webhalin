@@ -59,13 +59,6 @@ mapIdToWebInfo = {
 
             ],
 
-    # 여의도 리버타워
-    20863: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
-            "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
-            "chk",
-            "javascript:applyDiscount('19', '1', '20|', '파킹박');",
-            "javascript:applyDiscount('19', '1', '20|', '파킹박');"
-            ],
     # EG빌딩
     19194: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
@@ -279,12 +272,6 @@ def get_har_in_script(park_id, ticket_name):
             return False
 
 
-    if park_id == 20863:
-        if ticket_name in ["평일 당일권","평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)", "휴일 당일권"]:
-            return "javascript:applyDiscount('19', '1', '05|', '파킹박');"
-        else:
-            return False  # ❗️20863에서 지정된 티켓 외는 실패 처리
-
     # 2. 공통 룰
     if ticket_name[-3:] == "심야권" or ticket_name[-3:] == "야간권":
         if park_id in mapIdToWebInfo:
@@ -315,7 +302,7 @@ def get_har_in_script(park_id, ticket_name):
 
 
 def check_discount_alert(driver, park_id=None):
-    if park_id in [20863, 19364, 16003, 19456, 19194]:
+    if park_id in [19364, 16003, 19456, 19194]:
         print("✅ 할인 결과 알림창 없음 → 예외 없이 성공 처리 (예상된 구조)")
         return True
 
@@ -1015,30 +1002,6 @@ def web_har_in(target, driver):
                             except Exception as e:
                                 print(Colors.RED + f"❌ 19492 할인 처리 중 오류: {e}" + Colors.ENDC)
                                 return False
-
-                        if park_id == 20863:
-                            try:
-                                # ✅ 이미 체크된 상태 유지 → 재클릭 없이 잠시 대기
-                                Util.sleep(0.8)  # 체크박스 선택 적용 시간 확보
-
-                                # ✅ 할인 버튼 클릭 (파킹박)
-                                btn = WebDriverWait(driver, 5).until(
-                                    EC.element_to_be_clickable(
-                                        (By.XPATH, "//input[@type='button' and @value='파킹박']")
-                                    )
-                                )
-                                driver.execute_script("arguments[0].click();", btn)
-                                print("✅ 파킹박 버튼 클릭 완료 (20863)")
-
-                                Util.sleep(1.0)  # 반응 대기
-
-                                # 20863은 alert 없음 → 체크 생략
-                                return True
-
-                            except Exception as e:
-                                print(Colors.RED + f"❌ 20863 할인 처리 실패: {e}" + Colors.ENDC)
-                                return False
-
 
                         if park_id == 29248:
                             try:
