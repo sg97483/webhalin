@@ -8204,6 +8204,96 @@ def web_har_in(target, driver):
                         return handle_invalid_ticket(driver)
 
 
+                elif park_id == 29579:
+
+                    if ticket_name in ["평일 당일권(월) 오픈특가", "평일 당일권(화) 오픈특가", "평일 당일권(수) 오픈특가", "평일 당일권(목) 오픈특가", "평일 당일권(금) 오픈특가"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_4a9ab0f8e3124d8b8e8f3a66df720db7']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name in ["휴일 당일권(토) 오픈특가", "휴일 당일권(일) 오픈특가"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_9bca732e5b65440e97ca494c3c6fc136']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 오후권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_9b5c033d92b542a0b1725851d08a13e2']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 심야권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_954afe93ea9f40ffa45745fe9eff06d5']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "휴일 심야권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_954afe93ea9f40ffa45745fe9eff06d5']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 24시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_a42dcbb6eea74f86b829b193667dcfdf']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "2일 연박권 (여행,출장전용)":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_7c798bf967324cf78a26de6b3dc4c742']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "3일 연박권 (여행,출장전용)":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_85b07d41bce448d287694ec0f83ab96a']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "4일 연박권 (여행,출장전용)":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_c89363dc651a4ac7924aef0b41952681']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "5일 연박권 (여행,출장전용)":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_aeb2c3222a1d407782b9a4442cfac075']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "6일 연박권 (여행,출장전용)":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_5b39234c632f4bf7a621ba721829c2d6']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "7일 연박권 (여행,출장전용)":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_6340ee8ed85d4c7cb10ffe26264b5f25']",
+                            btn_confirm_xpath
+                        )
+
+                    else:
+                        return handle_invalid_ticket(driver)
+
+
 
                 elif park_id == 21787:
 
