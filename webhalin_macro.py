@@ -126,9 +126,9 @@ def web_har_in(target):
         return True
 
     # KMPARK 전용사이트
-    elif park_type == ParkType.NEW_KMPARK:
-        exec_web_har_in(NewKmpark, target, driver)
-        return True
+    #elif park_type == ParkType.NEW_KMPARK:
+    #    exec_web_har_in(NewKmpark, target, driver)
+    #    return True
 
     elif park_type == ParkType.CENTER_SQUARE:
         exec_web_har_in(CenterSquare, target, driver)

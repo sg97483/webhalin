@@ -657,6 +657,47 @@ def is_car_selection_popup_present(driver, timeout=2):
 
 
 
+def verify_single_car_number(driver, ori_car_num):
+    """
+    단일 차량 검색 결과일 때, 화면에 표시된 차량번호(mf_wfm_body_carNoText)를
+    원래 차량번호(ori_car_num)와 비교하여 일치 여부를 반환합니다.
+    최소 뒤 6자리 이상 일치해야 True 반환.
+    """
+    try:
+        displayed_car_elem = WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.ID, "mf_wfm_body_carNoText"))
+        )
+        displayed_car_num = displayed_car_elem.text.strip()
+        print(f"DEBUG: 화면에 표시된 차량번호: {displayed_car_num}")
+        print(f"DEBUG: 원래 처리 대상 차량번호: {ori_car_num}")
+
+        displayed_clean = displayed_car_num.replace(" ", "")
+        ori_clean = ori_car_num.replace(" ", "")
+
+        # 최소 6자리부터 전체까지 뒤에서부터 비교
+        min_match_length = 6
+        max_match_length = min(len(displayed_clean), len(ori_clean))
+
+        if max_match_length < min_match_length:
+            print(f"DEBUG: 차량번호 길이가 너무 짧아 비교 불가 (표시: {len(displayed_clean)}, 원본: {len(ori_clean)})")
+            return False
+
+        for match_length in range(min_match_length, max_match_length + 1):
+            if displayed_clean[-match_length:] == ori_clean[-match_length:]:
+                print(f"✅ 단일 차량 검증 성공: 끝 {match_length}자리 일치 ({displayed_car_num} == {ori_car_num})")
+                return True
+
+        print(f"❌ 단일 차량 검증 실패: 차량번호 불일치 (표시: {displayed_car_num}, 대상: {ori_car_num})")
+        return False
+
+    except TimeoutException:
+        print("DEBUG: 화면에서 차량번호(mf_wfm_body_carNoText)를 찾을 수 없음")
+        return False
+    except Exception as e:
+        print(f"DEBUG: 단일 차량 검증 중 오류 발생: {e}")
+        return False
+
+
 def web_har_in(target, driver):
     pid = target[0]
     park_id = int(Util.all_trim(target[1]))
@@ -728,7 +769,26 @@ def web_har_in(target, driver):
                     print("DEBUG: 차량 선택 실패 → 종료")
                     return False
             else:
-                print("DEBUG: 차량 선택 팝업이 뜨지 않음 → 단일 차량 검색으로 판단하고 진행")
+                print("DEBUG: 차량 선택 팝업이 뜨지 않음 → 단일 차량 검색으로 판단, 차량번호 검증 시작")
+                if not verify_single_car_number(driver, ori_car_num):
+                    print("DEBUG: 단일 차량 검증 실패 → 로그아웃 후 종료")
+                    try:
+                        driver.execute_script(
+                            "var modal = document.getElementById('_modal'); if(modal) modal.style.display='none';"
+                        )
+                        logout_button = WebDriverWait(driver, 5).until(
+                            EC.element_to_be_clickable((By.ID, "mf_wfm_header_btn_logout"))
+                        )
+                        driver.execute_script("arguments[0].click();", logout_button)
+                        print("DEBUG: 차량 불일치 → 로그아웃 완료")
+                    except Exception as logout_ex:
+                        print(f"DEBUG: 로그아웃 실패: {logout_ex}")
+                    try:
+                        driver.delete_all_cookies()
+                        driver.get("about:blank")
+                    except Exception:
+                        pass
+                    return False
 
 
         except TimeoutException as e:
