@@ -1665,6 +1665,41 @@ def web_har_in(target, driver):
                 return handle_invalid_ticket(driver)
 
 
+        elif park_id == 29498:
+
+            if ticket_name == "평일3시간권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']"
+                )
+            elif ticket_name == "평일5시간권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']"
+                )
+
+            elif ticket_name == "평일 당일권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_3_discountTkGrp']"
+                )
+
+            elif ticket_name == "심야권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_2_discountTkGrp']"
+                )
+
+            elif ticket_name == "휴일 당일권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_3_discountTkGrp']"
+                )
+
+            else:
+                return handle_invalid_ticket(driver)
+
+
         elif park_id == 29590:
 
             if ticket_name == "평일 3시간권":
