@@ -594,19 +594,21 @@ def web_har_in(target, driver):
                 try:
                     # 1. 화면에 표시된 차량 번호 요소가 나타날 때까지 최대 5초 대기
                     wait = WebDriverWait(driver, 5)
-                    car_num_element = wait.until(EC.visibility_of_element_located((By.XPATH, car_num_xpath)))
+                    wait.until(EC.visibility_of_element_located((By.XPATH, car_num_xpath)))
+                    car_num_elements = driver.find_elements(By.XPATH, car_num_xpath)
 
-                    # 2. 요소에서 실제 차량 번호 텍스트를 가져오기 (예: '04마3127')
-                    displayed_car_num = Util.all_trim(car_num_element.text)
+                    is_matched = False
+                    for element in car_num_elements:
+                        displayed_car_num = Util.all_trim(element.text)
+                        if displayed_car_num[-7:] == ori_car_num[-7:]:
+                            is_matched = True
+                            print(Colors.GREEN + f"✅ 차량번호 일치 확인: {displayed_car_num}" + Colors.ENDC)
+                            break
 
-                    # 3. DB에서 온 번호(ori_car_num)와 화면 번호의 뒤 7자리를 비교
-                    if displayed_car_num[-7:] == ori_car_num[-7:]:
-                        # ✅ 번호가 일치하면 정상 진행
-                        print(Colors.GREEN + f"✅ 차량번호 일치 확인: {displayed_car_num}" + Colors.ENDC)
-                    else:
-                        # ❌ 번호가 다르면 로그 남기고 실패 처리 후 로그아웃
-                        print(
-                            Colors.RED + f"❌ 차량번호 불일치. [DB: {ori_car_num}] != [화면: {displayed_car_num}]" + Colors.ENDC)
+                    if not is_matched:
+                        # ❌ 일치하는 번호가 없으면 로그 남기고 실패 처리 후 로그아웃
+                        displayed_nums = [Util.all_trim(el.text) for el in car_num_elements]
+                        print(Colors.RED + f"❌ 차량번호 불일치. [DB: {ori_car_num}] != [화면: {', '.join(displayed_nums)}]" + Colors.ENDC)
                         driver.find_element(By.XPATH, side_nav_xpath).click()  # 로그아웃
                         return False
 
