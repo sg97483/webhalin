@@ -276,13 +276,13 @@ def process_discount_for_park(driver, park_id, ticket_name):
     """
     try:
         if park_id == 19598:
-            if ticket_name == "평일 시간권(12시간)":
+            if ticket_name == "평일 12시간권":
                 return select_discount_and_confirm(
                     driver,
                     "//*[@id='discountItemsDataRadio_30236773c2ae46efb4e4699da822810d']",
                     btn_confirm_xpath
                 )
-            elif ticket_name == "휴일 시간권(12시간)":
+            elif ticket_name in ["휴일 12시간권(토)", "휴일 12시간권(일)"]:
                 return select_discount_and_confirm(
                     driver,
                     "//*[@id='discountItemsDataRadio_d3f6972a85ef4017a98216c51562c93e']",
@@ -643,13 +643,13 @@ def web_har_in(target, driver):
                         return False
 
                 if park_id == 19598:
-                    if ticket_name == "평일 시간권(12시간)":
+                    if ticket_name == "평일 12시간권":
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_30236773c2ae46efb4e4699da822810d']",
                             btn_confirm_xpath
                         )
-                    elif ticket_name == "휴일 시간권(12시간)":
+                    elif ticket_name in ["휴일 12시간권(토)", "휴일 12시간권(일)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_d3f6972a85ef4017a98216c51562c93e']",
