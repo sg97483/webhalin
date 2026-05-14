@@ -1155,7 +1155,14 @@ def click_matching_car_number(driver, ori_car_num, park_id):
                 continue
 
             car_num_text = cells[1].text.replace(" ", "").strip()
-            if car_num_text.endswith(target_suffix):
+            
+            # '/' 가 포함된 차량번호의 경우 '/' 앞부분만 사용하여 비교 (예: 129우5439/1-5439)
+            if "/" in car_num_text:
+                car_num_text_compare = car_num_text.split("/")[0]
+            else:
+                car_num_text_compare = car_num_text
+
+            if car_num_text_compare.endswith(target_suffix):
                 print(f"DEBUG: 차량번호 일치 발견 - {car_num_text}")
                 row.click()
                 return True
