@@ -340,9 +340,6 @@ park_type_old_aj = [
 
 park_type_etc = [
     Parks.HUMAX_VILLAGE,
-    19427, #종로플레이스
-
-
 ]
 park_type_aplus = [15740]
 park_type_nice = [
