@@ -6280,6 +6280,25 @@ def web_har_in(target, driver):
                             "//*[@id='discountItemsDataRadio_25e2b1397a0248be972db65ae3b0d064']",
                             btn_confirm_xpath
                         )
+                    elif ticket_name == "4일연박권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_a2dcff1a15994b218a21b05a7f753c65']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name == "5일연박권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_67235c545c1742ad8b542d6740822cf0']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name in ["평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_b495f60f0598483f92832a6b05f3665e']",
+                            btn_confirm_xpath
+                        )
 
                     else:
                         return handle_invalid_ticket(driver)
@@ -8663,6 +8682,22 @@ def web_har_in(target, driver):
                     else:
                         return handle_invalid_ticket(driver)
 
+
+                elif park_id == 29184:
+                    if ticket_name in ["평일 당일권", "평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_a242ba61df99417480be3bfb9a821dd8']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name == "심야권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_f081405a98134335a649a987bcc2bb23']",
+                            btn_confirm_xpath
+                        )
+                    else:
+                        return handle_invalid_ticket(driver)
 
 
                 else:
