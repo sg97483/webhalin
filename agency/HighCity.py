@@ -6,7 +6,7 @@ import Colors
 from park import ParkUtil, ParkType, Parks
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import UnexpectedAlertPresentException, NoAlertPresentException
+from selenium.common.exceptions import UnexpectedAlertPresentException, NoAlertPresentException, TimeoutException
 from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.support.ui import Select
 import WebInfo
@@ -593,30 +593,36 @@ def web_har_in(target, driver):
                 print(Colors.BLUE + f"DEBUG: 현재 페이지 URL: {driver.current_url}" + Colors.ENDC)
 
                 if park_id in [29218, 18996]:
-                    target_car_number = ori_car_num.replace(" ", "")  # 차량번호 공백제거
-
-                    # 결과 tr 리스트에서 원하는 차량 tr을 찾아 클릭
-                    tr_list = WebDriverWait(driver, 5).until(
-                        EC.presence_of_all_elements_located(
-                            (By.XPATH, "//table[tbody/tr/th/h1[contains(text(), '입차 차량 조회 내역')]]/tbody/tr[td]")
-                        )
-                    )
-                    matched = False
-                    for tr in tr_list:
-                        td_list = tr.find_elements(By.TAG_NAME, "td")
-                        for td in td_list:
-                            # 차량번호 추출 후 비교 (공백제거 등 필요시 추가)
-                            car_number_text = td.text.replace(" ", "")
-                            if target_car_number in car_number_text:
-                                driver.execute_script("arguments[0].click();", tr)
-                                print(f"✅ 차량번호 {target_car_number} 선택 클릭 완료")
-                                matched = True
-                                break
-                        if matched:
-                            break
-                    if not matched:
-                        print(f"❌ '{target_car_number}' 번호에 해당하는 차량이 조회 결과에 없습니다.")
-                        return False
+                    if "discountApply.cs" in driver.current_url:
+                        print(Colors.GREEN + "✅ 이미 할인 선택 페이지(discountApply.cs)로 자동 이동되었습니다. 차량 선택 클릭 과정을 건너뜁니다." + Colors.ENDC)
+                    else:
+                        target_car_number = ori_car_num.replace(" ", "")  # 차량번호 공백제거
+                        try:
+                            # 결과 tr 리스트에서 원하는 차량 tr을 찾아 클릭
+                            tr_list = WebDriverWait(driver, 5).until(
+                                EC.presence_of_all_elements_located(
+                                    (By.XPATH, "//table[tbody/tr/th/h1[contains(text(), '입차 차량 조회 내역')]]/tbody/tr[td]")
+                                )
+                            )
+                            matched = False
+                            for tr in tr_list:
+                                td_list = tr.find_elements(By.TAG_NAME, "td")
+                                for td in td_list:
+                                    # 차량번호 추출 후 비교 (공백제거 등 필요시 추가)
+                                    car_number_text = td.text.replace(" ", "")
+                                    if target_car_number in car_number_text:
+                                        driver.execute_script("arguments[0].click();", tr)
+                                        print(f"✅ 차량번호 {target_car_number} 선택 클릭 완료")
+                                        matched = True
+                                        break
+                                if matched:
+                                    break
+                            if not matched:
+                                print(f"❌ '{target_car_number}' 번호에 해당하는 차량이 조회 결과에 없습니다.")
+                                return False
+                        except TimeoutException:
+                            print(Colors.RED + "❌ 차량 조회 내역 테이블을 찾을 수 없습니다." + Colors.ENDC)
+                            return False
 
                 print(Colors.BLUE + f"DEBUG: ParkUtil.check_search({park_id}, driver) 확인 중..." + Colors.ENDC)
                 check_search_result = ParkUtil.check_search(park_id, driver)
