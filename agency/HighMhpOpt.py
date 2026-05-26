@@ -8363,14 +8363,14 @@ def web_har_in(target, driver):
 
                 elif park_id == 29579:
 
-                    if ticket_name in ["평일 당일권(월) 오픈특가", "평일 당일권(화) 오픈특가", "평일 당일권(수) 오픈특가", "평일 당일권(목) 오픈특가", "평일 당일권(금) 오픈특가"]:
+                    if ticket_name in ["평일 당일권(월)", "평일 당일권(화)", "평일 당일권(수)", "평일 당일권(목)", "평일 당일권(금)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_4a9ab0f8e3124d8b8e8f3a66df720db7']",
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name in ["휴일 당일권(토) 오픈특가", "휴일 당일권(일) 오픈특가"]:
+                    elif ticket_name in ["휴일 당일권(토)", "휴일 당일권(일)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_9bca732e5b65440e97ca494c3c6fc136']",
