@@ -465,10 +465,20 @@ def process_ticket_and_logout(driver, button_id, park_id):
              print("ERROR: StaleElementReferenceException 재시도 3회 실패.")
              return False
 
-         # 할인 적용 확인 알림 처리
+         # 할인 적용 확인 알림 처리 (실패 문구 확인 추가)
          try:
-             WebDriverWait(driver, 3).until(EC.alert_is_present()).accept()
+             alert = WebDriverWait(driver, 3).until(EC.alert_is_present())
+             alert_text = alert.text
+             print(f"DEBUG: 할인 결과 알림창 텍스트: {alert_text}")
+             alert.accept()
              print("DEBUG: 할인권 적용 확인 알림 닫기 완료.")
+             
+             # 실패 유발 키워드 확인
+             fail_keywords = ["필수", "오류", "실패", "잘못", "제한", "없습니다", "않습니다", "대상입니다"]
+             for kw in fail_keywords:
+                 if kw in alert_text:
+                     print(f"ERROR: 할인 적용 실패 팝업 감지됨: {alert_text}")
+                     return False
          except TimeoutException:
              print("DEBUG: 할인권 적용 알림 없음 (정상일 수 있음).")
 
@@ -552,6 +562,22 @@ def wait_and_click_discount_button(driver, button_id):
 
          button.click()
          print(f"DEBUG: 할인 버튼(id={button_id}) 클릭 완료")
+
+         # Alert 처리 추가
+         try:
+             alert = WebDriverWait(driver, 3).until(EC.alert_is_present())
+             alert_text = alert.text
+             print(f"DEBUG: 18938 할인 알림창 텍스트: {alert_text}")
+             alert.accept()
+             
+             fail_keywords = ["필수", "오류", "실패", "잘못", "제한", "없습니다", "않습니다", "대상입니다"]
+             for kw in fail_keywords:
+                 if kw in alert_text:
+                     print(f"ERROR: 18938 할인 적용 실패 팝업 감지됨: {alert_text}")
+                     return False
+         except TimeoutException:
+             print("DEBUG: 18938 할인 적용 알림 없음.")
+
          return True
 
      except TimeoutException:
@@ -765,13 +791,22 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
 
     # ✅ 45010 전용 메모 입력
     if park_id == 45010:
+        time.sleep(1)
         try:
             memo_field = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.ID, "memo"))
             )
+            # JavaScript로 메모 값 직접 입력 및 input, change 이벤트 강제 전파 (바인딩 유실 방지)
+            driver.execute_script(
+                "arguments[0].value = '파킹박'; "
+                "arguments[0].dispatchEvent(new Event('input', { bubbles: true })); "
+                "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
+                memo_field
+            )
             memo_field.clear()
             memo_field.send_keys("파킹박")
             print("DEBUG: 45010 메모 입력 완료")
+            time.sleep(1)
         except TimeoutException:
             print("ERROR: 45010 메모 필드 찾기 실패")
             return False
@@ -829,7 +864,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
             print("ERROR: 18577 메모 필드 찾기 실패")
             return False
 
-    if park_id in [18938, 45010]:
+    if park_id in [18938]:
         print("DEBUG: 18938 전용 할인 로직 진행 중...")
         if not search_car_number_and_wait_discount(driver, driver.car_number_last4, button_id, park_id):
             return False
@@ -850,6 +885,10 @@ def logout(driver, park_id):
     """
     주차장 ID에 따른 로그아웃 처리 함수
     """
+    if park_id == 45010:
+        print("DEBUG: 45010은 로그아웃 생략 처리 (성공으로 간주)")
+        return True
+
     try:
         if park_id == 18577:
             print("DEBUG: 18577 전용 로그아웃 버튼 찾기")
@@ -1297,6 +1336,10 @@ def web_har_in(target, driver):
                     print("ERROR: 검색된 차량번호와 일치하지 않음 → 할인 중단.")
                     return False
 
+
+            if park_id == 45010:
+                print("DEBUG: 45010 차량 선택 후 안정적인 렌더링을 위해 3초 대기합니다.")
+                time.sleep(3)
 
             # ✅ 할인내역이 존재하면 처리 중단 (특정 park_id만)
             if not check_discount_entries(driver, park_id):
