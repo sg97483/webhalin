@@ -701,7 +701,7 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
         19130: {"평일1일권": "14", "평일 심야권": "15", "2시간권": "11", "3시간권": "12"},
         19210: {"평일1일권": "3", "주말1일권": "5", "심야권": "4", "심야권(일~목)": "4", "심야권(금,토)": "4"},
         19887: {"평일 당일권": "13", "주말 당일권": "14", "심야권": "15", "4시간권": "10", "6시간권": "11"},
-        18577: {"평일1일권(화~금)": "838", "주말1일권": "5"},
+        18577: {"평일1일권(화~금)": "880", "평일1일권": "880", "주말1일권": "5"},
         18945: {"평일 당일권": "19", "휴일 당일권": "16", "평일 심야권": "18"},
         19934: {"평일12시간권": "7", "주말당일권": "6", "심야권": "8"},  # 심야권 분기 처리
         19258: {"평일1일권": "15", "평일 당일권(월~목)": "15", "평일 당일권(금)": "15", "주말1일권": "15", "휴일 당일권": "15", "평일 심야권": "14", "심야권(금,토)": "14", "심야권(일~목)": "14"},
@@ -853,13 +853,22 @@ def handle_ticket(driver, park_id, ticket_name, entry_day_of_week=None):
 
     # ✅ 18577 메모 필드 입력
     if park_id == 18577:
+        time.sleep(1)
         try:
             memo_field = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.ID, "memo"))
             )
+            # JavaScript로 메모 값 직접 입력 및 input, change 이벤트 강제 전파 (바인딩 유실 방지)
+            driver.execute_script(
+                "arguments[0].value = '파킹박'; "
+                "arguments[0].dispatchEvent(new Event('input', { bubbles: true })); "
+                "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
+                memo_field
+            )
             memo_field.clear()
             memo_field.send_keys("파킹박")
             print("DEBUG: 18577 메모 입력 완료")
+            time.sleep(1)
         except TimeoutException:
             print("ERROR: 18577 메모 필드 찾기 실패")
             return False
@@ -1337,8 +1346,8 @@ def web_har_in(target, driver):
                     return False
 
 
-            if park_id == 45010:
-                print("DEBUG: 45010 차량 선택 후 안정적인 렌더링을 위해 3초 대기합니다.")
+            if park_id in [45010, 18577]:
+                print(f"DEBUG: {park_id} 차량 선택 후 안정적인 렌더링을 위해 3초 대기합니다.")
                 time.sleep(3)
 
             # ✅ 할인내역이 존재하면 처리 중단 (특정 park_id만)
