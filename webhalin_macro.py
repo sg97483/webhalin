@@ -20,9 +20,7 @@ from agency import NewAmano, Iptime, Gs, HighCity, Iparking, AJpark, Darae, ArcP
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-driver = ChromeDriver.get()
-driver.implicitly_wait(3)
-driver.maximize_window()
+driver = None
 
 '''
 # parkId: [id_name, pw_name, login_btn_xpath,
@@ -175,6 +173,17 @@ repeatCnt = 0
 
 
 while True:
+    print("🔄 크롬 드라이버 시작 중...")
+    try:
+        driver = ChromeDriver.get()
+        if driver is None:
+            raise Exception("드라이버 객체를 생성할 수 없습니다.")
+    except Exception as e:
+        print(Colors.RED + f"❌ 드라이버 시작 실패: {e}" + Colors.ENDC)
+        print("10초 대기 후 다시 시도합니다...")
+        time.sleep(10)
+        continue
+
     conn = pymysql.connect(host='49.236.134.172', port=3306, user='root', password='#orange8398@@',
                            db='parkingpark',
                            charset='utf8')
@@ -250,22 +259,16 @@ while True:
             except Exception as ex:
                 print(Colors.RED + str(ex) + Colors.ENDC)
 
-        # 🔄 매 5회마다 크롬 드라이버 재시작
-        if repeatCnt % 4 == 0:
-            print("🔄 driver 재시작")
+        # ── 루프가 종료되면 크롬 드라이버를 닫아 리소스를 절약하고 하얀 화면 대기를 방지함 ──
+        if driver:
             try:
                 driver.quit()
+                print("✅ 드라이버 안전 종료 완료 (대기 모드 진입)")
             except Exception as e:
                 print(Colors.RED + f"드라이버 종료 중 오류: {e}" + Colors.ENDC)
+            driver = None
 
-            try:
-                driver = ChromeDriver.get()
-                driver.implicitly_wait(3)
-                driver.maximize_window()
-                print("✅ 드라이버 재시작 완료")
-            except Exception as e:
-                print(Colors.RED + f"드라이버 재생성 실패: {e}" + Colors.ENDC)
-
+    print(Colors.GREEN + "메크로 일시정지 (500초 대기)" + Colors.ENDC)
     time.sleep(500)
 
     print("메크로 재시작")
