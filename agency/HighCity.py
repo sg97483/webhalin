@@ -72,9 +72,9 @@ mapIdToWebInfo = {
     19248: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
             "license_plate_number", "//*[@id='search_form']/table/tbody/tr/td[1]/table/tbody/tr/td/input[2]",
             "chk",
-            "javascript:applyDiscount('13', '1', '01|02|03|', 'ppark', '999999999', '0');",
-            "javascript:applyDiscount('13', '1', '01|02|03|', 'ppark', '999999999', '0');",
-            "javascript:applyDiscount('31', '1', '', 'ppark(야간)', '999999999', '0');",
+            "javascript:applyDiscount('13', '1', '01|02|03|04|33|26|', 'ppark', '999999999', '0');",
+            "javascript:applyDiscount('13', '1', '01|02|03|04|33|26|', 'ppark', '999999999', '0');",
+            "javascript:applyDiscount('31', '1', '04|26|', 'ppark(야간)', '999999999', '0');",
             ],
     #  동산마을공영
     19276: ["user_id", "password", "//*[@id='login_form']/table[2]/tbody/tr[1]/td[3]/input",
@@ -271,6 +271,26 @@ def get_har_in_script(park_id, ticket_name):
         else:
             return False
 
+    if park_id == 19248:
+        t = ticket_name.strip()
+        if "12시간권" in t:
+            return "javascript:applyDiscount('50', '1', '', '12시간권(공유서비스)', '999999999', '0');"
+        elif "6시간권" in t:
+            return "javascript:applyDiscount('43', '2', '26|', '6시간권', '999999999', '0');"
+        elif "3시간권" in t:
+            return "javascript:applyDiscount('49', '1', '', '3시간권(공유서비스)', '999999999', '0');"
+        elif "2시간권" in t:
+            return "javascript:applyDiscount('48', '1', '', '2시간권(공유서비스)', '999999999', '0');"
+        elif "1시간권" in t:
+            return "javascript:applyDiscount('47', '1', '', '1시간권(공유서비스)', '999999999', '0');"
+        elif "심야권" in t or "야간권" in t:
+            return "javascript:applyDiscount('31', '1', '04|26|', 'ppark(야간)', '999999999', '0');"
+        elif "당일권" in t or "1일권" in t or "요일권" in t:
+            return "javascript:applyDiscount('13', '1', '01|02|03|04|33|26|', 'ppark', '999999999', '0');"
+        else:
+            return False
+
+
 
     # 2. 공통 룰
     if ticket_name[-3:] == "심야권" or ticket_name[-3:] == "야간권":
@@ -302,7 +322,7 @@ def get_har_in_script(park_id, ticket_name):
 
 
 def check_discount_alert(driver, park_id=None):
-    if park_id in [19364, 16003, 19456, 19194]:
+    if park_id in [19364, 16003, 19456, 19194, 19248]:
         print("✅ 할인 결과 알림창 없음 → 예외 없이 성공 처리 (예상된 구조)")
         return True
 
