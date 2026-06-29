@@ -73,8 +73,8 @@ mapIdToWebInfo = {
 #btn_login_xpath = "//*[@id='app']/div/div[2]/div/div/main/div/form/button"
 btn_login_xpath = "/html/body/mhp-console/div/div[2]/div/div/main/div/form/button"
 btn_search_xpath = "/html/body/mhp-console/div/div[2]/div/div/main/div[2]/div[1]/div[1]/form/button/div"
-side_nav_xpath = "//*[@id='side-nav']/div/div/div[3]/div[3]/div/a"
-#side_nav_xpath = "//*[contains(@id, 'side-nav')]/div/div/div[3]/div[3]/div/a"
+side_nav_xpath = "//a[@data-ui='sideNavButtonLogout']"
+#side_nav_xpath = "//*[@id='side-nav']/div/div/div[3]/div[3]/div/a"
 btn_confirm_xpath = "/html/body/mhp-console/div/div[2]/div/div/main/div[2]/div[1]/div[2]/div/div/div/div[2]/div[1]/div/div/div[2]/button[2]"
 
 def click_har_in_script(ticket_name, driver):
