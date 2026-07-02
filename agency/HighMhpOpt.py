@@ -3,7 +3,7 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common import alert
 from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, UnexpectedAlertPresentException, NoAlertPresentException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -596,21 +596,71 @@ def web_har_in(target, driver):
             web_info = mapIdToWebInfo[park_id]
             web_har_in_info = ParkUtil.get_park_lot_option(park_id)
 
-            if ParkUtil.first_access(park_id, driver.current_url):
-
-                driver.find_element_by_id("username").send_keys(web_har_in_info[WebInfo.webHarInId])
-                driver.find_element_by_id("password").send_keys(web_har_in_info[WebInfo.webHarInPw])
-
-                driver.find_element_by_xpath(web_info[WebInfo.btnLogin]).click()
-
+            print(Colors.BLUE + f"DEBUG: current_url = {driver.current_url}" + Colors.ENDC)
+            first_access_result = ParkUtil.first_access(park_id, driver.current_url)
+            print(Colors.BLUE + f"DEBUG: first_access_result = {first_access_result}" + Colors.ENDC)
+            
+            if not first_access_result:
+                try:
+                    driver.implicitly_wait(1)
+                    if len(driver.find_elements(By.ID, "username")) > 0:
+                        print(Colors.BLUE + "DEBUG: 화면에 username 필드가 감지되어 로그인 과정을 강제 활성화합니다." + Colors.ENDC)
+                        first_access_result = True
+                except:
+                    pass
                 driver.implicitly_wait(3)
 
-                driver.find_element_by_id(web_info[WebInfo.inputSearch]).send_keys(search_id)
-                Util.sleep(3)
-
-                driver.find_element_by_xpath(web_info[WebInfo.btnSearch]).click()
-
-                Util.sleep(3)
+            if first_access_result:
+                try:
+                    wait = WebDriverWait(driver, 10)
+                    
+                    # ID 입력 필드 대기 및 입력
+                    print("DEBUG: username 필드 대기 중...")
+                    username_field = wait.until(EC.presence_of_element_located((By.ID, "username")))
+                    print("DEBUG: username 필드 찾음, 입력 중...")
+                    username_field.send_keys(web_har_in_info[WebInfo.webHarInId])
+                    
+                    # PW 입력 필드 대기 및 입력
+                    print("DEBUG: password 필드 대기 중...")
+                    password_field = wait.until(EC.presence_of_element_located((By.ID, "password")))
+                    print("DEBUG: password 필드 찾음, 입력 중...")
+                    password_field.send_keys(web_har_in_info[WebInfo.webHarInPw])
+                    
+                    # 로그인 버튼 클릭
+                    print("DEBUG: 로그인 버튼 대기 중...")
+                    login_btn = wait.until(EC.element_to_be_clickable((By.XPATH, web_info[WebInfo.btnLogin])))
+                    print("DEBUG: 로그인 버튼 클릭 중...")
+                    login_btn.click()
+                    
+                    driver.implicitly_wait(3)
+                    
+                    # 차량번호 입력 필드 대기 및 입력
+                    print("DEBUG: 차량번호 입력 필드 대기 중...")
+                    search_field = wait.until(EC.presence_of_element_located((By.ID, web_info[WebInfo.inputSearch])))
+                    print("DEBUG: 차량번호 입력 필드 찾음, 입력 중...")
+                    search_field.send_keys(search_id)
+                    Util.sleep(3)
+                    
+                    # 검색 버튼 클릭
+                    print("DEBUG: 검색 버튼 대기 중...")
+                    search_btn = wait.until(EC.element_to_be_clickable((By.XPATH, web_info[WebInfo.btnSearch])))
+                    print("DEBUG: 검색 버튼 클릭 중...")
+                    search_btn.click()
+                    
+                    Util.sleep(3)
+                    print("DEBUG: 로그인 및 차량 검색 완료")
+                except UnexpectedAlertPresentException as alert_ex:
+                    alert_text = alert_ex.alert_text if hasattr(alert_ex, 'alert_text') and alert_ex.alert_text else str(alert_ex)
+                    print(Colors.RED + f"❌ 로그인 중 알림창 감지 (ID/PW 불일치 등): {alert_text}" + Colors.ENDC)
+                    try:
+                        alert = driver.switch_to.alert
+                        alert.accept()
+                    except:
+                        pass
+                    return False
+                except Exception as login_ex:
+                    print(Colors.RED + f"❌ 로그인 또는 검색 과정 중 오류 발생: {login_ex}" + Colors.ENDC)
+                    return False
 
                 # ======================================================================
                 # 💡 여기부터 새로운 검증 코드 추가
@@ -8740,6 +8790,42 @@ def web_har_in(target, driver):
                         )
                     else:
                         return handle_invalid_ticket(driver)
+
+
+                elif park_id == 19156:
+                    if  ticket_name == "평일 6시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_3c0f450daa504c1f9666d32b4eabe827']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name == "평일 4시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_3dd8327c03334c67931fbc11be855e6e']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name == "평일 3시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_f74eb52e9608442bbdb611127d30b723']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name == "평일 2시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_5dd1f24a3f644948bd73cc4507706804']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name == "평일 1시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_3a39bf457b13440485da68dbe9d48ffe']",
+                            btn_confirm_xpath
+                        )
+                    else:
+                        return handle_invalid_ticket(driver)
+
 
 
                 elif park_id == 29184:
