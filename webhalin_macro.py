@@ -268,7 +268,7 @@ while True:
                 print(Colors.RED + f"드라이버 종료 중 오류: {e}" + Colors.ENDC)
             driver = None
 
-    print(Colors.GREEN + "메크로 일시정지 (500초 대기)" + Colors.ENDC)
-    time.sleep(500)
+    print(Colors.GREEN + "메크로 일시정지 (300초 대기)" + Colors.ENDC)
+    time.sleep(300)
 
     print("메크로 재시작")
