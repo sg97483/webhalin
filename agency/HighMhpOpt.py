@@ -2330,6 +2330,20 @@ def web_har_in(target, driver):
                             btn_confirm_xpath
                         )
 
+                    elif ticket_name == "평일 2시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_e689136f8e14410bb944d54596469a65']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 1시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_8cebbf8d1f5a499eb8ef8c0af25997e5']",
+                            btn_confirm_xpath
+                        )
+
                     elif ticket_name == "추석특가 당일권":
                         return select_discount_and_confirm(
                             driver,
