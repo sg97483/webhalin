@@ -31,7 +31,7 @@ def handle_alert(driver):
     try:
         WebDriverWait(driver, 2).until(EC.alert_is_present())
         alert = driver.switch_to.alert
-        print(f"DEBUG: Alert 발견 - {alert.text}")
+        print(f"DEBUG : Alert 발견 - {alert.text}")
         alert.accept()
         print("DEBUG: Alert 닫기 완료")
     except TimeoutException:
