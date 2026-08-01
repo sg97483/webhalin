@@ -15,7 +15,7 @@ from park import ParkType, Parks, ParkUtil
 import Util
 
 from agency import NewAmano, Iptime, Gs, HighCity, Iparking, AJpark, Darae, ArcPlace, Blue, HighMhpOpt, Etc, OldAJ, \
-    Nice, NiceNew, AplusAsset, CenterSquare, NewKmpark
+    Nice, NiceNew, AplusAsset, CenterSquare, NewKmpark, HiSeoCho
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -147,6 +147,10 @@ def web_har_in(target):
 
     elif park_type == ParkType.AJ_PARK:
         exec_web_har_in(AJpark, target, driver)
+        return True
+
+    elif park_type == ParkType.HI_SEOCHO:
+        exec_web_har_in(HiSeoCho, target, driver)
         return True
 
     #elif park_type == ParkType.GS2:

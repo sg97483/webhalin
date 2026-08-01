@@ -199,6 +199,18 @@ def handle_ticket(driver, park_id, ticket_name):
             logout(driver)
             return False
 
+        time.sleep(1)
+
+        # 팝업 모달 "확인" 버튼 클릭 ("XX 차량에 XX 할인을 적용하시겠습니까?")
+        try:
+            confirm_button = WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.XPATH, "//button[text()='확인' or normalize-space()='확인']"))
+            )
+            confirm_button.click()
+            print("DEBUG: 팝업 '확인' 버튼 클릭 완료.")
+        except TimeoutException:
+            print("WARNING: 팝업 '확인' 버튼을 찾을 수 없거나 이미 닫혔습니다.")
+
         time.sleep(2)
         handle_alert(driver)  # 적용 후 뜨는 Alert 창 처리
 

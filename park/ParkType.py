@@ -27,6 +27,7 @@ CENTER_SQUARE_NEW = 39
 CENTER_SQUARE = 40
 NEW_AMANO = 46
 NEW_KMPARK = 47
+HI_SEOCHO = 48
 #CENTER_SQUARE =34
 
 # 주차장 타입별 주차장들
@@ -69,6 +70,10 @@ parkTypeBlue = [
 
 parkTypeDarae = [
     28864
+]
+
+parkTypeHiSeoCho = [
+    19273, 29196, 19236, 19237, 19456, 19453, 29195
 ]
 
 parkTypeIparking = [
@@ -557,7 +562,8 @@ def get_park_type(park_id):
         return OLD_AJ
     elif park_id in park_type_nice:
         return NICE
-
+    elif park_id in parkTypeHiSeoCho:
+        return HI_SEOCHO
 
     else:
         print(f"DEBUG: park_id {park_id} does not match any parkType.")

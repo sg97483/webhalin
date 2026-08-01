@@ -45,8 +45,8 @@ def get_sql(now_date, logger, is_park_test, testPark):
             "AND agHp = 0 "
         ).format(today=now_date)
 
-        # 💡 현재 시간이 오후 1시 이전이면, reservedStDtm이 현재 시간 이하인 데이터만 조회
-        if current_hour < 13:
+        # 💡 현재 시간이 12시 30분 이전이면, 오전(11시 59분 이하) 데이터만 조회
+        if current_time < '1230':
             #sql += " AND SUBSTRING(reservedStDtm, 9, 4) <= '{current_time}' ".format(current_time=current_time)
             sql += " AND SUBSTRING(reservedStDtm, 9, 4) <= '1159' "
 
