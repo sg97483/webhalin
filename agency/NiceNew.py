@@ -1919,6 +1919,65 @@ def web_har_in(target, driver):
                 return handle_invalid_ticket(driver)
 
 
+        elif park_id == 29514:
+
+            if ticket_name == "평일 심야권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_7_discountTkGrp']"
+                )
+
+            elif ticket_name == "평일 4시간권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_2_discountTkGrp']"
+                )
+
+            elif ticket_name == "평일 3시간권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']"
+                )
+            elif ticket_name == "평일 2시간권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']"
+                )
+
+            elif ticket_name == "2일 연박권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_3_discountTkGrp']"
+                )
+
+            elif ticket_name == "3일 연박권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_4_discountTkGrp']"
+                )
+
+            elif ticket_name == "4일 연박권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_5_discountTkGrp']"
+                )
+
+            elif ticket_name == "5일 연박권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_6_discountTkGrp']"
+                )
+
+            elif ticket_name in ["평일 당일권", "휴일 당일권"]:
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_8_discountTkGrp']"
+                )
+
+            else:
+                return handle_invalid_ticket(driver)
+
+
         elif park_id == 19302:
 
             if ticket_name in ["평일1일권", "주말1일권"]:
