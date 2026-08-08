@@ -1111,7 +1111,7 @@ def web_har_in(target, driver):
                 return handle_invalid_ticket(driver)
 
         elif park_id == 19791:
-            if ticket_name in ["평일 1일권", "주말1일권"]:
+            if ticket_name in ["평일 1일권", "주말1일권", "휴일 당일권", "평일 당일권"]:
                 return select_discount_and_confirm(
                     driver,
                     "//*[@id='mf_wfm_body_gen_dcTkList_2_discountTkGrp']"
