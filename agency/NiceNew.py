@@ -1871,6 +1871,24 @@ def web_har_in(target, driver):
                 return handle_invalid_ticket(driver)
 
 
+        elif park_id == 29504:
+
+            if ticket_name == "야간권":
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']"
+                )
+
+            elif ticket_name in ["평일 5시간권", "휴일 5시간권"]:
+                return select_discount_and_confirm(
+                    driver,
+                    "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']"
+                )
+
+            else:
+                return handle_invalid_ticket(driver)
+
+
         elif park_id == 29592:
 
             if ticket_name == "평일 3시간권":
