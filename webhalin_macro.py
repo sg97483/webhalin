@@ -15,7 +15,7 @@ from park import ParkType, Parks, ParkUtil
 import Util
 
 from agency import NewAmano, Iptime, Gs, HighCity, Iparking, AJpark, Darae, ArcPlace, Blue, HighMhpOpt, Etc, OldAJ, \
-    Nice, NiceNew, AplusAsset, CenterSquare, NewKmpark, HiSeoCho
+    Nice, NiceNew, AplusAsset, CenterSquare, CenterSquareNew, NewKmpark, HiSeoCho
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -83,6 +83,11 @@ def exec_web_har_in(park_type, target, chrome_driver, lotName=None):
             in_car_check_db(pid, park_id)
             push_fcm_in_car_check(pid)
             print("센터스퀘어 입차처리성공2")
+    elif park_type == CenterSquareNew :
+        if park_type.web_har_in(target,chrome_driver):
+            in_car_check_db(pid, park_id)
+            push_fcm_in_car_check(pid)
+            print("센터스퀘어(New) 입차처리성공2")
     elif park_type.web_har_in(target, chrome_driver):
         logging_info(target)
         in_car_check_db(pid, park_id)
@@ -130,6 +135,10 @@ def web_har_in(target):
 
     elif park_type == ParkType.CENTER_SQUARE:
         exec_web_har_in(CenterSquare, target, driver)
+        return True
+
+    elif park_type == ParkType.CENTER_SQUARE_NEW:
+        exec_web_har_in(CenterSquareNew, target, driver)
         return True
 
     elif park_type == ParkType.ETC:

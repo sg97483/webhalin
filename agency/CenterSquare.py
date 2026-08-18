@@ -27,12 +27,11 @@ def web_har_in(target, driver):
     driver.implicitly_wait(3)
     driver.get(login_url)
 
-    driver.find_element_by_xpath('// *[ @ id = "t_userid-inputEl"]').clear()
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "t_userid"))).clear()
+    driver.find_element_by_name("t_userid").send_keys('ppark')
 
-    driver.find_element_by_xpath('// *[ @ id = "t_userid-inputEl"]').send_keys('ppark')
-
-    driver.find_element_by_xpath('// *[ @ id = "t_pwd-inputEl"]').send_keys('1234')
-    driver.find_element_by_xpath('//*[@id="btn_login-btnEl"]').send_keys(Keys.ENTER)
+    driver.find_element_by_name("t_pwd").send_keys('1234')
+    driver.find_element_by_xpath('//*[@id="btn_login-btnInnerEl"]').click()
 
     driver.find_element_by_xpath('//*[@id="btn_ParkM-btnEl"]').send_keys(Keys.ENTER)
     time.sleep(3)
@@ -47,9 +46,9 @@ def web_har_in(target, driver):
         dd1 = driver.find_element_by_xpath('//*[@id="gridview-1012"]/table/tbody/tr[2]/td[2]/div').text
     except:
         driver.switch_to.default_content()
-        driver.find_element_by_xpath('// *[ @ id = "btn_logout-btnEl"]').click()
+        driver.find_element_by_xpath('//*[@id="btn_logout-btnEl"]').click()
         time.sleep(1)
-        driver.find_element_by_xpath('// *[ @ id = "button-1006-btnEl"]').click()
+        driver.find_element_by_xpath('//*[@id="button-1006-btnEl"]').click()
         time.sleep(1)
 
         print(Colors.BLUE + "검색값 없음"+ Colors.ENDC)
@@ -72,9 +71,9 @@ def web_har_in(target, driver):
                 driver.find_element_by_xpath('//*[@id="gridview-1012"]/table/tbody/tr[4]/td[2]/div').click()
             else:
                 driver.switch_to.default_content()
-                driver.find_element_by_xpath('// *[ @ id = "btn_logout-btnEl"]').click()
+                driver.find_element_by_xpath('//*[@id="btn_logout-btnEl"]').click()
                 time.sleep(1)
-                driver.find_element_by_xpath('// *[ @ id = "button-1006-btnEl"]').click()
+                driver.find_element_by_xpath('//*[@id="button-1006-btnEl"]').click()
                 time.sleep(1)
 
                 print(Colors.GREEN + "세번째 차량번호 다름" + Colors.ENDC)
@@ -170,12 +169,12 @@ def web_har_in(target, driver):
 
             return False
 
-    driver.find_element_by_xpath('// *[ @ id = "btn_save-btnEl"]').click()
+    driver.find_element_by_xpath('//*[@id="btn_save-btnEl"]').click()
     time.sleep(1)
     driver.switch_to.default_content()
-    driver.find_element_by_xpath('// *[ @ id = "btn_logout-btnEl"]').click()
+    driver.find_element_by_xpath('//*[@id="btn_logout-btnEl"]').click()
     time.sleep(1)
-    driver.find_element_by_xpath('// *[ @ id = "button-1006-btnEl"]').click()
+    driver.find_element_by_xpath('//*[@id="button-1006-btnEl"]').click()
     time.sleep(1)
 
 

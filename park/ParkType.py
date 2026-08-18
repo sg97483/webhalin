@@ -515,7 +515,9 @@ mapToHarinUrl = {
     KAIT_TOWER: "/discount/carSearch.cs?userID=ppark&contextPath=",
     ARC_PLACE: "/discount/carSearch.cs?userID=ppark&contextPath=",
     AJ_PARK: "home.do",
-    OLD_AJ: "/discount/carSearch.cs?userID=ppark&contextPath="
+    OLD_AJ: "/discount/carSearch.cs?userID=ppark&contextPath=",
+    CENTER_SQUARE_NEW: "/main",
+    CENTER_SQUARE: "/main"
 }
 
 type_to_day_css = {
