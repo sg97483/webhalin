@@ -1,11 +1,32 @@
-﻿#payment_list
-payment_list/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
 
-# Log
-# /로 끝나면 해당 디렉토리 전체를 무시
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Logs and databases
+logs/
+log/
 beforeLog/
+*.log
+AplusAssetEXE/Log/
 2020*/
 2020*.py
 /*.txt
-log/
-/logs/
+login_error.png
+
+# IDE and Editor configs
+.idea/
+.vscode/
+
+# Build and Binary backups
+chromedriver_back.exe
+reqyurenebts.txt
+
+# payment_list
+payment_list/

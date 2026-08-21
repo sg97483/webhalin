@@ -216,27 +216,44 @@ while True:
             print(Colors.RED + str(ex) + Colors.ENDC)
     else:
         repeatCnt += 1
-        logger.info("반복 횟수 : " + str(repeatCnt))
-
 
         now = datetime.datetime.now()
         nowYM = now.strftime('%Y%m')
         nowDate = now.strftime('%Y%m%d')
+        nowTime = now.strftime('%H%M')
 
-        log_dir = './logs/' + nowYM
-
+        log_base_dir = './logs'
+        log_dir = os.path.join(log_base_dir, nowYM)
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
 
-        nowTime = now.strftime('%H%M')
-        file_name = nowDate + "_" + nowTime + "_" + str(repeatCnt) + ".txt"
+        # 30일 경과 로그 자동 삭제
+        retention_days = 30
+        now_ts = time.time()
+        for root, dirs, files in os.walk(log_base_dir):
+            for file in files:
+                file_path = os.path.join(root, file)
+                if now_ts - os.path.getmtime(file_path) > retention_days * 86400:
+                    try:
+                        os.remove(file_path)
+                    except Exception as e:
+                        print(Colors.RED + f"오래된 로그 삭제 실패 ({file_path}): {e}" + Colors.ENDC)
 
-        file_url = log_dir + "\\" + file_name
+        # 일별 단일 로그 파일에 누적 기록 (append)
+        file_name = f"{nowDate}.log"
+        file_url = os.path.join(log_dir, file_name)
 
-        file_handler = logging.FileHandler(file_url, encoding="utf-8")
+        # 핸들러 설정 (포맷터 추가하여 시간 표시)
+        file_handler = logging.FileHandler(file_url, encoding="utf-8", mode='a')
         streamHandler = logging.StreamHandler()
+        formatter = logging.Formatter('[%(asctime)s] %(levelname)s - %(message)s')
+        file_handler.setFormatter(formatter)
+        streamHandler.setFormatter(formatter)
+        
         logger.addHandler(file_handler)
         logger.addHandler(streamHandler)
+
+        logger.info(f"==== 반복 횟수 : {repeatCnt} ====")
 
         curs.execute(GetSql.get_sql(nowDate, logger, is_park_test, testPark))
         rows = curs.fetchall()
