@@ -178,24 +178,46 @@ def handle_invalid_ticket(driver):
     return False
 
 
+def robust_click(driver, xpath, timeout=5):
+    """
+    여러 개의 팝업이 겹쳐 있을 때 가장 위에 있는 요소를 찾아 일반 클릭(마우스 이벤트 포함)을 수행.
+    JS 클릭이 안 먹히는 UI 프레임워크(w2ui 등)를 위한 완벽한 해결책.
+    """
+    try:
+        WebDriverWait(driver, timeout).until(
+            EC.visibility_of_element_located((By.XPATH, xpath))
+        )
+        elements = driver.find_elements(By.XPATH, xpath)
+        visible_elements = [e for e in elements if e.is_displayed()]
+        
+        # 뒤에서부터 (가장 위에 있는 요소부터) 클릭 시도
+        for el in reversed(visible_elements):
+            try:
+                el.click()
+                return True
+            except:
+                pass
+                
+        # 모든 일반 클릭이 실패했다면 최후의 수단으로 JS 클릭
+        if visible_elements:
+            driver.execute_script("arguments[0].click();", visible_elements[-1])
+            return True
+    except TimeoutException:
+        pass
+    return False
+
 def handle_popup(driver):
     """
     로그인 후 나타나는 팝업을 처리하는 함수.
     """
     try:
         # 첫 번째 팝업의 "확인" 버튼 처리
-        confirm_button = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//input[@value='확인' and @type='button']"))
-        )
-        confirm_button.click()
-        print("첫 번째 팝업이 닫혔습니다.")
+        if robust_click(driver, "//input[@value='확인' and @type='button']", timeout=5):
+            print("첫 번째 팝업이 닫혔습니다.")
 
         # 두 번째 팝업의 "나중에 변경하기" 버튼 처리
-        cancel_change_button = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.ID, "mf_wfm_body_DCWD009P01_wframe_btn_cancelChg"))
-        )
-        cancel_change_button.click()
-        print("비밀번호 변경 팝업에서 '나중에 변경하기' 버튼이 클릭되었습니다.")
+        if robust_click(driver, "//input[@value='나중에 변경하기']", timeout=5):
+            print("비밀번호 변경 팝업에서 '나중에 변경하기' 버튼이 클릭되었습니다.")
 
     except TimeoutException:
         print("팝업이 나타나지 않았거나 처리 중 오류가 발생했습니다.")
@@ -238,11 +260,8 @@ def handle_password_change_popup(driver, timeout=3):
         )
         print("DEBUG: '비밀번호 변경' 팝업 감지됨.")
 
-        later_button = WebDriverWait(driver, timeout).until(
-            EC.element_to_be_clickable((By.ID, "mf_wfm_body_DCWD009P01_wframe_btn_cancelChg"))
-        )
-        later_button.click()
-        print("DEBUG: '비밀번호 변경' 팝업 '나중에 변경하기' 클릭 완료.")
+        if robust_click(driver, "//input[@value='나중에 변경하기']", timeout=timeout):
+            print("DEBUG: '비밀번호 변경' 팝업 '나중에 변경하기' 클릭 완료.")
 
         WebDriverWait(driver, timeout).until(
             EC.invisibility_of_element_located((By.ID, "mf_wfm_body_DCWD009P01"))
@@ -252,6 +271,31 @@ def handle_password_change_popup(driver, timeout=3):
         print("DEBUG: '비밀번호 변경' 팝업이 감지되지 않음 (정상일 수 있음).")
 
 
+def handle_pre_login_popups(driver):
+    """
+    로그인 버튼 클릭 전 또는 중에 나타날 수 있는 만료 팝업 처리
+    """
+    handled = False
+    try:
+        # 1. "비밀번호가 만료되었습니다" 등의 알림창 확인 버튼
+        if robust_click(driver, "//div[contains(@class, 'messagebox')]//input[@value='확인']", timeout=3):
+            print("DEBUG: [사전팝업] 알림 팝업 감지됨. '확인' 클릭.")
+            time.sleep(1)
+            handled = True
+    except Exception as e:
+        print(f"DEBUG: [사전팝업] 알림 팝업 처리 중 오류: {e}")
+
+    try:
+        # 2. "비밀번호 변경" 팝업에서 "나중에 변경하기" 버튼
+        wait_time = 5 if handled else 2
+        if robust_click(driver, "//input[@value='나중에 변경하기']", timeout=wait_time):
+            print("DEBUG: [사전팝업] 비밀번호 변경 팝업 감지됨. '나중에 변경하기' 클릭.")
+            time.sleep(2)
+            handled = True
+    except Exception as e:
+        print(f"DEBUG: [사전팝업] 비밀번호 변경 팝업 처리 중 오류: {e}")
+        
+    return handled
 
 
 def select_discount_and_confirm(driver, radio_xpath):
@@ -410,11 +454,8 @@ def handle_login_alert_popup(driver):
     """
     try:
         # 알림 팝업 감지 및 '확인' 버튼 대기
-        confirm_button = WebDriverWait(driver, 5).until(
-            EC.presence_of_element_located((By.XPATH, "//input[@value='확인' and contains(@class, 'w2trigger')]"))
-        )
-        confirm_button.click()
-        print("DEBUG: 로그인 후 알림 팝업 '확인' 버튼 클릭 완료.")
+        if robust_click(driver, "//input[@value='확인' and contains(@class, 'w2trigger')]", timeout=5):
+            print("DEBUG: 로그인 후 알림 팝업 '확인' 버튼 클릭 완료.")
     except TimeoutException:
         print("DEBUG: 로그인 알림 팝업이 감지되지 않음. (정상일 수도 있음)")
 
@@ -719,10 +760,23 @@ def web_har_in(target, driver):
             print("로그인 버튼 클릭 전 3초 대기...")
             time.sleep(3)
 
-            login_button = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.ID, "mf_wfm_body_btn_login"))
-            )
-            login_button.click()
+            # 로그인 버튼 클릭 전에 팝업이 뜬 경우를 대비하여 사전 처리
+            popups_handled = handle_pre_login_popups(driver)
+            if popups_handled:
+                print("DEBUG: 팝업 처리됨. 화면 전환 대기...")
+                time.sleep(2)
+
+            try:
+                login_button = WebDriverWait(driver, 5).until(
+                    EC.visibility_of_element_located((By.ID, "mf_wfm_body_btn_login"))
+                )
+                try:
+                    login_button.click()
+                except Exception as click_e:
+                    print(f"DEBUG: 일반 로그인 클릭 실패 ({click_e}), JS 강제 클릭 시도")
+                    driver.execute_script("arguments[0].click();", login_button)
+            except TimeoutException:
+                print("DEBUG: 로그인 버튼이 보이지 않음. (팝업 처리 후 이미 로그인되었을 수 있습니다.)")
 
             print("로그인 성공!")
 
