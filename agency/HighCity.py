@@ -1372,6 +1372,12 @@ def web_har_in(target, driver):
                                     btn_id = "BTN_종일권 (일일권)"
                                 elif ticket_name == "휴일 당일권":
                                     btn_id = "BTN_주말권 (일일권)"
+                                elif ticket_name == "평일 3시간권":
+                                    btn_id = "BTN_평일3시간권(공유)"
+                                elif ticket_name == "평일 2시간권":
+                                    btn_id = "BTN_평일2시간권(공유)"
+                                elif ticket_name == "평일 1시간권":
+                                    btn_id = "BTN_평일1시간권(공유)"
                                 else:
                                     print(Colors.RED + f"❌ 정의되지 않은 ticket_name: {ticket_name}" + Colors.ENDC)
                                     return False
