@@ -42,7 +42,6 @@ parkTypeHighCity = [
     Parks.DONGSAN_GONGYEONG,
     Parks.BANPO_DONG_GONGYONG,
     Parks.GRAND_CENTRAL,
-    Parks.MUGUNG,
     Parks.HAEUNDAE_IPARK,
     19174,
     19492,#반포2동공영

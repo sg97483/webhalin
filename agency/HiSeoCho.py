@@ -168,6 +168,11 @@ def handle_ticket(driver, park_id, ticket_name):
                 target_btn_text = "전일권"
             else:
                 target_btn_text = ticket_name
+        elif park_id == 19456:
+            if ticket_name == "휴일 당일권":
+                target_btn_text = "전일권"
+            else:
+                target_btn_text = ticket_name
         else:
             target_btn_text = ticket_name
 
@@ -210,6 +215,24 @@ def handle_ticket(driver, park_id, ticket_name):
             print("DEBUG: 팝업 '확인' 버튼 클릭 완료.")
         except TimeoutException:
             print("WARNING: 팝업 '확인' 버튼을 찾을 수 없거나 이미 닫혔습니다.")
+
+        time.sleep(1)
+
+        # 2번째 팝업 "확인" 버튼 클릭 ("할인이 적용되었습니다.")
+        try:
+            success_button = WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.XPATH, "//div[@role='dialog' and contains(., '할인이 적용되었습니다.')]//button[contains(text(), '확인')]"))
+            )
+            success_button.click()
+            print("DEBUG: '할인이 적용되었습니다.' 팝업 '확인' 버튼 클릭 완료.")
+        except TimeoutException:
+            # 못 찾을 경우 화면에 보이는 다른 확인 버튼이라도 시도
+            try:
+                second_confirm = driver.find_element(By.XPATH, "//button[text()='확인' or normalize-space()='확인']")
+                second_confirm.click()
+                print("DEBUG: 두 번째 팝업 '확인' 버튼 클릭 완료 (일반).")
+            except Exception:
+                print("WARNING: 두 번째 팝업의 '확인' 버튼을 찾을 수 없습니다.")
 
         time.sleep(2)
         handle_alert(driver)  # 적용 후 뜨는 Alert 창 처리
