@@ -2037,7 +2037,7 @@ def web_har_in(target, driver):
                 return handle_invalid_ticket(driver)
 
 
-        elif park_id == 29688:
+        elif park_id == 29507:
 
             if ticket_name in ["평일 당일권(카리프트)", "휴일 당일권(카리프트)"]:
                 return select_discount_and_confirm(
