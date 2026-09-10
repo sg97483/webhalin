@@ -271,6 +271,24 @@ def handle_password_change_popup(driver, timeout=3):
         print("DEBUG: '비밀번호 변경' 팝업이 감지되지 않음 (정상일 수 있음).")
 
 
+def handle_password_expired_popup(driver, timeout=3):
+    try:
+        popup = WebDriverWait(driver, timeout).until(
+            EC.presence_of_element_located((By.ID, "mf_wfm_body_DCCO011P01"))
+        )
+        print("DEBUG: '비밀번호 변경(만료)' 팝업 감지됨.")
+
+        if robust_click(driver, "//*[@id='mf_wfm_body_DCCO011P01_wframe_btn_cancelChg']", timeout=timeout):
+            print("DEBUG: '비밀번호 변경(만료)' 팝업 '닫기' 클릭 완료.")
+
+        WebDriverWait(driver, timeout).until(
+            EC.invisibility_of_element_located((By.ID, "mf_wfm_body_DCCO011P01"))
+        )
+        print("DEBUG: '비밀번호 변경(만료)' 팝업 닫힘 확인 완료.")
+    except TimeoutException:
+        print("DEBUG: '비밀번호 변경(만료)' 팝업이 감지되지 않음 (정상일 수 있음).")
+
+
 def handle_pre_login_popups(driver):
     """
     로그인 버튼 클릭 전 또는 중에 나타날 수 있는 만료 팝업 처리
@@ -668,6 +686,7 @@ def handle_all_optional_popups(driver, park_id):
             handle_password_reset_popup(driver, timeout=2)
             handle_init_password_popup(driver, timeout=2)
             handle_password_change_popup(driver, timeout=2)
+            handle_password_expired_popup(driver, timeout=2)
 
         if park_id in [19768, 19796, 19399]:  # 공지사항 팝업 뜨는 park_id
             handle_notice_popup(driver, timeout=2)
@@ -793,6 +812,7 @@ def web_har_in(target, driver):
             handle_login_alert_popup(driver)
 
             handle_password_change_popup(driver)
+            handle_password_expired_popup(driver)
 
             # 🔽 여기서 호출
             handle_notice_popup(driver)
