@@ -1153,7 +1153,7 @@ def web_har_in(target, driver):
                                 Util.sleep(1.5)
 
                                 # 할인 버튼 텍스트 매핑
-                                if ticket_name == "평일1일권":
+                                if ticket_name in ["평일 당일권", "휴일 당일권"]:
                                     button_text = "(유료)당일권"
                                 else:
                                     print(Colors.RED + f"❌ 정의되지 않은 ticket_name: {ticket_name}" + Colors.ENDC)
