@@ -9327,6 +9327,45 @@ def web_har_in(target, driver):
                         return handle_invalid_ticket(driver)
 
 
+                elif park_id == 19506:
+                    if ticket_name in ["평일 3시간권", "휴일 3시간권"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_f5997b1b0822469d87087ee37cebb6df']",
+                            btn_confirm_xpath
+                        )
+                    elif ticket_name in ["평일 6시간권", "휴일 6시간권"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_699dfaeebdb1479fa94578ac2db2726f']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name in ["평일 10시간권", "휴일 10시간권"]:
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_622ab1520a2243119ee4aada502e2480']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 2시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_92424d62ee604f49a449825df49c06c8']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 1시간권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_c08652d1b45849ec9cc41153a391405e']",
+                            btn_confirm_xpath
+                        )
+
+                    else:
+                        return handle_invalid_ticket(driver)
+
+
                 elif park_id == 29257:
                     if ticket_name == "평일주간권(10시간)":
                         return select_discount_and_confirm(
