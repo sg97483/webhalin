@@ -6555,7 +6555,7 @@ def web_har_in(target, driver):
                     if ticket_name == "휴일 당일권":
                         return select_discount_and_confirm(
                             driver,
-                            "//*[@id='discountItemsDataRadio_f9fd0925186c4b76907c7335e908e633']",
+                            "//*[@id='discountItemsDataRadio_852daffbf7864764864fdb0de4056994']",
                             btn_confirm_xpath
                         )
 
