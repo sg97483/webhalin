@@ -3878,7 +3878,8 @@ def web_har_in(target, driver):
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "휴일 당일권":
+
+                    elif ticket_name in ["휴일 당일권(토)", "휴일 당일권(일)"]:
                         return select_discount_and_confirm(
                             driver,
                             "//*[@id='discountItemsDataRadio_43e3f5f9811c43958e51b35f3daa23ba']",
