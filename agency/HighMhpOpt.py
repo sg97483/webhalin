@@ -6632,24 +6632,24 @@ def web_har_in(target, driver):
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name == "평일 심야권(월-목)":
+                    elif ticket_name in ["평일 10시간권", "평일 10시간권(금)"]:
                         return select_discount_and_confirm(
                             driver,
-                            "//*[@id='discountItemsDataRadio_0f15717500d34a39839efe54a4b8d15f']",
+                            "//*[@id='discountItemsDataRadio_bfa5c4fb9f1d48edbe6322af81ab3a59']",
+                            btn_confirm_xpath
+                        )
+
+                    elif ticket_name == "평일 심야권":
+                        return select_discount_and_confirm(
+                            driver,
+                            "//*[@id='discountItemsDataRadio_1a6fd806a40a4b04bff756eb9cf134a4']",
                             btn_confirm_xpath
                         )
 
                     elif ticket_name == "심야권(금~일)":
                         return select_discount_and_confirm(
                             driver,
-                            "//*[@id='discountItemsDataRadio_19a61e30f40c4e968ce0e02046bd82db']",
-                            btn_confirm_xpath
-                        )
-
-                    elif ticket_name == "평일 오전 1시간권":
-                        return select_discount_and_confirm(
-                            driver,
-                            "//*[@id='discountItemsDataRadio_2feb1bb076014a3f80a3c6c474277961']",
+                            "//*[@id='discountItemsDataRadio_1a6fd806a40a4b04bff756eb9cf134a4']",
                             btn_confirm_xpath
                         )
 
@@ -6660,12 +6660,6 @@ def web_har_in(target, driver):
                             btn_confirm_xpath
                         )
 
-                    elif ticket_name in ["평일 10시간권(월-목)", "평일 10시간권(금)", "평일 10시간권"]:
-                        return select_discount_and_confirm(
-                            driver,
-                            "//*[@id='discountItemsDataRadio_bfa5c4fb9f1d48edbe6322af81ab3a59']",
-                            btn_confirm_xpath
-                        )
 
                     else:
                         return handle_invalid_ticket(driver)
