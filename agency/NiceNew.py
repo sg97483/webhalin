@@ -870,7 +870,8 @@ def web_har_in(target, driver):
             print(f"로그인 과정에서 문제가 발생했습니다: {e}")
             return False
 
-        # park_id 및 ticket_name에 따른 처리        park_str = str(park_id)
+        # park_id 및 ticket_name에 따른 처리
+        park_str = str(park_id)
         if park_str in NICE_NEW_MAPPINGS:
             mapping = NICE_NEW_MAPPINGS[park_str]
             if ticket_name in mapping:

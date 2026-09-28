@@ -114,6 +114,13 @@ NICE_NEW_MAPPINGS = \
         "휴일 당일권": "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']",
         "평일 심야권": "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']"
     },
+    "19965": {
+        "평일 당일권": "//*[@id='mf_wfm_body_gen_dcTkList_2_discountTkGrp']",
+        "평일 3시간권": "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']",
+        "평일 심야권": "//*[@id='mf_wfm_body_gen_dcTkList_1_discountTkGrp']",
+        "휴일 당일권": "//*[@id='mf_wfm_body_gen_dcTkList_2_discountTkGrp']",
+        "휴일 3시간권": "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']"
+    },
     "19478": {
         "심야권": "//*[@id='mf_wfm_body_gen_dcTkList_0_discountTkGrp']"
     },
