@@ -1344,6 +1344,20 @@ PARK_DISCOUNT_MAPPINGS = \
         "평일 2시간권": "//*[@id='discountItemsDataRadio_c6d274f8fbd94dc7a669472fd36c74d1']",
         "평일 1시간권": "//*[@id='discountItemsDataRadio_91ed18ed532149aa86ef326dc1d56d67']"
     },
+    "19736": {
+        "평일 당일권": "//*[@id='discountItemsDataRadio_74fb60bc858a4f11bb7ef1037dd7f99e']",
+        "평일 당일권(월)": "//*[@id='discountItemsDataRadio_74fb60bc858a4f11bb7ef1037dd7f99e']",
+        "평일 당일권(화)": "//*[@id='discountItemsDataRadio_74fb60bc858a4f11bb7ef1037dd7f99e']",
+        "평일 당일권(수)": "//*[@id='discountItemsDataRadio_74fb60bc858a4f11bb7ef1037dd7f99e']",
+        "평일 당일권(목)": "//*[@id='discountItemsDataRadio_74fb60bc858a4f11bb7ef1037dd7f99e']",
+        "평일 당일권(금)": "//*[@id='discountItemsDataRadio_74fb60bc858a4f11bb7ef1037dd7f99e']",
+        "휴일 당일권": "//*[@id='discountItemsDataRadio_e83acc5934e145db8fb5fc5f985c7ce2']",
+        "평일 6시간권": "//*[@id='discountItemsDataRadio_6def1e0b873846c0a83e767fd74f9995']",
+        "평일 3시간권": "//*[@id='discountItemsDataRadio_6ee1b0370e7742a38ceaff3001a00685']",
+        "평일 2시간권": "//*[@id='discountItemsDataRadio_fbaf4cc1a7ed4680be8e2d95ff9b7210']",
+        "평일 1시간권": "//*[@id='discountItemsDataRadio_827e512668dc44b9a4946c193472f9dc']",
+        "심야권": "//*[@id='discountItemsDataRadio_d96e47ea02ec45f5a4f9f87fe9883e0d']"
+    },
     "29243": {
         "평일 당일권": "//*[@id='discountItemsDataRadio_2f3af9bb9c5643edb6906853d02717cc']",
         "평일 3시간권": "//*[@id='discountItemsDataRadio_378865c490104ccca6554f058ab5b54f']",

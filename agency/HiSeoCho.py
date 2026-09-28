@@ -169,8 +169,15 @@ def handle_ticket(driver, park_id, ticket_name):
             else:
                 target_btn_text = ticket_name
         elif park_id == 19456:
-            if ticket_name == "휴일 당일권":
+            if ticket_name == "평일 당일권":
+                target_btn_text = "당일권"
+            else:
+                target_btn_text = ticket_name
+        elif park_id == 19273:
+            if "당일권" in ticket_name:
                 target_btn_text = "전일권"
+            elif "심야권" in ticket_name:
+                target_btn_text = "야간 12시간권"
             else:
                 target_btn_text = ticket_name
         else:
