@@ -235,17 +235,6 @@ PARK_DISCOUNT_MAPPINGS = \
         "평일 2시간권": "//*[@id='discountItemsDataRadio_5f745696e17f48beb39b1173d8a0f5ef']",
         "평일 1시간권": "//*[@id='discountItemsDataRadio_bd1a796f039849dc9430c98c9eb70aaa']"
     },
-    "19736": {
-        "평일 당일권": "//*[@id='discountItemsDataRadio_74fb60bc858a4f11bb7ef1037dd7f99e']",
-        "평일 당일권(월)": "//*[@id='discountItemsDataRadio_74fb60bc858a4f11bb7ef1037dd7f99e']",
-        "평일 당일권(화)": "//*[@id='discountItemsDataRadio_74fb60bc858a4f11bb7ef1037dd7f99e']",
-        "평일 당일권(수)": "//*[@id='discountItemsDataRadio_74fb60bc858a4f11bb7ef1037dd7f99e']",
-        "평일 당일권(목)": "//*[@id='discountItemsDataRadio_74fb60bc858a4f11bb7ef1037dd7f99e']",
-        "평일 당일권(금)": "//*[@id='discountItemsDataRadio_74fb60bc858a4f11bb7ef1037dd7f99e']",
-        "휴일 당일권": "//*[@id='discountItemsDataRadio_e83acc5934e145db8fb5fc5f985c7ce2']",
-        "평일 6시간권": "//*[@id='discountItemsDataRadio_6def1e0b873846c0a83e767fd74f9995']",
-        "심야권": "//*[@id='discountItemsDataRadio_20818da333e840aa82c87c5cce864540']"
-    },
     "19884": {
         "평일 당일권": "//*[@id='discountItemsDataRadio_300ea3bbf5a34f958f0775540914bbc8']",
         "평일 당일권(월)": "//*[@id='discountItemsDataRadio_300ea3bbf5a34f958f0775540914bbc8']",
