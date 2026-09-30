@@ -256,44 +256,26 @@ def handle_ticket(driver, park_id, ticket_name):
 
     # ✅ 19004 전용 할인 처리
     if park_id == 19004:
-        ticket_map = {
-            # 평일당일권(공유서비스) - HTML에 있지만 ticket_name 매핑 필요
-            "평일 당일권": "평일당일권(공유서비스)",
-            "평일1일권": "평일당일권(공유서비스)",
-            
-            # 평일12시간권(공유서비스)
-            "평일 12시간권": "평일12시간권(공유서비스)",
-            "평일 12시간권(월)": "평일12시간권(공유서비스)",
-            "평일 12시간권(화)": "평일12시간권(공유서비스)",
-            "평일 12시간권(수)": "평일12시간권(공유서비스)",
-            "평일 12시간권(목)": "평일12시간권(공유서비스)",
-            "평일 12시간권(금)": "평일12시간권(공유서비스)",
-            
-            # 휴일당일권(공유서비스)
-            "휴일 당일권": "휴일당일권(공유서비스)",
-            "휴일 당일권(토~일)": "휴일당일권(공유서비스)",
-            
-            # 야간권(공유서비스)
-            "야간권": "야간권(공유서비스)",
-            "평일 심야권": "야간권(공유서비스)",
-            "휴일 심야권": "야간권(공유서비스)",
-            
-            # 3시간(공유서비스)
-            "평일 3시간권": "3시간(공유서비스)",
-            "휴일 3시간권": "3시간(공유서비스)",
-            
-            # 2시간(공유서비스)
-            "평일 2시간권": "2시간(공유서비스)",
-            
-            # 1시간(공유서비스)
-            "평일 1시간권": "1시간(공유서비스)",
-        }
+        target_text = None
+        if "당일권" in ticket_name or "1일권" in ticket_name:
+            if "휴일" in ticket_name:
+                target_text = "휴일당일권(공유서비스)"
+            else:
+                target_text = "평일당일권(공유서비스)"
+        elif "12시간권" in ticket_name:
+            target_text = "평일12시간권(공유서비스)"
+        elif "야간권" in ticket_name or "심야권" in ticket_name:
+            target_text = "야간권(공유서비스)"
+        elif "3시간권" in ticket_name:
+            target_text = "3시간(공유서비스)"
+        elif "2시간권" in ticket_name:
+            target_text = "2시간(공유서비스)"
+        elif "1시간권" in ticket_name:
+            target_text = "1시간(공유서비스)"
 
-        if ticket_name not in ticket_map:
+        if not target_text:
             print(f"ERROR: 19004에서 지원하지 않는 ticket_name: {ticket_name}")
             return False
-
-        target_text = ticket_map[ticket_name]
 
         try:
             select_element = WebDriverWait(driver, 10).until(
