@@ -1951,7 +1951,8 @@ PARK_DISCOUNT_MAPPINGS = \
     },
     "29250": {
         "평일 당일권": "//*[@id='discountItemsDataRadio_cf12ada61c2545f897321eb3058cc613']",
-        "휴일 당일권": "//*[@id='discountItemsDataRadio_4e8d6782f61849e0b205ab57e9e81be3']",
+        "휴일 당일권(토)": "//*[@id='discountItemsDataRadio_4e8d6782f61849e0b205ab57e9e81be3']",
+        "휴일 당일권(일)": "//*[@id='discountItemsDataRadio_4e8d6782f61849e0b205ab57e9e81be3']",
         "2일 연박권": "//*[@id='discountItemsDataRadio_b5f5fa5af36c413d871f9ba6e5ddf604']",
         "3일 연박권": "//*[@id='discountItemsDataRadio_3355273f5316439a84a5f7ef2d58c7a8']",
         "4일 연박권": "//*[@id='discountItemsDataRadio_b001fb3a16f245ef9b8391f33cfcc134']"
